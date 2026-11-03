@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../account/entitlement.dart';
 import '../l10n/app_localizations.dart';
 import '../state/providers.dart';
+import '../telemetry/analytics.dart';
 import '../state/settings.dart';
 import '../theme/app_theme.dart';
 import '../theme/tokens.g.dart';
@@ -93,6 +94,17 @@ class SettingsScreen extends ConsumerWidget {
           ),
           section(l.settingsPrivacy),
           note(l.settingsPrivacyBody),
+          if (ref.watch(analyticsProvider).available)
+            SwitchListTile(
+              title: Text(l.settingsShareUsage),
+              subtitle: Text(l.settingsShareUsageBody),
+              value: s.shareUsage,
+              onChanged: (v) {
+                // Turning it off forgets the install id, so a later opt-in isn't linked to the past.
+                if (!v) ref.read(analyticsProvider).reset();
+                c.update(s.copyWith(shareUsage: v));
+              },
+            ),
           section(l.settingsAge),
           note(l.settingsAgeBody),
           section(l.settingsAbout),

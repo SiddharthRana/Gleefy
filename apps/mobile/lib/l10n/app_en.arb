@@ -193,7 +193,7 @@
   "settingsHapticsBody": "A small buzz when you tap a vote.",
   "settingsShowOnboarding": "Show the introduction again",
   "settingsPrivacy": "Privacy",
-  "settingsPrivacyBody": "You can play without an account. An account is only for buying Premium: it stores your email and subscription status on the MirthMix server. There are no analytics in this version. Games, settings and players are stored only on this phone.",
+  "settingsPrivacyBody": "You can play without an account. An account is only for buying Premium: it stores your email and subscription status on the MirthMix server. Games, settings and players are stored only on this phone.",
   "settingsAge": "Age guidance",
   "settingsAgeBody": "MirthMix is made for ages 13 and up. Categories marked 13+ include more mature themes, never explicit content.",
   "settingsAbout": "About",
@@ -591,5 +591,7 @@
   "accountDeleteFailed": "We couldn’t delete your account. Please try again.",
   "settingsPremium": "Premium",
   "signInAdult": "I’m 18 or older",
-  "signInAdultRequired": "Accounts and purchases are for people aged 18 or over. You can keep playing everything free without an account."
+  "signInAdultRequired": "Accounts and purchases are for people aged 18 or over. You can keep playing everything free without an account.",
+  "settingsShareUsage": "Share anonymous usage stats",
+  "settingsShareUsageBody": "Which games are played, how far you get, and crash reports, to help improve MirthMix. Never names, questions, answers or your email. Off unless you turn it on."
 }

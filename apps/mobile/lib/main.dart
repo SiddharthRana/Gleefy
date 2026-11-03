@@ -19,6 +19,7 @@ import 'config/app_config.dart';
 import 'app.dart';
 import 'content/content.dart';
 import 'state/providers.dart';
+import 'telemetry/analytics.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -57,7 +58,24 @@ Future<void> main() async {
     ]);
   }
 
+  if (AppConfig.posthogKey.isNotEmpty) {
+    final dio = Dio(BaseOptions(baseUrl: AppConfig.posthogHost, connectTimeout: const Duration(seconds: 10)));
+    overrides.add(analyticsSinkProvider.overrideWithValue(PostHogSink(dio, AppConfig.posthogKey)));
+  }
+
   final container = ProviderContainer(overrides: overrides);
+  // Uncaught errors go to the opt-in error reports (dropped when sharing is off).
+  final analytics = container.read(analyticsProvider);
+  final previousOnError = FlutterError.onError;
+  FlutterError.onError = (details) {
+    analytics.captureError(details.exception, details.stack);
+    previousOnError?.call(details);
+  };
+  PlatformDispatcher.instance.onError = (error, stack) {
+    analytics.captureError(error, stack);
+    return false;
+  };
+  analytics.track('app_opened');
   if (AppConfig.accountsConfigured) {
     // Listen for purchases Play redelivers (interrupted flows) and refresh the entitlement.
     container.read(billingControllerProvider);

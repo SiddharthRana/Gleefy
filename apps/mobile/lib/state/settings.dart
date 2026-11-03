@@ -11,6 +11,7 @@ class AppSettings {
     this.bigText = false,
     this.reduceMotion = false,
     this.haptics = true,
+    this.shareUsage = false,
   });
 
   final bool onboarded;
@@ -21,14 +22,24 @@ class AppSettings {
   final bool reduceMotion;
   final bool haptics;
 
-  AppSettings copyWith({bool? onboarded, ThemeMode? themeMode, bool? bigText, bool? reduceMotion, bool? haptics}) =>
-      AppSettings(
-        onboarded: onboarded ?? this.onboarded,
-        themeMode: themeMode ?? this.themeMode,
-        bigText: bigText ?? this.bigText,
-        reduceMotion: reduceMotion ?? this.reduceMotion,
-        haptics: haptics ?? this.haptics,
-      );
+  /// Opt-in anonymous usage stats and error reports. Off unless the person turns it on.
+  final bool shareUsage;
+
+  AppSettings copyWith({
+    bool? onboarded,
+    ThemeMode? themeMode,
+    bool? bigText,
+    bool? reduceMotion,
+    bool? haptics,
+    bool? shareUsage,
+  }) => AppSettings(
+    onboarded: onboarded ?? this.onboarded,
+    themeMode: themeMode ?? this.themeMode,
+    bigText: bigText ?? this.bigText,
+    reduceMotion: reduceMotion ?? this.reduceMotion,
+    haptics: haptics ?? this.haptics,
+    shareUsage: shareUsage ?? this.shareUsage,
+  );
 }
 
 class SettingsController extends Notifier<AppSettings> {
@@ -43,6 +54,7 @@ class SettingsController extends Notifier<AppSettings> {
       bigText: p.getBool('${_prefix}bigText') ?? false,
       reduceMotion: p.getBool('${_prefix}reduceMotion') ?? false,
       haptics: p.getBool('${_prefix}haptics') ?? true,
+      shareUsage: p.getBool('${_prefix}shareUsage') ?? false,
     );
   }
 
@@ -55,6 +67,7 @@ class SettingsController extends Notifier<AppSettings> {
       p.setBool('${_prefix}bigText', next.bigText),
       p.setBool('${_prefix}reduceMotion', next.reduceMotion),
       p.setBool('${_prefix}haptics', next.haptics),
+      p.setBool('${_prefix}shareUsage', next.shareUsage),
     ]);
   }
 }

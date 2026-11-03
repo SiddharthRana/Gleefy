@@ -14,6 +14,7 @@ import '../../config/app_config.dart';
 import '../../content/content.dart';
 import '../../l10n/app_localizations.dart';
 import '../../state/providers.dart';
+import '../../telemetry/analytics.dart';
 import '../../theme/app_theme.dart';
 import '../../theme/tokens.g.dart';
 import '../modes.dart';
@@ -35,7 +36,9 @@ class _PremiumScreenState extends ConsumerState<PremiumScreen> {
     super.initState();
     // Always re-check with the server when the screen opens.
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) unawaited(ref.read(entitlementProvider.notifier).refresh());
+      if (!mounted) return;
+      ref.read(analyticsProvider).track('premium_viewed', {'premium': ref.read(premiumProvider)});
+      unawaited(ref.read(entitlementProvider.notifier).refresh());
     });
   }
 

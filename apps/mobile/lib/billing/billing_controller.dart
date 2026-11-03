@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../account/api_client.dart';
 import '../account/entitlement.dart';
+import '../telemetry/analytics.dart';
 import 'billing_gateway.dart';
 
 /// Overridden in main.dart with the Google Play gateway on Android.
@@ -104,6 +105,9 @@ class BillingController extends Notifier<BillingState> {
           final res = await ref.read(accountApiProvider).verifyPlayPurchase(token);
           await gateway.complete(update);
           await ref.read(entitlementProvider.notifier).refresh();
+          ref.read(analyticsProvider).track('purchase_verified', {
+            'restored': update.status == StorePurchaseStatus.restored,
+          });
           state = state.copyWith(phase: PurchasePhase.success, duplicateWarning: res.duplicateSubscription);
         } on ApiException catch (e) {
           // Not completed: Play redelivers it and we retry verification later.

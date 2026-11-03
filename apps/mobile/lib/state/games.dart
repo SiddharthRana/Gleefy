@@ -8,6 +8,7 @@ import '../game/guess_engine.dart';
 import '../game/random.dart';
 import '../game/trivia_engine.dart';
 import '../game/wyr_engine.dart';
+import '../telemetry/analytics.dart';
 import 'providers.dart';
 import 'sessions.dart';
 
@@ -155,6 +156,16 @@ class GameStarter {
               names: names,
             );
     }
+    final pack = ref.read(contentProvider).packFor(setup.mode);
+    ref.read(analyticsProvider).track('game_started', {
+      'mode': setup.mode.id,
+      'rounds': setup.rounds,
+      'categories': setup.categoryIds.length,
+      'premium_category': setup.categoryIds.any((id) => pack.category(id)?.tier == Tier.premium),
+      'players': names.length,
+      'timer': setup.timer,
+      'pass_the_phone': setup.passThePhone,
+    });
     ref.read(recentsProvider.notifier).add(SavedGame(name: '', setups: [setup]));
     ref.read(sharedPreferencesProvider).setString('setup.${setup.mode.id}', jsonEncode(setup.toJson()));
     return playRoute(setup.mode);

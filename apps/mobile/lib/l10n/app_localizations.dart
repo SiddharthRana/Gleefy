@@ -682,7 +682,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsPrivacyBody.
   ///
   /// In en, this message translates to:
-  /// **'You can play without an account. An account is only for buying Premium: it stores your email and subscription status on the MirthMix server. There are no analytics in this version. Games, settings and players are stored only on this phone.'**
+  /// **'You can play without an account. An account is only for buying Premium: it stores your email and subscription status on the MirthMix server. Games, settings and players are stored only on this phone.'**
   String get settingsPrivacyBody;
 
   /// No description provided for @settingsAge.
@@ -1482,6 +1482,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Accounts and purchases are for people aged 18 or over. You can keep playing everything free without an account.'**
   String get signInAdultRequired;
+
+  /// No description provided for @settingsShareUsage.
+  ///
+  /// In en, this message translates to:
+  /// **'Share anonymous usage stats'**
+  String get settingsShareUsage;
+
+  /// No description provided for @settingsShareUsageBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Which games are played, how far you get, and crash reports, to help improve MirthMix. Never names, questions, answers or your email. Off unless you turn it on.'**
+  String get settingsShareUsageBody;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

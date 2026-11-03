@@ -18,7 +18,7 @@ const reasons = [
   { title: 'No sign-up', body: 'Open the app and play. No account, no email, no profile.' },
   {
     title: 'Private by design',
-    body: 'Games and settings stay on your phone. No analytics in this version.',
+    body: 'Games, settings and player names stay on your phone. Usage stats only if you opt in.',
   },
   {
     title: 'Original questions',

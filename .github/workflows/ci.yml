@@ -249,11 +249,16 @@ jobs:
           SITE_URL: ${{ vars.SITE_URL }}
           SUPABASE_URL: ${{ vars.SUPABASE_URL }}
           SUPABASE_PUBLISHABLE_KEY: ${{ vars.SUPABASE_PUBLISHABLE_KEY }}
+          # Optional, opt-in analytics; empty = the setting isn't offered.
+          POSTHOG_KEY: ${{ vars.POSTHOG_KEY }}
+          POSTHOG_HOST: ${{ vars.POSTHOG_HOST || 'https://eu.i.posthog.com' }}
         run: >-
           flutter build appbundle --release --build-number=${{ github.run_number }}
           --dart-define=API_BASE_URL="$API_URL" --dart-define=SITE_URL="$SITE_URL"
           --dart-define=SUPABASE_URL="$SUPABASE_URL"
           --dart-define=SUPABASE_PUBLISHABLE_KEY="$SUPABASE_PUBLISHABLE_KEY"
+          --dart-define=POSTHOG_KEY="$POSTHOG_KEY" --dart-define=POSTHOG_HOST="$POSTHOG_HOST"
+          --dart-define=APP_VERSION="$(grep '^version:' pubspec.yaml | cut -d' ' -f2 | cut -d+ -f1)"
       - name: Upload to Google Play
         uses: r0adkll/upload-google-play@v1
         with:

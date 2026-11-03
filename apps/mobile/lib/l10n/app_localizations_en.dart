@@ -339,7 +339,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsPrivacyBody =>
-      'You can play without an account. An account is only for buying Premium: it stores your email and subscription status on the MirthMix server. There are no analytics in this version. Games, settings and players are stored only on this phone.';
+      'You can play without an account. An account is only for buying Premium: it stores your email and subscription status on the MirthMix server. Games, settings and players are stored only on this phone.';
 
   @override
   String get settingsAge => 'Age guidance';
@@ -818,4 +818,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get signInAdultRequired =>
       'Accounts and purchases are for people aged 18 or over. You can keep playing everything free without an account.';
+
+  @override
+  String get settingsShareUsage => 'Share anonymous usage stats';
+
+  @override
+  String get settingsShareUsageBody =>
+      'Which games are played, how far you get, and crash reports, to help improve MirthMix. Never names, questions, answers or your email. Off unless you turn it on.';
 }
