@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Fredoka, Nunito } from 'next/font/google';
+import { ErrorMonitoring } from '@/components/error-monitoring';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
 import { siteUrl } from '@/lib/site';
@@ -47,6 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
         <SiteFooter />
+        <ErrorMonitoring />
       </body>
     </html>
   );

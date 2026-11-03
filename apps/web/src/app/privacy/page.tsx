@@ -64,8 +64,10 @@ export default function PrivacyPage() {
       <h2 className="mt-10 font-display text-3xl font-semibold">This website</h2>
       <p className="mt-3">
         This website uses no analytics. If you sign in, your browser keeps your session in local
-        storage so you stay signed in. Our hosting provider may keep standard server logs (such as
-        IP address and pages requested) for security.
+        storage so you stay signed in. If the site hits an error, a report of the error (the page
+        path and where in the code it happened, never your email or what you typed) may be sent to
+        our error-reporting provider, Sentry, so we can fix it. Our hosting provider may keep
+        standard server logs (such as IP address and pages requested) for security.
       </p>
       <h2 className="mt-10 font-display text-3xl font-semibold">Age</h2>
       <p className="mt-3">

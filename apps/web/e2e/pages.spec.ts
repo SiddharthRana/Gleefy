@@ -135,3 +135,16 @@ test('footer links reach the help pages', async ({ page }) => {
     await expect(page.getByRole('heading', { level: 1, name: heading })).toBeVisible();
   }
 });
+
+test('pages make no third-party requests (no analytics, and no error reporting without a DSN)', async ({
+  page,
+  baseURL,
+}) => {
+  const origins = new Set<string>();
+  page.on('request', (r) => origins.add(new URL(r.url()).origin));
+  for (const path of ['/', '/play', '/games/trivia', '/faq']) {
+    await page.goto(path);
+    await page.waitForLoadState('networkidle');
+  }
+  expect([...origins]).toEqual([new URL(baseURL!).origin]);
+});

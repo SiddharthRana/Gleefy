@@ -194,6 +194,8 @@ jobs:
           NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ vars.SUPABASE_PUBLISHABLE_KEY }}
           NEXT_PUBLIC_PADDLE_CLIENT_TOKEN: ${{ vars.PADDLE_CLIENT_TOKEN }}
           NEXT_PUBLIC_PADDLE_ENV: ${{ vars.PADDLE_ENV }}
+          NEXT_PUBLIC_SENTRY_DSN: ${{ vars.WEB_SENTRY_DSN }}
+          NEXT_PUBLIC_CONTACT_EMAIL: ${{ vars.CONTACT_EMAIL }}
         run: pnpm --filter @mirthmix/web build
       # Deploying to the project's production branch makes this the live site.
       - name: Upload to Cloudflare Pages
