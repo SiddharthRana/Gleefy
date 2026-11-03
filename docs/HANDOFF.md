@@ -6,11 +6,13 @@ Paste this into a new Claude Code session on the `siddharthrana/mirthmix` reposi
 
 ## Status
 
-Phases 1–4 are complete. Phase 4 (payments) is on branch `claude/phase-4-payments` (open a PR into `main`). **Next is Phase 5 (polish and launch prep)** — see "Next" in `docs/PROGRESS.md`. Billing still has to be configured (Supabase, Play Console, provider) following `docs/payments-setup.md`.
+All five phases are complete in code (Phase 5 on branch `claude/phase-5-launch-prep` until merged). What's left is the owner's launch work in `docs/launch/checklist.md`: accounts, domain, legal review, a second-person trivia review, billing and deploy setup, Play Console forms and the closed test.
 
 ## Where things are
 
 - **Branches:** `main` holds Phases 1–3. `claude/phase-4-payments` holds Phase 4 until merged. Start new work on a branch from `main` and open a PR into it.
+- **Launch:** `docs/launch/` (checklist, Play listing, Data safety, content rating, closed test) and `docs/privacy-data-map.md`.
+- **Analytics:** opt-in only, `apps/mobile/lib/telemetry/analytics.dart`; off unless built with `POSTHOG_KEY`.
 - **Deploys:** `.github/workflows/ci.yml` has approval-gated deploy jobs (environments `backend`, `web`, `play-store`), switched on by `DEPLOY_*` repository variables. Setup: `docs/deployment.md`.
 - **Payments:** `apps/api` (NestJS billing API), `supabase/migrations`, `packages/plans`, app `lib/account` + `lib/billing`, web `/pricing` + `/account`. Setup steps: `docs/payments-setup.md`.
 - **Status and next steps:** `docs/PROGRESS.md` (always the source of truth; updated at every commit).

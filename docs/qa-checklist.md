@@ -76,7 +76,7 @@ Run on a real Android phone (ideally a small, low-end one) before each release. 
 
 - [ ] Without the dart-defines, Premium says it isn't available and every free game still works.
 - [ ] A locked premium category shows "See Premium"; Premium lists the premium categories.
-- [ ] Sign-in: an email code arrives, a wrong code is refused, the right one signs in.
+- [ ] Sign-in needs "I'm 18 or older" ticked; an email code arrives, a wrong code is refused, the right one signs in.
 - [ ] Monthly and annual prices come from Google Play in local currency.
 - [ ] Buying as a license tester: Play sheet → "Confirming your purchase…" → "Premium is on"; the purchase shows as acknowledged in Play Console; premium categories unlock in setup.
 - [ ] Kill the app right after paying; on relaunch Premium turns on without paying again.
@@ -88,8 +88,15 @@ Run on a real Android phone (ideally a small, low-end one) before each release. 
 - [ ] Website: sign in with the same email shows the Play subscription with "Manage in Google Play".
 - [ ] Website (sandbox provider): subscribe → provider checkout → Account shows Premium; "Manage subscription" opens the portal; the app shows "manage it on the website" for this account.
 
+## Usage stats (builds with `POSTHOG_KEY`)
+
+- [ ] Settings shows "Share anonymous usage stats", switched off on a fresh install.
+- [ ] With it off, PostHog's live events show nothing from the phone.
+- [ ] Turned on: play a game; `app_opened`, `game_started` and `game_completed` arrive with mode and rounds, and no names or questions.
+- [ ] Turned off again: events stop.
+
 ## Website
 
-- [ ] Home, Games, Would You Rather, Premium, Account, Privacy and Terms load on a phone and a desktop.
+- [ ] Home, Games, every game guide, How to play, FAQ, Guides, Contact, Premium, Account, Account deletion, Privacy and Terms load on a phone and a desktop.
 - [ ] The landing-page demo works and "Another one" shows a different question.
 - [ ] Privacy and Terms clearly say they are drafts awaiting legal review.
