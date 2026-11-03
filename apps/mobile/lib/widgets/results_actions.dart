@@ -7,6 +7,7 @@ import '../features/modes.dart';
 import '../l10n/app_localizations.dart';
 import '../state/games.dart';
 import '../theme/tokens.g.dart';
+import 'motion.dart';
 
 /// Bottom actions on every results screen. In a party pack they move to the next game;
 /// otherwise they offer a new setup or a replay with the same settings.
@@ -31,17 +32,19 @@ class ResultsActions extends ConsumerWidget {
           const SizedBox(height: MmSpace.s2),
           SizedBox(
             width: double.infinity,
-            child: FilledButton(
-              onPressed: () {
-                onClear();
-                final route = ref.read(partyProvider.notifier).advance();
-                if (route == null) {
-                  context.go('/');
-                } else {
-                  context.pushReplacement(route);
-                }
-              },
-              child: Text(next == null ? l.partyFinish : l.partyNext(modeName(l, next.mode))),
+            child: Pressable(
+              child: FilledButton(
+                onPressed: () {
+                  onClear();
+                  final route = ref.read(partyProvider.notifier).advance();
+                  if (route == null) {
+                    context.go('/');
+                  } else {
+                    context.pushReplacement(route);
+                  }
+                },
+                child: Text(next == null ? l.partyFinish : l.partyNext(modeName(l, next.mode))),
+              ),
             ),
           ),
         ],
@@ -60,12 +63,14 @@ class ResultsActions extends ConsumerWidget {
           ),
           const SizedBox(width: MmSpace.s3),
           Expanded(
-            child: FilledButton(
-              onPressed: () {
-                onPlayAgain();
-                context.pushReplacement(playRoute(mode));
-              },
-              child: Text(l.resultsPlayAgain),
+            child: Pressable(
+              child: FilledButton(
+                onPressed: () {
+                  onPlayAgain();
+                  context.pushReplacement(playRoute(mode));
+                },
+                child: Text(l.resultsPlayAgain),
+              ),
             ),
           ),
         ],

@@ -21,7 +21,7 @@ export function ModeCard({ mode }: { mode: ModeInfo }) {
     </>
   );
   return (
-    <li className="rounded-card border border-border bg-surface">
+    <li className={`${mode.href ? 'lift' : ''} rounded-card border border-border bg-surface`}>
       {mode.href ? (
         <Link href={mode.href} className="block h-full rounded-card p-5 hover:bg-surface-muted">
           {body}

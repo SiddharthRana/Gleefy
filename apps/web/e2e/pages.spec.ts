@@ -27,8 +27,16 @@ const pages = [
 for (const path of pages) {
   test(`${path} has no WCAG A/AA violations`, async ({ page }) => {
     await page.goto(path);
-    // Let entrance animations finish so colour contrast isn't sampled mid-fade.
-    await page.evaluate(() => Promise.all(document.getAnimations().map((a) => a.finished)));
+    // Let entrance animations finish so colour contrast isn't sampled mid-fade (decorative
+    // looping ones never finish, so they're skipped).
+    await page.evaluate(() =>
+      Promise.all(
+        document
+          .getAnimations()
+          .filter((a) => a.effect?.getComputedTiming().iterations !== Infinity)
+          .map((a) => a.finished),
+      ),
+    );
     const results = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
       .analyze();
@@ -147,4 +155,11 @@ test('pages make no third-party requests (no analytics, and no error reporting w
     await page.waitForLoadState('networkidle');
   }
   expect([...origins]).toEqual([new URL(baseURL!).origin]);
+});
+
+test('with reduced motion requested, nothing animates', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  await page.getByRole('button', { pressed: false }).first().click(); // a pick would burst confetti
+  expect(await page.evaluate(() => document.getAnimations().length)).toBe(0);
 });

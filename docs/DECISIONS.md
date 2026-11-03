@@ -2,6 +2,12 @@
 
 Short, dated records of non-trivial choices. Newest first.
 
+## 2026-11-03 — Game-feel motion
+
+**Short, springy, and off under reduced motion.** The website gets 3D "sink-in" buttons, lifting cards, bouncing picks, bumping counters, a filling vote split, a right-answer pulse and wrong-answer shake, flipping clues, popping points and a confetti burst on results, all in `globals.css` under `prefers-reduced-motion: no-preference`. The app gets the same ideas through `lib/widgets/motion.dart` (`Pressable`, `Bump`, `StaggerIn`, `PopIn`, `Shake`, `Confetti`), each checking the system setting and the in-app Reduce motion switch. Every animation is one-shot except the hero's drifting dots on the website, so widget tests still settle and the accessibility wait skips only looping animations.
+
+**The vote-split fill darkens rather than lightens** the option colour, so it only ever raises the contrast of the white text on top. _Rejected:_ a library (Framer Motion, flutter_animate): the effects are small and a dependency would add weight for little gain.
+
 ## 2026-11-03 — Closing the gaps after Phase 5
 
 **Custom questions are merged into the content, not a separate mode.** `contentProvider` now combines the bundled packs (`bundledContentProvider`) with the person's questions as a free "My questions" category, so pools, saved games, results, favourites and party packs work unchanged. Its region (`mine`) keeps it out of Quick play and default selections. Only the two-choice games get custom questions: trivia and clue cards need more structure than a party host will type.

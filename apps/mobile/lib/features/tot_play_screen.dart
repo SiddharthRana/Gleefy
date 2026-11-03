@@ -14,6 +14,7 @@ import '../theme/app_theme.dart';
 import '../theme/tokens.g.dart';
 import '../widgets/countdown.dart';
 import '../widgets/game_shell.dart';
+import '../widgets/motion.dart';
 import '../widgets/option_card.dart';
 
 const totTimeLimitMs = 5000;
@@ -171,9 +172,11 @@ class _TotPlayScreenState extends ConsumerState<TotPlayScreen> {
           ],
         ),
       ),
-      bottom: FilledButton(
-        onPressed: cur.revealed ? () => _act(const Next()) : null,
-        child: Text(session.isLastRound ? l.playFinish : l.playNext),
+      bottom: Pressable(
+        child: FilledButton(
+          onPressed: cur.revealed ? () => _act(const Next()) : null,
+          child: Text(session.isLastRound ? l.playFinish : l.playNext),
+        ),
       ),
     );
   }

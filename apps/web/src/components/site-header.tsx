@@ -10,7 +10,9 @@ export function SiteHeader() {
           className="flex min-h-12 items-center gap-2 font-display text-2xl font-bold"
           aria-label="MirthMix home"
         >
-          <Logo />
+          <span className="wiggle inline-flex">
+            <Logo />
+          </span>
           <span>MirthMix</span>
         </Link>
         <nav aria-label="Main">
@@ -18,7 +20,7 @@ export function SiteHeader() {
             <li>
               <Link
                 href="/games"
-                className="inline-flex min-h-12 items-center whitespace-nowrap rounded-full px-3 hover:bg-surface-muted sm:px-4"
+                className="nav-link inline-flex min-h-12 items-center whitespace-nowrap rounded-full px-3 hover:bg-surface-muted sm:px-4"
               >
                 Games
               </Link>
@@ -26,7 +28,7 @@ export function SiteHeader() {
             <li>
               <Link
                 href="/play"
-                className="inline-flex min-h-12 items-center whitespace-nowrap rounded-full px-3 hover:bg-surface-muted sm:px-4"
+                className="nav-link inline-flex min-h-12 items-center whitespace-nowrap rounded-full px-3 hover:bg-surface-muted sm:px-4"
               >
                 Play
               </Link>
@@ -34,7 +36,7 @@ export function SiteHeader() {
             <li>
               <Link
                 href="/pricing"
-                className="inline-flex min-h-12 items-center whitespace-nowrap rounded-full px-3 hover:bg-surface-muted sm:px-4"
+                className="nav-link inline-flex min-h-12 items-center whitespace-nowrap rounded-full px-3 hover:bg-surface-muted sm:px-4"
               >
                 Premium
               </Link>
@@ -42,7 +44,7 @@ export function SiteHeader() {
             <li className="hidden md:block">
               <Link
                 href="/how-to-play"
-                className="inline-flex min-h-12 items-center whitespace-nowrap rounded-full px-3 hover:bg-surface-muted sm:px-4"
+                className="nav-link inline-flex min-h-12 items-center whitespace-nowrap rounded-full px-3 hover:bg-surface-muted sm:px-4"
               >
                 How to play
               </Link>
