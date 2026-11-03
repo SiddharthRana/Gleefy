@@ -15,3 +15,8 @@ onlyBuiltDependencies:
 # Telemetry postinstall shipped with swagger-ui; intentionally not run.
 ignoredBuiltDependencies:
   - '@scarf/scarf'
+
+# Patched versions of transitive dependencies of @sentry/node (GHSA-g3hv-75wg-m249, GHSA-3g3m-2fjr-6pw4).
+overrides:
+  minimatch@<11.0.1: ^11.0.1
+  glob@>=9.0.0 <=14.0.1: ^14.0.2

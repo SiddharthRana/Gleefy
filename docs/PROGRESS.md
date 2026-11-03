@@ -33,7 +33,18 @@
 - **Cold start on a low-end phone isn't measured**; the emulator runs on a fast Mac. Measure during the closed test.
 - **Analytics weren't checked against a real PostHog project** (payload shape follows PostHog's capture API docs; error events use the `$exception` properties).
 - Lighthouse ran locally against `wrangler pages dev`, not the deployed site. The pricing page's one best-practices point is a console error from the API not running locally.
-- Unfinished code (custom questions, Premium in the web player, API/web error reporting, a first-run analytics prompt) is listed in `docs/launch/checklist.md`.
+- Unfinished code at the Phase 5 checkpoint has since been built (see below); what remains is listed in `docs/launch/checklist.md`.
+
+## After Phase 5 — closing the known gaps (2026-11-03)
+
+| Area                      | What                                                                                                                                                                                            | Verified by                                                                                                                       |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Custom questions (§7)     | Write, edit, delete (with undo) your own Would You Rather and This or That questions; length limits, duplicate check, an English + Hinglish word filter; stored only on the phone, never shared | 9 tests: rules, filter (incl. look-alikes and false positives), write → play only yours, Quick play excludes them, relaunch, undo |
+| Premium in the web player | Signed-in subscribers can tick premium categories at `/play`; links with premium categories wait for the check, and leave them out (with a note) without Premium                                | 5 Playwright tests with a seeded session (e2e build points at a fake Supabase)                                                    |
+| Error reports (optional)  | Sentry for the API (5xx only, scrubbed) and website (loaded only with a DSN), ported from Weblume                                                                                               | 4 API tests (scrubbing, filter, SDK transport); e2e: no third-party requests without a DSN                                        |
+| Analytics prompt          | One-time card after a finished game in builds with analytics; either answer hides it for good                                                                                                   | 3 widget tests incl. accessibility guidelines                                                                                     |
+
+**Test totals now:** TypeScript 220 (API 99 incl. 25 database e2e), Flutter 114, web Playwright 155.
 
 ## Next
 

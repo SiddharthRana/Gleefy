@@ -36,6 +36,7 @@ export const guides: ModeGuide[] = [
       'Set a group size so nobody can vote twice.',
       'Skip any question that doesn’t suit your group. It won’t use up a round.',
       'Ask the minority to defend their pick before you reveal the next one.',
+      'Write a few questions about your own group in the app (My questions) and mix them in.',
     ],
     pack: 'would-you-rather',
     webPlayer: true,

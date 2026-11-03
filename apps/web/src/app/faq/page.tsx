@@ -39,6 +39,10 @@ const faqs: { q: string; a: React.ReactNode }[] = [
     ),
   },
   {
+    q: 'Can I add my own questions?',
+    a: 'Yes, in the Android app: Settings → My questions, or “Write your own questions” when you set up Would You Rather or This or That. They stay on your phone and are never uploaded or shared.',
+  },
+  {
     q: 'Does it work offline?',
     a: 'Yes. All the games and questions are on your phone. Premium checks in with our server now and then, but stays on for a few days without a connection.',
   },

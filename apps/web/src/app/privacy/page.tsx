@@ -16,6 +16,7 @@ export default function PrivacyPage() {
       <ul className="mt-3 list-disc space-y-2 pl-6">
         <li>Your settings (theme, big text, motion and vibration preferences).</li>
         <li>The game you are playing, so it survives the app closing, and your last game setup.</li>
+        <li>Player and team names, favourites, party packs and questions you write yourself.</li>
       </ul>
       <p className="mt-3">
         All of this stays on your phone. There is no advertising, and nothing you play is sent to us
@@ -38,9 +39,9 @@ export default function PrivacyPage() {
         <li>A random identifier for this install, the app version and the platform.</li>
       </ul>
       <p className="mt-3">
-        It never includes player names, questions, answers, your email or your account. The data
-        goes to our analytics provider, PostHog, hosted in the EU. Turning the setting off stops it
-        and forgets the random identifier.
+        It never includes player names, questions (including ones you write), answers, your email or
+        your account. The data goes to our analytics provider, PostHog, hosted in the EU. Turning
+        the setting off stops it and forgets the random identifier.
       </p>
       <h2 className="mt-10 font-display text-3xl font-semibold">Accounts and Premium</h2>
       <p className="mt-3">

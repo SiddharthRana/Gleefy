@@ -16,7 +16,7 @@ lib/
   game/
     random.dart           mulberry32 + seeded shuffle (port of packages/game-engine)
     wyr_engine.dart       Would You Rather reducer (port of packages/game-engine)
-  state/                  Riverpod providers: prefs, content, settings, session (persisted), premium
+  state/                  Riverpod providers: prefs, content (+ custom questions), settings, session (persisted), premium
   config/app_config.dart  --dart-define values (API, Supabase)
   account/                Purchaser sign-in (email code), API client, cached verified entitlement
   billing/                Google Play Billing gateway + purchase controller (verify before complete)

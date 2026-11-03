@@ -57,7 +57,7 @@ Shared repository variables (read by more than one job):
      SUPABASE_SECRET_KEY='sb_secret_…' \
      CORS_ORIGINS='https://mirthmix.example'
    ```
-   Add billing secrets from `apps/api/.env.example` when you set up payments. Non-secret settings (`NODE_ENV`, `PORT`, `TRUST_PROXY_HOPS=1`) are in `apps/api/fly.toml`. Point `api.<domain>` at the app with `fly certs add api.<domain>`.
+   Add billing secrets from `apps/api/.env.example` when you set up payments, and optionally `SENTRY_DSN` for API error reports. Non-secret settings (`NODE_ENV`, `PORT`, `TRUST_PROXY_HOPS=1`) are in `apps/api/fly.toml`. Point `api.<domain>` at the app with `fly certs add api.<domain>`.
 3. Create a deploy token: `fly tokens create deploy --app mirthmix-api`.
 4. `backend` environment:
 

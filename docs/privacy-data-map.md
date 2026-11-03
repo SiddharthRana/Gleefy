@@ -39,7 +39,14 @@ Payment details (cards, UPI) are entered only in Google Play's or the payment pa
 | Error reports: type, message (≤ 500 chars), stack (≤ 40 lines)                                                                          | PostHog (EU) | Same                                                              |
 | Random install id, app version, platform                                                                                                | PostHog (EU) | Id forgotten on the phone when sharing is turned off              |
 
-Never sent: player names, questions, answers, email, account id, location, contacts.
+Never sent: player names, questions (including custom ones), answers, email, account id, location, contacts.
+
+## Optional error reports from the API and website (only when a Sentry DSN is configured)
+
+| Data                                                                   | Service | Notes                                                                    |
+| ---------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------ |
+| API: unexpected (5xx) errors with the route pattern, method and status | Sentry  | No user, IP, cookies, auth or signature headers, bodies or query strings |
+| Website: JavaScript errors with the page path                          | Sentry  | No user, headers, query strings, console or click breadcrumbs            |
 
 ## Account deletion
 

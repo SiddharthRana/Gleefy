@@ -86,7 +86,15 @@ Run on a real Android phone (ideally a small, low-end one) before each release. 
 - [ ] Refund in Play Console: Premium turns off at the next app launch.
 - [ ] Delete account (type DELETE): signed out, Premium off; signing in again creates a fresh free account.
 - [ ] Website: sign in with the same email shows the Play subscription with "Manage in Google Play".
+- [ ] Website `/play` signed in with Premium: premium categories can be ticked and played; signed out they're locked.
 - [ ] Website (sandbox provider): subscribe → provider checkout → Account shows Premium; "Manage subscription" opens the portal; the app shows "manage it on the website" for this account.
+
+## My questions
+
+- [ ] Settings → My questions: add a Would You Rather and a This or That question; edit one; delete one and undo.
+- [ ] Rude words, identical options, duplicates and over-long options are refused with a clear message.
+- [ ] In setup, "My questions" appears but isn't ticked; tick only it and play: only your questions appear.
+- [ ] Quick play never shows your questions. Kill the app mid-game: Resume still shows them.
 
 ## Usage stats (builds with `POSTHOG_KEY`)
 
@@ -94,6 +102,7 @@ Run on a real Android phone (ideally a small, low-end one) before each release. 
 - [ ] With it off, PostHog's live events show nothing from the phone.
 - [ ] Turned on: play a game; `app_opened`, `game_started` and `game_completed` arrive with mode and rounds, and no names or questions.
 - [ ] Turned off again: events stop.
+- [ ] On a fresh install, after the first finished game the results screen asks once; either answer hides it for good.
 
 ## Website
 

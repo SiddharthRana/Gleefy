@@ -9,7 +9,7 @@ Everything between today and a production release, in order. Code work is done u
 - [ ] Set up a support email address (shown on `/contact` and in the Play listing).
 - [ ] Google Play developer account (one-time $25 fee); identity verification.
 - [ ] Confirm Paddle or Dodo Payments accepts you as a seller (`docs/payments-setup.md` §0), or launch with Google Play billing only (`WEB_PAYMENT_PROVIDER=none`).
-- [ ] Supabase project (Free while testing; Pro before taking real payments), Fly.io app, Cloudflare Pages project, optional PostHog project (EU) with a retention period set.
+- [ ] Supabase project (Free while testing; Pro before taking real payments), Fly.io app, Cloudflare Pages project, optional PostHog project (EU) with a retention period set, optional Sentry project (EU region) for the API and website.
 
 ## 2. Content (owner + a second person)
 
@@ -53,12 +53,11 @@ Everything between today and a production release, in order. Code work is done u
 
 ## Unfinished work (code)
 
-Known gaps, deliberately left for after launch or for an owner decision:
+Known gaps, deliberately left for later or for an owner decision:
 
-- **Custom questions** (BUILD_PROMPT §7 describes on-device custom questions with a profanity filter) are not built. Nothing in the app lets people add their own questions yet.
-- **The web player is free-only**: web subscribers get Premium in the app, but `/play` doesn't unlock premium categories.
-- **Error reporting covers the app only.** The API logs errors on Fly.io; the website has none. Sentry for the API (as in Weblume) is a small addition if needed.
-- **Analytics ask happens only in Settings.** There is no first-run prompt, so few people may opt in. Consider one gentle prompt after a finished game.
 - **No iOS release** and no App Store payments (out of scope).
 - **Cold start on a low-end phone** isn't measured: on a Pixel 10 Pro XL emulator on a fast Mac, cold start was 0.7–0.8 s (1.9 s on the very first launch). Measure on a real budget phone during the closed test (budget: < 2 s).
 - **Trivia countdown isn't persisted**: after the app is killed mid-question, that question's timer restarts.
+- **Custom questions can't be backed up or moved** to another phone (by design they never leave the device), and only the two-choice games support them.
+
+Built since the Phase 5 checkpoint: custom questions, Premium categories in the web player, optional Sentry error reports for the API and website, and a one-time analytics prompt after a finished game.
