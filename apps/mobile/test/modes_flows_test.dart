@@ -52,10 +52,15 @@ void main() {
     final h = await pumpApp(tester);
     await tester.tap(find.byTooltip('Players and teams'));
     await tester.pumpAndSettle();
-    for (final name in ['Asha', 'Ben']) {
-      await tester.enterText(find.byType(TextField), name);
-      await tapText(tester, 'Add');
-    }
+    expect(find.text('No names yet'), findsOneWidget);
+    // Add with the button, then from the keyboard.
+    await tester.enterText(find.byType(TextField), 'Asha');
+    await tester.tap(find.widgetWithText(FilledButton, 'Add'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), 'Ben');
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pumpAndSettle();
+    expect(find.text('2 of 12'), findsOneWidget);
     expect(h.container.read(lineupProvider), ['Asha', 'Ben']);
     await tester.tap(find.byTooltip('Remove Asha'));
     await tester.pumpAndSettle();

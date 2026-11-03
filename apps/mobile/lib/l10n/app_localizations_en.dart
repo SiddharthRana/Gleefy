@@ -890,4 +890,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get usagePromptNo => 'No thanks';
+
+  @override
+  String get playersEmpty => 'No names yet';
+
+  @override
+  String get playersEmptyBody => 'Add players to take turns, or teams like “Team Chai” and “Team Coffee”.';
+
+  @override
+  String playersCount(int count, int max) {
+    return '$count of $max';
+  }
 }

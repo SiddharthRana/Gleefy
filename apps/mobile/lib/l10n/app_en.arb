@@ -627,5 +627,18 @@
   "setupWriteOwn": "Write your own questions",
   "usagePromptTitle": "Help make MirthMix better?",
   "usagePromptYes": "Share anonymous stats",
-  "usagePromptNo": "No thanks"
+  "usagePromptNo": "No thanks",
+  "playersEmpty": "No names yet",
+  "playersEmptyBody": "Add players to take turns, or teams like “Team Chai” and “Team Coffee”.",
+  "playersCount": "{count} of {max}",
+  "@playersCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  }
 }
