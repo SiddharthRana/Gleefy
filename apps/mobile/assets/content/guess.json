@@ -42,6 +42,22 @@
       "tier": "premium",
       "ageRating": "all",
       "region": "global"
+    },
+    {
+      "id": "home",
+      "name": "At Home",
+      "description": "Things you’d find around the house.",
+      "tier": "premium",
+      "ageRating": "all",
+      "region": "global"
+    },
+    {
+      "id": "sports-games",
+      "name": "Sports & Games",
+      "description": "Ways to play, from the field to the board.",
+      "tier": "premium",
+      "ageRating": "all",
+      "region": "global"
     }
   ],
   "items": [
@@ -459,7 +475,11 @@
       "id": "gta-jobs-002",
       "category": "jobs",
       "answer": "Pilot",
-      "clues": ["My office is above the clouds.", "I talk to air traffic control.", "I fly planes."]
+      "clues": [
+        "My office is above the clouds.",
+        "I talk to air traffic control.",
+        "I fly planes."
+      ]
     },
     {
       "id": "gta-jobs-003",
@@ -499,6 +519,346 @@
         "I tell you to open wide.",
         "I use a tiny mirror and a drill.",
         "I look after your teeth."
+      ]
+    },
+    {
+      "id": "gta-everyday-011",
+      "category": "everyday",
+      "answer": "Refrigerator",
+      "clues": [
+        "I hum quietly all day and all night.",
+        "Open my door and a little light comes on.",
+        "I keep your food cold."
+      ]
+    },
+    {
+      "id": "gta-everyday-012",
+      "category": "everyday",
+      "answer": "Scissors",
+      "clues": [
+        "I have two blades, but I’m not a sword.",
+        "Children use a version of me with round tips at school.",
+        "I cut paper."
+      ]
+    },
+    {
+      "id": "gta-animals-011",
+      "category": "animals",
+      "answer": "Tortoise",
+      "clues": [
+        "Some of us live for more than a hundred years.",
+        "I carry my home wherever I go.",
+        "I’m slow, I live on land and I have a hard shell."
+      ]
+    },
+    {
+      "id": "gta-animals-012",
+      "category": "animals",
+      "answer": "Zebra",
+      "clues": [
+        "No two of us have the same pattern.",
+        "I’m a wild relative of the horse on the African plains.",
+        "I have black and white stripes."
+      ]
+    },
+    {
+      "id": "gta-places-011",
+      "category": "places",
+      "answer": "Statue of Liberty",
+      "clues": [
+        "I was a gift from France.",
+        "I hold a torch high above a harbour.",
+        "I’m a giant green statue in New York."
+      ]
+    },
+    {
+      "id": "gta-places-012",
+      "category": "places",
+      "answer": "Mount Fuji",
+      "clues": [
+        "I’m a volcano that last erupted in 1707.",
+        "I’m often painted with snow on my cone.",
+        "I’m Japan’s tallest mountain."
+      ]
+    },
+    {
+      "id": "gta-desi-food-011",
+      "category": "desi-food",
+      "answer": "Vada pav",
+      "clues": [
+        "People call me the city’s own burger.",
+        "A spicy potato fritter sits inside a soft bun.",
+        "I’m Mumbai’s favourite street snack."
+      ]
+    },
+    {
+      "id": "gta-desi-food-012",
+      "category": "desi-food",
+      "answer": "Khichdi",
+      "clues": [
+        "I’m what you’re given when you’re feeling unwell.",
+        "I’m rice and lentils cooked together until soft.",
+        "I’m a simple one-pot dish, often eaten with ghee."
+      ]
+    },
+    {
+      "id": "gta-jobs-007",
+      "category": "jobs",
+      "answer": "Farmer",
+      "clues": [
+        "My working day often starts before sunrise.",
+        "I depend on the rain and the seasons.",
+        "I grow crops and raise animals."
+      ]
+    },
+    {
+      "id": "gta-jobs-008",
+      "category": "jobs",
+      "answer": "Plumber",
+      "clues": [
+        "I’m called when something won’t stop dripping.",
+        "I carry a wrench and know my way around pipes.",
+        "I fix leaks and blocked drains."
+      ]
+    },
+    {
+      "id": "gta-jobs-009",
+      "category": "jobs",
+      "answer": "Photographer",
+      "clues": [
+        "Good light is everything to me.",
+        "I often ask people to say \"cheese\".",
+        "I take pictures for a living."
+      ]
+    },
+    {
+      "id": "gta-jobs-010",
+      "category": "jobs",
+      "answer": "Journalist",
+      "clues": [
+        "I always check my sources.",
+        "I ask questions and write down the answers.",
+        "I report the news."
+      ]
+    },
+    {
+      "id": "gta-jobs-011",
+      "category": "jobs",
+      "answer": "Architect",
+      "clues": [
+        "I think about space, light and how people move through it.",
+        "My drawings come before the bricks.",
+        "I design buildings."
+      ]
+    },
+    {
+      "id": "gta-jobs-012",
+      "category": "jobs",
+      "answer": "Tailor",
+      "clues": [
+        "I always carry a measuring tape.",
+        "I work with needles, thread and patterns.",
+        "I make and alter clothes."
+      ]
+    },
+    {
+      "id": "gta-home-001",
+      "category": "home",
+      "answer": "Kettle",
+      "clues": [
+        "I click or whistle when I’m done.",
+        "I’m busiest at teatime.",
+        "I boil water."
+      ]
+    },
+    {
+      "id": "gta-home-002",
+      "category": "home",
+      "answer": "Doorbell",
+      "clues": [
+        "I live right next to the front door.",
+        "Press my button and someone inside hears me.",
+        "I ring when a visitor arrives."
+      ]
+    },
+    {
+      "id": "gta-home-003",
+      "category": "home",
+      "answer": "Sofa",
+      "clues": [
+        "Coins and remote controls get lost down my sides.",
+        "Several people can sit on me at once.",
+        "I’m the big comfy seat in the living room."
+      ]
+    },
+    {
+      "id": "gta-home-004",
+      "category": "home",
+      "answer": "Washing machine",
+      "clues": [
+        "I spin very fast.",
+        "Socks sometimes go missing inside me.",
+        "I clean your clothes."
+      ]
+    },
+    {
+      "id": "gta-home-005",
+      "category": "home",
+      "answer": "Ceiling fan",
+      "clues": [
+        "I’m up high and go round and round.",
+        "I’m a lifesaver in an Indian summer.",
+        "I hang from above and cool the whole room."
+      ]
+    },
+    {
+      "id": "gta-home-006",
+      "category": "home",
+      "answer": "Pressure cooker",
+      "clues": [
+        "I let off steam with a loud whistle.",
+        "My lid locks tight while I work.",
+        "I cook dal and rice in a hurry."
+      ]
+    },
+    {
+      "id": "gta-home-007",
+      "category": "home",
+      "answer": "Bookshelf",
+      "clues": [
+        "I’m happiest when I’m full of stories.",
+        "I’m made of planks, one above another.",
+        "I hold your books."
+      ]
+    },
+    {
+      "id": "gta-home-008",
+      "category": "home",
+      "answer": "Mop",
+      "clues": [
+        "I’m always wet at work.",
+        "I get pushed back and forth across the floor.",
+        "I clean floors, with a bucket nearby."
+      ]
+    },
+    {
+      "id": "gta-home-009",
+      "category": "home",
+      "answer": "Light bulb",
+      "clues": [
+        "I get hot, unless I’m an LED.",
+        "I screw or click into a holder.",
+        "Flip a switch and I light up the room."
+      ]
+    },
+    {
+      "id": "gta-home-010",
+      "category": "home",
+      "answer": "Doormat",
+      "clues": [
+        "People walk all over me and I don’t mind.",
+        "I sometimes say \"Welcome\".",
+        "You wipe your shoes on me at the door."
+      ]
+    },
+    {
+      "id": "gta-sports-games-001",
+      "category": "sports-games",
+      "answer": "Chess",
+      "clues": [
+        "My oldest ancestor was played in India.",
+        "I have kings, queens and castles.",
+        "I’m played on a board of 64 squares."
+      ]
+    },
+    {
+      "id": "gta-sports-games-002",
+      "category": "sports-games",
+      "answer": "Cricket",
+      "clues": [
+        "A match can last five days.",
+        "I have bowlers, batters and wickets.",
+        "I’m India’s favourite bat-and-ball sport."
+      ]
+    },
+    {
+      "id": "gta-sports-games-003",
+      "category": "sports-games",
+      "answer": "Badminton",
+      "clues": [
+        "My \"birdie\" can’t fly far on its own.",
+        "I’m played with light rackets over a high net.",
+        "I use a shuttlecock."
+      ]
+    },
+    {
+      "id": "gta-sports-games-004",
+      "category": "sports-games",
+      "answer": "Carrom",
+      "clues": [
+        "I’m usually played on a square wooden board at home.",
+        "You flick a striker to pocket your pieces.",
+        "I have a red queen and black and white coins."
+      ]
+    },
+    {
+      "id": "gta-sports-games-005",
+      "category": "sports-games",
+      "answer": "Kabaddi",
+      "clues": [
+        "You must keep chanting the same word while you raid.",
+        "One raider goes into the other team’s half.",
+        "I’m a tag-and-tackle sport from India."
+      ]
+    },
+    {
+      "id": "gta-sports-games-006",
+      "category": "sports-games",
+      "answer": "Swimming",
+      "clues": [
+        "You’ll need goggles and maybe a cap.",
+        "Freestyle, backstroke and butterfly are my styles.",
+        "I happen in a pool."
+      ]
+    },
+    {
+      "id": "gta-sports-games-007",
+      "category": "sports-games",
+      "answer": "Snakes and ladders",
+      "clues": [
+        "Old versions of me taught lessons about good and bad deeds.",
+        "A lucky roll can take you way up.",
+        "Land on the wrong square and you slide back down."
+      ]
+    },
+    {
+      "id": "gta-sports-games-008",
+      "category": "sports-games",
+      "answer": "Hide and seek",
+      "clues": [
+        "Someone counts to a hundred with their eyes shut.",
+        "Behind the curtain is never a good spot.",
+        "One person looks for everyone else."
+      ]
+    },
+    {
+      "id": "gta-sports-games-009",
+      "category": "sports-games",
+      "answer": "Marathon",
+      "clues": [
+        "My name comes from a legend about a Greek messenger.",
+        "I’m just over 42 kilometres long.",
+        "I’m a very long running race."
+      ]
+    },
+    {
+      "id": "gta-sports-games-010",
+      "category": "sports-games",
+      "answer": "Table tennis",
+      "clues": [
+        "My ball is tiny, light and hollow.",
+        "Players stand at each end of a small table with a net.",
+        "I’m also called ping-pong."
       ]
     }
   ]

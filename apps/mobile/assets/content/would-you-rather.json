@@ -893,6 +893,66 @@
       "category": "time-travel",
       "a": "Have a time machine that only goes back",
       "b": "Have one that only goes forward"
+    },
+    {
+      "id": "wyr-time-travel-021",
+      "category": "time-travel",
+      "a": "Watch any day in history as an invisible guest",
+      "b": "Watch any day of your own life again"
+    },
+    {
+      "id": "wyr-time-travel-022",
+      "category": "time-travel",
+      "a": "Live in a medieval castle for a month",
+      "b": "Live on a space station for a month"
+    },
+    {
+      "id": "wyr-time-travel-023",
+      "category": "time-travel",
+      "a": "Learn the truth behind one historical mystery",
+      "b": "Learn one secret about the future"
+    },
+    {
+      "id": "wyr-time-travel-024",
+      "category": "time-travel",
+      "a": "Visit the future but forget it all when you return",
+      "b": "Visit the past but be unable to speak"
+    },
+    {
+      "id": "wyr-time-travel-025",
+      "category": "time-travel",
+      "a": "Go back in time knowing everything you know now",
+      "b": "Go forward in time with only the skills you have now"
+    },
+    {
+      "id": "wyr-time-travel-026",
+      "category": "time-travel",
+      "a": "Have dinner in ancient Rome",
+      "b": "Have dinner on Mars in the year 2300"
+    },
+    {
+      "id": "wyr-time-travel-027",
+      "category": "time-travel",
+      "a": "Hear a famous speech from history delivered live",
+      "b": "Hear your favourite artist’s very first concert"
+    },
+    {
+      "id": "wyr-time-travel-028",
+      "category": "time-travel",
+      "a": "Undo the last argument you had",
+      "b": "Relive your happiest hour"
+    },
+    {
+      "id": "wyr-time-travel-029",
+      "category": "time-travel",
+      "a": "Spend a year in your city in 1950",
+      "b": "Spend a year in your city in 2100"
+    },
+    {
+      "id": "wyr-time-travel-030",
+      "category": "time-travel",
+      "a": "Meet the person who invented writing",
+      "b": "Meet the first person to live on another planet"
     }
   ]
 }
