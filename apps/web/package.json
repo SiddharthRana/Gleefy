@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:e2e": "NEXT_PUBLIC_SUPABASE_URL=http://supabase.test NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_e2e next build",
     "start": "wrangler pages dev out",
     "lint": "eslint .",
     "typecheck": "next typegen && tsc --noEmit",

@@ -55,6 +55,9 @@ jobs:
         run: pnpm --filter @mirthmix/api --filter @mirthmix/web run build
       - name: Install Playwright browser
         run: pnpm --filter @mirthmix/web exec playwright install --with-deps chromium
+      # Same site, built with a fake Supabase address so tests can sign in with a seeded session.
+      - name: Build web for end-to-end tests
+        run: pnpm --filter @mirthmix/web run build:e2e
       - name: Web end-to-end and accessibility tests
         run: pnpm --filter @mirthmix/web run test:e2e
       - name: Dependency audit (high and critical)
