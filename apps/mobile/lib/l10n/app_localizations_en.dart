@@ -881,4 +881,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get setupWriteOwn => 'Write your own questions';
+
+  @override
+  String get usagePromptTitle => 'Help make MirthMix better?';
+
+  @override
+  String get usagePromptYes => 'Share anonymous stats';
+
+  @override
+  String get usagePromptNo => 'No thanks';
 }

@@ -624,5 +624,8 @@
       }
     }
   },
-  "setupWriteOwn": "Write your own questions"
+  "setupWriteOwn": "Write your own questions",
+  "usagePromptTitle": "Help make MirthMix better?",
+  "usagePromptYes": "Share anonymous stats",
+  "usagePromptNo": "No thanks"
 }

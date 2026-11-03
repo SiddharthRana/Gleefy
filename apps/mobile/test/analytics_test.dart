@@ -127,4 +127,54 @@ void main() {
     expect(errors, hasLength(20));
     expect((props(errors.first)[r'$exception_message']! as String).length, 500);
   });
+
+  group('after a finished game', () {
+    Future<Harness> finishGame(WidgetTester tester, {AnalyticsSink? sink, Map<String, Object> prefs = const {}}) async {
+      final h = await pumpApp(
+        tester,
+        content: tinyContent(casual: 6),
+        initialPrefs: prefs,
+        overrides: [if (sink != null) analyticsSinkProvider.overrideWithValue(sink)],
+      );
+      playShortGame(h);
+      h.container.read(routerProvider).go('/play/would-you-rather/results');
+      await tester.pumpAndSettle();
+      return h;
+    }
+
+    testWidgets('asks once, and "Share" turns sharing on', (tester) async {
+      final sink = FakeSink();
+      final h = await finishGame(tester, sink: sink);
+      expect(find.text('Help make MirthMix better?'), findsOneWidget);
+      expect(sink.events, isEmpty); // nothing before the answer
+      await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+      await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
+      await expectLater(tester, meetsGuideline(textContrastGuideline));
+      await tester.tap(find.text('Share anonymous stats'));
+      await tester.pumpAndSettle();
+      expect(find.text('Help make MirthMix better?'), findsNothing);
+      expect(h.prefs.getBool('settings.shareUsage'), isTrue);
+      expect(h.prefs.getBool('analytics.asked'), isTrue);
+    });
+
+    testWidgets('"No thanks" keeps sharing off and never asks again', (tester) async {
+      final sink = FakeSink();
+      final h = await finishGame(tester, sink: sink);
+      await tester.tap(find.text('No thanks'));
+      await tester.pumpAndSettle();
+      expect(h.prefs.getBool('settings.shareUsage'), isNot(isTrue));
+      playShortGame(h);
+      h.container.read(routerProvider).go('/');
+      await tester.pumpAndSettle();
+      h.container.read(routerProvider).go('/play/would-you-rather/results');
+      await tester.pumpAndSettle();
+      expect(find.text('Help make MirthMix better?'), findsNothing);
+      expect(sink.events, isEmpty);
+    });
+
+    testWidgets('never asks in a build without analytics', (tester) async {
+      await finishGame(tester);
+      expect(find.text('Help make MirthMix better?'), findsNothing);
+    });
+  });
 }

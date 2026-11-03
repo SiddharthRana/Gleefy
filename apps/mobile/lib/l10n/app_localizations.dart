@@ -1596,6 +1596,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Write your own questions'**
   String get setupWriteOwn;
+
+  /// No description provided for @usagePromptTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Help make MirthMix better?'**
+  String get usagePromptTitle;
+
+  /// No description provided for @usagePromptYes.
+  ///
+  /// In en, this message translates to:
+  /// **'Share anonymous stats'**
+  String get usagePromptYes;
+
+  /// No description provided for @usagePromptNo.
+  ///
+  /// In en, this message translates to:
+  /// **'No thanks'**
+  String get usagePromptNo;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
