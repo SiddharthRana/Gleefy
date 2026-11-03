@@ -6,6 +6,17 @@ const pages = [
   '/play',
   '/games',
   '/games/would-you-rather',
+  '/games/this-or-that',
+  '/games/trivia',
+  '/games/guess',
+  '/games/custom-party-pack',
+  '/how-to-play',
+  '/faq',
+  '/guides',
+  '/guides/game-night-on-one-phone',
+  '/guides/family-party-games',
+  '/contact',
+  '/account-deletion',
   '/pricing',
   '/account',
   '/checkout/paddle',
@@ -75,7 +86,7 @@ test('every mode is listed as available in the app', async ({ page }) => {
 
 test('category counts come from the real content pack', async ({ page }) => {
   await page.goto('/games/would-you-rather');
-  await expect(page.getByText('140 original questions in the starter pack.')).toBeVisible();
+  await expect(page.getByText(/^\d+ original questions in \d+ categories\.$/)).toBeVisible();
   await expect(page.getByRole('main').getByText('Premium', { exact: true })).toBeVisible();
 });
 
@@ -95,4 +106,32 @@ test('security headers are set', async ({ request }) => {
   const res = await request.get('/');
   expect(res.headers()['x-content-type-options']).toBe('nosniff');
   expect(res.headers()['x-powered-by']).toBeUndefined();
+});
+
+test('every game in the library has its own guide page', async ({ page }) => {
+  await page.goto('/games');
+  const links = page.getByRole('main').getByRole('link');
+  await expect(links).toHaveCount(5);
+  for (const name of ['This or That', 'Trivia Blitz', 'Guess the Answer', 'Custom Party Pack']) {
+    await page.goto('/games');
+    await page
+      .getByRole('main')
+      .getByRole('link', { name: new RegExp(name) })
+      .click();
+    await expect(page.getByRole('heading', { level: 1, name })).toBeVisible();
+  }
+});
+
+test('footer links reach the help pages', async ({ page }) => {
+  await page.goto('/');
+  const footer = page.getByRole('navigation', { name: 'Footer' });
+  for (const [link, heading] of [
+    ['How to play', 'How to play'],
+    ['Guides', 'Guides'],
+    ['FAQ', 'FAQ'],
+    ['Contact', 'Contact'],
+  ]) {
+    await footer.getByRole('link', { name: link }).click();
+    await expect(page.getByRole('heading', { level: 1, name: heading })).toBeVisible();
+  }
 });

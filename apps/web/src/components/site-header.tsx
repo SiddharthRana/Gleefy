@@ -41,7 +41,7 @@ export function SiteHeader() {
             </li>
             <li className="hidden md:block">
               <Link
-                href="/#how-it-works"
+                href="/how-to-play"
                 className="inline-flex min-h-12 items-center whitespace-nowrap rounded-full px-3 hover:bg-surface-muted sm:px-4"
               >
                 How to play

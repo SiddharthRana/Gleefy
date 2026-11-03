@@ -1,3 +1,4 @@
+import createMDX from '@next/mdx';
 import type { NextConfig } from 'next';
 
 // Every page is static (the web player runs in the browser), so the site is exported as plain files
@@ -5,6 +6,7 @@ import type { NextConfig } from 'next';
 // `headers()` doesn't apply to a static export.
 const nextConfig: NextConfig = {
   output: 'export',
+  pageExtensions: ['ts', 'tsx', 'md', 'mdx'],
   reactCompiler: true,
   typedRoutes: true,
   poweredByHeader: false,
@@ -16,4 +18,7 @@ const nextConfig: NextConfig = {
   ],
 };
 
-export default nextConfig;
+// Guides are MDX pages under src/app/guides.
+const withMDX = createMDX({});
+
+export default withMDX(nextConfig);

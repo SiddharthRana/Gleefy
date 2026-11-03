@@ -13,6 +13,29 @@ export function SiteFooter() {
               </Link>
             </li>
             <li>
+              <Link
+                href="/how-to-play"
+                className="inline-flex min-h-12 items-center hover:text-text"
+              >
+                How to play
+              </Link>
+            </li>
+            <li>
+              <Link href="/guides" className="inline-flex min-h-12 items-center hover:text-text">
+                Guides
+              </Link>
+            </li>
+            <li>
+              <Link href="/faq" className="inline-flex min-h-12 items-center hover:text-text">
+                FAQ
+              </Link>
+            </li>
+            <li>
+              <Link href="/contact" className="inline-flex min-h-12 items-center hover:text-text">
+                Contact
+              </Link>
+            </li>
+            <li>
               <Link href="/account" className="inline-flex min-h-12 items-center hover:text-text">
                 Account
               </Link>

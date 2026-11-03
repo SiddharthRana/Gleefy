@@ -1470,6 +1470,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Premium'**
   String get settingsPremium;
+
+  /// No description provided for @signInAdult.
+  ///
+  /// In en, this message translates to:
+  /// **'I’m 18 or older'**
+  String get signInAdult;
+
+  /// No description provided for @signInAdultRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Accounts and purchases are for people aged 18 or over. You can keep playing everything free without an account.'**
+  String get signInAdultRequired;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

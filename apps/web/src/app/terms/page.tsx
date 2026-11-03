@@ -21,11 +21,32 @@ export default function TermsPage() {
       <p className="mt-3">
         Questions are original to MirthMix and provided for entertainment. They are not advice.
       </p>
-      <h2 className="mt-10 font-display text-3xl font-semibold">Subscriptions</h2>
+      <h2 className="mt-10 font-display text-3xl font-semibold">Accounts</h2>
       <p className="mt-3">
-        Paid features are not available yet. These terms will describe billing, renewal,
-        cancellation and refunds before any purchase is offered.
+        Playing never needs an account. An account is only for buying or restoring Premium, and is
+        for people aged 18 or over. You can delete it at any time (see{' '}
+        <a href="/account-deletion" className="font-bold text-primary underline">
+          Delete your account
+        </a>
+        ).
       </p>
+      <h2 className="mt-10 font-display text-3xl font-semibold">Premium subscriptions</h2>
+      <ul className="mt-3 list-disc space-y-2 pl-6">
+        <li>
+          Premium is a monthly or yearly subscription. In the Android app it is sold and billed by
+          Google Play; on the website by our payment partner, who is the seller of record and
+          handles tax and invoices.
+        </li>
+        <li>
+          Subscriptions renew automatically until cancelled. Cancel in Google Play or with “Manage
+          subscription” on your Account page; Premium stays on until the end of the paid period.
+        </li>
+        <li>
+          Refunds follow Google Play’s policy for app purchases, and our payment partner’s policy
+          for website purchases. Prices are shown before you pay and may vary by country.
+        </li>
+        <li>Free play stays free: Premium only adds extra categories.</li>
+      </ul>
     </article>
   );
 }

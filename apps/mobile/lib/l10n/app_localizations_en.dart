@@ -811,4 +811,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsPremium => 'Premium';
+
+  @override
+  String get signInAdult => 'I’m 18 or older';
+
+  @override
+  String get signInAdultRequired =>
+      'Accounts and purchases are for people aged 18 or over. You can keep playing everything free without an account.';
 }
