@@ -26,6 +26,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { freeCategories, modeNames, packs, playableCategories } from '@/lib/packs';
 import { usePremium } from '@/lib/premium';
+import { Confetti } from '@/components/confetti';
 import { primary, secondary } from '@/lib/ui';
 
 /** Setup when there's no `?c=`, otherwise the game the link describes. */
@@ -83,7 +84,7 @@ export function Setup() {
           {(Object.keys(modeNames) as ShareMode[]).map((m) => (
             <label
               key={m}
-              className="flex min-h-12 items-center gap-3 rounded-card border border-border bg-surface px-4"
+              className="tile flex min-h-12 items-center gap-3 rounded-card border-2 border-border bg-surface px-4"
             >
               <input
                 type="radio"
@@ -103,7 +104,7 @@ export function Setup() {
           {packs[mode].categories.map((c) => (
             <label
               key={c.id}
-              className="flex min-h-12 items-center gap-3 rounded-card border border-border bg-surface px-4"
+              className="tile flex min-h-12 items-center gap-3 rounded-card border-2 border-border bg-surface px-4"
             >
               <input
                 type="checkbox"
@@ -140,7 +141,7 @@ export function Setup() {
           {[5, 10, 15, 20].map((r) => (
             <label
               key={r}
-              className="flex min-h-12 items-center gap-2 rounded-full border border-border bg-surface px-5"
+              className="tile flex min-h-12 items-center gap-2 rounded-full border-2 border-border bg-surface px-5"
             >
               <input
                 type="radio"
@@ -308,8 +309,9 @@ function ChoiceView({
     return (
       <section
         aria-labelledby="results"
-        className="rounded-panel border border-border bg-surface p-6"
+        className="pop-big relative rounded-panel border border-border bg-surface p-6"
       >
+        <Confetti />
         <h2 id="results" className="font-display text-3xl font-semibold">
           Results
         </h2>
@@ -328,7 +330,7 @@ function ChoiceView({
   const pct = (n: number) => (cur.votes.length ? Math.round((100 * n) / cur.votes.length) : 0);
   const rapid = mode === 'this-or-that';
   return (
-    <section aria-label="Question" className="grid gap-4">
+    <section key={cur.questionId} aria-label="Question" className="pop grid gap-4">
       <h2 className="text-center font-display text-3xl font-semibold">
         {rapid ? 'This or that?' : 'Would you rather…'}
       </h2>
@@ -344,10 +346,20 @@ function ChoiceView({
             const voted = reduceWyr(s, { type: 'vote', side });
             set(rapid ? reduceWyr(voted, { type: 'reveal' }) : voted);
           }}
-          className={`flex min-h-24 items-center justify-between gap-4 rounded-panel px-6 py-4 text-left font-display text-2xl font-semibold text-on-option ${side === 'a' ? 'bg-option-a' : 'bg-option-b'}`}
+          style={{ '--tilt': side === 'a' ? '-0.5deg' : '0.5deg' } as React.CSSProperties}
+          className={`choice flex min-h-24 items-center justify-between gap-4 rounded-panel px-6 py-4 text-left font-display text-2xl font-semibold text-on-option ${side === 'a' ? 'bg-option-a' : 'bg-option-b'}`}
         >
-          <span>{q[side]}</span>
-          <span className="rounded-full bg-surface px-3 py-1 text-lg text-text">
+          {/* After the reveal, a bar fills to each side's share of the votes. */}
+          <span
+            className="fill"
+            style={{ width: cur.revealed ? `${pct(side === 'a' ? a : b)}%` : '0%' }}
+          />
+          <span className="relative">{q[side]}</span>
+          {/* Keyed by the number, so it bumps every time a vote lands or the split appears. */}
+          <span
+            key={cur.revealed ? `pct-${side}` : `${side}-${side === 'a' ? a : b}`}
+            className="bump relative rounded-full bg-surface px-3 py-1 text-lg text-text"
+          >
             {cur.revealed ? `${pct(side === 'a' ? a : b)}%` : side === 'a' ? a : b}
           </span>
         </button>
@@ -396,8 +408,9 @@ function TriviaView({ s, set }: { s: TriviaState; set: (s: TriviaState) => void 
     return (
       <section
         aria-labelledby="results"
-        className="rounded-panel border border-border bg-surface p-6"
+        className="pop-big relative rounded-panel border border-border bg-surface p-6"
       >
+        <Confetti />
         <h2 id="results" className="font-display text-3xl font-semibold">
           Results
         </h2>
@@ -410,7 +423,7 @@ function TriviaView({ s, set }: { s: TriviaState; set: (s: TriviaState) => void 
   const q = packs.trivia.items.find((i) => i.id === cur!.questionId)!;
   const answered = cur!.picked !== null || cur!.timedOut;
   return (
-    <section aria-label="Question" className="grid gap-3">
+    <section key={cur!.questionId} aria-label="Question" className="pop grid gap-3">
       <h2 className="text-center font-display text-3xl font-semibold">{q.question}</h2>
       {cur!.choiceOrder.map((index, pos) => {
         const mark = !answered
@@ -434,9 +447,11 @@ function TriviaView({ s, set }: { s: TriviaState; set: (s: TriviaState) => void 
                 }),
               )
             }
-            className={`min-h-14 rounded-card border-2 bg-surface px-5 text-left text-lg font-bold ${
-              answered && index === cur!.answer ? 'border-[var(--mm-success)]' : 'border-border'
-            }`}
+            className={`press min-h-14 rounded-card border-2 bg-surface px-5 text-left text-lg font-bold ${
+              answered && index === cur!.answer
+                ? 'correct border-[var(--mm-success)]'
+                : 'border-border'
+            } ${answered && index === cur!.picked && index !== cur!.answer ? 'wrong' : ''}`}
           >
             {'ABCD'[pos]}. {q.choices[index]}
             {mark}
@@ -445,7 +460,7 @@ function TriviaView({ s, set }: { s: TriviaState; set: (s: TriviaState) => void 
       })}
       {answered && (
         <div aria-live="polite" className="grid gap-2">
-          <p className="text-xl font-bold">
+          <p className="pop-big text-xl font-bold">
             {cur!.picked === cur!.answer
               ? `Correct! +${cur!.points}`
               : `Not quite. Answer: ${q.choices[cur!.answer]}`}
@@ -483,8 +498,9 @@ function GuessView({ s, set }: { s: GuessState; set: (s: GuessState) => void }) 
     return (
       <section
         aria-labelledby="results"
-        className="rounded-panel border border-border bg-surface p-6"
+        className="pop-big relative rounded-panel border border-border bg-surface p-6"
       >
+        <Confetti />
         <h2 id="results" className="font-display text-3xl font-semibold">
           Results
         </h2>
@@ -498,18 +514,23 @@ function GuessView({ s, set }: { s: GuessState; set: (s: GuessState) => void }) 
   const q = packs.guess.items.find((i) => i.id === cur.questionId)!;
   const act = (type: 'clue' | 'got' | 'reveal' | 'next' | 'skip') => set(reduceGuess(s, { type }));
   return (
-    <section aria-label="Card" className="grid gap-3">
+    <section key={cur.questionId} aria-label="Card" className="pop relative grid gap-3">
+      {cur.outcome === 'got' && <Confetti pieces={24} seed={cur.cluesShown} />}
       <div className="rounded-card bg-surface-muted p-4 text-center">
         <p className="text-sm">Reader only — the answer is</p>
         <p className="font-display text-3xl font-semibold">{q.answer}</p>
       </div>
       {q.clues.slice(0, cur.cluesShown).map((clue, i) => (
-        <div key={clue} className="rounded-card border border-border bg-surface p-4">
+        <div key={clue} className="flip-in rounded-card border border-border bg-surface p-4">
           <p className="text-sm font-bold text-muted">Clue {i + 1}</p>
           <p className="text-xl">{clue}</p>
         </div>
       ))}
-      <p aria-live="polite" className="font-bold">
+      <p
+        key={`${cur.questionId}-${cur.outcome ?? cur.cluesShown}`}
+        aria-live="polite"
+        className={`font-bold ${cur.outcome === 'got' ? 'pop-big text-2xl' : 'pop'}`}
+      >
         {cur.outcome === 'got'
           ? `+${pointsFor(cur.cluesShown)} points`
           : cur.outcome === 'revealed'

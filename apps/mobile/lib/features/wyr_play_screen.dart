@@ -13,6 +13,7 @@ import '../state/settings.dart';
 import '../theme/app_theme.dart';
 import '../theme/tokens.g.dart';
 import '../widgets/game_shell.dart';
+import '../widgets/motion.dart';
 import '../widgets/option_card.dart';
 
 /// Would You Rather: the host taps once per raised hand, then reveals the split.
@@ -84,11 +85,15 @@ class WyrPlayScreen extends ConsumerWidget {
               ],
               Expanded(
                 child: current.revealed
-                    ? FilledButton(
-                        onPressed: () => act(const Next()),
-                        child: Text(session.isLastRound ? l.playFinish : l.playNext),
+                    ? Pressable(
+                        child: FilledButton(
+                          onPressed: () => act(const Next()),
+                          child: Text(session.isLastRound ? l.playFinish : l.playNext),
+                        ),
                       )
-                    : FilledButton(onPressed: () => act(const Reveal()), child: Text(l.playReveal)),
+                    : Pressable(
+                        child: FilledButton(onPressed: () => act(const Reveal()), child: Text(l.playReveal)),
+                      ),
               ),
             ],
           ),

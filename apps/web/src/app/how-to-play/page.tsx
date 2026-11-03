@@ -46,7 +46,7 @@ export default function HowToPlayPage() {
       </p>
       <ul className="mt-10 grid gap-4 md:grid-cols-2">
         {basics.map((b) => (
-          <li key={b.title} className="rounded-card border border-border bg-surface p-5">
+          <li key={b.title} className="lift rounded-card border border-border bg-surface p-5">
             <h2 className="font-display text-2xl font-semibold">{b.title}</h2>
             <p className="mt-2">{b.body}</p>
           </li>
@@ -61,7 +61,7 @@ export default function HowToPlayPage() {
             <li key={g.id}>
               <Link
                 href={guideHref(g.id)}
-                className="flex min-h-12 items-center rounded-card border border-border bg-surface px-4 font-bold hover:bg-surface-muted"
+                className="lift flex min-h-12 items-center rounded-card border border-border bg-surface px-4 font-bold hover:bg-surface-muted"
               >
                 {g.name}
               </Link>

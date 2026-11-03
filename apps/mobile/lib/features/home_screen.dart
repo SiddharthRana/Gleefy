@@ -12,6 +12,7 @@ import '../theme/app_theme.dart';
 import '../theme/tokens.g.dart';
 import '../widgets/brand.dart';
 import '../widgets/mode_tile.dart';
+import '../widgets/motion.dart';
 import 'modes.dart';
 
 /// A game in progress that Home can offer to resume.
@@ -120,23 +121,29 @@ class HomeScreen extends ConsumerWidget {
             ),
             const SizedBox(height: MmSpace.s4),
           ],
-          GradientPanel(
-            onTap: () => _quickPlay(context, ref),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(l.homeQuickPlay, style: theme.textTheme.headlineSmall?.copyWith(color: Colors.white)),
-                      const SizedBox(height: MmSpace.s2),
-                      Text(l.homeQuickPlayBody, style: theme.textTheme.bodyMedium?.copyWith(color: Colors.white)),
-                    ],
+          Pressable(
+            scale: 0.97,
+            child: GradientPanel(
+              onTap: () => _quickPlay(context, ref),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(l.homeQuickPlay, style: theme.textTheme.headlineSmall?.copyWith(color: Colors.white)),
+                        const SizedBox(height: MmSpace.s2),
+                        Text(l.homeQuickPlayBody, style: theme.textTheme.bodyMedium?.copyWith(color: Colors.white)),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(width: MmSpace.s4),
-                const Icon(Icons.play_circle_fill_rounded, size: 56),
-              ],
+                  const SizedBox(width: MmSpace.s4),
+                  const PopIn(
+                    delay: Duration(milliseconds: 200),
+                    child: Icon(Icons.play_circle_fill_rounded, size: 56),
+                  ),
+                ],
+              ),
             ),
           ),
           if (favourites.isNotEmpty) ...[
@@ -184,8 +191,11 @@ class HomeScreen extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: MmSpace.s2),
-          for (final entry in LibraryEntry.values.take(3)) ...[
-            ModeTile(entry: entry),
+          for (final (i, entry) in LibraryEntry.values.take(3).indexed) ...[
+            StaggerIn(
+              index: i,
+              child: ModeTile(entry: entry),
+            ),
             const SizedBox(height: MmSpace.s3),
           ],
         ],

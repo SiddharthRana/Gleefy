@@ -9,6 +9,7 @@ import '../../state/providers.dart';
 import '../../state/games.dart';
 import '../../state/sessions.dart';
 import '../../widgets/results_actions.dart';
+import '../../widgets/motion.dart';
 import '../../widgets/usage_prompt.dart';
 import '../modes.dart';
 import '../../theme/app_theme.dart';
@@ -60,56 +61,64 @@ class ChoiceResultsScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(MmSpace.s4),
+      body: Stack(
         children: [
-          GradientPanel(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(modeName(l, mode), style: theme.textTheme.titleMedium?.copyWith(color: Colors.white)),
-                const SizedBox(height: MmSpace.s1),
-                Text(
-                  l.resultsSummary(results.roundsPlayed, results.totalVotes),
-                  style: theme.textTheme.headlineSmall?.copyWith(color: Colors.white),
+          ListView(
+            padding: const EdgeInsets.all(MmSpace.s4),
+            children: [
+              PopIn(
+                child: GradientPanel(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(modeName(l, mode), style: theme.textTheme.titleMedium?.copyWith(color: Colors.white)),
+                      const SizedBox(height: MmSpace.s1),
+                      Text(
+                        l.resultsSummary(results.roundsPlayed, results.totalVotes),
+                        style: theme.textTheme.headlineSmall?.copyWith(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const UsagePrompt(),
+              if (sync != null) ...[
+                const SizedBox(height: MmSpace.s4),
+                Card(
+                  child: ListTile(
+                    leading: Icon(Icons.favorite_rounded, color: theme.colorScheme.primary),
+                    title: Text(l.totInSync(names[sync.players.$1], names[sync.players.$2])),
+                    subtitle: Text(l.totInSyncBody(sync.matches, sync.rounds)),
+                  ),
                 ),
               ],
-            ),
+              if (results.mostDivisive case final id?) ...[
+                const SizedBox(height: MmSpace.s4),
+                _Highlight(
+                  title: l.resultsDivisive,
+                  icon: Icons.balance_rounded,
+                  item: pack.item(id)!,
+                  round: roundFor(id)!,
+                ),
+              ],
+              if (results.mostUnanimous case final id?) ...[
+                const SizedBox(height: MmSpace.s3),
+                _Highlight(
+                  title: l.resultsUnanimous,
+                  icon: Icons.groups_rounded,
+                  item: pack.item(id)!,
+                  round: roundFor(id)!,
+                ),
+              ],
+              const SizedBox(height: MmSpace.s6),
+              Semantics(header: true, child: Text(l.resultsAllRounds, style: theme.textTheme.titleLarge)),
+              const SizedBox(height: MmSpace.s2),
+              for (final (i, r) in session.rounds.indexed)
+                if (pack.item(r.questionId) case final item?) _RoundRow(index: i + 1, item: item, round: r),
+            ],
           ),
-          const UsagePrompt(),
-          if (sync != null) ...[
-            const SizedBox(height: MmSpace.s4),
-            Card(
-              child: ListTile(
-                leading: Icon(Icons.favorite_rounded, color: theme.colorScheme.primary),
-                title: Text(l.totInSync(names[sync.players.$1], names[sync.players.$2])),
-                subtitle: Text(l.totInSyncBody(sync.matches, sync.rounds)),
-              ),
-            ),
-          ],
-          if (results.mostDivisive case final id?) ...[
-            const SizedBox(height: MmSpace.s4),
-            _Highlight(
-              title: l.resultsDivisive,
-              icon: Icons.balance_rounded,
-              item: pack.item(id)!,
-              round: roundFor(id)!,
-            ),
-          ],
-          if (results.mostUnanimous case final id?) ...[
-            const SizedBox(height: MmSpace.s3),
-            _Highlight(
-              title: l.resultsUnanimous,
-              icon: Icons.groups_rounded,
-              item: pack.item(id)!,
-              round: roundFor(id)!,
-            ),
-          ],
-          const SizedBox(height: MmSpace.s6),
-          Semantics(header: true, child: Text(l.resultsAllRounds, style: theme.textTheme.titleLarge)),
-          const SizedBox(height: MmSpace.s2),
-          for (final (i, r) in session.rounds.indexed)
-            if (pack.item(r.questionId) case final item?) _RoundRow(index: i + 1, item: item, round: r),
+          // A one-off celebration when the results appear.
+          const Positioned.fill(child: Confetti()),
         ],
       ),
       bottomNavigationBar: ResultsActions(mode: mode, onPlayAgain: controller.restart, onClear: controller.clear),

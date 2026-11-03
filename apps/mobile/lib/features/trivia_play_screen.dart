@@ -14,6 +14,7 @@ import '../theme/app_theme.dart';
 import '../theme/tokens.g.dart';
 import '../widgets/countdown.dart';
 import '../widgets/game_shell.dart';
+import '../widgets/motion.dart';
 
 const _letters = ['A', 'B', 'C', 'D'];
 
@@ -104,20 +105,36 @@ class _TriviaPlayScreenState extends ConsumerState<TriviaPlayScreen> {
           Text(item.question, style: theme.textTheme.headlineSmall, textAlign: TextAlign.center),
           const SizedBox(height: MmSpace.s6),
           for (final (pos, index) in cur.choiceOrder.indexed) ...[
-            _Choice(
-              letter: _letters[pos],
-              text: item.choices[index],
-              state: !cur.answered
-                  ? _ChoiceState.open
-                  : index == cur.answer
-                  ? _ChoiceState.correct
-                  : index == cur.picked
-                  ? _ChoiceState.wrong
-                  : _ChoiceState.dimmed,
-              onTap: () {
-                if (ref.read(settingsProvider).haptics) HapticFeedback.selectionClick();
-                _act(Answer(pos, _countdown.elapsedMs));
-              },
+            // Choices deal in one by one for each question; the right one pops, a wrong pick shakes.
+            StaggerIn(
+              key: ValueKey('${cur.questionId}-$pos'),
+              index: pos,
+              child: Shake(
+                shake: cur.answered && index == cur.picked && index != cur.answer,
+                child: Bump(
+                  value: cur.answered && index == cur.answer,
+                  amount: 0.06,
+                  child: Pressable(
+                    enabled: !cur.answered,
+                    scale: 0.97,
+                    child: _Choice(
+                      letter: _letters[pos],
+                      text: item.choices[index],
+                      state: !cur.answered
+                          ? _ChoiceState.open
+                          : index == cur.answer
+                          ? _ChoiceState.correct
+                          : index == cur.picked
+                          ? _ChoiceState.wrong
+                          : _ChoiceState.dimmed,
+                      onTap: () {
+                        if (ref.read(settingsProvider).haptics) HapticFeedback.selectionClick();
+                        _act(Answer(pos, _countdown.elapsedMs));
+                      },
+                    ),
+                  ),
+                ),
+              ),
             ),
             const SizedBox(height: MmSpace.s3),
           ],
@@ -125,7 +142,9 @@ class _TriviaPlayScreenState extends ConsumerState<TriviaPlayScreen> {
             const SizedBox(height: MmSpace.s2),
             Semantics(
               liveRegion: true,
-              child: Text(feedback, style: theme.textTheme.titleLarge, textAlign: TextAlign.center),
+              child: PopIn(
+                child: Text(feedback, style: theme.textTheme.titleLarge, textAlign: TextAlign.center),
+              ),
             ),
             if (cur.picked != cur.answer) ...[
               const SizedBox(height: MmSpace.s1),
@@ -140,9 +159,11 @@ class _TriviaPlayScreenState extends ConsumerState<TriviaPlayScreen> {
           ],
         ],
       ),
-      bottom: FilledButton(
-        onPressed: cur.answered ? () => _act(const NextQuestion()) : null,
-        child: Text(session.isLastRound ? l.playFinish : l.playNext),
+      bottom: Pressable(
+        child: FilledButton(
+          onPressed: cur.answered ? () => _act(const NextQuestion()) : null,
+          child: Text(session.isLastRound ? l.playFinish : l.playNext),
+        ),
       ),
     );
   }

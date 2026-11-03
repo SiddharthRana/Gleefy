@@ -29,7 +29,26 @@ const reasons = [
 export default function HomePage() {
   return (
     <>
-      <section className="rise grid items-center gap-10 py-12 md:grid-cols-2 md:py-20">
+      <section className="relative grid items-center gap-10 py-12 md:grid-cols-2 md:py-20">
+        {/* Drifting party bits behind the hero. Decorative; still under reduced motion. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+        >
+          <span className="float absolute top-10 left-[45%] size-4 rounded-full bg-option-a opacity-60" />
+          <span
+            className="float absolute top-[70%] left-[8%] size-3 rotate-12 rounded-[3px] bg-accent opacity-70"
+            style={{ animationDelay: '-2s' }}
+          />
+          <span
+            className="float absolute top-[20%] right-[4%] size-5 rounded-full bg-option-b opacity-50"
+            style={{ animationDelay: '-4s' }}
+          />
+          <span
+            className="float absolute bottom-6 left-[52%] size-3 rounded-[3px] bg-primary opacity-60"
+            style={{ animationDelay: '-1s' }}
+          />
+        </div>
         <div>
           <h1 className="font-display text-5xl font-bold leading-tight sm:text-6xl">
             Party games for <span className="text-primary">one phone</span>.
@@ -41,7 +60,7 @@ export default function HomePage() {
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
               href="/games"
-              className="brand-gradient inline-flex min-h-14 items-center rounded-full px-7 text-lg font-bold"
+              className="press btn-3d brand-gradient inline-flex min-h-14 items-center rounded-full px-7 text-lg font-bold"
             >
               See the games
             </Link>
@@ -59,7 +78,7 @@ export default function HomePage() {
         </h2>
         <ol className="mt-8 grid gap-4 md:grid-cols-3">
           {steps.map((s, i) => (
-            <li key={s.title} className="rounded-card border border-border bg-surface p-5">
+            <li key={s.title} className="lift rounded-card border border-border bg-surface p-5">
               <span
                 aria-hidden="true"
                 className="brand-gradient inline-flex size-10 items-center justify-center rounded-full font-display text-xl font-bold"
@@ -94,7 +113,7 @@ export default function HomePage() {
         </h2>
         <ul className="mt-8 grid gap-4 sm:grid-cols-2">
           {reasons.map((r) => (
-            <li key={r.title} className="rounded-card border border-border bg-surface p-5">
+            <li key={r.title} className="lift rounded-card border border-border bg-surface p-5">
               <h3 className="font-display text-2xl font-semibold">{r.title}</h3>
               <p className="mt-1 text-muted">{r.body}</p>
             </li>

@@ -12,6 +12,7 @@ import '../../theme/app_theme.dart';
 import '../../theme/tokens.g.dart';
 import '../../widgets/brand.dart';
 import '../../widgets/results_actions.dart';
+import '../../widgets/motion.dart';
 import '../../widgets/usage_prompt.dart';
 import '../modes.dart';
 
@@ -87,35 +88,46 @@ class ScoreResultsScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(MmSpace.s4),
+      body: Stack(
         children: [
-          GradientPanel(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(modeName(l, mode), style: theme.textTheme.titleMedium?.copyWith(color: Colors.white)),
-                const SizedBox(height: MmSpace.s1),
-                Text(headline, style: theme.textTheme.headlineSmall?.copyWith(color: Colors.white)),
-              ],
-            ),
-          ),
-          const UsagePrompt(),
-          const SizedBox(height: MmSpace.s4),
-          for (final (i, row) in rows.indexed)
-            Card(
-              margin: const EdgeInsets.only(bottom: MmSpace.s2),
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: winners.contains(row.team) ? palette.accent : palette.surfaceMuted,
-                  foregroundColor: winners.contains(row.team) ? palette.onAccent : theme.colorScheme.onSurface,
-                  child: Text('${i + 1}'),
+          ListView(
+            padding: const EdgeInsets.all(MmSpace.s4),
+            children: [
+              PopIn(
+                child: GradientPanel(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(modeName(l, mode), style: theme.textTheme.titleMedium?.copyWith(color: Colors.white)),
+                      const SizedBox(height: MmSpace.s1),
+                      Text(headline, style: theme.textTheme.headlineSmall?.copyWith(color: Colors.white)),
+                    ],
+                  ),
                 ),
-                title: Text(nameOf(row.team), style: theme.textTheme.titleMedium),
-                subtitle: Text(row.detail),
-                trailing: Text(l.resultsPoints(row.score), style: theme.textTheme.titleMedium),
               ),
-            ),
+              const UsagePrompt(),
+              const SizedBox(height: MmSpace.s4),
+              for (final (i, row) in rows.indexed)
+                StaggerIn(
+                  index: i + 2,
+                  child: Card(
+                    margin: const EdgeInsets.only(bottom: MmSpace.s2),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: winners.contains(row.team) ? palette.accent : palette.surfaceMuted,
+                        foregroundColor: winners.contains(row.team) ? palette.onAccent : theme.colorScheme.onSurface,
+                        child: Text('${i + 1}'),
+                      ),
+                      title: Text(nameOf(row.team), style: theme.textTheme.titleMedium),
+                      subtitle: Text(row.detail),
+                      trailing: Text(l.resultsPoints(row.score), style: theme.textTheme.titleMedium),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+          // A one-off celebration when the results appear.
+          const Positioned.fill(child: Confetti()),
         ],
       ),
       bottomNavigationBar: ResultsActions(mode: mode, onPlayAgain: restart, onClear: clear),

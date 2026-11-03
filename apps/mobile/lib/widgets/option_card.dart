@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../l10n/app_localizations.dart';
 import '../theme/tokens.g.dart';
+import 'motion.dart';
 
 /// A big, full-colour answer button that can show a vote count and, once revealed, its share.
 class OptionCard extends StatelessWidget {
@@ -41,48 +42,55 @@ class OptionCard extends StatelessWidget {
       label: revealed ? '$text. ${l.playVotes(votes)}, ${l.playSplit(percent)}' : l.playVoteFor(text),
       value: revealed ? null : l.playVotes(votes),
       excludeSemantics: true,
-      child: Material(
-        color: color,
-        borderRadius: BorderRadius.circular(MmRadius.xl),
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          onTap: enabled ? onTap : null,
-          child: Stack(
-            children: [
-              if (revealed)
-                Positioned.fill(
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: TweenAnimationBuilder<double>(
-                      tween: Tween(begin: 0, end: share),
-                      duration: reduceMotion ? Duration.zero : const Duration(milliseconds: 600),
-                      curve: Curves.easeOutCubic,
-                      builder: (_, v, _) => FractionallySizedBox(
-                        widthFactor: v,
-                        heightFactor: 1,
-                        child: ColoredBox(color: Colors.black.withValues(alpha: 0.18)),
+      child: Pressable(
+        enabled: enabled,
+        child: Material(
+          color: color,
+          borderRadius: BorderRadius.circular(MmRadius.xl),
+          clipBehavior: Clip.antiAlias,
+          child: InkWell(
+            onTap: enabled ? onTap : null,
+            child: Stack(
+              children: [
+                if (revealed)
+                  Positioned.fill(
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: TweenAnimationBuilder<double>(
+                        tween: Tween(begin: 0, end: share),
+                        duration: reduceMotion ? Duration.zero : const Duration(milliseconds: 600),
+                        curve: Curves.easeOutCubic,
+                        builder: (_, v, _) => FractionallySizedBox(
+                          widthFactor: v,
+                          heightFactor: 1,
+                          child: ColoredBox(color: Colors.black.withValues(alpha: 0.18)),
+                        ),
+                      ),
+                    ),
+                  ),
+                Padding(
+                  padding: const EdgeInsets.all(MmSpace.s5),
+                  child: Center(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: MediaQuery.sizeOf(context).width - 80),
+                        child: Text(text, style: style, textAlign: TextAlign.center),
                       ),
                     ),
                   ),
                 ),
-              Padding(
-                padding: const EdgeInsets.all(MmSpace.s5),
-                child: Center(
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(maxWidth: MediaQuery.sizeOf(context).width - 80),
-                      child: Text(text, style: style, textAlign: TextAlign.center),
-                    ),
+                Positioned(
+                  right: MmSpace.s3,
+                  top: MmSpace.s3,
+                  // Bumps with every vote, and again when the split is revealed.
+                  child: Bump(
+                    value: revealed ? 'split' : votes,
+                    child: VoteBadge(text: revealed ? l.playSplit(percent) : '$votes', color: onColor, onColor: color),
                   ),
                 ),
-              ),
-              Positioned(
-                right: MmSpace.s3,
-                top: MmSpace.s3,
-                child: VoteBadge(text: revealed ? l.playSplit(percent) : '$votes', color: onColor, onColor: color),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

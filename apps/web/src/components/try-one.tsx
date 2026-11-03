@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { Confetti } from './confetti';
+import { secondary } from '@/lib/ui';
 
 type Sample = { id: string; a: string; b: string };
 
@@ -18,16 +20,18 @@ export function TryOne({ samples }: { samples: Sample[] }) {
       <h2 id="try-heading" className="font-display text-xl font-semibold text-muted">
         Try one: Would you rather…
       </h2>
-      <div key={q.id} className="pop mt-4 grid gap-3">
+      <div key={q.id} className="pop relative mt-4 grid gap-3">
+        {picked && <Confetti key={picked} pieces={18} seed={index + (picked === 'a' ? 1 : 2)} />}
         {(['a', 'b'] as const).map((side) => (
           <button
             key={side}
             type="button"
             onClick={() => setPicked(side)}
             aria-pressed={picked === side}
-            className={`min-h-20 rounded-panel px-5 py-4 text-left font-display text-xl font-semibold text-on-option transition-transform ${
+            style={{ '--tilt': side === 'a' ? '-0.6deg' : '0.6deg' } as React.CSSProperties}
+            className={`choice min-h-20 rounded-panel px-5 py-4 text-left font-display text-xl font-semibold text-on-option ${
               side === 'a' ? 'bg-option-a' : 'bg-option-b'
-            } ${picked === side ? 'ring-4 ring-accent' : ''}`}
+            } ${picked === side ? 'choice-picked ring-4 ring-accent' : ''}`}
           >
             {q[side]}
             {picked === side && (
@@ -48,7 +52,7 @@ export function TryOne({ samples }: { samples: Sample[] }) {
             setIndex((i) => i + 1);
             setPicked(null);
           }}
-          className="min-h-12 rounded-full border-2 border-border px-5 font-bold hover:bg-surface-muted"
+          className={secondary}
         >
           Another one
         </button>
