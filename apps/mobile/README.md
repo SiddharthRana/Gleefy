@@ -16,10 +16,11 @@ lib/
   game/
     random.dart           mulberry32 + seeded shuffle (port of packages/game-engine)
     wyr_engine.dart       Would You Rather reducer (port of packages/game-engine)
-  state/                  Riverpod providers: prefs, content, settings, session (persisted), premium
+  state/                  Riverpod providers: prefs, content (+ custom questions), settings, session (persisted), premium
   config/app_config.dart  --dart-define values (API, Supabase)
   account/                Purchaser sign-in (email code), API client, cached verified entitlement
   billing/                Google Play Billing gateway + purchase controller (verify before complete)
+  telemetry/              Opt-in anonymous analytics and error reports (PostHog HTTP API, no SDK)
   router/router.dart      Routes + first-launch onboarding redirect
   features/               Screens: onboarding, home, library, settings, wyr/{setup,play,results}
   widgets/                Brand mark, gradient panel, mode tile
@@ -46,7 +47,9 @@ flutter run \
   --dart-define=SUPABASE_PUBLISHABLE_KEY=<local publishable key>
 ```
 
-Without them, Premium says it isn't available in this build. Google Play purchases only work in a build installed from a Play testing track; see `docs/payments-setup.md`.
+Without them, Premium says it isn't available in this build.
+
+Optional analytics: `--dart-define=POSTHOG_KEY=<project key>` (and `POSTHOG_HOST`, default the EU cloud) offers "Share anonymous usage stats" in Settings. It is off until the person turns it on; see `lib/telemetry/analytics.dart` for exactly what is sent. Google Play purchases only work in a build installed from a Play testing track; see `docs/payments-setup.md`.
 
 ## Check
 

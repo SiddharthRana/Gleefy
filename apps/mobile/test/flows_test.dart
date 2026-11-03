@@ -161,6 +161,7 @@ void main() {
     expect(deep.onChanged, isNull);
 
     // Fewer questions than rounds is explained.
+    await reveal(tester, find.text("Only 3 questions in these categories, so you'll play 3 rounds."));
     expect(find.text("Only 3 questions in these categories, so you'll play 3 rounds."), findsOneWidget);
 
     // Deselecting the only free category disables Start.

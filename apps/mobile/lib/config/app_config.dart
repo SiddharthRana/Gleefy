@@ -12,6 +12,12 @@ abstract final class AppConfig {
 
   static const packageName = 'com.mirthmix.app';
 
+  static const appVersion = String.fromEnvironment('APP_VERSION', defaultValue: '0.1.0');
+
+  /// Optional, opt-in analytics (PostHog project key and host, e.g. https://eu.i.posthog.com).
+  static const posthogKey = String.fromEnvironment('POSTHOG_KEY');
+  static const posthogHost = String.fromEnvironment('POSTHOG_HOST', defaultValue: 'https://eu.i.posthog.com');
+
   static bool get accountsConfigured =>
       apiBaseUrl.isNotEmpty && supabaseUrl.isNotEmpty && supabasePublishableKey.isNotEmpty;
 }

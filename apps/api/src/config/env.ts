@@ -100,6 +100,16 @@ export const envSchema = z.object({
     .string()
     .optional()
     .transform((v) => (v ? v : undefined)),
+  // ---- Monitoring
+  /** Sentry DSN. Without it, errors are only logged. Events are scrubbed of personal data. */
+  SENTRY_DSN: z
+    .url()
+    .optional()
+    .or(z.literal('').transform(() => undefined)),
+  SENTRY_ENVIRONMENT: z
+    .string()
+    .optional()
+    .transform((v) => (v ? v : undefined)),
   // Number of reverse-proxy hops in front of the API (so client IPs are read correctly). 0 = none.
   TRUST_PROXY_HOPS: z.coerce.number().int().min(0).max(5).default(0),
 });

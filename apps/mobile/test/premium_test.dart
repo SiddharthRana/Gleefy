@@ -205,6 +205,10 @@ void main() {
     expect(find.text('Enter a valid email address.'), findsOneWidget);
     await tester.enterText(find.byType(TextField), 'host@example.test');
     await tapText(tester, 'Send code');
+    expect(find.textContaining('aged 18 or over'), findsOneWidget);
+    expect(auth.sentTo, isEmpty);
+    await tapText(tester, 'I’m 18 or older');
+    await tapText(tester, 'Send code');
     expect(auth.sentTo, ['host@example.test']);
 
     await tester.enterText(find.byType(TextField), '000000');

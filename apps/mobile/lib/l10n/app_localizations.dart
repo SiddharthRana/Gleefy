@@ -682,7 +682,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsPrivacyBody.
   ///
   /// In en, this message translates to:
-  /// **'You can play without an account. An account is only for buying Premium: it stores your email and subscription status on the MirthMix server. There are no analytics in this version. Games, settings and players are stored only on this phone.'**
+  /// **'You can play without an account. An account is only for buying Premium: it stores your email and subscription status on the MirthMix server. Games, settings and players are stored only on this phone.'**
   String get settingsPrivacyBody;
 
   /// No description provided for @settingsAge.
@@ -1470,6 +1470,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Premium'**
   String get settingsPremium;
+
+  /// No description provided for @signInAdult.
+  ///
+  /// In en, this message translates to:
+  /// **'I’m 18 or older'**
+  String get signInAdult;
+
+  /// No description provided for @signInAdultRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Accounts and purchases are for people aged 18 or over. You can keep playing everything free without an account.'**
+  String get signInAdultRequired;
+
+  /// No description provided for @settingsShareUsage.
+  ///
+  /// In en, this message translates to:
+  /// **'Share anonymous usage stats'**
+  String get settingsShareUsage;
+
+  /// No description provided for @settingsShareUsageBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Which games are played, how far you get, and crash reports, to help improve MirthMix. Never names, questions, answers or your email. Off unless you turn it on.'**
+  String get settingsShareUsageBody;
+
+  /// No description provided for @myQuestionsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My questions'**
+  String get myQuestionsTitle;
+
+  /// No description provided for @myQuestionsIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Write your own questions for Would You Rather and This or That. They stay on this phone and are never shared.'**
+  String get myQuestionsIntro;
+
+  /// No description provided for @myQuestionsHowTo.
+  ///
+  /// In en, this message translates to:
+  /// **'To play them, tick “My questions” when you set up the game.'**
+  String get myQuestionsHowTo;
+
+  /// No description provided for @myQuestionsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No questions yet. Tap “Add question” to write one.'**
+  String get myQuestionsEmpty;
+
+  /// No description provided for @myQuestionsAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add question'**
+  String get myQuestionsAdd;
+
+  /// No description provided for @myQuestionsEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit question'**
+  String get myQuestionsEdit;
+
+  /// No description provided for @myQuestionsOptionA.
+  ///
+  /// In en, this message translates to:
+  /// **'First option'**
+  String get myQuestionsOptionA;
+
+  /// No description provided for @myQuestionsOptionB.
+  ///
+  /// In en, this message translates to:
+  /// **'Second option'**
+  String get myQuestionsOptionB;
+
+  /// No description provided for @myQuestionsDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete question'**
+  String get myQuestionsDelete;
+
+  /// No description provided for @myQuestionsDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Question deleted'**
+  String get myQuestionsDeleted;
+
+  /// No description provided for @myQuestionsErrorEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill in both options.'**
+  String get myQuestionsErrorEmpty;
+
+  /// No description provided for @myQuestionsErrorTooLong.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep each option to {max} characters or fewer.'**
+  String myQuestionsErrorTooLong(int max);
+
+  /// No description provided for @myQuestionsErrorSame.
+  ///
+  /// In en, this message translates to:
+  /// **'The two options need to be different.'**
+  String get myQuestionsErrorSame;
+
+  /// No description provided for @myQuestionsErrorDuplicate.
+  ///
+  /// In en, this message translates to:
+  /// **'You already have this question.'**
+  String get myQuestionsErrorDuplicate;
+
+  /// No description provided for @myQuestionsErrorNotAllowed.
+  ///
+  /// In en, this message translates to:
+  /// **'That has a word we don’t allow. Keep it friendly for everyone.'**
+  String get myQuestionsErrorNotAllowed;
+
+  /// No description provided for @myQuestionsErrorFull.
+  ///
+  /// In en, this message translates to:
+  /// **'You’ve reached {max} questions. Delete some to add more.'**
+  String myQuestionsErrorFull(int max);
+
+  /// No description provided for @setupWriteOwn.
+  ///
+  /// In en, this message translates to:
+  /// **'Write your own questions'**
+  String get setupWriteOwn;
+
+  /// No description provided for @usagePromptTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Help make MirthMix better?'**
+  String get usagePromptTitle;
+
+  /// No description provided for @usagePromptYes.
+  ///
+  /// In en, this message translates to:
+  /// **'Share anonymous stats'**
+  String get usagePromptYes;
+
+  /// No description provided for @usagePromptNo.
+  ///
+  /// In en, this message translates to:
+  /// **'No thanks'**
+  String get usagePromptNo;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

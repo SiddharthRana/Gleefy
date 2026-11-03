@@ -23,13 +23,16 @@ import {
 } from '@mirthmix/game-engine';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { freeCategories, modeNames, packs } from '@/lib/packs';
+import Link from 'next/link';
+import { freeCategories, modeNames, packs, playableCategories } from '@/lib/packs';
+import { usePremium } from '@/lib/premium';
 import { primary, secondary } from '@/lib/ui';
 
 /** Setup when there's no `?c=`, otherwise the game the link describes. */
 export function Player() {
   const code = useSearchParams().get('c');
   const game = useMemo(() => (code ? decodeShare(code) : null), [code]);
+  const premium = usePremium();
   if (code && !game) {
     return (
       <p role="alert" className="py-8 text-lg">
@@ -37,11 +40,19 @@ export function Player() {
       </p>
     );
   }
-  return game ? <Game key={code} game={game} code={code!} /> : <Setup />;
+  if (!game) return <Setup />;
+  const needsPremium = game.categoryIds.some(
+    (id) => packs[game.mode].categories.find((c) => c.id === id)?.tier === 'premium',
+  );
+  // Deal only once we know whether premium categories can be played, so the game never re-deals.
+  if (needsPremium && premium === null) return <p className="py-8 text-lg">Checking Premium…</p>;
+  return <Game key={code} game={game} code={code!} premium={premium === true} />;
 }
 
-function Setup() {
+/** The new-game form. Also the static fallback while the URL is read, so nothing shifts on load. */
+export function Setup() {
   const router = useRouter();
+  const premium = usePremium() === true;
   const [mode, setMode] = useState<ShareMode>('would-you-rather');
   const [rounds, setRounds] = useState(10);
   const [selected, setSelected] = useState<string[]>(() => freeCategories(mode).map((c) => c.id));
@@ -89,7 +100,7 @@ function Setup() {
       <fieldset>
         <legend className="font-display text-2xl font-semibold">Categories</legend>
         <div className="mt-3 grid gap-2 sm:grid-cols-2">
-          {freeCategories(mode).map((c) => (
+          {packs[mode].categories.map((c) => (
             <label
               key={c.id}
               className="flex min-h-12 items-center gap-3 rounded-card border border-border bg-surface px-4"
@@ -97,6 +108,7 @@ function Setup() {
               <input
                 type="checkbox"
                 className="size-5"
+                disabled={c.tier === 'premium' && !premium}
                 checked={selected.includes(c.id)}
                 onChange={(e) =>
                   setSelected((s) =>
@@ -107,10 +119,20 @@ function Setup() {
               <span>
                 <span className="font-bold">{c.name}</span>
                 {c.region === 'in' && <span className="text-muted"> · India</span>}
+                {c.tier === 'premium' && <span className="text-muted"> · Premium</span>}
               </span>
             </label>
           ))}
         </div>
+        {!premium && (
+          <p className="mt-3 text-muted">
+            Premium categories unlock with{' '}
+            <Link href="/pricing" className="font-bold text-primary underline">
+              MirthMix Premium
+            </Link>
+            .
+          </p>
+        )}
       </fieldset>
       <fieldset>
         <legend className="font-display text-2xl font-semibold">Rounds</legend>
@@ -147,10 +169,10 @@ type AnyState =
   | { mode: 'trivia'; s: TriviaState }
   | { mode: 'guess'; s: GuessState };
 
-function start(game: SharedGame): AnyState | null {
+function start(game: SharedGame, premium: boolean): AnyState | null {
   const pack = packs[game.mode];
-  const free = new Set(freeCategories(game.mode).map((c) => c.id));
-  const ids = game.categoryIds.filter((id) => free.has(id));
+  const playable = new Set(playableCategories(game.mode, premium).map((c) => c.id));
+  const ids = game.categoryIds.filter((id) => playable.has(id));
   const pool = buildPool(pack.items as { id: string; category: string }[], ids);
   if (!pool.length) return null;
   const cfg = { categoryIds: ids, rounds: game.rounds, seed: game.seed };
@@ -172,10 +194,31 @@ function start(game: SharedGame): AnyState | null {
   }
 }
 
-function Game({ game, code }: { game: SharedGame; code: string }) {
-  const [state, setState] = useState<AnyState | null>(() => start(game));
+function Game({ game, code, premium }: { game: SharedGame; code: string; premium: boolean }) {
+  const [state, setState] = useState<AnyState | null>(() => start(game, premium));
   const [copied, setCopied] = useState(false);
-  if (!state) return <p role="alert">No questions are available for this game.</p>;
+  const skipped = premium
+    ? []
+    : packs[game.mode].categories.filter(
+        (c) => c.tier === 'premium' && game.categoryIds.includes(c.id),
+      );
+  if (!state) {
+    return (
+      <p role="alert" className="py-8 text-lg">
+        {skipped.length ? (
+          <>
+            This game only uses Premium categories.{' '}
+            <Link href="/pricing" className="font-bold text-primary underline">
+              See Premium
+            </Link>{' '}
+            or pick a game below.
+          </>
+        ) : (
+          'No questions are available for this game.'
+        )}
+      </p>
+    );
+  }
 
   const share = async () => {
     const url = `${window.location.origin}/play?c=${code}`;
@@ -193,6 +236,15 @@ function Game({ game, code }: { game: SharedGame; code: string }) {
 
   return (
     <div className="grid gap-6">
+      {skipped.length > 0 && (
+        <p role="note" className="rounded-card bg-surface-muted p-4">
+          This link includes Premium categories ({skipped.map((c) => c.name).join(', ')}), so
+          they’re left out.{' '}
+          <Link href="/pricing" className="font-bold text-primary underline">
+            See Premium
+          </Link>
+        </p>
+      )}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="font-bold text-muted" aria-live="polite">
           {modeNames[game.mode]} · {done ? 'Finished' : `Round ${round} of ${s.totalRounds}`}
@@ -223,7 +275,7 @@ function Game({ game, code }: { game: SharedGame; code: string }) {
           <button
             type="button"
             className={primary}
-            onClick={() => setState(start({ ...game, seed: newSeed() }))}
+            onClick={() => setState(start({ ...game, seed: newSeed() }, premium))}
           >
             Play again
           </button>

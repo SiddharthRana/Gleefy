@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../account/entitlement.dart';
 import '../l10n/app_localizations.dart';
 import '../state/providers.dart';
+import '../telemetry/analytics.dart';
 import '../state/settings.dart';
 import '../theme/app_theme.dart';
 import '../theme/tokens.g.dart';
@@ -53,21 +54,13 @@ class SettingsScreen extends ConsumerWidget {
               onSelectionChanged: (v) => c.update(s.copyWith(themeMode: v.first)),
             ),
           ),
-          section(l.settingsPremium),
-          ListTile(
-            leading: Icon(ref.watch(premiumProvider) ? Icons.verified_rounded : Icons.lock_outline_rounded),
-            title: Text(l.premiumTitle),
-            trailing: const Icon(Icons.chevron_right_rounded),
-            onTap: () => context.push('/premium'),
-          ),
-          if (ref.watch(entitlementProvider).signedIn)
-            ListTile(
-              leading: const Icon(Icons.person_outline_rounded),
-              title: Text(l.accountTitle),
-              trailing: const Icon(Icons.chevron_right_rounded),
-              onTap: () => context.push('/account'),
-            ),
           section(l.settingsPlay),
+          ListTile(
+            leading: const Icon(Icons.edit_note_rounded),
+            title: Text(l.myQuestionsTitle),
+            trailing: const Icon(Icons.chevron_right_rounded),
+            onTap: () => context.push('/my-questions'),
+          ),
           SwitchListTile(
             title: Text(l.settingsBigText),
             subtitle: Text(l.settingsBigTextBody),
@@ -91,8 +84,33 @@ class SettingsScreen extends ConsumerWidget {
             trailing: const Icon(Icons.chevron_right_rounded),
             onTap: () => context.push('/onboarding'),
           ),
+          section(l.settingsPremium),
+          ListTile(
+            leading: Icon(ref.watch(premiumProvider) ? Icons.verified_rounded : Icons.lock_outline_rounded),
+            title: Text(l.premiumTitle),
+            trailing: const Icon(Icons.chevron_right_rounded),
+            onTap: () => context.push('/premium'),
+          ),
+          if (ref.watch(entitlementProvider).signedIn)
+            ListTile(
+              leading: const Icon(Icons.person_outline_rounded),
+              title: Text(l.accountTitle),
+              trailing: const Icon(Icons.chevron_right_rounded),
+              onTap: () => context.push('/account'),
+            ),
           section(l.settingsPrivacy),
           note(l.settingsPrivacyBody),
+          if (ref.watch(analyticsProvider).available)
+            SwitchListTile(
+              title: Text(l.settingsShareUsage),
+              subtitle: Text(l.settingsShareUsageBody),
+              value: s.shareUsage,
+              onChanged: (v) {
+                // Turning it off forgets the install id, so a later opt-in isn't linked to the past.
+                if (!v) ref.read(analyticsProvider).reset();
+                c.update(s.copyWith(shareUsage: v));
+              },
+            ),
           section(l.settingsAge),
           note(l.settingsAgeBody),
           section(l.settingsAbout),

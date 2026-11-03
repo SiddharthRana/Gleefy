@@ -42,6 +42,46 @@
       "tier": "premium",
       "ageRating": "all",
       "region": "global"
+    },
+    {
+      "id": "home",
+      "name": "Home & Habits",
+      "description": "Chores, comforts and how you live.",
+      "tier": "free",
+      "ageRating": "all",
+      "region": "global"
+    },
+    {
+      "id": "sports",
+      "name": "Sports & Play",
+      "description": "Games, workouts and how you like to play.",
+      "tier": "free",
+      "ageRating": "all",
+      "region": "global"
+    },
+    {
+      "id": "tech",
+      "name": "Tech & Gadgets",
+      "description": "Screens, settings and everyday tech.",
+      "tier": "premium",
+      "ageRating": "all",
+      "region": "global"
+    },
+    {
+      "id": "party",
+      "name": "Parties & Celebrations",
+      "description": "How you like to celebrate.",
+      "tier": "premium",
+      "ageRating": "all",
+      "region": "global"
+    },
+    {
+      "id": "work",
+      "name": "Work & Study",
+      "description": "Desks, deadlines and how you get things done.",
+      "tier": "premium",
+      "ageRating": "all",
+      "region": "global"
     }
   ],
   "items": [
@@ -464,6 +504,486 @@
       "category": "pop",
       "a": "Book first",
       "b": "Film first"
+    },
+    {
+      "id": "tot-home-001",
+      "category": "home",
+      "a": "Shoes off indoors",
+      "b": "Shoes on indoors"
+    },
+    {
+      "id": "tot-home-002",
+      "category": "home",
+      "a": "Make the bed",
+      "b": "Leave it unmade"
+    },
+    {
+      "id": "tot-home-003",
+      "category": "home",
+      "a": "Cook",
+      "b": "Wash up"
+    },
+    {
+      "id": "tot-home-004",
+      "category": "home",
+      "a": "Bath",
+      "b": "Shower"
+    },
+    {
+      "id": "tot-home-005",
+      "category": "home",
+      "a": "Houseplants",
+      "b": "No plants"
+    },
+    {
+      "id": "tot-home-006",
+      "category": "home",
+      "a": "Sofa nap",
+      "b": "Bed nap"
+    },
+    {
+      "id": "tot-home-007",
+      "category": "home",
+      "a": "Chores now",
+      "b": "Chores later"
+    },
+    {
+      "id": "tot-home-008",
+      "category": "home",
+      "a": "Music while cleaning",
+      "b": "Silence while cleaning"
+    },
+    {
+      "id": "tot-home-009",
+      "category": "home",
+      "a": "Balcony",
+      "b": "Garden"
+    },
+    {
+      "id": "tot-home-010",
+      "category": "home",
+      "a": "Big kitchen",
+      "b": "Big bedroom"
+    },
+    {
+      "id": "tot-home-011",
+      "category": "home",
+      "a": "Open windows",
+      "b": "Air conditioning"
+    },
+    {
+      "id": "tot-home-012",
+      "category": "home",
+      "a": "Alarm clock",
+      "b": "Wake up naturally"
+    },
+    {
+      "id": "tot-home-013",
+      "category": "home",
+      "a": "Dishwasher",
+      "b": "Wash by hand"
+    },
+    {
+      "id": "tot-home-014",
+      "category": "home",
+      "a": "Fairy lights",
+      "b": "Candles"
+    },
+    {
+      "id": "tot-home-015",
+      "category": "home",
+      "a": "Bright walls",
+      "b": "White walls"
+    },
+    {
+      "id": "tot-sports-001",
+      "category": "sports",
+      "a": "Running",
+      "b": "Cycling"
+    },
+    {
+      "id": "tot-sports-002",
+      "category": "sports",
+      "a": "Swimming",
+      "b": "Hiking"
+    },
+    {
+      "id": "tot-sports-003",
+      "category": "sports",
+      "a": "Play sports",
+      "b": "Watch sports"
+    },
+    {
+      "id": "tot-sports-004",
+      "category": "sports",
+      "a": "Team sport",
+      "b": "Solo sport"
+    },
+    {
+      "id": "tot-sports-005",
+      "category": "sports",
+      "a": "Badminton",
+      "b": "Tennis"
+    },
+    {
+      "id": "tot-sports-006",
+      "category": "sports",
+      "a": "Chess",
+      "b": "Carrom"
+    },
+    {
+      "id": "tot-sports-007",
+      "category": "sports",
+      "a": "Indoor games",
+      "b": "Outdoor games"
+    },
+    {
+      "id": "tot-sports-008",
+      "category": "sports",
+      "a": "Winning",
+      "b": "Having fun"
+    },
+    {
+      "id": "tot-sports-009",
+      "category": "sports",
+      "a": "Morning workout",
+      "b": "Evening workout"
+    },
+    {
+      "id": "tot-sports-010",
+      "category": "sports",
+      "a": "At the stadium",
+      "b": "Watching at home"
+    },
+    {
+      "id": "tot-sports-011",
+      "category": "sports",
+      "a": "Skating",
+      "b": "Skipping rope"
+    },
+    {
+      "id": "tot-sports-012",
+      "category": "sports",
+      "a": "Card games",
+      "b": "Dice games"
+    },
+    {
+      "id": "tot-sports-013",
+      "category": "sports",
+      "a": "Basketball",
+      "b": "Volleyball"
+    },
+    {
+      "id": "tot-sports-014",
+      "category": "sports",
+      "a": "Kabaddi",
+      "b": "Kho-kho"
+    },
+    {
+      "id": "tot-sports-015",
+      "category": "sports",
+      "a": "Coach",
+      "b": "Captain"
+    },
+    {
+      "id": "tot-pop-011",
+      "category": "pop",
+      "a": "Musicals",
+      "b": "Action films"
+    },
+    {
+      "id": "tot-pop-012",
+      "category": "pop",
+      "a": "Reality shows",
+      "b": "Documentaries"
+    },
+    {
+      "id": "tot-pop-013",
+      "category": "pop",
+      "a": "Rewatch a favourite",
+      "b": "Try something new"
+    },
+    {
+      "id": "tot-pop-014",
+      "category": "pop",
+      "a": "Cinema",
+      "b": "Streaming at home"
+    },
+    {
+      "id": "tot-pop-015",
+      "category": "pop",
+      "a": "Watch the trailer",
+      "b": "Go in blind"
+    },
+    {
+      "id": "tot-tech-001",
+      "category": "tech",
+      "a": "Phone",
+      "b": "Laptop"
+    },
+    {
+      "id": "tot-tech-002",
+      "category": "tech",
+      "a": "Dark mode",
+      "b": "Light mode"
+    },
+    {
+      "id": "tot-tech-003",
+      "category": "tech",
+      "a": "Headphones",
+      "b": "Earbuds"
+    },
+    {
+      "id": "tot-tech-004",
+      "category": "tech",
+      "a": "Voice notes",
+      "b": "Text messages"
+    },
+    {
+      "id": "tot-tech-005",
+      "category": "tech",
+      "a": "Smartwatch",
+      "b": "Classic watch"
+    },
+    {
+      "id": "tot-tech-006",
+      "category": "tech",
+      "a": "E-reader",
+      "b": "Paper books"
+    },
+    {
+      "id": "tot-tech-007",
+      "category": "tech",
+      "a": "Typing",
+      "b": "Handwriting"
+    },
+    {
+      "id": "tot-tech-008",
+      "category": "tech",
+      "a": "Online shopping",
+      "b": "Shopping in person"
+    },
+    {
+      "id": "tot-tech-009",
+      "category": "tech",
+      "a": "Video call",
+      "b": "Phone call"
+    },
+    {
+      "id": "tot-tech-010",
+      "category": "tech",
+      "a": "Photos",
+      "b": "Videos"
+    },
+    {
+      "id": "tot-tech-011",
+      "category": "tech",
+      "a": "Notifications on",
+      "b": "Notifications off"
+    },
+    {
+      "id": "tot-tech-012",
+      "category": "tech",
+      "a": "Tablet",
+      "b": "Laptop"
+    },
+    {
+      "id": "tot-tech-013",
+      "category": "tech",
+      "a": "Cloud storage",
+      "b": "Hard drive"
+    },
+    {
+      "id": "tot-tech-014",
+      "category": "tech",
+      "a": "Emoji",
+      "b": "GIFs"
+    },
+    {
+      "id": "tot-tech-015",
+      "category": "tech",
+      "a": "Wired charger",
+      "b": "Wireless charger"
+    },
+    {
+      "id": "tot-party-001",
+      "category": "party",
+      "a": "Surprise party",
+      "b": "Planned party"
+    },
+    {
+      "id": "tot-party-002",
+      "category": "party",
+      "a": "Dance floor",
+      "b": "Quiet corner"
+    },
+    {
+      "id": "tot-party-003",
+      "category": "party",
+      "a": "Fancy dress",
+      "b": "Casual clothes"
+    },
+    {
+      "id": "tot-party-004",
+      "category": "party",
+      "a": "Host",
+      "b": "Guest"
+    },
+    {
+      "id": "tot-party-005",
+      "category": "party",
+      "a": "Cake",
+      "b": "Box of sweets"
+    },
+    {
+      "id": "tot-party-006",
+      "category": "party",
+      "a": "Birthday at home",
+      "b": "Birthday out"
+    },
+    {
+      "id": "tot-party-007",
+      "category": "party",
+      "a": "Fireworks",
+      "b": "Lanterns"
+    },
+    {
+      "id": "tot-party-008",
+      "category": "party",
+      "a": "Big wedding",
+      "b": "Small wedding"
+    },
+    {
+      "id": "tot-party-009",
+      "category": "party",
+      "a": "Karaoke",
+      "b": "DJ"
+    },
+    {
+      "id": "tot-party-010",
+      "category": "party",
+      "a": "Arrive early",
+      "b": "Arrive fashionably late"
+    },
+    {
+      "id": "tot-party-011",
+      "category": "party",
+      "a": "Gifts",
+      "b": "Experiences"
+    },
+    {
+      "id": "tot-party-012",
+      "category": "party",
+      "a": "Theme party",
+      "b": "No theme"
+    },
+    {
+      "id": "tot-party-013",
+      "category": "party",
+      "a": "New Year’s Eve out",
+      "b": "New Year’s Eve in"
+    },
+    {
+      "id": "tot-party-014",
+      "category": "party",
+      "a": "Games night",
+      "b": "Movie night"
+    },
+    {
+      "id": "tot-party-015",
+      "category": "party",
+      "a": "Leave first",
+      "b": "Stay till the end"
+    },
+    {
+      "id": "tot-work-001",
+      "category": "work",
+      "a": "Work from home",
+      "b": "Work from the office"
+    },
+    {
+      "id": "tot-work-002",
+      "category": "work",
+      "a": "Early start",
+      "b": "Late finish"
+    },
+    {
+      "id": "tot-work-003",
+      "category": "work",
+      "a": "Notes on paper",
+      "b": "Notes on a laptop"
+    },
+    {
+      "id": "tot-work-004",
+      "category": "work",
+      "a": "Group project",
+      "b": "Solo project"
+    },
+    {
+      "id": "tot-work-005",
+      "category": "work",
+      "a": "Study with music",
+      "b": "Study in silence"
+    },
+    {
+      "id": "tot-work-006",
+      "category": "work",
+      "a": "Library",
+      "b": "Café"
+    },
+    {
+      "id": "tot-work-007",
+      "category": "work",
+      "a": "Last-minute rush",
+      "b": "Finish early"
+    },
+    {
+      "id": "tot-work-008",
+      "category": "work",
+      "a": "Meetings",
+      "b": "Emails"
+    },
+    {
+      "id": "tot-work-009",
+      "category": "work",
+      "a": "Big company",
+      "b": "Small startup"
+    },
+    {
+      "id": "tot-work-010",
+      "category": "work",
+      "a": "Exams",
+      "b": "Assignments"
+    },
+    {
+      "id": "tot-work-011",
+      "category": "work",
+      "a": "Long lunch",
+      "b": "Leave early"
+    },
+    {
+      "id": "tot-work-012",
+      "category": "work",
+      "a": "Standing desk",
+      "b": "Comfy chair"
+    },
+    {
+      "id": "tot-work-013",
+      "category": "work",
+      "a": "Highlighters",
+      "b": "Sticky notes"
+    },
+    {
+      "id": "tot-work-014",
+      "category": "work",
+      "a": "Ask for help",
+      "b": "Figure it out alone"
+    },
+    {
+      "id": "tot-work-015",
+      "category": "work",
+      "a": "Four-day week",
+      "b": "Longer holidays"
     }
   ]
 }

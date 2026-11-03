@@ -22,7 +22,9 @@
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run",
     "validate": "node --experimental-strip-types scripts/content.ts validate",
-    "sync": "node --experimental-strip-types scripts/content.ts sync"
+    "sync": "node --experimental-strip-types scripts/content.ts sync",
+    "review": "node --experimental-strip-types scripts/content.ts review",
+    "mark-verified": "node --experimental-strip-types scripts/content.ts mark-verified"
   },
   "dependencies": {
     "zod": "^4.6.7"

@@ -12,6 +12,7 @@ import '../../theme/app_theme.dart';
 import '../../theme/tokens.g.dart';
 import '../../widgets/brand.dart';
 import '../../widgets/results_actions.dart';
+import '../../widgets/usage_prompt.dart';
 import '../modes.dart';
 
 typedef _Row = ({int team, int score, String detail});
@@ -99,6 +100,7 @@ class ScoreResultsScreen extends ConsumerWidget {
               ],
             ),
           ),
+          const UsagePrompt(),
           const SizedBox(height: MmSpace.s4),
           for (final (i, row) in rows.indexed)
             Card(

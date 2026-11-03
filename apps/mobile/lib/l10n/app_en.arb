@@ -193,7 +193,7 @@
   "settingsHapticsBody": "A small buzz when you tap a vote.",
   "settingsShowOnboarding": "Show the introduction again",
   "settingsPrivacy": "Privacy",
-  "settingsPrivacyBody": "You can play without an account. An account is only for buying Premium: it stores your email and subscription status on the MirthMix server. There are no analytics in this version. Games, settings and players are stored only on this phone.",
+  "settingsPrivacyBody": "You can play without an account. An account is only for buying Premium: it stores your email and subscription status on the MirthMix server. Games, settings and players are stored only on this phone.",
   "settingsAge": "Age guidance",
   "settingsAgeBody": "MirthMix is made for ages 13 and up. Categories marked 13+ include more mature themes, never explicit content.",
   "settingsAbout": "About",
@@ -589,5 +589,43 @@
   "accountDeleteConfirm": "Delete",
   "accountDeleted": "Your account was deleted.",
   "accountDeleteFailed": "We couldn’t delete your account. Please try again.",
-  "settingsPremium": "Premium"
+  "settingsPremium": "Premium",
+  "signInAdult": "I’m 18 or older",
+  "signInAdultRequired": "Accounts and purchases are for people aged 18 or over. You can keep playing everything free without an account.",
+  "settingsShareUsage": "Share anonymous usage stats",
+  "settingsShareUsageBody": "Which games are played, how far you get, and crash reports, to help improve MirthMix. Never names, questions, answers or your email. Off unless you turn it on.",
+  "myQuestionsTitle": "My questions",
+  "myQuestionsIntro": "Write your own questions for Would You Rather and This or That. They stay on this phone and are never shared.",
+  "myQuestionsHowTo": "To play them, tick “My questions” when you set up the game.",
+  "myQuestionsEmpty": "No questions yet. Tap “Add question” to write one.",
+  "myQuestionsAdd": "Add question",
+  "myQuestionsEdit": "Edit question",
+  "myQuestionsOptionA": "First option",
+  "myQuestionsOptionB": "Second option",
+  "myQuestionsDelete": "Delete question",
+  "myQuestionsDeleted": "Question deleted",
+  "myQuestionsErrorEmpty": "Fill in both options.",
+  "myQuestionsErrorTooLong": "Keep each option to {max} characters or fewer.",
+  "@myQuestionsErrorTooLong": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "myQuestionsErrorSame": "The two options need to be different.",
+  "myQuestionsErrorDuplicate": "You already have this question.",
+  "myQuestionsErrorNotAllowed": "That has a word we don’t allow. Keep it friendly for everyone.",
+  "myQuestionsErrorFull": "You’ve reached {max} questions. Delete some to add more.",
+  "@myQuestionsErrorFull": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "setupWriteOwn": "Write your own questions",
+  "usagePromptTitle": "Help make MirthMix better?",
+  "usagePromptYes": "Share anonymous stats",
+  "usagePromptNo": "No thanks"
 }

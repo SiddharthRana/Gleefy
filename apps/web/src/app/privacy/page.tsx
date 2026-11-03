@@ -16,10 +16,32 @@ export default function PrivacyPage() {
       <ul className="mt-3 list-disc space-y-2 pl-6">
         <li>Your settings (theme, big text, motion and vibration preferences).</li>
         <li>The game you are playing, so it survives the app closing, and your last game setup.</li>
+        <li>Player and team names, favourites, party packs and questions you write yourself.</li>
       </ul>
       <p className="mt-3">
-        All of this stays on your phone. There are no analytics and no advertising, and nothing you
-        play is sent to us.
+        All of this stays on your phone. There is no advertising, and nothing you play is sent to us
+        unless you choose to share usage statistics (below).
+      </p>
+      <h2 className="mt-10 font-display text-3xl font-semibold">Usage statistics (optional)</h2>
+      <p className="mt-3">
+        The app can share anonymous usage statistics and crash reports, but only if you turn on
+        “Share anonymous usage stats” in Settings. It is off until you do. When on, it sends:
+      </p>
+      <ul className="mt-3 list-disc space-y-2 pl-6">
+        <li>
+          Which game was started or finished, the number of rounds and categories, and whether
+          timers or a premium category were used.
+        </li>
+        <li>
+          When the app is opened and when the Premium screen is viewed or a purchase verified.
+        </li>
+        <li>Error reports: the error message and where in the app it happened.</li>
+        <li>A random identifier for this install, the app version and the platform.</li>
+      </ul>
+      <p className="mt-3">
+        It never includes player names, questions (including ones you write), answers, your email or
+        your account. The data goes to our analytics provider, PostHog, hosted in the EU. Turning
+        the setting off stops it and forgets the random identifier.
       </p>
       <h2 className="mt-10 font-display text-3xl font-semibold">Accounts and Premium</h2>
       <p className="mt-3">
@@ -43,8 +65,10 @@ export default function PrivacyPage() {
       <h2 className="mt-10 font-display text-3xl font-semibold">This website</h2>
       <p className="mt-3">
         This website uses no analytics. If you sign in, your browser keeps your session in local
-        storage so you stay signed in. Our hosting provider may keep standard server logs (such as
-        IP address and pages requested) for security.
+        storage so you stay signed in. If the site hits an error, a report of the error (the page
+        path and where in the code it happened, never your email or what you typed) may be sent to
+        our error-reporting provider, Sentry, so we can fix it. Our hosting provider may keep
+        standard server logs (such as IP address and pages requested) for security.
       </p>
       <h2 className="mt-10 font-display text-3xl font-semibold">Age</h2>
       <p className="mt-3">
@@ -53,8 +77,7 @@ export default function PrivacyPage() {
       </p>
       <h2 className="mt-10 font-display text-3xl font-semibold">Changes</h2>
       <p className="mt-3">
-        If we add analytics later, this page will be updated before they launch, and analytics will
-        ask for consent where the law requires it.
+        If what we collect changes, we will update this page before the change reaches the app.
       </p>
     </article>
   );

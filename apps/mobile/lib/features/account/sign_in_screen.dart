@@ -20,6 +20,9 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
   final _code = TextEditingController();
   String? _sentTo;
   String? _error;
+
+  /// Accounts and purchases are 18+ (BUILD_PROMPT §0, India's DPDP Act); self-declared here.
+  bool _adult = false;
   bool _busy = false;
 
   @override
@@ -56,6 +59,10 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     final email = _email.text.trim();
     if (!looksLikeEmail(email)) {
       setState(() => _error = l.signInBadEmail);
+      return;
+    }
+    if (!_adult) {
+      setState(() => _error = l.signInAdultRequired);
       return;
     }
     await _run(() async {
@@ -103,6 +110,14 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
               textInputAction: TextInputAction.done,
               onSubmitted: (_) => _verify(),
               decoration: InputDecoration(labelText: l.signInCode, border: const OutlineInputBorder()),
+            ),
+          if (!sent)
+            CheckboxListTile(
+              value: _adult,
+              onChanged: _busy ? null : (v) => setState(() => _adult = v ?? false),
+              title: Text(l.signInAdult),
+              controlAffinity: ListTileControlAffinity.leading,
+              contentPadding: EdgeInsets.zero,
             ),
           if (_error != null)
             Semantics(

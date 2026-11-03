@@ -2,7 +2,7 @@
 
 Party games for one shared phone: Would You Rather, This or That, Trivia Blitz, Guess the Answer and custom party packs, for friends, couples and families playing together in person. No sign-up needed.
 
-> **Status: Phases 1–4 of 5 are complete.** All four modes plus custom party packs are playable on Android, and in the browser at `/play` with shareable links. Premium (Google Play Billing in the app, Paddle or Dodo Payments on the web) is built and tested against fakes and a local database, but no store, provider or Supabase project is set up yet. Nothing is deployed. See [`docs/PROGRESS.md`](docs/PROGRESS.md) for exactly what works and what doesn't, and [`docs/BUILD_PROMPT.md`](docs/BUILD_PROMPT.md) for the full plan.
+> **Status: all 5 phases are complete in code.** Four games plus custom party packs on Android and in the browser, 580 original questions and cards, Premium via Google Play or Paddle/Dodo, opt-in analytics and an approval-gated deploy pipeline. Nothing is deployed or configured yet: the remaining launch steps (accounts, legal review, trivia verification, closed test) are in [`docs/launch/checklist.md`](docs/launch/checklist.md). See [`docs/PROGRESS.md`](docs/PROGRESS.md) for exactly what works and what doesn't, and [`docs/BUILD_PROMPT.md`](docs/BUILD_PROMPT.md) for the full plan.
 
 ## Architecture
 

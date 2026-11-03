@@ -339,7 +339,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsPrivacyBody =>
-      'You can play without an account. An account is only for buying Premium: it stores your email and subscription status on the MirthMix server. There are no analytics in this version. Games, settings and players are stored only on this phone.';
+      'You can play without an account. An account is only for buying Premium: it stores your email and subscription status on the MirthMix server. Games, settings and players are stored only on this phone.';
 
   @override
   String get settingsAge => 'Age guidance';
@@ -811,4 +811,83 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsPremium => 'Premium';
+
+  @override
+  String get signInAdult => 'I’m 18 or older';
+
+  @override
+  String get signInAdultRequired =>
+      'Accounts and purchases are for people aged 18 or over. You can keep playing everything free without an account.';
+
+  @override
+  String get settingsShareUsage => 'Share anonymous usage stats';
+
+  @override
+  String get settingsShareUsageBody =>
+      'Which games are played, how far you get, and crash reports, to help improve MirthMix. Never names, questions, answers or your email. Off unless you turn it on.';
+
+  @override
+  String get myQuestionsTitle => 'My questions';
+
+  @override
+  String get myQuestionsIntro =>
+      'Write your own questions for Would You Rather and This or That. They stay on this phone and are never shared.';
+
+  @override
+  String get myQuestionsHowTo => 'To play them, tick “My questions” when you set up the game.';
+
+  @override
+  String get myQuestionsEmpty => 'No questions yet. Tap “Add question” to write one.';
+
+  @override
+  String get myQuestionsAdd => 'Add question';
+
+  @override
+  String get myQuestionsEdit => 'Edit question';
+
+  @override
+  String get myQuestionsOptionA => 'First option';
+
+  @override
+  String get myQuestionsOptionB => 'Second option';
+
+  @override
+  String get myQuestionsDelete => 'Delete question';
+
+  @override
+  String get myQuestionsDeleted => 'Question deleted';
+
+  @override
+  String get myQuestionsErrorEmpty => 'Fill in both options.';
+
+  @override
+  String myQuestionsErrorTooLong(int max) {
+    return 'Keep each option to $max characters or fewer.';
+  }
+
+  @override
+  String get myQuestionsErrorSame => 'The two options need to be different.';
+
+  @override
+  String get myQuestionsErrorDuplicate => 'You already have this question.';
+
+  @override
+  String get myQuestionsErrorNotAllowed => 'That has a word we don’t allow. Keep it friendly for everyone.';
+
+  @override
+  String myQuestionsErrorFull(int max) {
+    return 'You’ve reached $max questions. Delete some to add more.';
+  }
+
+  @override
+  String get setupWriteOwn => 'Write your own questions';
+
+  @override
+  String get usagePromptTitle => 'Help make MirthMix better?';
+
+  @override
+  String get usagePromptYes => 'Share anonymous stats';
+
+  @override
+  String get usagePromptNo => 'No thanks';
 }

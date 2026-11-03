@@ -14,6 +14,7 @@ import { ENV, type Env } from './config/env';
 import { DatabaseModule } from './database/database.module';
 import { EntitlementsModule } from './entitlements/entitlements.module';
 import { HealthController } from './health/health.controller';
+import { ObservabilityModule } from './observability/observability.module';
 import { PlansController } from './plans/plans.controller';
 
 const REQUEST_ID = /^[A-Za-z0-9-]{8,64}$/;
@@ -61,6 +62,7 @@ const REQUEST_ID = /^[A-Za-z0-9-]{8,64}$/;
       ],
     }),
     DatabaseModule,
+    ObservabilityModule,
     AuthModule,
     EntitlementsModule,
     AccountModule,

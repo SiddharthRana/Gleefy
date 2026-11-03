@@ -42,6 +42,30 @@
       "tier": "premium",
       "ageRating": "all",
       "region": "global"
+    },
+    {
+      "id": "history",
+      "name": "History",
+      "description": "Empires, explorers and turning points.",
+      "tier": "premium",
+      "ageRating": "all",
+      "region": "global"
+    },
+    {
+      "id": "world-food",
+      "name": "Food Around the World",
+      "description": "Dishes, ingredients and where they come from.",
+      "tier": "premium",
+      "ageRating": "all",
+      "region": "global"
+    },
+    {
+      "id": "sports",
+      "name": "Sports",
+      "description": "Rules, records and the language of the game.",
+      "tier": "premium",
+      "ageRating": "all",
+      "region": "global"
     }
   ],
   "items": [
@@ -50,7 +74,12 @@
       "category": "science",
       "difficulty": "easy",
       "question": "Which gas do plants take in from the air to make food?",
-      "choices": ["Carbon dioxide", "Oxygen", "Nitrogen", "Helium"],
+      "choices": [
+        "Carbon dioxide",
+        "Oxygen",
+        "Nitrogen",
+        "Helium"
+      ],
       "answer": 0,
       "explanation": "Plants use carbon dioxide, water and sunlight in photosynthesis.",
       "source": "Encyclopaedia Britannica: Photosynthesis",
@@ -62,7 +91,12 @@
       "category": "science",
       "difficulty": "easy",
       "question": "At sea level, at what temperature does water boil?",
-      "choices": ["100 °C", "90 °C", "80 °C", "120 °C"],
+      "choices": [
+        "100 °C",
+        "90 °C",
+        "80 °C",
+        "120 °C"
+      ],
       "answer": 0,
       "explanation": "At standard sea-level pressure, pure water boils at 100 °C.",
       "source": "Encyclopaedia Britannica: Boiling point",
@@ -74,7 +108,12 @@
       "category": "science",
       "difficulty": "easy",
       "question": "What is the chemical symbol for gold?",
-      "choices": ["Au", "Ag", "Gd", "Go"],
+      "choices": [
+        "Au",
+        "Ag",
+        "Gd",
+        "Go"
+      ],
       "answer": 0,
       "explanation": "Au comes from the Latin word for gold, aurum.",
       "source": "Royal Society of Chemistry: Periodic Table — Gold",
@@ -86,7 +125,12 @@
       "category": "science",
       "difficulty": "medium",
       "question": "How many bones are in a typical adult human body?",
-      "choices": ["206", "186", "226", "306"],
+      "choices": [
+        "206",
+        "186",
+        "226",
+        "306"
+      ],
       "answer": 0,
       "explanation": "Babies have more bones; many fuse together as we grow.",
       "source": "Encyclopaedia Britannica: Human skeleton",
@@ -98,7 +142,12 @@
       "category": "science",
       "difficulty": "easy",
       "question": "Which natural material is the hardest?",
-      "choices": ["Diamond", "Quartz", "Iron", "Granite"],
+      "choices": [
+        "Diamond",
+        "Quartz",
+        "Iron",
+        "Granite"
+      ],
       "answer": 0,
       "explanation": "Diamond tops the Mohs hardness scale at 10.",
       "source": "Encyclopaedia Britannica: Mohs hardness",
@@ -110,7 +159,12 @@
       "category": "science",
       "difficulty": "medium",
       "question": "Where in a human cell is most of its DNA kept?",
-      "choices": ["Nucleus", "Cell membrane", "Ribosome", "Cytoplasm"],
+      "choices": [
+        "Nucleus",
+        "Cell membrane",
+        "Ribosome",
+        "Cytoplasm"
+      ],
       "answer": 0,
       "explanation": "The nucleus holds the chromosomes.",
       "source": "Encyclopaedia Britannica: Cell nucleus",
@@ -139,7 +193,12 @@
       "category": "science",
       "difficulty": "easy",
       "question": "Which organ pumps blood around your body?",
-      "choices": ["Heart", "Lungs", "Liver", "Kidneys"],
+      "choices": [
+        "Heart",
+        "Lungs",
+        "Liver",
+        "Kidneys"
+      ],
       "answer": 0,
       "explanation": "The heart pumps blood through the arteries and veins.",
       "source": "Encyclopaedia Britannica: Heart",
@@ -151,7 +210,12 @@
       "category": "science",
       "difficulty": "easy",
       "question": "What is H₂O better known as?",
-      "choices": ["Water", "Salt", "Hydrogen peroxide", "Air"],
+      "choices": [
+        "Water",
+        "Salt",
+        "Hydrogen peroxide",
+        "Air"
+      ],
       "answer": 0,
       "explanation": "Two hydrogen atoms and one oxygen atom make a water molecule.",
       "source": "Encyclopaedia Britannica: Water",
@@ -163,7 +227,12 @@
       "category": "science",
       "difficulty": "easy",
       "question": "Which vitamin does your skin make in sunlight?",
-      "choices": ["Vitamin D", "Vitamin C", "Vitamin A", "Vitamin K"],
+      "choices": [
+        "Vitamin D",
+        "Vitamin C",
+        "Vitamin A",
+        "Vitamin K"
+      ],
       "answer": 0,
       "explanation": "UVB light helps the skin produce vitamin D.",
       "source": "NHS: Vitamin D",
@@ -175,7 +244,12 @@
       "category": "science",
       "difficulty": "medium",
       "question": "Which gas makes up most of Earth's atmosphere?",
-      "choices": ["Nitrogen", "Oxygen", "Carbon dioxide", "Argon"],
+      "choices": [
+        "Nitrogen",
+        "Oxygen",
+        "Carbon dioxide",
+        "Argon"
+      ],
       "answer": 0,
       "explanation": "Nitrogen makes up about 78% of dry air.",
       "source": "NASA Earth Fact Sheet",
@@ -187,7 +261,12 @@
       "category": "science",
       "difficulty": "medium",
       "question": "Which unit measures electrical resistance?",
-      "choices": ["Ohm", "Volt", "Watt", "Ampere"],
+      "choices": [
+        "Ohm",
+        "Volt",
+        "Watt",
+        "Ampere"
+      ],
       "answer": 0,
       "explanation": "Resistance is measured in ohms, named after Georg Ohm.",
       "source": "NIST: SI units",
@@ -199,7 +278,12 @@
       "category": "geography",
       "difficulty": "easy",
       "question": "Which is the largest ocean on Earth?",
-      "choices": ["Pacific", "Atlantic", "Indian", "Arctic"],
+      "choices": [
+        "Pacific",
+        "Atlantic",
+        "Indian",
+        "Arctic"
+      ],
       "answer": 0,
       "explanation": "The Pacific covers about a third of Earth's surface.",
       "source": "Encyclopaedia Britannica: Pacific Ocean",
@@ -211,7 +295,12 @@
       "category": "geography",
       "difficulty": "easy",
       "question": "What is the capital of Japan?",
-      "choices": ["Tokyo", "Osaka", "Kyoto", "Seoul"],
+      "choices": [
+        "Tokyo",
+        "Osaka",
+        "Kyoto",
+        "Seoul"
+      ],
       "answer": 0,
       "explanation": "Tokyo has been Japan's capital since 1868.",
       "source": "Encyclopaedia Britannica: Tokyo",
@@ -223,7 +312,12 @@
       "category": "geography",
       "difficulty": "easy",
       "question": "Which river flows through Egypt and is one of the longest in the world?",
-      "choices": ["Nile", "Congo", "Niger", "Zambezi"],
+      "choices": [
+        "Nile",
+        "Congo",
+        "Niger",
+        "Zambezi"
+      ],
       "answer": 0,
       "explanation": "The Nile flows north into the Mediterranean Sea.",
       "source": "Encyclopaedia Britannica: Nile River",
@@ -235,7 +329,12 @@
       "category": "geography",
       "difficulty": "easy",
       "question": "How many continents are there, by the most common count?",
-      "choices": ["7", "5", "6", "8"],
+      "choices": [
+        "7",
+        "5",
+        "6",
+        "8"
+      ],
       "answer": 0,
       "explanation": "Africa, Antarctica, Asia, Australia, Europe, North America and South America.",
       "source": "National Geographic: Continent",
@@ -247,7 +346,12 @@
       "category": "geography",
       "difficulty": "easy",
       "question": "Which country has the largest area?",
-      "choices": ["Russia", "Canada", "China", "United States"],
+      "choices": [
+        "Russia",
+        "Canada",
+        "China",
+        "United States"
+      ],
       "answer": 0,
       "explanation": "Russia spans about 17 million square kilometres.",
       "source": "Encyclopaedia Britannica: Russia",
@@ -259,7 +363,12 @@
       "category": "geography",
       "difficulty": "medium",
       "question": "What is the capital of Australia?",
-      "choices": ["Canberra", "Sydney", "Melbourne", "Perth"],
+      "choices": [
+        "Canberra",
+        "Sydney",
+        "Melbourne",
+        "Perth"
+      ],
       "answer": 0,
       "explanation": "Canberra was purpose-built as the capital.",
       "source": "Encyclopaedia Britannica: Canberra",
@@ -271,7 +380,12 @@
       "category": "geography",
       "difficulty": "easy",
       "question": "Which country's flag has a red maple leaf?",
-      "choices": ["Canada", "Switzerland", "Austria", "Japan"],
+      "choices": [
+        "Canada",
+        "Switzerland",
+        "Austria",
+        "Japan"
+      ],
       "answer": 0,
       "explanation": "Canada adopted the maple leaf flag in 1965.",
       "source": "Government of Canada: National flag",
@@ -283,7 +397,12 @@
       "category": "geography",
       "difficulty": "medium",
       "question": "Mount Kilimanjaro is in which country?",
-      "choices": ["Tanzania", "Kenya", "Uganda", "Ethiopia"],
+      "choices": [
+        "Tanzania",
+        "Kenya",
+        "Uganda",
+        "Ethiopia"
+      ],
       "answer": 0,
       "explanation": "It is in north-eastern Tanzania, near the Kenyan border.",
       "source": "Encyclopaedia Britannica: Kilimanjaro",
@@ -295,7 +414,12 @@
       "category": "geography",
       "difficulty": "medium",
       "question": "Which desert stretches across Mongolia and northern China?",
-      "choices": ["Gobi", "Sahara", "Kalahari", "Atacama"],
+      "choices": [
+        "Gobi",
+        "Sahara",
+        "Kalahari",
+        "Atacama"
+      ],
       "answer": 0,
       "explanation": "The Gobi is a cold desert in East Asia.",
       "source": "Encyclopaedia Britannica: Gobi",
@@ -307,7 +431,12 @@
       "category": "geography",
       "difficulty": "medium",
       "question": "What is the capital of Brazil?",
-      "choices": ["Brasília", "Rio de Janeiro", "São Paulo", "Salvador"],
+      "choices": [
+        "Brasília",
+        "Rio de Janeiro",
+        "São Paulo",
+        "Salvador"
+      ],
       "answer": 0,
       "explanation": "Brasília became the capital in 1960.",
       "source": "Encyclopaedia Britannica: Brasília",
@@ -319,7 +448,12 @@
       "category": "geography",
       "difficulty": "hard",
       "question": "Which strait separates Spain from Morocco?",
-      "choices": ["Strait of Gibraltar", "Strait of Hormuz", "Bosporus", "Strait of Malacca"],
+      "choices": [
+        "Strait of Gibraltar",
+        "Strait of Hormuz",
+        "Bosporus",
+        "Strait of Malacca"
+      ],
       "answer": 0,
       "explanation": "It links the Atlantic Ocean and the Mediterranean Sea.",
       "source": "Encyclopaedia Britannica: Strait of Gibraltar",
@@ -331,7 +465,12 @@
       "category": "geography",
       "difficulty": "medium",
       "question": "Which is the smallest country in the world by area?",
-      "choices": ["Vatican City", "Monaco", "San Marino", "Malta"],
+      "choices": [
+        "Vatican City",
+        "Monaco",
+        "San Marino",
+        "Malta"
+      ],
       "answer": 0,
       "explanation": "Vatican City covers less than half a square kilometre.",
       "source": "Encyclopaedia Britannica: Vatican City",
@@ -343,7 +482,12 @@
       "category": "nature",
       "difficulty": "easy",
       "question": "Which is the fastest land animal?",
-      "choices": ["Cheetah", "Lion", "Horse", "Greyhound"],
+      "choices": [
+        "Cheetah",
+        "Lion",
+        "Horse",
+        "Greyhound"
+      ],
       "answer": 0,
       "explanation": "Cheetahs can sprint faster than 100 km/h over short distances.",
       "source": "Encyclopaedia Britannica: Cheetah",
@@ -355,7 +499,12 @@
       "category": "nature",
       "difficulty": "easy",
       "question": "How many legs does a spider have?",
-      "choices": ["8", "6", "10", "12"],
+      "choices": [
+        "8",
+        "6",
+        "10",
+        "12"
+      ],
       "answer": 0,
       "explanation": "Spiders are arachnids, which have eight legs.",
       "source": "Encyclopaedia Britannica: Spider",
@@ -367,7 +516,12 @@
       "category": "nature",
       "difficulty": "easy",
       "question": "What is the largest animal known to have lived?",
-      "choices": ["Blue whale", "African elephant", "Megalodon", "Giraffe"],
+      "choices": [
+        "Blue whale",
+        "African elephant",
+        "Megalodon",
+        "Giraffe"
+      ],
       "answer": 0,
       "explanation": "Blue whales can be around 30 metres long.",
       "source": "NOAA Fisheries: Blue whale",
@@ -379,7 +533,12 @@
       "category": "nature",
       "difficulty": "easy",
       "question": "What do giant pandas mostly eat?",
-      "choices": ["Bamboo", "Fish", "Fruit", "Insects"],
+      "choices": [
+        "Bamboo",
+        "Fish",
+        "Fruit",
+        "Insects"
+      ],
       "answer": 0,
       "explanation": "Bamboo makes up nearly all of a giant panda's diet.",
       "source": "WWF: Giant panda",
@@ -391,7 +550,12 @@
       "category": "nature",
       "difficulty": "easy",
       "question": "What is a group of lions called?",
-      "choices": ["A pride", "A pack", "A herd", "A flock"],
+      "choices": [
+        "A pride",
+        "A pack",
+        "A herd",
+        "A flock"
+      ],
       "answer": 0,
       "explanation": "Lions are the most social big cats and live in prides.",
       "source": "Encyclopaedia Britannica: Lion",
@@ -403,7 +567,12 @@
       "category": "nature",
       "difficulty": "medium",
       "question": "Which bird can fly backwards?",
-      "choices": ["Hummingbird", "Sparrow", "Eagle", "Pigeon"],
+      "choices": [
+        "Hummingbird",
+        "Sparrow",
+        "Eagle",
+        "Pigeon"
+      ],
       "answer": 0,
       "explanation": "Hummingbirds can hover and fly in every direction.",
       "source": "Encyclopaedia Britannica: Hummingbird",
@@ -415,7 +584,12 @@
       "category": "nature",
       "difficulty": "easy",
       "question": "Frogs belong to which group of animals?",
-      "choices": ["Amphibians", "Reptiles", "Mammals", "Fish"],
+      "choices": [
+        "Amphibians",
+        "Reptiles",
+        "Mammals",
+        "Fish"
+      ],
       "answer": 0,
       "explanation": "Most amphibians start life in water and later live on land.",
       "source": "Encyclopaedia Britannica: Amphibian",
@@ -427,7 +601,12 @@
       "category": "nature",
       "difficulty": "medium",
       "question": "How many hearts does an octopus have?",
-      "choices": ["3", "1", "2", "8"],
+      "choices": [
+        "3",
+        "1",
+        "2",
+        "8"
+      ],
       "answer": 0,
       "explanation": "Two hearts pump blood to the gills and one to the rest of the body.",
       "source": "Smithsonian Ocean: Octopus",
@@ -439,7 +618,12 @@
       "category": "nature",
       "difficulty": "easy",
       "question": "Which tree grows acorns?",
-      "choices": ["Oak", "Pine", "Maple", "Palm"],
+      "choices": [
+        "Oak",
+        "Pine",
+        "Maple",
+        "Palm"
+      ],
       "answer": 0,
       "explanation": "Acorns are the nuts of oak trees.",
       "source": "Encyclopaedia Britannica: Oak",
@@ -451,7 +635,12 @@
       "category": "nature",
       "difficulty": "easy",
       "question": "Which mammal can truly fly?",
-      "choices": ["Bat", "Flying squirrel", "Sugar glider", "Colugo"],
+      "choices": [
+        "Bat",
+        "Flying squirrel",
+        "Sugar glider",
+        "Colugo"
+      ],
       "answer": 0,
       "explanation": "The others glide; bats are the only mammals capable of powered flight.",
       "source": "Encyclopaedia Britannica: Bat",
@@ -463,7 +652,12 @@
       "category": "nature",
       "difficulty": "easy",
       "question": "What is a baby kangaroo called?",
-      "choices": ["Joey", "Cub", "Kid", "Calf"],
+      "choices": [
+        "Joey",
+        "Cub",
+        "Kid",
+        "Calf"
+      ],
       "answer": 0,
       "explanation": "A joey grows in its mother's pouch.",
       "source": "Encyclopaedia Britannica: Kangaroo",
@@ -475,7 +669,12 @@
       "category": "nature",
       "difficulty": "medium",
       "question": "Roughly how long is an African elephant's pregnancy?",
-      "choices": ["About 22 months", "About 9 months", "About 12 months", "About 36 months"],
+      "choices": [
+        "About 22 months",
+        "About 9 months",
+        "About 12 months",
+        "About 36 months"
+      ],
       "answer": 0,
       "explanation": "It is the longest pregnancy of any land mammal.",
       "source": "Encyclopaedia Britannica: Elephant",
@@ -487,7 +686,12 @@
       "category": "india",
       "difficulty": "easy",
       "question": "What is India's national animal?",
-      "choices": ["Bengal tiger", "Asiatic lion", "Indian elephant", "Peacock"],
+      "choices": [
+        "Bengal tiger",
+        "Asiatic lion",
+        "Indian elephant",
+        "Peacock"
+      ],
       "answer": 0,
       "explanation": "The tiger was declared the national animal in 1973.",
       "source": "Government of India: National symbols",
@@ -499,7 +703,12 @@
       "category": "india",
       "difficulty": "easy",
       "question": "What is the capital of India?",
-      "choices": ["New Delhi", "Mumbai", "Kolkata", "Bengaluru"],
+      "choices": [
+        "New Delhi",
+        "Mumbai",
+        "Kolkata",
+        "Bengaluru"
+      ],
       "answer": 0,
       "explanation": "New Delhi has been the capital since independence.",
       "source": "Government of India: National portal",
@@ -528,7 +737,12 @@
       "category": "india",
       "difficulty": "medium",
       "question": "In which year did India's Constitution come into effect?",
-      "choices": ["1950", "1947", "1949", "1952"],
+      "choices": [
+        "1950",
+        "1947",
+        "1949",
+        "1952"
+      ],
       "answer": 0,
       "explanation": "It came into force on 26 January 1950, now celebrated as Republic Day.",
       "source": "Government of India: Constitution of India",
@@ -540,7 +754,12 @@
       "category": "india",
       "difficulty": "easy",
       "question": "Which state's name means 'land of five rivers'?",
-      "choices": ["Punjab", "Haryana", "Assam", "Bihar"],
+      "choices": [
+        "Punjab",
+        "Haryana",
+        "Assam",
+        "Bihar"
+      ],
       "answer": 0,
       "explanation": "In Persian, 'panj' means five and 'ab' means water.",
       "source": "Encyclopaedia Britannica: Punjab",
@@ -552,7 +771,12 @@
       "category": "india",
       "difficulty": "medium",
       "question": "Which classical dance from Kerala is known for its elaborate make-up and costumes?",
-      "choices": ["Kathakali", "Kathak", "Bharatanatyam", "Odissi"],
+      "choices": [
+        "Kathakali",
+        "Kathak",
+        "Bharatanatyam",
+        "Odissi"
+      ],
       "answer": 0,
       "explanation": "Kathakali dancers tell stories through expressions and gestures.",
       "source": "Encyclopaedia Britannica: Kathakali",
@@ -564,7 +788,12 @@
       "category": "india",
       "difficulty": "easy",
       "question": "Which city is called the 'Pink City'?",
-      "choices": ["Jaipur", "Udaipur", "Jodhpur", "Agra"],
+      "choices": [
+        "Jaipur",
+        "Udaipur",
+        "Jodhpur",
+        "Agra"
+      ],
       "answer": 0,
       "explanation": "Many of Jaipur's old buildings are painted a terracotta pink.",
       "source": "Encyclopaedia Britannica: Jaipur",
@@ -576,7 +805,12 @@
       "category": "india",
       "difficulty": "medium",
       "question": "Which Indian state has the longest coastline?",
-      "choices": ["Gujarat", "Tamil Nadu", "Maharashtra", "Andhra Pradesh"],
+      "choices": [
+        "Gujarat",
+        "Tamil Nadu",
+        "Maharashtra",
+        "Andhra Pradesh"
+      ],
       "answer": 0,
       "explanation": "Gujarat's coast is roughly 1,600 km long.",
       "source": "Encyclopaedia Britannica: Gujarat",
@@ -588,7 +822,12 @@
       "category": "india",
       "difficulty": "medium",
       "question": "Which Indian grandmaster won the world chess championship in 2000?",
-      "choices": ["Viswanathan Anand", "Pentala Harikrishna", "Koneru Humpy", "Dibyendu Barua"],
+      "choices": [
+        "Viswanathan Anand",
+        "Pentala Harikrishna",
+        "Koneru Humpy",
+        "Dibyendu Barua"
+      ],
       "answer": 0,
       "explanation": "Anand went on to win the world title several more times.",
       "source": "Encyclopaedia Britannica: Viswanathan Anand",
@@ -600,7 +839,12 @@
       "category": "india",
       "difficulty": "medium",
       "question": "What was the name of India's first satellite, launched in 1975?",
-      "choices": ["Aryabhata", "Bhaskara", "Rohini", "INSAT-1A"],
+      "choices": [
+        "Aryabhata",
+        "Bhaskara",
+        "Rohini",
+        "INSAT-1A"
+      ],
       "answer": 0,
       "explanation": "It was named after the ancient Indian mathematician and astronomer.",
       "source": "ISRO: Aryabhata",
@@ -612,7 +856,12 @@
       "category": "india",
       "difficulty": "easy",
       "question": "What is India's national flower?",
-      "choices": ["Lotus", "Rose", "Marigold", "Jasmine"],
+      "choices": [
+        "Lotus",
+        "Rose",
+        "Marigold",
+        "Jasmine"
+      ],
       "answer": 0,
       "explanation": "The lotus is a symbol in Indian art and mythology.",
       "source": "Government of India: National symbols",
@@ -624,7 +873,12 @@
       "category": "india",
       "difficulty": "medium",
       "question": "Which river is the longest flowing within India?",
-      "choices": ["Ganga", "Godavari", "Yamuna", "Narmada"],
+      "choices": [
+        "Ganga",
+        "Godavari",
+        "Yamuna",
+        "Narmada"
+      ],
       "answer": 0,
       "explanation": "The Ganga flows about 2,500 km from the Himalayas to the Bay of Bengal.",
       "source": "Encyclopaedia Britannica: Ganges River",
@@ -636,7 +890,12 @@
       "category": "space",
       "difficulty": "easy",
       "question": "Which is the largest planet in our solar system?",
-      "choices": ["Jupiter", "Saturn", "Neptune", "Earth"],
+      "choices": [
+        "Jupiter",
+        "Saturn",
+        "Neptune",
+        "Earth"
+      ],
       "answer": 0,
       "explanation": "Jupiter is more than twice as massive as all the other planets combined.",
       "source": "NASA: Jupiter",
@@ -648,7 +907,12 @@
       "category": "space",
       "difficulty": "easy",
       "question": "Which planet is known as the Red Planet?",
-      "choices": ["Mars", "Venus", "Mercury", "Jupiter"],
+      "choices": [
+        "Mars",
+        "Venus",
+        "Mercury",
+        "Jupiter"
+      ],
       "answer": 0,
       "explanation": "Iron oxide dust gives Mars its reddish colour.",
       "source": "NASA: Mars",
@@ -660,7 +924,12 @@
       "category": "space",
       "difficulty": "easy",
       "question": "Which star is closest to Earth?",
-      "choices": ["The Sun", "Proxima Centauri", "Sirius", "Polaris"],
+      "choices": [
+        "The Sun",
+        "Proxima Centauri",
+        "Sirius",
+        "Polaris"
+      ],
       "answer": 0,
       "explanation": "Trick question: the Sun is a star. Proxima Centauri is the next closest.",
       "source": "NASA: The Sun",
@@ -672,7 +941,12 @@
       "category": "space",
       "difficulty": "easy",
       "question": "Who was the first person to walk on the Moon?",
-      "choices": ["Neil Armstrong", "Buzz Aldrin", "Yuri Gagarin", "Michael Collins"],
+      "choices": [
+        "Neil Armstrong",
+        "Buzz Aldrin",
+        "Yuri Gagarin",
+        "Michael Collins"
+      ],
       "answer": 0,
       "explanation": "Armstrong stepped onto the Moon on 20 July 1969 (Apollo 11).",
       "source": "NASA: Apollo 11",
@@ -684,7 +958,12 @@
       "category": "space",
       "difficulty": "easy",
       "question": "Which planet is famous for its bright rings?",
-      "choices": ["Saturn", "Mars", "Mercury", "Venus"],
+      "choices": [
+        "Saturn",
+        "Mars",
+        "Mercury",
+        "Venus"
+      ],
       "answer": 0,
       "explanation": "Saturn's rings are mostly ice and rock.",
       "source": "NASA: Saturn",
@@ -696,7 +975,12 @@
       "category": "space",
       "difficulty": "medium",
       "question": "About how long does sunlight take to reach Earth?",
-      "choices": ["About 8 minutes", "About 8 seconds", "About 8 hours", "About 8 days"],
+      "choices": [
+        "About 8 minutes",
+        "About 8 seconds",
+        "About 8 hours",
+        "About 8 days"
+      ],
       "answer": 0,
       "explanation": "Light covers the 150 million km in roughly 8 minutes 20 seconds.",
       "source": "NASA: Sun facts",
@@ -725,11 +1009,2464 @@
       "category": "space",
       "difficulty": "easy",
       "question": "Which planet is closest to the Sun?",
-      "choices": ["Mercury", "Venus", "Earth", "Mars"],
+      "choices": [
+        "Mercury",
+        "Venus",
+        "Earth",
+        "Mars"
+      ],
       "answer": 0,
       "explanation": "Mercury orbits the Sun every 88 days.",
       "source": "NASA: Mercury",
       "verifiedOn": "2026-10-30",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-science-013",
+      "category": "science",
+      "difficulty": "medium",
+      "question": "What is the chemical symbol for sodium?",
+      "choices": [
+        "Na",
+        "So",
+        "Sd",
+        "Sn"
+      ],
+      "answer": 0,
+      "explanation": "Na comes from natrium, the Latin name for sodium.",
+      "source": "Royal Society of Chemistry: Periodic Table, sodium",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-science-014",
+      "category": "science",
+      "difficulty": "easy",
+      "question": "In which part of a plant does most photosynthesis happen?",
+      "choices": [
+        "Leaves",
+        "Roots",
+        "Flowers",
+        "Seeds"
+      ],
+      "answer": 0,
+      "explanation": "Leaves are full of chloroplasts, which capture sunlight to make food.",
+      "source": "Britannica: Photosynthesis",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-science-015",
+      "category": "science",
+      "difficulty": "easy",
+      "question": "Which blood cells carry oxygen around the body?",
+      "choices": [
+        "Red blood cells",
+        "White blood cells",
+        "Platelets",
+        "Nerve cells"
+      ],
+      "answer": 0,
+      "explanation": "Red blood cells contain haemoglobin, which binds oxygen.",
+      "source": "Britannica: Red blood cell",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-science-016",
+      "category": "science",
+      "difficulty": "easy",
+      "question": "Which force keeps the planets in orbit around the Sun?",
+      "choices": [
+        "Gravity",
+        "Magnetism",
+        "Friction",
+        "Static electricity"
+      ],
+      "answer": 0,
+      "explanation": "The Sun’s gravity pulls on each planet and bends its path into an orbit.",
+      "source": "NASA Science: Gravity",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-science-017",
+      "category": "science",
+      "difficulty": "easy",
+      "question": "Which element has the atomic number 1?",
+      "choices": [
+        "Hydrogen",
+        "Helium",
+        "Oxygen",
+        "Carbon"
+      ],
+      "answer": 0,
+      "explanation": "Hydrogen has one proton, making it the first element in the periodic table.",
+      "source": "Royal Society of Chemistry: Periodic Table, hydrogen",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-science-018",
+      "category": "science",
+      "difficulty": "easy",
+      "question": "What is the largest organ of the human body?",
+      "choices": [
+        "Skin",
+        "Liver",
+        "Lungs",
+        "Brain"
+      ],
+      "answer": 0,
+      "explanation": "Skin covers the whole body and is its largest organ.",
+      "source": "Britannica: Skin",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-science-019",
+      "category": "science",
+      "difficulty": "medium",
+      "question": "Which metal is a liquid at room temperature?",
+      "choices": [
+        "Mercury",
+        "Lead",
+        "Tin",
+        "Aluminium"
+      ],
+      "answer": 0,
+      "explanation": "Mercury melts at about −39 °C, so it is liquid at room temperature.",
+      "source": "Royal Society of Chemistry: Periodic Table, mercury",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-science-020",
+      "category": "science",
+      "difficulty": "medium",
+      "question": "Sound travels fastest through which of these?",
+      "choices": [
+        "Steel",
+        "Water",
+        "Air",
+        "A vacuum"
+      ],
+      "answer": 0,
+      "explanation": "Sound moves faster through solids than liquids or gases, and not at all through a vacuum.",
+      "source": "Britannica: Sound, speed of sound",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-science-021",
+      "category": "science",
+      "difficulty": "medium",
+      "question": "What is the pH of pure water at 25 °C?",
+      "choices": [
+        "7",
+        "0",
+        "5",
+        "14"
+      ],
+      "answer": 0,
+      "explanation": "Pure water is neutral, with a pH of 7 at 25 °C.",
+      "source": "Britannica: pH",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-science-022",
+      "category": "science",
+      "difficulty": "easy",
+      "question": "Which scientist described the three laws of motion?",
+      "choices": [
+        "Isaac Newton",
+        "Albert Einstein",
+        "Galileo Galilei",
+        "Charles Darwin"
+      ],
+      "answer": 0,
+      "explanation": "Newton published his laws of motion in 1687, in the Principia.",
+      "source": "Britannica: Newton’s laws of motion",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-science-023",
+      "category": "science",
+      "difficulty": "easy",
+      "question": "How many chambers does the human heart have?",
+      "choices": [
+        "4",
+        "2",
+        "3",
+        "6"
+      ],
+      "answer": 0,
+      "explanation": "Two atria receive blood and two ventricles pump it out.",
+      "source": "Britannica: Heart",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-science-024",
+      "category": "science",
+      "difficulty": "easy",
+      "question": "Which gas makes the bubbles in fizzy drinks?",
+      "choices": [
+        "Carbon dioxide",
+        "Oxygen",
+        "Nitrogen",
+        "Helium"
+      ],
+      "answer": 0,
+      "explanation": "Carbon dioxide is dissolved under pressure and bubbles out when the bottle is opened.",
+      "source": "Britannica: Carbonation",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-science-025",
+      "category": "science",
+      "difficulty": "medium",
+      "question": "Which part of the eye changes the size of the pupil?",
+      "choices": [
+        "Iris",
+        "Retina",
+        "Lens",
+        "Cornea"
+      ],
+      "answer": 0,
+      "explanation": "The coloured iris widens or narrows the pupil to control how much light gets in.",
+      "source": "Britannica: Iris (eye)",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-science-026",
+      "category": "science",
+      "difficulty": "medium",
+      "question": "What is the SI unit of force?",
+      "choices": [
+        "Newton",
+        "Joule",
+        "Watt",
+        "Pascal"
+      ],
+      "answer": 0,
+      "explanation": "One newton accelerates one kilogram by one metre per second, every second.",
+      "source": "BIPM: The International System of Units",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-science-027",
+      "category": "science",
+      "difficulty": "medium",
+      "question": "Which type of rock forms when lava or magma cools?",
+      "choices": [
+        "Igneous",
+        "Sedimentary",
+        "Metamorphic",
+        "Limestone"
+      ],
+      "answer": 0,
+      "explanation": "Igneous rocks, such as basalt and granite, form from cooled molten rock.",
+      "source": "Britannica: Igneous rock",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-science-028",
+      "category": "science",
+      "difficulty": "medium",
+      "question": "What is the hardest substance in the human body?",
+      "choices": [
+        "Tooth enamel",
+        "Bone",
+        "Fingernails",
+        "Cartilage"
+      ],
+      "answer": 0,
+      "explanation": "Enamel, the outer layer of teeth, is harder than bone.",
+      "source": "Britannica: Enamel (tooth)",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-science-029",
+      "category": "science",
+      "difficulty": "easy",
+      "question": "What do we call animals that eat only plants?",
+      "choices": [
+        "Herbivores",
+        "Carnivores",
+        "Omnivores",
+        "Scavengers"
+      ],
+      "answer": 0,
+      "explanation": "Herbivores, like cows and deer, eat plants only.",
+      "source": "Britannica: Herbivore",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-science-030",
+      "category": "science",
+      "difficulty": "medium",
+      "question": "What is the centre of an atom called?",
+      "choices": [
+        "The nucleus",
+        "The electron",
+        "The shell",
+        "The orbit"
+      ],
+      "answer": 0,
+      "explanation": "The nucleus holds protons and neutrons; electrons move around it.",
+      "source": "Britannica: Atomic nucleus",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-geography-013",
+      "category": "geography",
+      "difficulty": "easy",
+      "question": "What is the capital of Canada?",
+      "choices": [
+        "Ottawa",
+        "Toronto",
+        "Vancouver",
+        "Montreal"
+      ],
+      "answer": 0,
+      "explanation": "Ottawa, in Ontario, is the capital; Toronto is Canada’s largest city.",
+      "source": "Britannica: Ottawa",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-geography-014",
+      "category": "geography",
+      "difficulty": "medium",
+      "question": "Which river carries more water than any other river in the world?",
+      "choices": [
+        "Amazon",
+        "Nile",
+        "Mississippi",
+        "Yangtze"
+      ],
+      "answer": 0,
+      "explanation": "The Amazon’s discharge is far greater than any other river’s.",
+      "source": "Britannica: Amazon River",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-geography-015",
+      "category": "geography",
+      "difficulty": "easy",
+      "question": "Which is the largest hot desert in the world?",
+      "choices": [
+        "Sahara",
+        "Arabian Desert",
+        "Kalahari",
+        "Thar"
+      ],
+      "answer": 0,
+      "explanation": "The Sahara covers much of North Africa. Only the cold polar deserts are larger.",
+      "source": "Britannica: Sahara",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-geography-016",
+      "category": "geography",
+      "difficulty": "medium",
+      "question": "What is the capital of Kenya?",
+      "choices": [
+        "Nairobi",
+        "Mombasa",
+        "Kampala",
+        "Addis Ababa"
+      ],
+      "answer": 0,
+      "explanation": "Nairobi is Kenya’s capital and largest city.",
+      "source": "Britannica: Nairobi",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-geography-017",
+      "category": "geography",
+      "difficulty": "medium",
+      "question": "Which mountain range is usually taken as the border between Europe and Asia?",
+      "choices": [
+        "Ural Mountains",
+        "Alps",
+        "Carpathians",
+        "Himalayas"
+      ],
+      "answer": 0,
+      "explanation": "The Urals run north to south across Russia and mark the conventional boundary.",
+      "source": "Britannica: Ural Mountains",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-geography-018",
+      "category": "geography",
+      "difficulty": "easy",
+      "question": "What is the capital of Italy?",
+      "choices": [
+        "Rome",
+        "Milan",
+        "Venice",
+        "Naples"
+      ],
+      "answer": 0,
+      "explanation": "Rome has been Italy’s capital since 1871.",
+      "source": "Britannica: Rome",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-geography-019",
+      "category": "geography",
+      "difficulty": "easy",
+      "question": "Which ocean lies between Africa and Australia?",
+      "choices": [
+        "Indian Ocean",
+        "Atlantic Ocean",
+        "Pacific Ocean",
+        "Arctic Ocean"
+      ],
+      "answer": 0,
+      "explanation": "The Indian Ocean is bounded by Africa, Asia and Australia.",
+      "source": "Britannica: Indian Ocean",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-geography-020",
+      "category": "geography",
+      "difficulty": "medium",
+      "question": "Which is the largest island in the world, not counting continents?",
+      "choices": [
+        "Greenland",
+        "Madagascar",
+        "Borneo",
+        "New Guinea"
+      ],
+      "answer": 0,
+      "explanation": "Greenland is the world’s largest island; Australia counts as a continent.",
+      "source": "Britannica: Greenland",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-geography-021",
+      "category": "geography",
+      "difficulty": "easy",
+      "question": "Which US state is made up entirely of islands?",
+      "choices": [
+        "Hawaii",
+        "Alaska",
+        "Florida",
+        "Rhode Island"
+      ],
+      "answer": 0,
+      "explanation": "Hawaii is a chain of volcanic islands in the Pacific.",
+      "source": "Britannica: Hawaii",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-geography-022",
+      "category": "geography",
+      "difficulty": "medium",
+      "question": "Along which side of South America do the Andes run?",
+      "choices": [
+        "The west",
+        "The east",
+        "Only the far south",
+        "Through the middle"
+      ],
+      "answer": 0,
+      "explanation": "The Andes run along the western, Pacific side of the continent.",
+      "source": "Britannica: Andes Mountains",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-geography-023",
+      "category": "geography",
+      "difficulty": "easy",
+      "question": "What is the capital of Egypt?",
+      "choices": [
+        "Cairo",
+        "Alexandria",
+        "Giza",
+        "Luxor"
+      ],
+      "answer": 0,
+      "explanation": "Cairo sits on the Nile, near the head of its delta.",
+      "source": "Britannica: Cairo",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-geography-024",
+      "category": "geography",
+      "difficulty": "medium",
+      "question": "Which is the largest lake in Africa?",
+      "choices": [
+        "Lake Victoria",
+        "Lake Tanganyika",
+        "Lake Malawi",
+        "Lake Chad"
+      ],
+      "answer": 0,
+      "explanation": "Lake Victoria is shared by Uganda, Kenya and Tanzania.",
+      "source": "Britannica: Lake Victoria",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-geography-025",
+      "category": "geography",
+      "difficulty": "easy",
+      "question": "What is the capital of South Korea?",
+      "choices": [
+        "Seoul",
+        "Busan",
+        "Pyongyang",
+        "Incheon"
+      ],
+      "answer": 0,
+      "explanation": "Seoul is South Korea’s capital and largest city.",
+      "source": "Britannica: Seoul",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-geography-026",
+      "category": "geography",
+      "difficulty": "medium",
+      "question": "What is the capital of Iceland?",
+      "choices": [
+        "Reykjavík",
+        "Oslo",
+        "Helsinki",
+        "Nuuk"
+      ],
+      "answer": 0,
+      "explanation": "Reykjavík is the world’s northernmost capital of a sovereign state.",
+      "source": "Britannica: Reykjavík",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-geography-027",
+      "category": "geography",
+      "difficulty": "easy",
+      "question": "Which sea lies between southern Europe and North Africa?",
+      "choices": [
+        "Mediterranean Sea",
+        "Red Sea",
+        "Black Sea",
+        "Caspian Sea"
+      ],
+      "answer": 0,
+      "explanation": "The Mediterranean is almost enclosed by Europe, Africa and Asia.",
+      "source": "Britannica: Mediterranean Sea",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-geography-028",
+      "category": "geography",
+      "difficulty": "easy",
+      "question": "Which imaginary line divides Earth into Northern and Southern Hemispheres?",
+      "choices": [
+        "The Equator",
+        "The Tropic of Cancer",
+        "The Prime Meridian",
+        "The Arctic Circle"
+      ],
+      "answer": 0,
+      "explanation": "The Equator is the line of 0° latitude.",
+      "source": "Britannica: Equator",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-geography-029",
+      "category": "geography",
+      "difficulty": "medium",
+      "question": "Angel Falls, the world’s highest uninterrupted waterfall, is in which country?",
+      "choices": [
+        "Venezuela",
+        "Brazil",
+        "Peru",
+        "Colombia"
+      ],
+      "answer": 0,
+      "explanation": "Angel Falls drops about 979 metres in Venezuela’s Canaima National Park.",
+      "source": "Britannica: Angel Falls",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-geography-030",
+      "category": "geography",
+      "difficulty": "medium",
+      "question": "Which country is home to Istanbul and lies partly in Europe and partly in Asia?",
+      "choices": [
+        "Turkey (Türkiye)",
+        "Greece",
+        "Bulgaria",
+        "Georgia"
+      ],
+      "answer": 0,
+      "explanation": "Istanbul sits on both sides of the Bosporus strait.",
+      "source": "Britannica: Istanbul",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-nature-013",
+      "category": "nature",
+      "difficulty": "easy",
+      "question": "How many legs does an insect have?",
+      "choices": [
+        "6",
+        "8",
+        "4",
+        "10"
+      ],
+      "answer": 0,
+      "explanation": "All adult insects have six legs; spiders, with eight, are not insects.",
+      "source": "Britannica: Insect",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-nature-014",
+      "category": "nature",
+      "difficulty": "easy",
+      "question": "What is the largest bird in the world?",
+      "choices": [
+        "Ostrich",
+        "Emu",
+        "Albatross",
+        "Condor"
+      ],
+      "answer": 0,
+      "explanation": "Ostriches can stand over 2.5 metres tall. They can’t fly but run very fast.",
+      "source": "Britannica: Ostrich",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-nature-015",
+      "category": "nature",
+      "difficulty": "easy",
+      "question": "Which animal is called the \"ship of the desert\"?",
+      "choices": [
+        "Camel",
+        "Horse",
+        "Donkey",
+        "Goat"
+      ],
+      "answer": 0,
+      "explanation": "Camels can travel long distances in the desert with little water.",
+      "source": "Britannica: Camel",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-nature-016",
+      "category": "nature",
+      "difficulty": "easy",
+      "question": "What do caterpillars grow into?",
+      "choices": [
+        "Butterflies or moths",
+        "Beetles",
+        "Bees",
+        "Dragonflies"
+      ],
+      "answer": 0,
+      "explanation": "Caterpillars are the larvae of butterflies and moths.",
+      "source": "Britannica: Caterpillar",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-nature-017",
+      "category": "nature",
+      "difficulty": "easy",
+      "question": "Which part of a plant takes in water from the soil?",
+      "choices": [
+        "Roots",
+        "Leaves",
+        "Flowers",
+        "Seeds"
+      ],
+      "answer": 0,
+      "explanation": "Roots absorb water and minerals and anchor the plant.",
+      "source": "Britannica: Root (plant)",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-nature-018",
+      "category": "nature",
+      "difficulty": "medium",
+      "question": "What is a group of crows called?",
+      "choices": [
+        "A murder",
+        "A pack",
+        "A pod",
+        "A herd"
+      ],
+      "answer": 0,
+      "explanation": "\"A murder of crows\" is a traditional collective noun.",
+      "source": "Britannica: Crow",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-nature-019",
+      "category": "nature",
+      "difficulty": "medium",
+      "question": "Which is the largest species of shark?",
+      "choices": [
+        "Whale shark",
+        "Great white shark",
+        "Hammerhead shark",
+        "Tiger shark"
+      ],
+      "answer": 0,
+      "explanation": "Whale sharks are the largest living fish, and they eat plankton.",
+      "source": "Britannica: Whale shark",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-nature-020",
+      "category": "nature",
+      "difficulty": "medium",
+      "question": "Snakes collect scents from the air using which body part?",
+      "choices": [
+        "Their forked tongue",
+        "Their eyes",
+        "Their scales",
+        "Their tail"
+      ],
+      "answer": 0,
+      "explanation": "The tongue carries scent particles to a sensing organ in the roof of the mouth.",
+      "source": "Britannica: Snake, senses",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-nature-021",
+      "category": "nature",
+      "difficulty": "easy",
+      "question": "Which of these animals is a marsupial?",
+      "choices": [
+        "Koala",
+        "Giant panda",
+        "Sloth",
+        "Otter"
+      ],
+      "answer": 0,
+      "explanation": "Koalas carry their young in a pouch; they are not bears.",
+      "source": "Britannica: Koala",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-nature-022",
+      "category": "nature",
+      "difficulty": "hard",
+      "question": "What colour is a polar bear’s skin?",
+      "choices": [
+        "Black",
+        "White",
+        "Pink",
+        "Grey"
+      ],
+      "answer": 0,
+      "explanation": "Under the pale fur, polar bear skin is black, which helps absorb heat.",
+      "source": "Britannica: Polar bear",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-nature-023",
+      "category": "nature",
+      "difficulty": "medium",
+      "question": "Chocolate is made from the seeds of which tree?",
+      "choices": [
+        "Cacao tree",
+        "Coffee plant",
+        "Coconut palm",
+        "Oil palm"
+      ],
+      "answer": 0,
+      "explanation": "Cacao seeds, often called cocoa beans, are fermented, dried and roasted.",
+      "source": "Britannica: Cacao",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-nature-024",
+      "category": "nature",
+      "difficulty": "easy",
+      "question": "What do koalas mainly eat?",
+      "choices": [
+        "Eucalyptus leaves",
+        "Bamboo",
+        "Grass",
+        "Insects"
+      ],
+      "answer": 0,
+      "explanation": "Koalas feed almost entirely on eucalyptus leaves.",
+      "source": "Britannica: Koala",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-nature-025",
+      "category": "nature",
+      "difficulty": "medium",
+      "question": "Which of these mammals lays eggs?",
+      "choices": [
+        "Platypus",
+        "Bat",
+        "Dolphin",
+        "Hedgehog"
+      ],
+      "answer": 0,
+      "explanation": "The platypus is one of the few egg-laying mammals, called monotremes.",
+      "source": "Britannica: Platypus",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-nature-026",
+      "category": "nature",
+      "difficulty": "medium",
+      "question": "How many wings does a honeybee have?",
+      "choices": [
+        "4",
+        "2",
+        "6",
+        "8"
+      ],
+      "answer": 0,
+      "explanation": "Bees have two pairs of wings that hook together in flight.",
+      "source": "Britannica: Bee",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-nature-027",
+      "category": "nature",
+      "difficulty": "easy",
+      "question": "Which is the tallest animal in the world?",
+      "choices": [
+        "Giraffe",
+        "Elephant",
+        "Ostrich",
+        "Camel"
+      ],
+      "answer": 0,
+      "explanation": "Adult giraffes can be over 5 metres tall.",
+      "source": "Britannica: Giraffe",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-nature-028",
+      "category": "nature",
+      "difficulty": "easy",
+      "question": "What do fish take out of the water with their gills?",
+      "choices": [
+        "Oxygen",
+        "Salt",
+        "Nitrogen",
+        "Sand"
+      ],
+      "answer": 0,
+      "explanation": "Gills absorb oxygen dissolved in the water.",
+      "source": "Britannica: Gill",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-nature-029",
+      "category": "nature",
+      "difficulty": "easy",
+      "question": "Which flower’s young plants turn to follow the Sun across the sky?",
+      "choices": [
+        "Sunflower",
+        "Rose",
+        "Tulip",
+        "Lily"
+      ],
+      "answer": 0,
+      "explanation": "Growing sunflowers track the Sun from east to west during the day.",
+      "source": "Britannica: Sunflower",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-nature-030",
+      "category": "nature",
+      "difficulty": "easy",
+      "question": "What is a female deer called?",
+      "choices": [
+        "A doe",
+        "A mare",
+        "A ewe",
+        "A sow"
+      ],
+      "answer": 0,
+      "explanation": "Female deer are does (or hinds in some species); males are bucks or stags.",
+      "source": "Britannica: Deer",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-india-013",
+      "category": "india",
+      "difficulty": "easy",
+      "question": "What is India’s national bird?",
+      "choices": [
+        "Indian peafowl (peacock)",
+        "Parrot",
+        "Kingfisher",
+        "Sparrow"
+      ],
+      "answer": 0,
+      "explanation": "The Indian peafowl became the national bird in 1963.",
+      "source": "Government of India: National Portal, National Bird",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-india-014",
+      "category": "india",
+      "difficulty": "easy",
+      "question": "In which city is India Gate?",
+      "choices": [
+        "New Delhi",
+        "Mumbai",
+        "Kolkata",
+        "Agra"
+      ],
+      "answer": 0,
+      "explanation": "India Gate is a war memorial honouring Indian soldiers, in the heart of New Delhi.",
+      "source": "Britannica: India Gate",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-india-015",
+      "category": "india",
+      "difficulty": "easy",
+      "question": "The Gateway of India stands in which city?",
+      "choices": [
+        "Mumbai",
+        "Chennai",
+        "Kolkata",
+        "Kochi"
+      ],
+      "answer": 0,
+      "explanation": "It overlooks the Arabian Sea at Apollo Bunder in Mumbai.",
+      "source": "Britannica: Gateway of India",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-india-016",
+      "category": "india",
+      "difficulty": "easy",
+      "question": "Who is known in India as the \"Father of the Nation\"?",
+      "choices": [
+        "Mahatma Gandhi",
+        "Jawaharlal Nehru",
+        "Sardar Patel",
+        "Subhas Chandra Bose"
+      ],
+      "answer": 0,
+      "explanation": "Gandhi led the non-violent movement for independence.",
+      "source": "Britannica: Mahatma Gandhi",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-india-017",
+      "category": "india",
+      "difficulty": "easy",
+      "question": "Which Mughal emperor built the Taj Mahal?",
+      "choices": [
+        "Shah Jahan",
+        "Akbar",
+        "Babur",
+        "Aurangzeb"
+      ],
+      "answer": 0,
+      "explanation": "Shah Jahan built it in memory of his wife, Mumtaz Mahal.",
+      "source": "Britannica: Taj Mahal",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-india-018",
+      "category": "india",
+      "difficulty": "medium",
+      "question": "Which Indian scientist won the Nobel Prize in Physics in 1930?",
+      "choices": [
+        "C. V. Raman",
+        "Homi J. Bhabha",
+        "Jagadish Chandra Bose",
+        "Satyendra Nath Bose"
+      ],
+      "answer": 0,
+      "explanation": "Raman won it for his work on the scattering of light, the Raman effect.",
+      "source": "Nobel Prize: C. V. Raman, Physics 1930",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-india-019",
+      "category": "india",
+      "difficulty": "easy",
+      "question": "Which festival is known as the festival of lights?",
+      "choices": [
+        "Diwali",
+        "Holi",
+        "Onam",
+        "Pongal"
+      ],
+      "answer": 0,
+      "explanation": "Homes are lit with diyas and lamps for Diwali.",
+      "source": "Britannica: Diwali",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-india-020",
+      "category": "india",
+      "difficulty": "easy",
+      "question": "Onam is mainly celebrated in which state?",
+      "choices": [
+        "Kerala",
+        "Tamil Nadu",
+        "Karnataka",
+        "Goa"
+      ],
+      "answer": 0,
+      "explanation": "Onam is Kerala’s harvest festival, famous for boat races and the Onam sadya.",
+      "source": "Britannica: Onam",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-india-021",
+      "category": "india",
+      "difficulty": "medium",
+      "question": "Which mountain range runs along India’s western coast?",
+      "choices": [
+        "Western Ghats",
+        "Eastern Ghats",
+        "Aravalli Range",
+        "Vindhya Range"
+      ],
+      "answer": 0,
+      "explanation": "The Western Ghats run from Gujarat down to Kerala and Tamil Nadu.",
+      "source": "Britannica: Western Ghats",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-india-022",
+      "category": "india",
+      "difficulty": "medium",
+      "question": "Which is one of the oldest mountain ranges in India?",
+      "choices": [
+        "Aravalli Range",
+        "Himalayas",
+        "Western Ghats",
+        "Satpura Range"
+      ],
+      "answer": 0,
+      "explanation": "The Aravallis, in Rajasthan and nearby states, are among the oldest fold mountains on Earth.",
+      "source": "Britannica: Aravalli Range",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-india-023",
+      "category": "india",
+      "difficulty": "easy",
+      "question": "Who was India’s first Prime Minister?",
+      "choices": [
+        "Jawaharlal Nehru",
+        "Sardar Patel",
+        "Rajendra Prasad",
+        "Lal Bahadur Shastri"
+      ],
+      "answer": 0,
+      "explanation": "Nehru served from independence in 1947 until 1964.",
+      "source": "Britannica: Jawaharlal Nehru",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-india-024",
+      "category": "india",
+      "difficulty": "medium",
+      "question": "Who was India’s first President?",
+      "choices": [
+        "Rajendra Prasad",
+        "S. Radhakrishnan",
+        "Zakir Husain",
+        "V. V. Giri"
+      ],
+      "answer": 0,
+      "explanation": "Rajendra Prasad took office in 1950, when India became a republic.",
+      "source": "Britannica: Rajendra Prasad",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-india-025",
+      "category": "india",
+      "difficulty": "medium",
+      "question": "Which Indian travelled to space in 1984?",
+      "choices": [
+        "Rakesh Sharma",
+        "Kalpana Chawla",
+        "Sunita Williams",
+        "Ravish Malhotra"
+      ],
+      "answer": 0,
+      "explanation": "Rakesh Sharma flew aboard the Soviet Soyuz T-11 mission.",
+      "source": "Britannica: Rakesh Sharma",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-india-026",
+      "category": "india",
+      "difficulty": "medium",
+      "question": "Kalaripayattu, a martial art, comes from which state?",
+      "choices": [
+        "Kerala",
+        "Punjab",
+        "Manipur",
+        "Assam"
+      ],
+      "answer": 0,
+      "explanation": "Kalaripayattu is one of the oldest martial arts still practised.",
+      "source": "Britannica: Kalaripayattu",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-india-027",
+      "category": "india",
+      "difficulty": "hard",
+      "question": "Which river is often called the \"Dakshin Ganga\"?",
+      "choices": [
+        "Godavari",
+        "Kaveri",
+        "Krishna",
+        "Narmada"
+      ],
+      "answer": 0,
+      "explanation": "The Godavari is the longest river in peninsular India.",
+      "source": "Britannica: Godavari River",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-india-028",
+      "category": "india",
+      "difficulty": "medium",
+      "question": "The Sundarbans mangrove forest lies in the delta of which rivers?",
+      "choices": [
+        "Ganga and Brahmaputra",
+        "Godavari and Krishna",
+        "Indus and Sutlej",
+        "Narmada and Tapi"
+      ],
+      "answer": 0,
+      "explanation": "The Sundarbans span India and Bangladesh and are home to Bengal tigers.",
+      "source": "UNESCO: The Sundarbans",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-india-029",
+      "category": "india",
+      "difficulty": "medium",
+      "question": "Bihu is a festival and dance from which state?",
+      "choices": [
+        "Assam",
+        "Odisha",
+        "Bihar",
+        "Sikkim"
+      ],
+      "answer": 0,
+      "explanation": "Bihu marks Assam’s seasons and harvest, with lively dancing.",
+      "source": "Britannica: Bihu",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-india-030",
+      "category": "india",
+      "difficulty": "easy",
+      "question": "Which city is often called the \"Silicon Valley of India\"?",
+      "choices": [
+        "Bengaluru",
+        "Hyderabad",
+        "Pune",
+        "Chennai"
+      ],
+      "answer": 0,
+      "explanation": "Bengaluru is a major centre of India’s technology industry.",
+      "source": "Britannica: Bengaluru",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-space-009",
+      "category": "space",
+      "difficulty": "easy",
+      "question": "What is the name of our galaxy?",
+      "choices": [
+        "The Milky Way",
+        "Andromeda",
+        "Sombrero",
+        "Triangulum"
+      ],
+      "answer": 0,
+      "explanation": "The Sun is one of hundreds of billions of stars in the Milky Way.",
+      "source": "NASA Science: Milky Way",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-space-010",
+      "category": "space",
+      "difficulty": "medium",
+      "question": "Which planet spins on its side, tilted about 98 degrees?",
+      "choices": [
+        "Uranus",
+        "Neptune",
+        "Saturn",
+        "Venus"
+      ],
+      "answer": 0,
+      "explanation": "Uranus rolls around the Sun on its side, probably after an ancient collision.",
+      "source": "NASA Science: Uranus",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-space-011",
+      "category": "space",
+      "difficulty": "medium",
+      "question": "Which is the hottest planet in our solar system?",
+      "choices": [
+        "Venus",
+        "Mercury",
+        "Mars",
+        "Jupiter"
+      ],
+      "answer": 0,
+      "explanation": "Venus’s thick carbon dioxide atmosphere traps heat, making it hotter than Mercury.",
+      "source": "NASA Science: Venus",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-space-012",
+      "category": "space",
+      "difficulty": "medium",
+      "question": "What was the first artificial satellite, launched in 1957?",
+      "choices": [
+        "Sputnik 1",
+        "Explorer 1",
+        "Vostok 1",
+        "Telstar"
+      ],
+      "answer": 0,
+      "explanation": "The Soviet Union launched Sputnik 1 on 4 October 1957.",
+      "source": "NASA History: Sputnik",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-space-013",
+      "category": "space",
+      "difficulty": "easy",
+      "question": "Who was the first human to travel into space?",
+      "choices": [
+        "Yuri Gagarin",
+        "Neil Armstrong",
+        "Alan Shepard",
+        "Valentina Tereshkova"
+      ],
+      "answer": 0,
+      "explanation": "Gagarin orbited Earth in Vostok 1 on 12 April 1961.",
+      "source": "Britannica: Yuri Gagarin",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-space-014",
+      "category": "space",
+      "difficulty": "medium",
+      "question": "Who was the first woman to travel into space?",
+      "choices": [
+        "Valentina Tereshkova",
+        "Sally Ride",
+        "Kalpana Chawla",
+        "Mae Jemison"
+      ],
+      "answer": 0,
+      "explanation": "Tereshkova flew on Vostok 6 in June 1963.",
+      "source": "Britannica: Valentina Tereshkova",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-space-015",
+      "category": "space",
+      "difficulty": "medium",
+      "question": "What was India’s first mission to Mars, launched in 2013?",
+      "choices": [
+        "Mangalyaan (Mars Orbiter Mission)",
+        "Chandrayaan-1",
+        "Aditya-L1",
+        "Gaganyaan"
+      ],
+      "answer": 0,
+      "explanation": "Mangalyaan reached Mars orbit in 2014 on its first attempt.",
+      "source": "ISRO: Mars Orbiter Mission",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-space-016",
+      "category": "space",
+      "difficulty": "easy",
+      "question": "What does a light-year measure?",
+      "choices": [
+        "Distance",
+        "Time",
+        "Brightness",
+        "Weight"
+      ],
+      "answer": 0,
+      "explanation": "It is the distance light travels in one year, about 9.46 trillion km.",
+      "source": "NASA Science: Light-year",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-space-017",
+      "category": "space",
+      "difficulty": "easy",
+      "question": "Which planet has the Great Red Spot, a giant storm?",
+      "choices": [
+        "Jupiter",
+        "Saturn",
+        "Mars",
+        "Neptune"
+      ],
+      "answer": 0,
+      "explanation": "The Great Red Spot is a storm larger than Earth.",
+      "source": "NASA Science: Jupiter",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-space-018",
+      "category": "space",
+      "difficulty": "medium",
+      "question": "Roughly how long does the Moon take to orbit Earth?",
+      "choices": [
+        "About 27 days",
+        "About 7 days",
+        "About 365 days",
+        "About 1 day"
+      ],
+      "answer": 0,
+      "explanation": "The Moon orbits Earth about every 27.3 days.",
+      "source": "NASA Science: Earth’s Moon",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-space-019",
+      "category": "space",
+      "difficulty": "easy",
+      "question": "Which object was counted as the ninth planet until 2006?",
+      "choices": [
+        "Pluto",
+        "Ceres",
+        "Eris",
+        "Makemake"
+      ],
+      "answer": 0,
+      "explanation": "The International Astronomical Union reclassified Pluto as a dwarf planet in 2006.",
+      "source": "NASA Science: Pluto",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-space-020",
+      "category": "space",
+      "difficulty": "hard",
+      "question": "What is the boundary around a black hole, beyond which nothing can escape, called?",
+      "choices": [
+        "The event horizon",
+        "The accretion disc",
+        "The photon cloud",
+        "The corona"
+      ],
+      "answer": 0,
+      "explanation": "Not even light can get back out once it crosses the event horizon.",
+      "source": "NASA Science: Black holes",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-history-001",
+      "category": "history",
+      "difficulty": "easy",
+      "question": "Which ancient civilisation built the pyramids at Giza?",
+      "choices": [
+        "Ancient Egyptians",
+        "Romans",
+        "Ancient Greeks",
+        "Maya"
+      ],
+      "answer": 0,
+      "explanation": "They were built as royal tombs about 4,500 years ago.",
+      "source": "Britannica: Pyramids of Giza",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-history-002",
+      "category": "history",
+      "difficulty": "easy",
+      "question": "In which year did the Second World War end?",
+      "choices": [
+        "1945",
+        "1939",
+        "1918",
+        "1950"
+      ],
+      "answer": 0,
+      "explanation": "The war ended in Europe in May 1945 and in Asia in September 1945.",
+      "source": "Britannica: World War II",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-history-003",
+      "category": "history",
+      "difficulty": "medium",
+      "question": "Who founded the Maurya Empire?",
+      "choices": [
+        "Chandragupta Maurya",
+        "Ashoka",
+        "Bindusara",
+        "Samudragupta"
+      ],
+      "answer": 0,
+      "explanation": "Chandragupta Maurya founded the empire around 321 BCE.",
+      "source": "Britannica: Mauryan empire",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-history-004",
+      "category": "history",
+      "difficulty": "easy",
+      "question": "Which wall divided a European city from 1961 to 1989?",
+      "choices": [
+        "The Berlin Wall",
+        "Hadrian’s Wall",
+        "The Great Wall",
+        "The Western Wall"
+      ],
+      "answer": 0,
+      "explanation": "The Berlin Wall split East and West Berlin until it fell in 1989.",
+      "source": "Britannica: Berlin Wall",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-history-005",
+      "category": "history",
+      "difficulty": "easy",
+      "question": "Which ship sank on its first voyage in 1912 after hitting an iceberg?",
+      "choices": [
+        "Titanic",
+        "Lusitania",
+        "Britannic",
+        "Mayflower"
+      ],
+      "answer": 0,
+      "explanation": "RMS Titanic sank in the North Atlantic on 15 April 1912.",
+      "source": "Britannica: Titanic",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-history-006",
+      "category": "history",
+      "difficulty": "easy",
+      "question": "Who painted the Mona Lisa?",
+      "choices": [
+        "Leonardo da Vinci",
+        "Michelangelo",
+        "Raphael",
+        "Vincent van Gogh"
+      ],
+      "answer": 0,
+      "explanation": "Leonardo painted it in the early 1500s; it hangs in the Louvre.",
+      "source": "Britannica: Mona Lisa",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-history-007",
+      "category": "history",
+      "difficulty": "medium",
+      "question": "Which empire was ruled from Constantinople for about a thousand years?",
+      "choices": [
+        "The Byzantine Empire",
+        "The Mughal Empire",
+        "The Mongol Empire",
+        "The Inca Empire"
+      ],
+      "answer": 0,
+      "explanation": "The Byzantine Empire lasted until Constantinople fell in 1453.",
+      "source": "Britannica: Byzantine Empire",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-history-008",
+      "category": "history",
+      "difficulty": "easy",
+      "question": "Who led the Salt March in 1930?",
+      "choices": [
+        "Mahatma Gandhi",
+        "Jawaharlal Nehru",
+        "Subhas Chandra Bose",
+        "Bhagat Singh"
+      ],
+      "answer": 0,
+      "explanation": "Gandhi walked to Dandi to make salt in protest against the British salt tax.",
+      "source": "Britannica: Salt March",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-history-009",
+      "category": "history",
+      "difficulty": "medium",
+      "question": "Whose expedition made the first voyage around the world (1519–1522)?",
+      "choices": [
+        "Ferdinand Magellan",
+        "Christopher Columbus",
+        "Vasco da Gama",
+        "James Cook"
+      ],
+      "answer": 0,
+      "explanation": "Magellan died on the way; Juan Sebastián Elcano brought the last ship home.",
+      "source": "Britannica: Ferdinand Magellan",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-history-010",
+      "category": "history",
+      "difficulty": "medium",
+      "question": "Vasco da Gama reached which Indian port by sea in 1498?",
+      "choices": [
+        "Calicut (Kozhikode)",
+        "Goa",
+        "Bombay",
+        "Madras"
+      ],
+      "answer": 0,
+      "explanation": "His voyage opened a sea route from Europe to India around Africa.",
+      "source": "Britannica: Vasco da Gama",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-history-011",
+      "category": "history",
+      "difficulty": "easy",
+      "question": "Which Roman city was buried when Mount Vesuvius erupted in AD 79?",
+      "choices": [
+        "Pompeii",
+        "Athens",
+        "Carthage",
+        "Troy"
+      ],
+      "answer": 0,
+      "explanation": "Ash preserved Pompeii so well that it is still being excavated.",
+      "source": "Britannica: Pompeii",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-history-012",
+      "category": "history",
+      "difficulty": "easy",
+      "question": "Who was the first President of the United States?",
+      "choices": [
+        "George Washington",
+        "Abraham Lincoln",
+        "Thomas Jefferson",
+        "John Adams"
+      ],
+      "answer": 0,
+      "explanation": "Washington took office in 1789.",
+      "source": "Britannica: George Washington",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-history-013",
+      "category": "history",
+      "difficulty": "medium",
+      "question": "Who developed the movable-type printing press in Europe around 1440?",
+      "choices": [
+        "Johannes Gutenberg",
+        "William Caxton",
+        "Leonardo da Vinci",
+        "Galileo Galilei"
+      ],
+      "answer": 0,
+      "explanation": "Gutenberg’s press made books far cheaper and faster to produce.",
+      "source": "Britannica: Johannes Gutenberg",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-history-014",
+      "category": "history",
+      "difficulty": "medium",
+      "question": "Which emperor turned to Buddhism after the Kalinga war?",
+      "choices": [
+        "Ashoka",
+        "Akbar",
+        "Harsha",
+        "Chandragupta Maurya"
+      ],
+      "answer": 0,
+      "explanation": "Shocked by the bloodshed, Ashoka spread Buddhist ideas through his edicts.",
+      "source": "Britannica: Ashoka",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-history-015",
+      "category": "history",
+      "difficulty": "medium",
+      "question": "In which country did the Industrial Revolution begin?",
+      "choices": [
+        "Great Britain",
+        "France",
+        "Germany",
+        "United States"
+      ],
+      "answer": 0,
+      "explanation": "It began in Britain in the 18th century with machines powered by water and steam.",
+      "source": "Britannica: Industrial Revolution",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-history-016",
+      "category": "history",
+      "difficulty": "easy",
+      "question": "Who was India’s first woman Prime Minister?",
+      "choices": [
+        "Indira Gandhi",
+        "Sarojini Naidu",
+        "Pratibha Patil",
+        "Sushma Swaraj"
+      ],
+      "answer": 0,
+      "explanation": "Indira Gandhi first became Prime Minister in 1966.",
+      "source": "Britannica: Indira Gandhi",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-history-017",
+      "category": "history",
+      "difficulty": "hard",
+      "question": "The Battle of Plassey (1757) was fought in which present-day state?",
+      "choices": [
+        "West Bengal",
+        "Bihar",
+        "Odisha",
+        "Uttar Pradesh"
+      ],
+      "answer": 0,
+      "explanation": "The East India Company’s victory at Plassey began British rule in Bengal.",
+      "source": "Britannica: Battle of Plassey",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-history-018",
+      "category": "history",
+      "difficulty": "medium",
+      "question": "Which civilisation built Machu Picchu?",
+      "choices": [
+        "The Inca",
+        "The Aztecs",
+        "The Maya",
+        "The Olmecs"
+      ],
+      "answer": 0,
+      "explanation": "The Inca built it high in the Andes of Peru in the 15th century.",
+      "source": "UNESCO: Historic Sanctuary of Machu Picchu",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-history-019",
+      "category": "history",
+      "difficulty": "easy",
+      "question": "Who gave the \"I Have a Dream\" speech in 1963?",
+      "choices": [
+        "Martin Luther King Jr.",
+        "Malcolm X",
+        "Abraham Lincoln",
+        "Nelson Mandela"
+      ],
+      "answer": 0,
+      "explanation": "King spoke at the March on Washington for civil rights.",
+      "source": "Britannica: I Have a Dream",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-history-020",
+      "category": "history",
+      "difficulty": "easy",
+      "question": "Nelson Mandela became president of which country in 1994?",
+      "choices": [
+        "South Africa",
+        "Kenya",
+        "Zimbabwe",
+        "Nigeria"
+      ],
+      "answer": 0,
+      "explanation": "He was South Africa’s first president elected in a fully democratic vote.",
+      "source": "Britannica: Nelson Mandela",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-food-001",
+      "category": "world-food",
+      "difficulty": "easy",
+      "question": "Sushi is a traditional dish from which country?",
+      "choices": [
+        "Japan",
+        "China",
+        "Thailand",
+        "Vietnam"
+      ],
+      "answer": 0,
+      "explanation": "Sushi combines vinegared rice with fish, vegetables or seaweed.",
+      "source": "Britannica: Sushi",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-food-002",
+      "category": "world-food",
+      "difficulty": "easy",
+      "question": "Paella is a rice dish from which country?",
+      "choices": [
+        "Spain",
+        "Italy",
+        "Mexico",
+        "Portugal"
+      ],
+      "answer": 0,
+      "explanation": "Paella comes from the Valencia region of Spain.",
+      "source": "Britannica: Paella",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-food-003",
+      "category": "world-food",
+      "difficulty": "easy",
+      "question": "Risotto is made with which grain?",
+      "choices": [
+        "Rice",
+        "Wheat",
+        "Barley",
+        "Corn"
+      ],
+      "answer": 0,
+      "explanation": "Short-grain rice is slowly cooked in stock until creamy.",
+      "source": "Britannica: Risotto",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-food-004",
+      "category": "world-food",
+      "difficulty": "easy",
+      "question": "What is the main ingredient of guacamole?",
+      "choices": [
+        "Avocado",
+        "Tomato",
+        "Green peas",
+        "Cucumber"
+      ],
+      "answer": 0,
+      "explanation": "Guacamole is mashed avocado with lime, onion and chilli.",
+      "source": "Britannica: Guacamole",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-food-005",
+      "category": "world-food",
+      "difficulty": "easy",
+      "question": "Hummus is made mainly from which legume?",
+      "choices": [
+        "Chickpeas",
+        "Lentils",
+        "Kidney beans",
+        "Black beans"
+      ],
+      "answer": 0,
+      "explanation": "Chickpeas are blended with tahini, lemon and garlic.",
+      "source": "Britannica: Hummus",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-food-006",
+      "category": "world-food",
+      "difficulty": "easy",
+      "question": "Kimchi, a spicy fermented dish, comes from which country?",
+      "choices": [
+        "Korea",
+        "Japan",
+        "Vietnam",
+        "Thailand"
+      ],
+      "answer": 0,
+      "explanation": "Kimchi is usually made from cabbage and radish.",
+      "source": "Britannica: Kimchi",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-food-007",
+      "category": "world-food",
+      "difficulty": "medium",
+      "question": "Which spice, from a crocus flower, is the most expensive by weight?",
+      "choices": [
+        "Saffron",
+        "Cardamom",
+        "Cinnamon",
+        "Clove"
+      ],
+      "answer": 0,
+      "explanation": "Each saffron thread is a hand-picked part of the flower.",
+      "source": "Britannica: Saffron",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-food-008",
+      "category": "world-food",
+      "difficulty": "easy",
+      "question": "Tofu is made from which bean?",
+      "choices": [
+        "Soybeans",
+        "Black beans",
+        "Mung beans",
+        "Broad beans"
+      ],
+      "answer": 0,
+      "explanation": "Soy milk is curdled and pressed into blocks.",
+      "source": "Britannica: Tofu",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-food-009",
+      "category": "world-food",
+      "difficulty": "easy",
+      "question": "Pad thai is a noodle dish from which country?",
+      "choices": [
+        "Thailand",
+        "Vietnam",
+        "Malaysia",
+        "Indonesia"
+      ],
+      "answer": 0,
+      "explanation": "Pad thai is stir-fried rice noodles, often with peanuts and lime.",
+      "source": "Britannica: Thai cuisine",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-food-010",
+      "category": "world-food",
+      "difficulty": "easy",
+      "question": "What kind of food is Parmigiano Reggiano?",
+      "choices": [
+        "Cheese",
+        "Ham",
+        "Pasta",
+        "Olive oil"
+      ],
+      "answer": 0,
+      "explanation": "It is a hard Italian cheese aged for at least a year.",
+      "source": "Britannica: Parmesan cheese",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-food-011",
+      "category": "world-food",
+      "difficulty": "easy",
+      "question": "Croissants are most associated with the bakeries of which country?",
+      "choices": [
+        "France",
+        "Germany",
+        "Belgium",
+        "Spain"
+      ],
+      "answer": 0,
+      "explanation": "The flaky, buttery croissant is a staple of French breakfasts.",
+      "source": "Britannica: Croissant",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-food-012",
+      "category": "world-food",
+      "difficulty": "easy",
+      "question": "Traditional Mexican tortillas are made from which grain?",
+      "choices": [
+        "Maize (corn)",
+        "Rice",
+        "Oats",
+        "Rye"
+      ],
+      "answer": 0,
+      "explanation": "Corn is treated with lime, ground into dough and pressed flat.",
+      "source": "Britannica: Tortilla",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-food-013",
+      "category": "world-food",
+      "difficulty": "easy",
+      "question": "Raisins are dried versions of which fruit?",
+      "choices": [
+        "Grapes",
+        "Plums",
+        "Figs",
+        "Dates"
+      ],
+      "answer": 0,
+      "explanation": "Dried plums are prunes; dried grapes are raisins.",
+      "source": "Britannica: Raisin",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-food-014",
+      "category": "world-food",
+      "difficulty": "medium",
+      "question": "Marzipan is made mainly from which nut?",
+      "choices": [
+        "Almonds",
+        "Cashews",
+        "Walnuts",
+        "Peanuts"
+      ],
+      "answer": 0,
+      "explanation": "Ground almonds are mixed with sugar into a smooth paste.",
+      "source": "Britannica: Marzipan",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-food-015",
+      "category": "world-food",
+      "difficulty": "medium",
+      "question": "Pho is a noodle soup from which country?",
+      "choices": [
+        "Vietnam",
+        "Thailand",
+        "Japan",
+        "Laos"
+      ],
+      "answer": 0,
+      "explanation": "Pho is broth with rice noodles, herbs and usually beef or chicken.",
+      "source": "Britannica: Vietnamese cuisine",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-food-016",
+      "category": "world-food",
+      "difficulty": "medium",
+      "question": "Pierogi, filled dumplings, are a national dish of which country?",
+      "choices": [
+        "Poland",
+        "Greece",
+        "Hungary",
+        "Portugal"
+      ],
+      "answer": 0,
+      "explanation": "Pierogi are also popular across Central and Eastern Europe.",
+      "source": "Britannica: Polish cuisine",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-food-017",
+      "category": "world-food",
+      "difficulty": "medium",
+      "question": "Couscous, made from semolina, is a staple in which region?",
+      "choices": [
+        "North Africa",
+        "South America",
+        "Scandinavia",
+        "East Asia"
+      ],
+      "answer": 0,
+      "explanation": "Couscous is central to Moroccan, Algerian and Tunisian cooking.",
+      "source": "Britannica: Couscous",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-food-018",
+      "category": "world-food",
+      "difficulty": "medium",
+      "question": "The tea ceremony called chanoyu comes from which country?",
+      "choices": [
+        "Japan",
+        "China",
+        "India",
+        "Korea"
+      ],
+      "answer": 0,
+      "explanation": "It is a ritual way of preparing and serving powdered green tea.",
+      "source": "Britannica: Tea ceremony",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-food-019",
+      "category": "world-food",
+      "difficulty": "easy",
+      "question": "Feta cheese traditionally comes from which country?",
+      "choices": [
+        "Greece",
+        "Italy",
+        "France",
+        "Denmark"
+      ],
+      "answer": 0,
+      "explanation": "Feta is made from sheep’s milk, sometimes mixed with goat’s milk.",
+      "source": "Britannica: Feta",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-food-020",
+      "category": "world-food",
+      "difficulty": "medium",
+      "question": "Which country is the original home of the potato?",
+      "choices": [
+        "Peru (the Andes)",
+        "Ireland",
+        "India",
+        "Russia"
+      ],
+      "answer": 0,
+      "explanation": "Potatoes were first farmed in the Andes of South America thousands of years ago.",
+      "source": "Britannica: Potato",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-sports-001",
+      "category": "sports",
+      "difficulty": "easy",
+      "question": "How many players does a football (soccer) team have on the field?",
+      "choices": [
+        "11",
+        "9",
+        "10",
+        "12"
+      ],
+      "answer": 0,
+      "explanation": "Each side fields ten outfield players and a goalkeeper.",
+      "source": "IFAB: Laws of the Game, Law 3",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-sports-002",
+      "category": "sports",
+      "difficulty": "easy",
+      "question": "In which sport would you see a slam dunk?",
+      "choices": [
+        "Basketball",
+        "Volleyball",
+        "Tennis",
+        "Handball"
+      ],
+      "answer": 0,
+      "explanation": "A slam dunk is pushing the ball down through the hoop.",
+      "source": "Britannica: Basketball",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-sports-003",
+      "category": "sports",
+      "difficulty": "easy",
+      "question": "How many rings are on the Olympic flag?",
+      "choices": [
+        "5",
+        "4",
+        "6",
+        "7"
+      ],
+      "answer": 0,
+      "explanation": "The five rings represent the union of the world’s continents.",
+      "source": "International Olympic Committee: Olympic rings",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-sports-004",
+      "category": "sports",
+      "difficulty": "easy",
+      "question": "In tennis, what is a score of zero called?",
+      "choices": [
+        "Love",
+        "Nil",
+        "Duck",
+        "Blank"
+      ],
+      "answer": 0,
+      "explanation": "A game score of 0 is called \"love\".",
+      "source": "Britannica: Tennis, scoring",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-sports-005",
+      "category": "sports",
+      "difficulty": "medium",
+      "question": "In cricket, what is it called when a batter is out without scoring?",
+      "choices": [
+        "A duck",
+        "A maiden",
+        "A bye",
+        "A no-ball"
+      ],
+      "answer": 0,
+      "explanation": "A batter dismissed for zero is \"out for a duck\".",
+      "source": "Britannica: Cricket",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-sports-006",
+      "category": "sports",
+      "difficulty": "medium",
+      "question": "How long is a standard marathon?",
+      "choices": [
+        "About 42.2 km",
+        "About 21.1 km",
+        "Exactly 50 km",
+        "About 30 km"
+      ],
+      "answer": 0,
+      "explanation": "The distance is 42.195 km; a half marathon is half that.",
+      "source": "World Athletics: Marathon",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-sports-007",
+      "category": "sports",
+      "difficulty": "medium",
+      "question": "Which country hosted the first modern Olympic Games in 1896?",
+      "choices": [
+        "Greece",
+        "France",
+        "United Kingdom",
+        "United States"
+      ],
+      "answer": 0,
+      "explanation": "The first modern Games were held in Athens.",
+      "source": "International Olympic Committee: Athens 1896",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-sports-008",
+      "category": "sports",
+      "difficulty": "easy",
+      "question": "In chess, which piece moves only diagonally?",
+      "choices": [
+        "Bishop",
+        "Rook",
+        "Knight",
+        "King"
+      ],
+      "answer": 0,
+      "explanation": "A bishop stays on squares of one colour all game.",
+      "source": "FIDE: Laws of Chess",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-sports-009",
+      "category": "sports",
+      "difficulty": "easy",
+      "question": "How many squares are on a chessboard?",
+      "choices": [
+        "64",
+        "81",
+        "49",
+        "100"
+      ],
+      "answer": 0,
+      "explanation": "The board has eight rows of eight squares.",
+      "source": "FIDE: Laws of Chess",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-sports-010",
+      "category": "sports",
+      "difficulty": "easy",
+      "question": "Kabaddi is a contact sport that originated in which country?",
+      "choices": [
+        "India",
+        "Japan",
+        "Brazil",
+        "Egypt"
+      ],
+      "answer": 0,
+      "explanation": "Kabaddi has been played in India for centuries and is now played worldwide.",
+      "source": "Britannica: Kabaddi",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-sports-011",
+      "category": "sports",
+      "difficulty": "medium",
+      "question": "In which sport is one under par on a hole called a birdie?",
+      "choices": [
+        "Golf",
+        "Badminton",
+        "Bowling",
+        "Archery"
+      ],
+      "answer": 0,
+      "explanation": "Two under par is an eagle; one over is a bogey.",
+      "source": "Britannica: Golf",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-sports-012",
+      "category": "sports",
+      "difficulty": "medium",
+      "question": "How many points is a touchdown worth in American football?",
+      "choices": [
+        "6",
+        "3",
+        "7",
+        "2"
+      ],
+      "answer": 0,
+      "explanation": "A touchdown is worth six points, before any extra point attempt.",
+      "source": "Britannica: American football",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-sports-013",
+      "category": "sports",
+      "difficulty": "medium",
+      "question": "What colour is the centre of a standard archery target?",
+      "choices": [
+        "Gold (yellow)",
+        "Red",
+        "Blue",
+        "Black"
+      ],
+      "answer": 0,
+      "explanation": "From the centre out, the rings are gold, red, blue, black and white.",
+      "source": "World Archery: Target archery",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-sports-014",
+      "category": "sports",
+      "difficulty": "easy",
+      "question": "Which sport uses a shuttlecock?",
+      "choices": [
+        "Badminton",
+        "Squash",
+        "Table tennis",
+        "Tennis"
+      ],
+      "answer": 0,
+      "explanation": "The shuttlecock is traditionally made of feathers and cork.",
+      "source": "Britannica: Badminton",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-sports-015",
+      "category": "sports",
+      "difficulty": "hard",
+      "question": "The Thomas Cup is the world team championship of which sport?",
+      "choices": [
+        "Badminton",
+        "Hockey",
+        "Tennis",
+        "Golf"
+      ],
+      "answer": 0,
+      "explanation": "The Thomas Cup is for men’s teams; the Uber Cup is for women’s teams.",
+      "source": "Badminton World Federation: Thomas Cup",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-sports-016",
+      "category": "sports",
+      "difficulty": "medium",
+      "question": "What is the highest score possible with three darts?",
+      "choices": [
+        "180",
+        "150",
+        "100",
+        "300"
+      ],
+      "answer": 0,
+      "explanation": "Three darts in the treble 20 score 180.",
+      "source": "Britannica: Darts",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-sports-017",
+      "category": "sports",
+      "difficulty": "easy",
+      "question": "In which sport do players form a scrum?",
+      "choices": [
+        "Rugby",
+        "Polo",
+        "Basketball",
+        "Cycling"
+      ],
+      "answer": 0,
+      "explanation": "A scrum restarts play after minor infringements in rugby.",
+      "source": "Britannica: Rugby",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-sports-018",
+      "category": "sports",
+      "difficulty": "easy",
+      "question": "In motor racing, what does the chequered flag mean?",
+      "choices": [
+        "The race is over",
+        "A safety car is out",
+        "The track is slippery",
+        "A driver has a penalty"
+      ],
+      "answer": 0,
+      "explanation": "The chequered flag is waved as the winner crosses the line.",
+      "source": "FIA: International Sporting Code",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-sports-019",
+      "category": "sports",
+      "difficulty": "easy",
+      "question": "How many holes are played in a standard round of golf?",
+      "choices": [
+        "18",
+        "9",
+        "12",
+        "24"
+      ],
+      "answer": 0,
+      "explanation": "A full round is 18 holes; many courses also offer 9.",
+      "source": "Britannica: Golf",
+      "verifiedOn": "2026-11-03",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-sports-020",
+      "category": "sports",
+      "difficulty": "medium",
+      "question": "How many players are on the court for each team in volleyball?",
+      "choices": [
+        "6",
+        "5",
+        "7",
+        "4"
+      ],
+      "answer": 0,
+      "explanation": "Indoor volleyball teams have six players on court.",
+      "source": "FIVB: Official Volleyball Rules",
+      "verifiedOn": "2026-11-03",
       "reviewStatus": "self-checked"
     }
   ]

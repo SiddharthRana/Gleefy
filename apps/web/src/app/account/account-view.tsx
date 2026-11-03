@@ -35,6 +35,8 @@ export function AccountView() {
 function SignInForm() {
   const router = useRouter();
   const [email, setEmail] = useState('');
+  // Accounts and purchases are 18+ (BUILD_PROMPT §0, India's DPDP Act); self-declared here.
+  const [adult, setAdult] = useState(false);
   const [code, setCode] = useState('');
   const [sentTo, setSentTo] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -44,6 +46,12 @@ function SignInForm() {
     e.preventDefault();
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())) {
       setError('Enter a valid email address.');
+      return;
+    }
+    if (!adult) {
+      setError(
+        'Accounts and purchases are for people aged 18 or over. Everything free works without an account.',
+      );
       return;
     }
     setBusy(true);
@@ -102,6 +110,15 @@ function SignInForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+          </label>
+          <label className="flex min-h-12 items-center gap-3 font-bold">
+            <input
+              type="checkbox"
+              className="size-5"
+              checked={adult}
+              onChange={(e) => setAdult(e.target.checked)}
+            />
+            I’m 18 or older
           </label>
         </>
       )}

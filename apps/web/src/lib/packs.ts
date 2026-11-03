@@ -22,6 +22,10 @@ export const modeNames: Record<ShareMode, string> = {
   guess: 'Guess the Answer',
 };
 
-/** Free categories only: premium needs a verified subscription (Phase 4). */
+/** Free categories; premium ones need a verified subscription (see usePremium). */
 export const freeCategories = (mode: ShareMode) =>
   packs[mode].categories.filter((c) => c.tier === 'free');
+
+/** Categories this visitor may play: free ones, plus premium ones with Premium. */
+export const playableCategories = (mode: ShareMode, premium: boolean) =>
+  packs[mode].categories.filter((c) => c.tier === 'free' || premium);

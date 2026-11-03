@@ -1,7 +1,54 @@
 # Progress
 
-**Current phase:** 4 of 5 — Payments ✅ complete (built and tested; nothing configured or deployed). **Checkpoint: waiting for the owner's go-ahead before Phase 5 (polish and launch prep).**
-**Last updated:** 2026-10-31
+**Current phase:** 5 of 5 — Polish and launch prep ✅ code complete. **Checkpoint: the remaining launch steps need the owner** (accounts, legal review, trivia verification, closed test); see `docs/launch/checklist.md`.
+**Last updated:** 2026-11-03
+
+## Phase 5 — Polish and launch prep
+
+### Done (verified in this environment)
+
+| Area               | What                                                                                                                                                                                                                          | Verified by                                                                                                            |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Content            | Launch targets met: **Would You Rather 150, This or That 150, Trivia 200, Guess 80**; 60% free in every mode except WYR (80%, already mostly free). 11 new categories. Every new trivia question has a source and explanation | `pnpm content:validate` (no duplicates, lengths, no clue gives its answer); app and web tests on the real packs        |
+| Trivia review loop | `pnpm content:review <csv>` exports all 200 questions for a second reviewer; `pnpm content:mark-verified <csv>` marks approved rows `verified`                                                                                | 3 CSV unit tests; manual round trip (approve 2 rows → 2 verified; pack restored)                                       |
+| 18+ purchasers     | Sign-in in the app and on the website requires "I'm 18 or older" (BUILD_PROMPT §0, DPDP); free play unaffected                                                                                                                | Widget test; web build                                                                                                 |
+| Website pages      | A guide per game (`/games/[mode]`, static), How to play, FAQ, Guides (MDX: hosting on one phone, family gatherings), Contact, Account deletion (for Play); Terms cover accounts and subscriptions                             | 143 Playwright tests incl. axe on every page                                                                           |
+| Analytics (opt-in) | PostHog via its HTTP API, no SDK: nothing is sent unless the build has `POSTHOG_KEY` **and** the person turns on "Share anonymous usage stats"; events for BUILD_PROMPT §13 and capped, truncated error reports               | 5 widget tests (off by default, opt-out forgets the id, no names or content in payloads, caps)                         |
+| Accessibility      | Android guideline tests (tap targets, labels, contrast) on every non-game screen, light and dark                                                                                                                              | 20 widget tests                                                                                                        |
+| Web performance    | `/play` layout shift fixed (setup form is the static fallback)                                                                                                                                                                | Lighthouse (local, Cloudflare dev server): landing mobile 92 perf / 100 a11y, desktop 100 / 100; `/play` 99–100, CLS 0 |
+| Android budgets    | Release APKs: arm64 21.3 MB, armeabi-v7a 18.9 MB, x86_64 22.8 MB (< 25 MB). First run on a real Android runtime: onboarding and a game render correctly, no errors in logcat                                                  | `flutter build apk --release --split-per-abi`; Pixel 10 Pro XL emulator: cold start 0.7–0.8 s (1.9 s on first launch)  |
+| Launch docs        | Play listing, Data safety answers, IARC notes, closed-test plan (`docs/launch/`), privacy data map, owner checklist with unfinished work                                                                                      | —                                                                                                                      |
+
+**Test totals:** TypeScript 216 (tokens 39, plans 11, content 28, engine 43, API 95 incl. 25 database e2e), Flutter 102, web Playwright 143.
+
+### Bugs found and fixed
+
+- `/play` rendered nothing until hydration, so the footer jumped (mobile CLS 0.25, Lighthouse 87).
+- The premium-lock widget test assumed one premium category per mode.
+
+### Not verified / limitations
+
+- **All trivia is `self-checked`, not `verified`.** BUILD_PROMPT §6 ships only verified questions; a second person must review them with the new review sheet before production.
+- **Nothing is deployed or configured** (no domain, Play account, Supabase, Fly.io, Cloudflare, PostHog or payment accounts). Everything in `docs/launch/checklist.md` sections 1–5 is the owner's.
+- **Cold start on a low-end phone isn't measured**; the emulator runs on a fast Mac. Measure during the closed test.
+- **Analytics weren't checked against a real PostHog project** (payload shape follows PostHog's capture API docs; error events use the `$exception` properties).
+- Lighthouse ran locally against `wrangler pages dev`, not the deployed site. The pricing page's one best-practices point is a console error from the API not running locally.
+- Unfinished code at the Phase 5 checkpoint has since been built (see below); what remains is listed in `docs/launch/checklist.md`.
+
+## After Phase 5 — closing the known gaps (2026-11-03)
+
+| Area                      | What                                                                                                                                                                                            | Verified by                                                                                                                       |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Custom questions (§7)     | Write, edit, delete (with undo) your own Would You Rather and This or That questions; length limits, duplicate check, an English + Hinglish word filter; stored only on the phone, never shared | 9 tests: rules, filter (incl. look-alikes and false positives), write → play only yours, Quick play excludes them, relaunch, undo |
+| Premium in the web player | Signed-in subscribers can tick premium categories at `/play`; links with premium categories wait for the check, and leave them out (with a note) without Premium                                | 5 Playwright tests with a seeded session (e2e build points at a fake Supabase)                                                    |
+| Error reports (optional)  | Sentry for the API (5xx only, scrubbed) and website (loaded only with a DSN), ported from Weblume                                                                                               | 4 API tests (scrubbing, filter, SDK transport); e2e: no third-party requests without a DSN                                        |
+| Analytics prompt          | One-time card after a finished game in builds with analytics; either answer hides it for good                                                                                                   | 3 widget tests incl. accessibility guidelines                                                                                     |
+
+**Test totals now:** TypeScript 220 (API 99 incl. 25 database e2e), Flutter 114, web Playwright 155.
+
+## Next
+
+The code side of the five phases is complete. Next steps are the owner's launch steps in `docs/launch/checklist.md`, then whatever the closed test turns up. Revisit real-time multiplayer only if completion rates and D7 retention are healthy (BUILD_PROMPT §13, §16).
 
 ## Phase 4 — Payments (same design as Weblume)
 
@@ -43,10 +90,6 @@
 - New: `apps/api/Dockerfile`, `.dockerignore`, `apps/api/fly.toml`, `apps/web/public/_headers`, `supabase/config.toml`, `docs/deployment.md`.
 - **Verified here:** actionlint passes; the API image builds and runs healthy as a non-root user against a migrated Postgres; `supabase db push` applies the migration and is a no-op on a second run; the site exports as static files and all 84 Playwright tests pass against `wrangler pages dev` (headers, clean URLs, 404s).
 - **Not verified:** the deploy jobs against real Supabase, Fly.io, Cloudflare or Google Play (no accounts yet), and the approval flow on GitHub. Each target stays off until its `DEPLOY_*` variable is `true`. No App Store deploy (iOS out of scope).
-
-## Next: Phase 5 — Polish and launch prep
-
-See BUILD_PROMPT §12: content to target counts (WYR 150, ToT 150, Trivia 200 verified, Guess 80), accessibility review, performance budgets, optional analytics/crash reporting, privacy review (now including purchaser accounts), Play listing, Data Safety answers (email, purchase history), IARC notes, app signing, App Links domain, and the closed test (≥ 12 testers for 14 days). Configure billing per `docs/payments-setup.md` alongside the closed test.
 
 ## Phase 3 — Web player and sharing
 

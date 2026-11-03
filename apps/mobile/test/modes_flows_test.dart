@@ -290,8 +290,13 @@ void main() {
     await pumpApp(tester, content: realContent());
     for (final mode in ['This or That', 'Trivia Blitz', 'Guess the Answer']) {
       await openSetup(tester, mode);
-      await reveal(tester, find.textContaining('Unlock with Premium.'));
-      expect(find.textContaining('Unlock with Premium.'), findsOneWidget, reason: mode);
+      // Each mode now has several premium categories; scroll until the first one is built.
+      final locked = find.textContaining('Unlock with Premium.');
+      for (var i = 0; i < 20 && locked.evaluate().isEmpty; i++) {
+        await tester.drag(find.byType(Scrollable).first, const Offset(0, -300));
+        await tester.pumpAndSettle();
+      }
+      expect(locked, findsWidgets, reason: mode);
       await goBack(tester);
       await goBack(tester);
     }

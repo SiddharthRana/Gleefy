@@ -2,6 +2,34 @@
 
 Short, dated records of non-trivial choices. Newest first.
 
+## 2026-11-03 — Closing the gaps after Phase 5
+
+**Custom questions are merged into the content, not a separate mode.** `contentProvider` now combines the bundled packs (`bundledContentProvider`) with the person's questions as a free "My questions" category, so pools, saved games, results, favourites and party packs work unchanged. Its region (`mine`) keeps it out of Quick play and default selections. Only the two-choice games get custom questions: trivia and clue cards need more structure than a party host will type.
+
+**A small built-in word filter**, not a library. It covers common English and Hindi/Hinglish swear words and slurs, look-alike spellings and simple endings, matching whole words so "Scunthorpe" or "cocktail" pass. Custom questions never leave the phone, so this is a guard rail, not moderation.
+
+**The web player asks the API, then deals.** `usePremium` reads `/v1/me`; a shared link with premium categories waits for that answer so a game never re-deals mid-play. Without Premium, premium categories are left out with a note rather than refusing the whole link.
+
+**Signed-in e2e tests use a fake Supabase address** (`build:e2e`) and a seeded browser session plus a mocked `/v1/me`, as Weblume does, instead of skipping the signed-in paths.
+
+**Sentry stays optional and scrubbed.** Ported from Weblume: the API reports only unexpected 5xx errors with the route pattern; the website loads Sentry only with a DSN and drops console and click breadcrumbs. An e2e test checks pages make no third-party requests by default.
+
+**One analytics prompt, after a finished game**, never at launch or mid-game, and never again once answered. Nothing is sent before a "yes".
+
+## 2026-11-03 — Phase 5 polish and launch prep
+
+**New content is mostly premium.** The packs were about 85% free against the ~60% target, so new categories went to premium where possible: This or That, Trivia and Guess now sit at 60% free. Would You Rather stays at 80% free; taking existing free categories away before launch felt worse than missing the ratio there.
+
+**Trivia stays `self-checked` until a second person reviews it.** The spec requires `verified`, which by definition needs someone other than the author. Instead of marking our own work verified, a CSV review sheet (`pnpm content:review` / `content:mark-verified`) makes the review a spreadsheet job. _Rejected:_ hiding unverified questions now (it would ship 0 trivia).
+
+**Analytics: PostHog over plain HTTP, opt-in only.** BUILD_PROMPT §2 allows "PostHog or none". The capture API needs no SDK, so the app gains almost no size and nothing runs unless the build has a key _and_ the person turns it on. Consent everywhere (not only EU/UK) keeps one simple rule. Error reports go to PostHog as `$exception` events instead of adding Sentry (one vendor, no native SDK). The website stays analytics-free. _Trade-off:_ few people may opt in, so the data will be thin.
+
+**Accounts are 18+ by self-declaration.** BUILD_PROMPT §0 and India's DPDP Act: under-18s would need verifiable parental consent, so sign-in asks people to confirm they're 18 or older. Free play needs no account and no age gate beyond the 13+ guidance.
+
+**Game guides are one static route.** `/games/[mode]` renders every mode's guide from shared data (`lib/guides.ts`) with real counts, so adding a mode is data, not a page. Trivia samples sort their choices, because packs list the right answer first.
+
+**Guides in MDX**, as BUILD_PROMPT §2 specifies; two real guides rather than thin SEO pages.
+
 ## 2026-10-31 — Deploy pipeline
 
 **One workflow, three approval-gated deploys.** The CI workflow ends with `deploy-backend`, `deploy-web` and `deploy-android` jobs on `main`. Each needs every check to pass and waits on a GitHub environment with required reviewers, so a green build shows "Review deployments" and each target ships only when approved. _Rejected:_ a separate deploy workflow triggered by `workflow_run` (harder to follow, and approvals would sit on a different run).

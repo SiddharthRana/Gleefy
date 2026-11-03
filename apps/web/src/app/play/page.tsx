@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
-import { Player } from './player';
+import { Player, Setup } from './player';
 
 export const metadata: Metadata = {
   title: 'Play',
@@ -15,7 +15,8 @@ export default function PlayPage() {
       <p className="mt-3 mb-8 text-lg text-muted">
         One screen, everyone together. Share the link and friends get the same game.
       </p>
-      <Suspense>
+      {/* The setup form is in the static HTML, so the page doesn't jump when the player loads. */}
+      <Suspense fallback={<Setup />}>
         <Player />
       </Suspense>
     </div>
