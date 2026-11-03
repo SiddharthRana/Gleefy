@@ -40,7 +40,8 @@ export function Player() {
   return game ? <Game key={code} game={game} code={code!} /> : <Setup />;
 }
 
-function Setup() {
+/** The new-game form. Also the static fallback while the URL is read, so nothing shifts on load. */
+export function Setup() {
   const router = useRouter();
   const [mode, setMode] = useState<ShareMode>('would-you-rather');
   const [rounds, setRounds] = useState(10);
