@@ -23,8 +23,13 @@ import '../features/trivia_play_screen.dart';
 import '../features/wyr_play_screen.dart';
 import '../l10n/app_localizations.dart';
 import '../state/settings.dart';
+import 'game_page.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
+  // Every page is dealt in like a card (still when Reduce motion is on).
+  Page<void> page(GoRouterState state, Widget child) =>
+      GamePage<void>(key: state.pageKey, still: ref.read(settingsProvider).reduceMotion, child: child);
+
   return GoRouter(
     initialLocation: '/',
     redirect: (context, state) {
@@ -34,46 +39,49 @@ final routerProvider = Provider<GoRouter>((ref) {
       return null;
     },
     routes: [
-      GoRoute(path: '/', builder: (_, _) => const HomeScreen()),
-      GoRoute(path: '/onboarding', builder: (_, _) => const OnboardingScreen()),
-      GoRoute(path: '/games', builder: (_, _) => const LibraryScreen()),
-      GoRoute(path: '/settings', builder: (_, _) => const SettingsScreen()),
-      GoRoute(path: '/players', builder: (_, _) => const PlayersScreen()),
-      GoRoute(path: '/party', builder: (_, _) => const PartyScreen()),
-      GoRoute(path: '/premium', builder: (_, _) => const PremiumScreen()),
+      GoRoute(path: '/', pageBuilder: (_, state) => page(state, const HomeScreen())),
+      GoRoute(path: '/onboarding', pageBuilder: (_, state) => page(state, const OnboardingScreen())),
+      GoRoute(path: '/games', pageBuilder: (_, state) => page(state, const LibraryScreen())),
+      GoRoute(path: '/settings', pageBuilder: (_, state) => page(state, const SettingsScreen())),
+      GoRoute(path: '/players', pageBuilder: (_, state) => page(state, const PlayersScreen())),
+      GoRoute(path: '/party', pageBuilder: (_, state) => page(state, const PartyScreen())),
+      GoRoute(path: '/premium', pageBuilder: (_, state) => page(state, const PremiumScreen())),
       GoRoute(
         path: '/my-questions',
-        builder: (_, state) => MyQuestionsScreen(
-          initialMode: GameMode.fromId(state.uri.queryParameters['mode'] ?? '') ?? GameMode.wouldYouRather,
+        pageBuilder: (_, state) => page(
+          state,
+          MyQuestionsScreen(
+            initialMode: GameMode.fromId(state.uri.queryParameters['mode'] ?? '') ?? GameMode.wouldYouRather,
+          ),
         ),
       ),
-      GoRoute(path: '/account', builder: (_, _) => const AccountScreen()),
-      GoRoute(path: '/account/sign-in', builder: (_, _) => const SignInScreen()),
+      GoRoute(path: '/account', pageBuilder: (_, state) => page(state, const AccountScreen())),
+      GoRoute(path: '/account/sign-in', pageBuilder: (_, state) => page(state, const SignInScreen())),
       // Shared links from the website: https://<domain>/play?c=…
       GoRoute(
         path: '/play',
-        builder: (_, state) => SharedLinkScreen(code: state.uri.queryParameters['c']),
+        pageBuilder: (_, state) => page(state, SharedLinkScreen(code: state.uri.queryParameters['c'])),
       ),
       for (final mode in GameMode.values) ...[
         GoRoute(
           path: '/play/${mode.id}/setup',
-          builder: (_, _) => SetupScreen(mode: mode),
+          pageBuilder: (_, state) => page(state, SetupScreen(mode: mode)),
         ),
         GoRoute(
           path: '/play/${mode.id}',
-          builder: (_, _) => switch (mode) {
+          pageBuilder: (_, state) => page(state, switch (mode) {
             GameMode.wouldYouRather => const WyrPlayScreen(),
             GameMode.thisOrThat => const TotPlayScreen(),
             GameMode.trivia => const TriviaPlayScreen(),
             GameMode.guess => const GuessPlayScreen(),
-          },
+          }),
         ),
         GoRoute(
           path: '/play/${mode.id}/results',
-          builder: (_, _) => switch (mode) {
+          pageBuilder: (_, state) => page(state, switch (mode) {
             GameMode.wouldYouRather || GameMode.thisOrThat => ChoiceResultsScreen(mode: mode),
             GameMode.trivia || GameMode.guess => ScoreResultsScreen(mode: mode),
-          },
+          }),
         ),
       ],
     ],

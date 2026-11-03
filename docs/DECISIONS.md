@@ -6,6 +6,8 @@ Short, dated records of non-trivial choices. Newest first.
 
 **Short, springy, and off under reduced motion.** The website gets 3D "sink-in" buttons, lifting cards, bouncing picks, bumping counters, a filling vote split, a right-answer pulse and wrong-answer shake, flipping clues, popping points and a confetti burst on results, all in `globals.css` under `prefers-reduced-motion: no-preference`. The app gets the same ideas through `lib/widgets/motion.dart` (`Pressable`, `Bump`, `StaggerIn`, `PopIn`, `Shake`, `Confetti`), each checking the system setting and the in-app Reduce motion switch. Every animation is one-shot except the hero's drifting dots on the website, so widget tests still settle and the accessibility wait skips only looping animations.
 
+**Pages are dealt in like cards.** In the app, every route uses `GamePage` (a go_router `CustomTransitionPage`): the new page rises a little and grows from 92% with a slight overshoot while the page underneath shrinks back; back plays it in reverse (420 ms in, 300 ms out). It's set per route rather than through the theme, because go_router falls back to transition-less pages when it can't detect a `MaterialApp` (as in the test harness). Reduce motion or the system setting makes pages appear instantly.
+
 **The vote-split fill darkens rather than lightens** the option colour, so it only ever raises the contrast of the white text on top. _Rejected:_ a library (Framer Motion, flutter_animate): the effects are small and a dependency would add weight for little gain.
 
 ## 2026-11-03 — Closing the gaps after Phase 5

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'page_transitions.dart';
 import 'tokens.g.dart';
 
 /// Brand colours that Material's [ColorScheme] has no slot for.
@@ -68,7 +69,7 @@ class MmPalette extends ThemeExtension<MmPalette> {
   MmPalette lerp(MmPalette? other, double t) => t < 0.5 || other == null ? this : other;
 }
 
-ThemeData buildTheme(Brightness brightness) {
+ThemeData buildTheme(Brightness brightness, {bool reduceMotion = false}) {
   final dark = brightness == Brightness.dark;
   final scheme = ColorScheme(
     brightness: brightness,
@@ -157,8 +158,11 @@ ThemeData buildTheme(Brightness brightness) {
     segmentedButtonTheme: SegmentedButtonThemeData(
       style: SegmentedButton.styleFrom(minimumSize: const Size(MmTouch.min, MmTouch.min)),
     ),
-    pageTransitionsTheme: const PageTransitionsTheme(
-      builders: {TargetPlatform.android: FadeForwardsPageTransitionsBuilder()},
+    pageTransitionsTheme: PageTransitionsTheme(
+      builders: {
+        TargetPlatform.android: GamePageTransitionsBuilder(still: reduceMotion),
+        TargetPlatform.iOS: GamePageTransitionsBuilder(still: reduceMotion),
+      },
     ),
   );
 }

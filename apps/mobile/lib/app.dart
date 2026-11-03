@@ -23,8 +23,8 @@ class MirthMixApp extends ConsumerWidget {
     return MaterialApp.router(
       onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
       debugShowCheckedModeBanner: false,
-      theme: buildTheme(Brightness.light),
-      darkTheme: buildTheme(Brightness.dark),
+      theme: buildTheme(Brightness.light, reduceMotion: settings.reduceMotion),
+      darkTheme: buildTheme(Brightness.dark, reduceMotion: settings.reduceMotion),
       themeMode: settings.themeMode,
       themeAnimationDuration: settings.reduceMotion ? Duration.zero : kThemeAnimationDuration,
       localizationsDelegates: _localizationsDelegates,
