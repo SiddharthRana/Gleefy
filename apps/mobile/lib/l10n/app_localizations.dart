@@ -1614,6 +1614,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No thanks'**
   String get usagePromptNo;
+
+  /// No description provided for @playersEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No names yet'**
+  String get playersEmpty;
+
+  /// No description provided for @playersEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Add players to take turns, or teams like “Team Chai” and “Team Coffee”.'**
+  String get playersEmptyBody;
+
+  /// No description provided for @playersCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} of {max}'**
+  String playersCount(int count, int max);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
