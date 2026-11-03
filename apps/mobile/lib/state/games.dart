@@ -9,6 +9,7 @@ import '../game/random.dart';
 import '../game/trivia_engine.dart';
 import '../game/wyr_engine.dart';
 import '../telemetry/analytics.dart';
+import 'custom_questions.dart';
 import 'providers.dart';
 import 'sessions.dart';
 
@@ -162,6 +163,7 @@ class GameStarter {
       'rounds': setup.rounds,
       'categories': setup.categoryIds.length,
       'premium_category': setup.categoryIds.any((id) => pack.category(id)?.tier == Tier.premium),
+      'custom_questions': setup.categoryIds.contains(customCategoryId),
       'players': names.length,
       'timer': setup.timer,
       'pass_the_phone': setup.passThePhone,

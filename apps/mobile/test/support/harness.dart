@@ -129,7 +129,7 @@ Future<Harness> pumpApp(
   final container = ProviderContainer(
     overrides: [
       sharedPreferencesProvider.overrideWithValue(prefs),
-      contentProvider.overrideWithValue(content ?? tinyContent()),
+      bundledContentProvider.overrideWithValue(content ?? tinyContent()),
       screenAwakeProvider.overrideWithValue(awake),
       ...overrides,
     ],

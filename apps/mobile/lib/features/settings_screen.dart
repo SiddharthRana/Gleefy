@@ -54,21 +54,13 @@ class SettingsScreen extends ConsumerWidget {
               onSelectionChanged: (v) => c.update(s.copyWith(themeMode: v.first)),
             ),
           ),
-          section(l.settingsPremium),
-          ListTile(
-            leading: Icon(ref.watch(premiumProvider) ? Icons.verified_rounded : Icons.lock_outline_rounded),
-            title: Text(l.premiumTitle),
-            trailing: const Icon(Icons.chevron_right_rounded),
-            onTap: () => context.push('/premium'),
-          ),
-          if (ref.watch(entitlementProvider).signedIn)
-            ListTile(
-              leading: const Icon(Icons.person_outline_rounded),
-              title: Text(l.accountTitle),
-              trailing: const Icon(Icons.chevron_right_rounded),
-              onTap: () => context.push('/account'),
-            ),
           section(l.settingsPlay),
+          ListTile(
+            leading: const Icon(Icons.edit_note_rounded),
+            title: Text(l.myQuestionsTitle),
+            trailing: const Icon(Icons.chevron_right_rounded),
+            onTap: () => context.push('/my-questions'),
+          ),
           SwitchListTile(
             title: Text(l.settingsBigText),
             subtitle: Text(l.settingsBigTextBody),
@@ -92,6 +84,20 @@ class SettingsScreen extends ConsumerWidget {
             trailing: const Icon(Icons.chevron_right_rounded),
             onTap: () => context.push('/onboarding'),
           ),
+          section(l.settingsPremium),
+          ListTile(
+            leading: Icon(ref.watch(premiumProvider) ? Icons.verified_rounded : Icons.lock_outline_rounded),
+            title: Text(l.premiumTitle),
+            trailing: const Icon(Icons.chevron_right_rounded),
+            onTap: () => context.push('/premium'),
+          ),
+          if (ref.watch(entitlementProvider).signedIn)
+            ListTile(
+              leading: const Icon(Icons.person_outline_rounded),
+              title: Text(l.accountTitle),
+              trailing: const Icon(Icons.chevron_right_rounded),
+              onTap: () => context.push('/account'),
+            ),
           section(l.settingsPrivacy),
           note(l.settingsPrivacyBody),
           if (ref.watch(analyticsProvider).available)

@@ -825,4 +825,60 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingsShareUsageBody =>
       'Which games are played, how far you get, and crash reports, to help improve MirthMix. Never names, questions, answers or your email. Off unless you turn it on.';
+
+  @override
+  String get myQuestionsTitle => 'My questions';
+
+  @override
+  String get myQuestionsIntro =>
+      'Write your own questions for Would You Rather and This or That. They stay on this phone and are never shared.';
+
+  @override
+  String get myQuestionsHowTo => 'To play them, tick “My questions” when you set up the game.';
+
+  @override
+  String get myQuestionsEmpty => 'No questions yet. Tap “Add question” to write one.';
+
+  @override
+  String get myQuestionsAdd => 'Add question';
+
+  @override
+  String get myQuestionsEdit => 'Edit question';
+
+  @override
+  String get myQuestionsOptionA => 'First option';
+
+  @override
+  String get myQuestionsOptionB => 'Second option';
+
+  @override
+  String get myQuestionsDelete => 'Delete question';
+
+  @override
+  String get myQuestionsDeleted => 'Question deleted';
+
+  @override
+  String get myQuestionsErrorEmpty => 'Fill in both options.';
+
+  @override
+  String myQuestionsErrorTooLong(int max) {
+    return 'Keep each option to $max characters or fewer.';
+  }
+
+  @override
+  String get myQuestionsErrorSame => 'The two options need to be different.';
+
+  @override
+  String get myQuestionsErrorDuplicate => 'You already have this question.';
+
+  @override
+  String get myQuestionsErrorNotAllowed => 'That has a word we don’t allow. Keep it friendly for everyone.';
+
+  @override
+  String myQuestionsErrorFull(int max) {
+    return 'You’ve reached $max questions. Delete some to add more.';
+  }
+
+  @override
+  String get setupWriteOwn => 'Write your own questions';
 }

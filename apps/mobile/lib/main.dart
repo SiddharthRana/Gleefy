@@ -39,7 +39,10 @@ Future<void> main() async {
   }
 
   // Accounts and billing are optional: without configuration everything free still works.
-  final overrides = [sharedPreferencesProvider.overrideWithValue(prefs), contentProvider.overrideWithValue(content)];
+  final overrides = [
+    sharedPreferencesProvider.overrideWithValue(prefs),
+    bundledContentProvider.overrideWithValue(content),
+  ];
   if (AppConfig.accountsConfigured) {
     await Supabase.initialize(url: AppConfig.supabaseUrl, publishableKey: AppConfig.supabasePublishableKey);
     final auth = SupabaseAuthRepository(Supabase.instance.client.auth);

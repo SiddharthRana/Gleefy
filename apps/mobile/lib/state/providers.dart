@@ -4,12 +4,18 @@ import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../account/entitlement.dart';
 import '../content/content.dart';
+import 'custom_questions.dart';
 
 /// Overridden in main() (and tests) with the instance loaded at startup.
 final sharedPreferencesProvider = Provider<SharedPreferences>((ref) => throw UnimplementedError());
 
 /// Overridden in main() (and tests) with the content loaded and checked at startup.
-final contentProvider = Provider<ContentLibrary>((ref) => throw UnimplementedError());
+final bundledContentProvider = Provider<ContentLibrary>((ref) => throw UnimplementedError());
+
+/// Everything playable: the bundled packs plus the person's own questions.
+final contentProvider = Provider<ContentLibrary>(
+  (ref) => withCustomQuestions(ref.watch(bundledContentProvider), ref.watch(customQuestionsProvider)),
+);
 
 /// Current time; overridden in tests.
 final clockProvider = Provider<DateTime Function()>((ref) => DateTime.now);

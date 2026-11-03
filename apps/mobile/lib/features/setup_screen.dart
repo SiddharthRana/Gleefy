@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../content/content.dart';
 import '../game/wyr_engine.dart' show EmptyPoolException;
 import '../l10n/app_localizations.dart';
+import '../state/custom_questions.dart';
 import '../state/games.dart';
 import '../state/providers.dart';
 import '../theme/app_theme.dart';
@@ -89,7 +90,8 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final palette = MmPalette.of(context);
-    final pack = _pack;
+    // Watched, so questions written from here appear when the person comes back.
+    final pack = ref.watch(contentProvider).packFor(widget.mode);
     final premium = ref.watch(premiumProvider);
     final available = pack.countIn(_selected);
     final entry = LibraryEntry.of(widget.mode);
@@ -142,6 +144,15 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
             ),
             const SizedBox(height: MmSpace.s2),
           ],
+          if (customLimits.containsKey(widget.mode))
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: TextButton.icon(
+                icon: const Icon(Icons.edit_note_rounded),
+                label: Text(l.setupWriteOwn),
+                onPressed: () => context.push('/my-questions?mode=${widget.mode.id}'),
+              ),
+            ),
           const SizedBox(height: MmSpace.s4),
           SectionTitle(l.setupRounds),
           SegmentedButton<int>(
