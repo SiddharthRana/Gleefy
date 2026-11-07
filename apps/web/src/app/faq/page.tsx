@@ -18,23 +18,23 @@ const faqs: { q: string; a: React.ReactNode }[] = [
     q: 'What does Premium include?',
     a: (
       <>
-        Every premium category in every game, on Android and the website, for a monthly or yearly
-        subscription. See <Link href="/pricing">Premium</Link> for prices and the full list.
+        Every premium category in every game, on Android and the website, for one small payment. It
+        isn’t a subscription. See <Link href="/pricing">Premium</Link> for the price and the full
+        list.
       </>
     ),
   },
   {
     q: 'Do I need an account?',
-    a: 'Only to buy Premium or use it on another device. You sign in with your email and a one-time code; there’s no password. Accounts and purchases are for people aged 18 or over.',
+    a: 'Only to buy Premium or use it on another device. You sign in with Google, or with your email and a one-time code; there’s no password. Accounts and purchases are for people aged 18 or over.',
   },
   {
-    q: 'How do I cancel Premium?',
+    q: 'Is Premium a subscription?',
     a: (
       <>
-        If you bought it in the Android app, cancel in Google Play → Payments & subscriptions. If
-        you bought it on the website, use “Manage subscription” on your{' '}
-        <Link href="/account">Account</Link> page. Premium stays on until the end of the period you
-        paid for.
+        No. You pay once and keep Premium, with nothing to cancel. To use it on another phone or on
+        the website, sign in to the same account on your <Link href="/account">Account</Link> page
+        or in the app’s Settings.
       </>
     ),
   },
@@ -44,13 +44,13 @@ const faqs: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: 'Does it work offline?',
-    a: 'Yes. All the games and questions are on your phone. Premium checks in with our server now and then, but stays on for a few days without a connection.',
+    a: 'Yes. All the games and questions are on your phone, and once Premium is unlocked it stays on without a connection.',
   },
   {
     q: 'What do you know about me?',
     a: (
       <>
-        Nothing, unless you buy Premium (then your email and subscription status) or choose to share
+        Nothing, unless you buy Premium (then your email and that you bought it) or choose to share
         anonymous usage statistics. Player names never leave your phone. See{' '}
         <Link href="/privacy">Privacy</Link>.
       </>

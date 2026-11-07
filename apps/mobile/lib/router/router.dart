@@ -32,6 +32,9 @@ final routerProvider = Provider<GoRouter>((ref) {
 
   return GoRouter(
     initialLocation: '/',
+    // "Continue with Google" comes back through mirthmix://auth-callback. Supabase finishes the
+    // sign-in from that link itself, so the router stays on the current screen.
+    onEnter: (context, current, next, router) => isAuthCallback(next.uri) ? const Block.stop() : const Allow(),
     redirect: (context, state) {
       // First launch goes through the short introduction; it never blocks later visits.
       final onboarded = ref.read(settingsProvider).onboarded;
@@ -100,3 +103,7 @@ final routerProvider = Provider<GoRouter>((ref) {
     ),
   );
 });
+
+/// The deep link Supabase Auth returns to after "Continue with Google".
+bool isAuthCallback(Uri uri) =>
+    uri.scheme == 'mirthmix' || uri.host == 'auth-callback' || uri.path.startsWith('/auth-callback');

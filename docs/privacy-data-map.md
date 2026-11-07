@@ -1,16 +1,16 @@
 # Privacy data map
 
-Everything MirthMix stores or sends, where it lives and when it's deleted. Keep this, `/privacy`, and `docs/launch/data-safety.md` in step. Reviewed 2026-11-03 against the code.
+Everything MirthMix stores or sends, where it lives and when it's deleted. Keep this, `/privacy`, and `docs/launch/data-safety.md` in step. Reviewed 2026-11-07 against the code.
 
 ## On the phone only (never sent anywhere)
 
-| Data                                                                 | Where                   | Deleted when                                             |
-| -------------------------------------------------------------------- | ----------------------- | -------------------------------------------------------- |
-| Settings (theme, big text, motion, haptics, analytics opt-in)        | shared_preferences      | App data cleared / uninstall                             |
-| Player and team names                                                | shared_preferences      | Edited, or app data cleared                              |
-| Game in progress, last setups, favourites, recent games, party packs | shared_preferences      | Finished/discarded, or app data cleared                  |
-| Cached Premium entitlement (user id, premium yes/no, valid until)    | shared_preferences      | Sign-out, account deletion, or a server answer of "free" |
-| Supabase session (sign-in token)                                     | Supabase client storage | Sign-out / account deletion                              |
+| Data                                                                  | Where                        | Deleted when                                             |
+| --------------------------------------------------------------------- | ---------------------------- | -------------------------------------------------------- |
+| Settings (theme, big text, motion, haptics, analytics opt-in)         | shared_preferences           | App data cleared / uninstall                             |
+| Player and team names                                                 | shared_preferences           | Edited, or app data cleared                              |
+| Game in progress, last setups, favourites, recent games, party packs  | shared_preferences           | Finished/discarded, or app data cleared                  |
+| Cached Premium entitlement (user id, premium yes/no, one-time unlock) | shared_preferences           | Sign-out, account deletion, or a server answer of "free" |
+| Supabase session (sign-in token)                                      | Android Keystore (encrypted) | Sign-out / account deletion                              |
 
 ## On the website (browser only)
 
@@ -21,13 +21,13 @@ Everything MirthMix stores or sends, where it lives and when it's deleted. Keep 
 
 ## On our servers (purchasers only)
 
-| Data                                                                                     | Service                            | Purpose                            | Retention                                                                                 |
-| ---------------------------------------------------------------------------------------- | ---------------------------------- | ---------------------------------- | ----------------------------------------------------------------------------------------- |
-| Email, account creation time                                                             | Supabase Auth                      | Sign-in                            | Until account deletion                                                                    |
-| Profile (deletion flag, Play account reference)                                          | Supabase Postgres `profiles`       | Link Play purchases to the account | Until account deletion (cascade)                                                          |
-| Subscriptions (provider, status, period, interval, provider ids)                         | Supabase Postgres `subscriptions`  | Entitlements                       | Until account deletion (cascade)                                                          |
-| Store/provider webhook events (payload may contain an email)                             | Supabase Postgres `webhook_events` | Idempotency, troubleshooting       | Payload erased after 30 days by the API's hourly maintenance; the event id/type row stays |
-| API request logs (method, path, status, request id; no bodies, headers or query strings) | Fly.io                             | Operations                         | Fly's log retention                                                                       |
+| Data                                                                                                  | Service                            | Purpose                            | Retention                                                                                 |
+| ----------------------------------------------------------------------------------------------------- | ---------------------------------- | ---------------------------------- | ----------------------------------------------------------------------------------------- |
+| Email, account creation time; with Google sign-in also the name and profile picture URL Google shares | Supabase Auth                      | Sign-in (only the email is used)   | Until account deletion                                                                    |
+| Profile (deletion flag, Play account reference)                                                       | Supabase Postgres `profiles`       | Link Play purchases to the account | Until account deletion (cascade)                                                          |
+| Purchases (provider, status, purchase time, provider ids)                                             | Supabase Postgres `subscriptions`  | Entitlements                       | Until account deletion (cascade)                                                          |
+| Store/provider webhook events (payload may contain an email)                                          | Supabase Postgres `webhook_events` | Idempotency, troubleshooting       | Payload erased after 30 days by the API's hourly maintenance; the event id/type row stays |
+| API request logs (method, path, status, request id; no bodies, headers or query strings)              | Fly.io                             | Operations                         | Fly's log retention                                                                       |
 
 Payment details (cards, UPI) are entered only in Google Play's or the payment partner's checkout and never reach MirthMix.
 
@@ -50,7 +50,7 @@ Never sent: player names, questions (including custom ones), answers, email, acc
 
 ## Account deletion
 
-`DELETE /v1/me` (app, website, or by email request): marks the profile deleted at once, clears the Play account reference, deletes the Supabase auth user (profile and subscriptions cascade). Without `SUPABASE_SECRET_KEY` the auth user removal is retried hourly. Store subscriptions must be cancelled separately; both UIs say so.
+`DELETE /v1/me` (app, website, or by email request): marks the profile deleted at once, clears the Play account reference, deletes the Supabase auth user (profile and purchaseons cascade). Without `SUPABASE_SECRET_KEY` the auth user removal is retried hourly. Store subscriptions must be cancelled separately; both UIs say so.
 
 ## Age
 

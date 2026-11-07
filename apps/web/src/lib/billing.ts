@@ -5,21 +5,16 @@ import { apiFetch } from './api';
 
 export interface BillingConfig {
   enabled: boolean;
-  web: {
-    provider: 'none' | 'paddle' | 'dodo';
-    available: boolean;
-    intervals: ('monthly' | 'annual')[];
-  };
-  googlePlay: { available: boolean; packageName: string; subscriptionId: string };
+  web: { provider: 'none' | 'dodo'; available: boolean };
+  googlePlay: { available: boolean; packageName: string; productId: string };
 }
 
-export interface AccountSubscription {
-  provider: 'google_play' | 'paddle' | 'dodo';
+/** A Premium unlock that gives access, or one whose payment is still pending (`on_hold`). */
+export interface AccountPurchase {
+  provider: 'google_play' | 'dodo';
   planId: string;
   status: string;
-  interval: 'monthly' | 'annual' | null;
-  currentPeriodEnd: string | null;
-  cancelAtPeriodEnd: boolean;
+  purchasedAt: string | null;
 }
 
 export interface Account {
@@ -27,47 +22,36 @@ export interface Account {
   email?: string;
   plan: { id: string; name: string; paid: boolean; source: 'default' | 'subscription' };
   entitlements: { premiumContent: boolean };
+  /** Premium is a one-time unlock: it doesn't run out. */
+  lifetime: boolean;
   validUntil: string | null;
-  subscriptions: AccountSubscription[];
+  purchases: AccountPurchase[];
 }
 
-/** Whether Premium can be bought on the web right now. `null` while loading; unavailable on error. */
-export function useBillingConfig(): BillingConfig | null {
-  const [config, setConfig] = useState<BillingConfig | null>(null);
+/**
+ * Whether Premium can be bought on the web. `config` is null while loading and when the check
+ * failed; `failed` is set when the API couldn't be reached or answered with an error, and the check
+ * gives up after 10 seconds so the page never waits forever (same as Weblume).
+ */
+export function useBillingConfigStatus(): { config: BillingConfig | null; failed: boolean } {
+  const [state, setState] = useState<{ config: BillingConfig | null; failed: boolean }>({
+    config: null,
+    failed: false,
+  });
   useEffect(() => {
     let active = true;
-    apiFetch<BillingConfig>('/v1/billing/config').then(
-      (data) => active && setConfig(data),
-      () =>
-        active &&
-        setConfig({
-          enabled: false,
-          web: { provider: 'none', available: false, intervals: [] },
-          googlePlay: { available: false, packageName: '', subscriptionId: '' },
-        }),
+    apiFetch<BillingConfig>('/v1/billing/config', { timeoutMs: 10_000 }).then(
+      (config) => active && setState({ config, failed: false }),
+      () => active && setState({ config: null, failed: true }),
     );
     return () => {
       active = false;
     };
   }, []);
-  return config;
+  return state;
 }
 
-const ACCESS_STATUSES = new Set(['trialing', 'active', 'grace_period']);
-
-/** Mirrors subscriptionGrantsAccess in @mirthmix/plans for display (the server decides access). */
-export function grantsAccess(s: { status: string; currentPeriodEnd: string | null }): boolean {
-  if (s.status === 'canceled')
-    return s.currentPeriodEnd !== null && new Date(s.currentPeriodEnd) > new Date();
-  return ACCESS_STATUSES.has(s.status);
-}
-
-export function playManageUrl(packageName: string, subscriptionId: string): string {
-  return `https://play.google.com/store/account/subscriptions?sku=${encodeURIComponent(subscriptionId)}&package=${encodeURIComponent(packageName)}`;
-}
-
-export const providerName: Record<AccountSubscription['provider'], string> = {
+export const providerName: Record<AccountPurchase['provider'], string> = {
   google_play: 'Google Play',
-  paddle: 'the website (Paddle)',
-  dodo: 'the website (Dodo Payments)',
+  dodo: 'the website',
 };

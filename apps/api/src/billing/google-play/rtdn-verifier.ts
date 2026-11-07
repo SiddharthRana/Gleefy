@@ -39,6 +39,17 @@ export interface RtdnMessage {
     purchaseToken?: string;
     subscriptionId?: string;
   };
+  oneTimeProductNotification?: {
+    notificationType?: number;
+    purchaseToken?: string;
+    sku?: string;
+  };
+  /** A purchase was refunded, charged back or revoked. productType 2 = one-time product. */
+  voidedPurchaseNotification?: {
+    purchaseToken?: string;
+    orderId?: string;
+    productType?: number;
+  };
   testNotification?: { version?: string };
 }
 

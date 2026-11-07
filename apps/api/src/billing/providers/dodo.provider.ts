@@ -1,4 +1,3 @@
-import type { SubscriptionStatus } from '@mirthmix/plans';
 import type { ProductCatalog } from '../product-catalog';
 import {
   header,
@@ -10,22 +9,32 @@ import {
 } from '../billing.types';
 import { verifyStandardWebhook } from './signatures';
 
-interface DodoSubscription {
-  subscription_id: string;
-  status: 'pending' | 'active' | 'on_hold' | 'cancelled' | 'failed' | 'expired' | string;
-  product_id: string;
-  customer?: { customer_id?: string };
+/** The parts of Dodo's Payment object we use. */
+interface DodoPayment {
+  payment_id: string;
+  status?: string | null;
+  subscription_id?: string | null;
+  product_cart?: { product_id: string; quantity?: number }[] | null;
+  customer?: { customer_id?: string; email?: string } | null;
   metadata?: { user_id?: string } | null;
-  previous_billing_date?: string | null;
-  next_billing_date?: string | null;
-  cancel_at_next_billing_date?: boolean;
+  created_at?: string;
 }
 
+/** Refund and Dispute objects both name the payment they belong to. */
+interface DodoPaymentRef {
+  payment_id: string;
+  status?: string;
+}
+
+/** Events that take a bought unlock away again. */
+const REVOKING = new Set(['refund.succeeded', 'dispute.lost']);
+
 /**
- * Dodo Payments (India-based Merchant of Record; supports UPI AutoPay and RBI e-mandates for Indian
- * buyers). Webhooks follow the Standard Webhooks spec. NOTE: request/response field names follow
- * Dodo's documentation as of this writing but were not verified against the live API from the
- * build environment — confirm in test mode before launch (docs/payments-setup.md).
+ * Dodo Payments (India-based Merchant of Record). Premium is a one-time product: a hosted checkout
+ * session, then `payment.succeeded` grants it and `refund.succeeded` or `dispute.lost` takes it
+ * away. Webhooks follow the Standard Webhooks spec. Paths and fields were checked against Dodo's API
+ * reference on 2026-11-07; still confirm one test-mode purchase end to end before launch
+ * (docs/payments-setup.md).
  */
 export class DodoProvider implements WebPaymentProvider {
   readonly id = 'dodo' as const;
@@ -65,7 +74,7 @@ export class DodoProvider implements WebPaymentProvider {
     productId: string;
     returnUrl: string;
   }): Promise<{ url: string }> {
-    const res = await this.call<{ checkout_url?: string }>('/checkouts', {
+    const res = await this.call<{ checkout_url?: string | null }>('/checkouts', {
       product_cart: [{ product_id: input.productId, quantity: 1 }],
       ...(input.email ? { customer: { email: input.email } } : {}),
       metadata: { user_id: input.userId },
@@ -73,15 +82,6 @@ export class DodoProvider implements WebPaymentProvider {
     });
     if (!res.checkout_url) throw new ProviderError('Dodo returned no checkout URL');
     return { url: res.checkout_url };
-  }
-
-  async createPortalSession(input: { customerId: string }): Promise<{ url: string }> {
-    const res = await this.call<{ link?: string }>(
-      `/customers/${encodeURIComponent(input.customerId)}/customer-portal/session`,
-      {},
-    );
-    if (!res.link) throw new ProviderError('Dodo returned no portal URL');
-    return { url: res.link };
   }
 
   parseWebhook(req: WebhookRequest, now = new Date()): ParsedWebhook {
@@ -99,49 +99,49 @@ export class DodoProvider implements WebPaymentProvider {
     const event = JSON.parse(req.rawBody.toString('utf8')) as {
       type: string;
       timestamp: string;
-      data: DodoSubscription;
+      data: unknown;
     };
-    if (!event.type.startsWith('subscription.')) {
+    const ignore = (reason: string): ParsedWebhook => ({
+      eventId: id!,
+      eventType: event.type,
+      subscription: null,
+      ignoredReason: reason,
+    });
+    const eventAt = new Date(event.timestamp);
+
+    if (REVOKING.has(event.type)) {
+      const ref = event.data as DodoPaymentRef;
+      if (!ref.payment_id) return ignore('no_payment');
       return {
         eventId: id!,
         eventType: event.type,
         subscription: null,
-        ignoredReason: 'unhandled_event',
+        refund: { providerSubscriptionId: ref.payment_id, eventAt },
       };
     }
-    const d = event.data;
-    const entry = this.catalog.find('dodo', d.product_id);
-    if (!entry)
-      return {
-        eventId: id!,
-        eventType: event.type,
-        subscription: null,
-        ignoredReason: 'unknown_product',
-      };
-    const cancelAtEnd = Boolean(d.cancel_at_next_billing_date);
-    const status: SubscriptionStatus =
-      d.status === 'active'
-        ? cancelAtEnd
-          ? 'canceled'
-          : 'active'
-        : d.status === 'on_hold' || d.status === 'pending'
-          ? 'on_hold'
-          : d.status === 'cancelled'
-            ? 'canceled' // keeps access only until next_billing_date (if in the future)
-            : 'expired'; // failed / expired / unknown
+    if (event.type !== 'payment.succeeded') return ignore('unhandled_event');
+
+    const d = event.data as DodoPayment;
+    // Renewals of a subscription also send payment.succeeded; Premium has no subscription.
+    if (d.subscription_id) return ignore('subscription_payment');
+    const entry = (d.product_cart ?? [])
+      .map((item) => this.catalog.find('dodo', item.product_id))
+      .find((e) => e !== undefined);
+    if (!entry) return ignore('unknown_product');
     const sub: NormalizedSubscription = {
       provider: 'dodo',
-      providerSubscriptionId: d.subscription_id,
+      providerSubscriptionId: d.payment_id,
       providerCustomerId: d.customer?.customer_id ?? null,
-      productId: d.product_id,
+      productId: entry.productId,
       planId: entry.planId,
-      interval: entry.interval,
-      status,
-      currentPeriodStart: d.previous_billing_date ? new Date(d.previous_billing_date) : null,
-      currentPeriodEnd: d.next_billing_date ? new Date(d.next_billing_date) : null,
-      cancelAtPeriodEnd: cancelAtEnd,
+      interval: 'one_time',
+      status: 'active',
+      currentPeriodStart: d.created_at ? new Date(d.created_at) : eventAt,
+      currentPeriodEnd: null,
+      cancelAtPeriodEnd: false,
       userId: d.metadata?.user_id ?? null,
-      eventAt: new Date(event.timestamp),
+      customerEmail: d.customer?.email ?? null,
+      eventAt,
     };
     return { eventId: id!, eventType: event.type, subscription: sub };
   }

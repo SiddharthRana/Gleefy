@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
 import { formatPrice, PLANS } from '@mirthmix/plans';
 import { modeNames, packs } from '@/lib/packs';
-import { SubscribeButtons } from './subscribe-buttons';
+import { UnlockButton } from './unlock-button';
 
 export const metadata: Metadata = {
   title: 'Premium',
   description:
-    'MirthMix is free to play. Premium unlocks every premium category in every game, on Android and the web.',
+    'MirthMix is free to play. Premium is a one-time unlock for every premium category in every game, on Android and the web.',
   alternates: { canonical: '/pricing' },
 };
 
@@ -22,7 +22,8 @@ const premiumCategories = Object.entries(packs).flatMap(([mode, pack]) =>
 );
 
 export default function PricingPage() {
-  const prices = PLANS.premium.displayPrices ?? [];
+  const p = PLANS.premium.displayPrice!;
+  const price = formatPrice(p.amount, p.currency);
   return (
     <div className="py-12">
       <h1 className="font-display text-5xl font-bold">Premium</h1>
@@ -39,7 +40,7 @@ export default function PricingPage() {
           <h2 id="free-plan" className="font-display text-3xl font-semibold">
             Free
           </h2>
-          <p className="mt-1 text-2xl font-bold">₹0</p>
+          <p className="mt-1 text-2xl font-bold">$0</p>
           <ul className="mt-4 list-disc space-y-2 pl-6">
             <li>All four games and custom party packs</li>
             <li>Every free category</li>
@@ -55,25 +56,20 @@ export default function PricingPage() {
           <h2 id="premium-plan" className="font-display text-3xl font-semibold">
             {PLANS.premium.name}
           </h2>
-          <ul className="mt-1 space-y-1 text-lg font-bold">
-            {prices.map((p) => (
-              <li key={p.currency}>
-                {formatPrice(p.monthly, p.currency)} a month or {formatPrice(p.annual, p.currency)}{' '}
-                a year
-              </li>
-            ))}
-          </ul>
+          <p className="mt-1 text-2xl font-bold">
+            {price} <span className="text-lg text-muted">once</span>
+          </p>
           <p className="mt-1 text-sm text-muted">
-            Indicative prices. The amount you pay, including any tax, is shown at checkout and may
+            No subscription. The amount you pay, including any tax, is shown at checkout and may
             vary by country.
           </p>
           <ul className="mt-4 list-disc space-y-2 pl-6">
             <li>Everything in Free</li>
             <li>Every premium category in every game</li>
             <li>One account for the Android app and the website</li>
-            <li>Cancel anytime</li>
+            <li>Pay once, keep it for good</li>
           </ul>
-          <SubscribeButtons />
+          <UnlockButton price={price} />
         </section>
       </div>
 
@@ -98,9 +94,8 @@ export default function PricingPage() {
           On Android
         </h2>
         <p className="mt-3">
-          In the Android app, Premium is bought through Google Play and managed in your Google Play
-          subscriptions. Sign in with the same email on the website and the app to use one
-          subscription in both places.
+          In the Android app, Premium is a one-time purchase through Google Play. Sign in with the
+          same Google account or email on the website and the app, and one purchase unlocks both.
         </p>
       </section>
     </div>

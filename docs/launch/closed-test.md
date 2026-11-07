@@ -6,7 +6,7 @@ New personal Google Play developer accounts must run a **closed test with at lea
 
 1. Play Console developer account verified, app created as `com.mirthmix.app`, first bundle uploaded by hand (see `docs/deployment.md` §4).
 2. Store listing, Data safety, content rating and target audience filled in (`docs/launch/`).
-3. Billing configured in **test mode**, testers added under Setup → License testing so subscriptions are free (`docs/payments-setup.md`).
+3. Billing configured in **test mode**, testers added under Setup → License testing so test purchases are free (`docs/payments-setup.md`).
 4. Recruit **15–20 testers** (some always drop out): friends, family, colleagues with Android phones, ideally including a few low-end phones and older Android versions. Collect their Google account emails in a Google Group or an email list.
 5. Create the closed testing track (e.g. `alpha`), add the testers' list, and publish a release there. Set the deploy workflow's `PLAY_TRACK` variable to `alpha` so approved releases go to it.
 6. Share the opt-in link. Each tester must open it, tap **Become a tester**, then install from Play.
@@ -18,7 +18,7 @@ Send a short message with the opt-in link and these tasks, spread over the two w
 - Play each game at least once with other people: Would You Rather, This or That (also pass-the-phone), Trivia Blitz with two teams, Guess the Answer, and a custom party pack.
 - Try the accessibility settings (big text, dark theme, reduced motion) and TalkBack if they use it.
 - Open a shared game link from the website.
-- Sign in and "buy" Premium (free as a license tester), then cancel it in Google Play.
+- Sign in (with Google and with an email code) and "buy" Premium (free as a license tester); check it unlocks on the website too.
 - Report anything confusing, broken, wrong (trivia answers!) or unsuitable.
 
 Feedback route: a simple form (Google Forms is fine) with: phone model, Android version, game, what happened, screenshot. Play also collects private feedback from testers on the listing.

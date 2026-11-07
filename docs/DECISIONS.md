@@ -2,6 +2,20 @@
 
 Short, dated records of non-trivial choices. Newest first.
 
+## 2026-11-07 — Premium becomes a one-time unlock; Weblume's payment fixes; Google sign-in
+
+**Premium is a one-time $2.99 unlock, not a subscription.** The owner asked for a minimal price because many players won't pay for party games, and chose a one-time unlock over $0.99–$1.99 subscriptions. A party game is an occasional purchase, "yours to keep" is easy to say yes to, and at $2.99 store fees stay reasonable (Play 15%, Dodo ≈ 4% + 15¢). Prices are set in US dollars; cheaper local prices (for example ₹99 in India) are per-country overrides in Play and Dodo, not code. _Rejected:_ $0.99/month (fees take ~20% on the web and buyers still face a subscription), keeping $2.99/$19.99 subscriptions.
+
+**Same tables and pipeline, one-time products.** A purchase is still a row in `subscriptions`, now with `billing_interval = 'one_time'`, status `active` and no end date (`refunded` takes it away, `on_hold` = payment pending). Play uses a non-consumable one-time product verified with `purchases.products` and acknowledged server-side; RTDN `oneTimeProductNotification` and `voidedPurchaseNotification` keep it current. Dodo uses a one-time product: `payment.succeeded` grants, `refund.succeeded` and `dispute.lost` revoke. The account API reports `lifetime` and a `purchases` list. _Rejected:_ renaming the table (touches every query before launch for no behavioural gain).
+
+**Dodo only on the web; Paddle removed.** Same choice as Weblume (2026-11-04): Dodo accepts Indian sellers, supports UPI and costs far less on small payments; Paddle routes products under $10 to custom pricing. Ported with Weblume's later fixes: payer-email matching when metadata isn't echoed, failed checkouts shown as failed (Dodo's `status` on the return URL), animated result cards, listing only purchases that matter, and a pricing page that stops waiting after 10 seconds.
+
+**Sign in with Google, or an email code.** The owner found no visible way to sign in: it was hidden inside Premium and absent in builds without accounts. Now Settings has a "Sign in" row, the website header has "Sign in", and both offer "Continue with Google" (Supabase OAuth with PKCE; the app returns through `mirthmix://auth-callback`, which the router ignores via `onEnter` so the current screen stays) next to the existing email code. The 18+ declaration applies to both. The button is behind `AUTH_GOOGLE_ENABLED` until the Google provider is set up. _Rejected:_ native Google Sign-In with ID tokens (needs per-platform OAuth clients and SHA fingerprints; Weblume uses the browser flow), Google only (people without Google accounts couldn't buy on the web).
+
+**App session in the Keystore, refreshed before API calls** (both from Weblume): `flutter_secure_storage` holds the Supabase session and PKCE verifier; requests wait for a refreshed token and retry once after a 401.
+
+**A one-time unlock stays on offline for good.** The 3-day offline grace only made sense for paid periods; a refund still takes Premium away the next time the phone is online.
+
 ## 2026-11-03 — Game-feel motion
 
 **Short, springy, and off under reduced motion.** The website gets 3D "sink-in" buttons, lifting cards, bouncing picks, bumping counters, a filling vote split, a right-answer pulse and wrong-answer shake, flipping clues, popping points and a confetti burst on results, all in `globals.css` under `prefers-reduced-motion: no-preference`. The app gets the same ideas through `lib/widgets/motion.dart` (`Pressable`, `Bump`, `StaggerIn`, `PopIn`, `Shake`, `Confetti`), each checking the system setting and the in-app Reduce motion switch. Every animation is one-shot except the hero's drifting dots on the website, so widget tests still settle and the accessibility wait skips only looping animations.

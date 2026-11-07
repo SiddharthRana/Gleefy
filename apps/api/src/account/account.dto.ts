@@ -20,15 +20,15 @@ class EntitlementsDto {
   @ApiProperty() premiumContent: boolean;
 }
 
-class AccountSubscriptionDto {
-  @ApiProperty() provider: string;
+class AccountPurchaseDto {
+  @ApiProperty({ enum: ['google_play', 'dodo'] }) provider: string;
   @ApiProperty({ enum: PLAN_IDS }) planId: string;
-  @ApiProperty({ enum: SUBSCRIPTION_STATUSES }) status: string;
-  @ApiProperty({ type: String, nullable: true, enum: ['monthly', 'annual'] }) interval:
-    'monthly' | 'annual' | null;
-  @ApiProperty({ type: String, nullable: true, format: 'date-time' }) currentPeriodEnd:
-    string | null;
-  @ApiProperty() cancelAtPeriodEnd: boolean;
+  @ApiProperty({
+    enum: SUBSCRIPTION_STATUSES,
+    description: 'active (unlocked) or on_hold (payment still pending)',
+  })
+  status: string;
+  @ApiProperty({ type: String, nullable: true, format: 'date-time' }) purchasedAt: string | null;
 }
 
 export class AccountDtoClass {
@@ -37,14 +37,16 @@ export class AccountDtoClass {
   @ApiProperty({ format: 'date-time' }) createdAt: string;
   @ApiProperty({ type: AccountPlanDto }) plan: AccountPlanDto;
   @ApiProperty({ type: EntitlementsDto }) entitlements: EntitlementsDto;
+  @ApiProperty({ description: 'Premium is a one-time unlock: it doesn’t run out' })
+  lifetime: boolean;
   @ApiProperty({
     type: String,
     nullable: true,
     format: 'date-time',
-    description: 'Re-check the entitlement after this moment (end of the paid period)',
+    description: 'Re-check a timed entitlement after this moment; null for a one-time unlock',
   })
   validUntil: string | null;
-  @ApiProperty({ type: [AccountSubscriptionDto] }) subscriptions: AccountSubscriptionDto[];
+  @ApiProperty({ type: [AccountPurchaseDto] }) purchases: AccountPurchaseDto[];
 }
 
 export class DeleteAccountResponse {

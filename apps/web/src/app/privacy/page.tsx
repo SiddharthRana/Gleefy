@@ -45,22 +45,22 @@ export default function PrivacyPage() {
       </p>
       <h2 className="mt-10 font-display text-3xl font-semibold">Accounts and Premium</h2>
       <p className="mt-3">
-        You never need an account to play. If you buy Premium, you sign in with your email so the
-        purchase works on your other devices. For that we store:
+        You never need an account to play. If you buy Premium, you sign in with Google or your email
+        so the purchase works on your other devices. With Google, Google shares your name, email
+        address and profile picture with our sign-in provider, which keeps them with your account;
+        we use only the email. For that we store:
       </p>
       <ul className="mt-3 list-disc space-y-2 pl-6">
         <li>Your email address and when the account was created (with our sign-in provider).</li>
         <li>
-          Your subscription: which store or payment partner you used, its status and renewal date.
+          Your purchase: which store or payment partner you used, its status and when you bought it.
           Card and payment details are handled by Google Play or our payment partner, never by us.
         </li>
-        <li>
-          Messages from the store about your subscription, kept for 30 days for troubleshooting.
-        </li>
+        <li>Messages from the store about your purchase, kept for 30 days for troubleshooting.</li>
       </ul>
       <p className="mt-3">
         You can delete your account at any time from the Account page on this website or in the app.
-        Deleting the account does not cancel a store subscription, so cancel that first.
+        Deleting the account also removes the Premium you bought.
       </p>
       <h2 className="mt-10 font-display text-3xl font-semibold">This website</h2>
       <p className="mt-3">

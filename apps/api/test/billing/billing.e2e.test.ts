@@ -12,15 +12,15 @@ import { ProviderError, WEB_PAYMENT_PROVIDER } from '../../src/billing/billing.t
 import {
   PLAY_API,
   type PlayApi,
-  type SubscriptionPurchaseV2,
+  type ProductPurchase,
 } from '../../src/billing/google-play/play-client';
 import { RTDN_KEY_RESOLVER } from '../../src/billing/google-play/rtdn-verifier';
 import { ProductCatalog } from '../../src/billing/product-catalog';
-import { PaddleProvider } from '../../src/billing/providers/paddle.provider';
+import { DodoProvider } from '../../src/billing/providers/dodo.provider';
 import { FeatureFlags } from '../../src/common/feature-flags.service';
 import { loadEnv } from '../../src/config/env';
 import { makeKeys, setTestEnv, signEs256 } from '../helpers';
-import { PADDLE_SECRET, paddleEvent, paddleHeaders } from './sign';
+import { DODO_SECRET, dodoHeaders, dodoPayment, dodoRefund } from './sign';
 
 const DB_URL = process.env.TEST_DATABASE_URL;
 const USER_A = '00000000-0000-4000-8000-0000000000c1';
@@ -35,10 +35,10 @@ describe.skipIf(!DB_URL)('billing (database e2e)', () => {
   let tokenA: string;
   let tokenB: string;
   let signRtdn: (claims: Record<string, unknown>) => Promise<string>;
-  const paddleCalls: { url: string; body: Record<string, unknown> }[] = [];
+  const dodoCalls: { url: string; body: Record<string, unknown> }[] = [];
   const play = {
     configured: true,
-    getSubscription: vi.fn<PlayApi['getSubscription']>(),
+    getProductPurchase: vi.fn<PlayApi['getProductPurchase']>(),
     acknowledge: vi.fn<PlayApi['acknowledge']>(),
   };
 
@@ -46,32 +46,19 @@ describe.skipIf(!DB_URL)('billing (database e2e)', () => {
     setTestEnv({
       DATABASE_URL: DB_URL!,
       MAINTENANCE_ENABLED: 'false',
-      WEB_PAYMENT_PROVIDER: 'paddle',
-      PADDLE_API_KEY: 'pdl_sdbx_apikey_test',
-      PADDLE_WEBHOOK_SECRET: PADDLE_SECRET,
-      PADDLE_PRICE_PREMIUM_MONTHLY: 'pri_monthly',
-      PADDLE_PRICE_PREMIUM_ANNUAL: 'pri_annual',
+      WEB_PAYMENT_PROVIDER: 'dodo',
+      DODO_API_KEY: 'dodo_test_key',
+      DODO_WEBHOOK_SECRET: DODO_SECRET,
+      DODO_PRODUCT_PREMIUM: 'pdt_unlock',
       GOOGLE_PLAY_RTDN_AUDIENCE: RTDN_AUD,
       GOOGLE_PLAY_RTDN_SERVICE_ACCOUNT: RTDN_SA,
       BILLING_ACCOUNT_SECRET: 'test-billing-account-secret-0123456789abcdef',
     });
     const env = loadEnv();
-    const fakePaddleFetch = (async (url: string, init?: RequestInit) => {
-      paddleCalls.push({ url: String(url), body: JSON.parse(String(init?.body ?? '{}')) });
-      if (String(url).endsWith('/transactions')) {
-        return new Response(
-          JSON.stringify({
-            data: {
-              id: 'txn_1',
-              checkout: { url: 'https://mirthmix.test/checkout/paddle?_ptxn=txn_1' },
-            },
-          }),
-        );
-      }
+    const fakeDodoFetch = (async (url: string, init?: RequestInit) => {
+      dodoCalls.push({ url: String(url), body: JSON.parse(String(init?.body ?? '{}')) });
       return new Response(
-        JSON.stringify({
-          data: { urls: { general: { overview: 'https://customer-portal.paddle.com/x' } } },
-        }),
+        JSON.stringify({ session_id: 'cks_1', checkout_url: 'https://checkout.dodo.test/cks_1' }),
       );
     }) as unknown as typeof fetch;
 
@@ -92,10 +79,10 @@ describe.skipIf(!DB_URL)('billing (database e2e)', () => {
       .useValue(keys.jwks)
       .overrideProvider(WEB_PAYMENT_PROVIDER)
       .useValue(
-        new PaddleProvider(
-          { apiKey: 'k', webhookSecret: PADDLE_SECRET, env: 'sandbox' },
+        new DodoProvider(
+          { apiKey: 'k', webhookSecret: DODO_SECRET, env: 'test' },
           new ProductCatalog(env),
-          fakePaddleFetch,
+          fakeDodoFetch,
         ),
       )
       .overrideProvider(PLAY_API)
@@ -122,8 +109,8 @@ describe.skipIf(!DB_URL)('billing (database e2e)', () => {
     await sql`delete from public.webhook_events`;
     await sql`update public.feature_flags set enabled = true where key = 'billing'`;
     flags.clearCache();
-    paddleCalls.length = 0;
-    play.getSubscription.mockReset();
+    dodoCalls.length = 0;
+    play.getProductPurchase.mockReset();
     play.acknowledge.mockReset();
   });
 
@@ -137,9 +124,9 @@ describe.skipIf(!DB_URL)('billing (database e2e)', () => {
   const plan = async (token = tokenA) =>
     (await request(server()).get('/v1/me').set('Authorization', `Bearer ${token}`).expect(200)).body
       .plan;
-  const sendPaddle = (body: string, headers = paddleHeaders(body)) =>
+  const sendDodo = (body: string, headers = dodoHeaders(body)) =>
     request(server())
-      .post('/v1/billing/webhooks/paddle')
+      .post('/v1/billing/webhooks/dodo')
       .set(headers)
       .set('content-type', 'application/json')
       .send(body);
@@ -149,11 +136,11 @@ describe.skipIf(!DB_URL)('billing (database e2e)', () => {
       const on = (await request(server()).get('/v1/billing/config').expect(200)).body;
       expect(on).toEqual({
         enabled: true,
-        web: { provider: 'paddle', available: true, intervals: ['monthly', 'annual'] },
+        web: { provider: 'dodo', available: true },
         googlePlay: {
           available: true,
           packageName: 'com.mirthmix.app',
-          subscriptionId: 'mirthmix_premium',
+          productId: 'mirthmix_premium_unlock',
         },
       });
       await sql`update public.feature_flags set enabled = false where key = 'billing'`;
@@ -164,174 +151,138 @@ describe.skipIf(!DB_URL)('billing (database e2e)', () => {
       expect(off.googlePlay.available).toBe(false);
     });
 
-    it('creates a checkout with our user id set server-side', async () => {
-      const res = await asA(request(server()).post('/v1/billing/checkout'))
-        .send({ interval: 'annual' })
-        .expect(200);
-      expect(res.body.url).toBe('https://mirthmix.test/checkout/paddle?_ptxn=txn_1');
-      expect(paddleCalls[0]).toMatchObject({
-        url: 'https://sandbox-api.paddle.com/transactions',
+    it('creates a one-time checkout with our user id set server-side', async () => {
+      const res = await asA(request(server()).post('/v1/billing/checkout')).send({}).expect(200);
+      expect(res.body.url).toBe('https://checkout.dodo.test/cks_1');
+      expect(dodoCalls[0]).toMatchObject({
+        url: 'https://test.dodopayments.com/checkouts',
         body: {
-          items: [{ price_id: 'pri_annual', quantity: 1 }],
-          custom_data: { user_id: USER_A },
+          product_cart: [{ product_id: 'pdt_unlock', quantity: 1 }],
+          customer: { email: 'bill-a@test.dev' },
+          metadata: { user_id: USER_A },
         },
       });
     });
 
-    it('refuses checkout when billing is off, signed out, invalid, or already subscribed', async () => {
-      await request(server())
-        .post('/v1/billing/checkout')
-        .send({ interval: 'monthly' })
-        .expect(401);
-      await asA(request(server()).post('/v1/billing/checkout'))
-        .send({ interval: 'weekly' })
-        .expect(400);
-      await asA(request(server()).post('/v1/billing/checkout'))
-        .send({ interval: 'monthly', userId: USER_B })
-        .expect(400);
-      await sendPaddle(paddleEvent({ userId: USER_A })).expect(200);
-      const dup = await asA(request(server()).post('/v1/billing/checkout'))
-        .send({ interval: 'monthly' })
-        .expect(409);
-      expect(dup.body).toMatchObject({ code: 'already_subscribed', provider: 'paddle' });
+    it('refuses checkout when billing is off, signed out, tampered with, or already bought', async () => {
+      await request(server()).post('/v1/billing/checkout').send({}).expect(401);
+      await sendDodo(dodoPayment({ userId: USER_A })).expect(200);
+      const dup = await asA(request(server()).post('/v1/billing/checkout')).send({}).expect(409);
+      expect(dup.body).toMatchObject({ code: 'already_purchased', provider: 'dodo' });
       await sql`update public.feature_flags set enabled = false where key = 'billing'`;
       flags.clearCache();
       expect(
-        (
-          await asA(request(server()).post('/v1/billing/checkout'))
-            .send({ interval: 'monthly' })
-            .expect(403)
-        ).body.code,
+        (await asA(request(server()).post('/v1/billing/checkout')).send({}).expect(403)).body.code,
       ).toBe('billing_disabled');
     });
 
-    it('opens the customer portal for web subscribers only', async () => {
-      expect((await asA(request(server()).post('/v1/billing/portal')).expect(404)).body.code).toBe(
-        'no_web_subscription',
-      );
-      await sendPaddle(paddleEvent({ userId: USER_A, subId: 'sub_portal' })).expect(200);
-      const res = await asA(request(server()).post('/v1/billing/portal')).expect(200);
-      expect(res.body.url).toBe('https://customer-portal.paddle.com/x');
-      expect(paddleCalls.at(-1)).toMatchObject({
-        url: 'https://sandbox-api.paddle.com/customers/ctm_01/portal-sessions',
-        body: { subscription_ids: ['sub_portal'] },
-      });
+    it('has no subscription portal', async () => {
+      await asA(request(server()).post('/v1/billing/portal')).expect(404);
     });
   });
 
-  describe('web webhooks (Paddle)', () => {
-    it('activates the plan from a verified webhook', async () => {
+  describe('web webhooks (Dodo)', () => {
+    it('unlocks Premium for good from a verified payment', async () => {
       expect((await plan()).id).toBe('free');
-      const res = await sendPaddle(paddleEvent({ userId: USER_A, eventId: 'evt_act' })).expect(200);
+      const body = dodoPayment({ userId: USER_A });
+      const res = await sendDodo(body, dodoHeaders(body, { id: 'msg_act' })).expect(200);
       expect(res.body).toEqual({ status: 'processed' });
       expect(await plan()).toMatchObject({ id: 'premium', source: 'subscription' });
-      const [row] = await sql`select status from public.webhook_events where event_id = 'evt_act'`;
+      const [row] = await sql`select status from public.webhook_events where event_id = 'msg_act'`;
       expect(row!.status).toBe('processed');
+      const [sub] =
+        await sql`select billing_interval, current_period_end from public.subscriptions where user_id = ${USER_A}`;
+      expect(sub).toEqual({ billing_interval: 'one_time', current_period_end: null });
       expect((await plan(tokenB)).id).toBe('free');
     });
 
+    it('matches the payer by email when the user id is missing', async () => {
+      await sendDodo(dodoPayment({ userId: null, email: 'BILL-B@test.dev' })).expect(200);
+      expect((await plan(tokenB)).id).toBe('premium');
+      expect((await plan()).id).toBe('free');
+    });
+
     it('rejects bad signatures and unknown providers without recording anything', async () => {
-      const body = paddleEvent({ userId: USER_A });
-      await sendPaddle(body, paddleHeaders(body, { secret: 'wrong' })).expect(401);
-      await sendPaddle(body.replace(USER_A, USER_B), paddleHeaders(body)).expect(401);
-      await sendPaddle(body, {} as ReturnType<typeof paddleHeaders>).expect(401);
-      await request(server()).post('/v1/billing/webhooks/dodo').send(body).expect(404);
+      const body = dodoPayment({ userId: USER_A });
+      await sendDodo(
+        body,
+        dodoHeaders(body, { secret: DODO_SECRET.replace('whsec_', 'whsec_x') }),
+      ).expect(401);
+      await sendDodo(body.replace(USER_A, USER_B), dodoHeaders(body)).expect(401);
+      await sendDodo(body, {} as ReturnType<typeof dodoHeaders>).expect(401);
+      await request(server()).post('/v1/billing/webhooks/paddle').send(body).expect(404);
       expect((await sql`select count(*)::int as n from public.webhook_events`)[0]!.n).toBe(0);
       expect((await plan()).id).toBe('free');
     });
 
     it('processes each event once', async () => {
-      const body = paddleEvent({ userId: USER_A, eventId: 'evt_dup' });
-      await sendPaddle(body).expect(200);
-      expect((await sendPaddle(body).expect(200)).body).toEqual({ status: 'duplicate' });
+      const body = dodoPayment({ userId: USER_A });
+      const headers = dodoHeaders(body, { id: 'msg_dup' });
+      await sendDodo(body, headers).expect(200);
+      expect((await sendDodo(body, headers).expect(200)).body).toEqual({ status: 'duplicate' });
     });
 
-    it('ignores events that arrive out of order', async () => {
-      const now = Date.now();
-      await sendPaddle(
-        paddleEvent({
-          userId: USER_A,
-          status: 'canceled',
-          occurredAt: new Date(now).toISOString(),
-        }),
+    it('takes Premium away on a refund or a lost dispute, and ignores late payment events', async () => {
+      const t = Date.now();
+      await sendDodo(
+        dodoPayment({ userId: USER_A, timestamp: new Date(t - 3000).toISOString() }),
       ).expect(200);
-      const late = await sendPaddle(
-        paddleEvent({
-          userId: USER_A,
-          status: 'active',
-          occurredAt: new Date(now - 60_000).toISOString(),
-        }),
+      expect((await plan()).id).toBe('premium');
+      await sendDodo(dodoRefund({ timestamp: new Date(t - 2000).toISOString() })).expect(200);
+      expect((await plan()).id).toBe('free');
+      // A retried payment.succeeded older than the refund can't bring it back.
+      const late = await sendDodo(
+        dodoPayment({ userId: USER_A, timestamp: new Date(t - 2500).toISOString() }),
       ).expect(200);
       expect(late.body).toEqual({ status: 'ignored' });
       expect((await plan()).id).toBe('free');
+
+      await sendDodo(dodoPayment({ userId: USER_B, paymentId: 'pay_2' })).expect(200);
+      expect((await plan(tokenB)).id).toBe('premium');
+      await sendDodo(dodoRefund({ type: 'dispute.lost', paymentId: 'pay_2' })).expect(200);
+      expect((await plan(tokenB)).id).toBe('free');
     });
 
-    it('keeps access after cancellation until the period ends, then removes it', async () => {
-      const t = Date.now();
-      await sendPaddle(
-        paddleEvent({ userId: USER_A, occurredAt: new Date(t - 3000).toISOString() }),
-      ).expect(200);
-      await sendPaddle(
-        paddleEvent({
-          userId: USER_A,
-          type: 'subscription.updated',
-          scheduledCancel: true,
-          occurredAt: new Date(t - 2000).toISOString(),
-        }),
-      ).expect(200);
-      expect((await plan()).id).toBe('premium');
-      const me = (await asA(request(server()).get('/v1/me')).expect(200)).body;
-      expect(me.subscriptions[0]).toMatchObject({ status: 'canceled', cancelAtPeriodEnd: true });
-      await sendPaddle(
-        paddleEvent({
-          userId: USER_A,
-          type: 'subscription.canceled',
-          status: 'canceled',
-          occurredAt: new Date(t - 1000).toISOString(),
-        }),
-      ).expect(200);
-      expect((await plan()).id).toBe('free');
-    });
-
-    it('ignores events for unknown users and unknown prices', async () => {
-      const r1 = await sendPaddle(
-        paddleEvent({ userId: '00000000-0000-4000-8000-00000000dead' }),
-      ).expect(200);
-      expect(r1.body).toEqual({ status: 'ignored' });
-      const r2 = await sendPaddle(paddleEvent({ userId: USER_A, priceId: 'pri_unknown' })).expect(
-        200,
-      );
-      expect(r2.body).toEqual({ status: 'ignored' });
+    it('ignores unknown users, products, payments, subscription renewals and other events', async () => {
+      const ignored = async (body: string) =>
+        expect((await sendDodo(body).expect(200)).body).toEqual({ status: 'ignored' });
+      await ignored(dodoPayment({ userId: '00000000-0000-4000-8000-00000000dead' }));
+      await ignored(dodoPayment({ userId: USER_A, productId: 'pdt_other' }));
+      await ignored(dodoPayment({ userId: USER_A, subscriptionId: 'sub_1' }));
+      await ignored(dodoPayment({ userId: USER_A, type: 'payment.failed' }));
+      await ignored(dodoRefund({ paymentId: 'pay_unknown' }));
+      await ignored(dodoRefund({ type: 'dispute.opened' }));
       expect((await plan()).id).toBe('free');
     });
   });
 
   describe('account and entitlements', () => {
-    it('reports premium content and when to re-check it', async () => {
+    it('reports a lifetime unlock and lists only purchases that matter', async () => {
       const free = (await asA(request(server()).get('/v1/me')).expect(200)).body;
       expect(free).toMatchObject({
         plan: { id: 'free', paid: false, source: 'default' },
         entitlements: { premiumContent: false },
+        lifetime: false,
         validUntil: null,
-        subscriptions: [],
+        purchases: [],
       });
-      const periodEnd = new Date(Date.now() + 20 * 86_400_000).toISOString();
-      await sendPaddle(paddleEvent({ userId: USER_A, periodEnd })).expect(200);
+      await sendDodo(dodoPayment({ userId: USER_A, paymentId: 'pay_refunded' })).expect(200);
+      await sendDodo(dodoRefund({ paymentId: 'pay_refunded' })).expect(200);
+      await sendDodo(dodoPayment({ userId: USER_A, paymentId: 'pay_kept' })).expect(200);
       const paid = (await asA(request(server()).get('/v1/me')).expect(200)).body;
       expect(paid).toMatchObject({
         plan: { id: 'premium', paid: true, source: 'subscription' },
         entitlements: { premiumContent: true },
-        validUntil: periodEnd,
+        lifetime: true,
+        validUntil: null,
       });
-      expect(paid.subscriptions[0]).toMatchObject({
-        provider: 'paddle',
-        status: 'active',
-        interval: 'monthly',
-      });
+      expect(paid.purchases).toHaveLength(1);
+      expect(paid.purchases[0]).toMatchObject({ provider: 'dodo', status: 'active' });
+      expect(Date.parse(paid.purchases[0].purchasedAt)).not.toBeNaN();
     });
 
     it('makes everyone free while the billing kill switch is off', async () => {
-      await sendPaddle(paddleEvent({ userId: USER_A })).expect(200);
+      await sendDodo(dodoPayment({ userId: USER_A })).expect(200);
       expect((await plan()).id).toBe('premium');
       await sql`update public.feature_flags set enabled = false where key = 'billing'`;
       flags.clearCache();
@@ -349,7 +300,7 @@ describe.skipIf(!DB_URL)('billing (database e2e)', () => {
       expect((await asA(request(server()).get('/v1/me')).expect(403)).body.code).toBe(
         'account_deleted',
       );
-      await sendPaddle(paddleEvent({ userId: USER_A })).expect(200);
+      await sendDodo(dodoPayment({ userId: USER_A })).expect(200);
       const rows =
         await sql`select count(*)::int as n from public.subscriptions where user_id = ${USER_A}`;
       expect(rows[0]!.n).toBe(0);
@@ -357,35 +308,31 @@ describe.skipIf(!DB_URL)('billing (database e2e)', () => {
     });
 
     it('purges webhook payloads after 30 days', async () => {
-      await sendPaddle(paddleEvent({ userId: USER_A, eventId: 'evt_old' })).expect(200);
-      await sendPaddle(paddleEvent({ userId: USER_A, eventId: 'evt_new' })).expect(200);
-      await sql`update public.webhook_events set received_at = now() - interval '31 days' where event_id = 'evt_old'`;
+      const send = (id: string, paymentId: string) => {
+        const body = dodoPayment({ userId: USER_A, paymentId });
+        return sendDodo(body, dodoHeaders(body, { id })).expect(200);
+      };
+      await send('msg_old', 'pay_old');
+      await send('msg_new', 'pay_new');
+      await sql`update public.webhook_events set received_at = now() - interval '31 days' where event_id = 'msg_old'`;
       const result = await app.get(MaintenanceService).run();
       expect(result.webhookPayloads).toBe(1);
       const rows =
         await sql`select event_id, payload is null as purged from public.webhook_events order by event_id`;
       expect(rows.map((r) => [r.event_id, r.purged])).toEqual([
-        ['evt_new', false],
-        ['evt_old', true],
+        ['msg_new', false],
+        ['msg_old', true],
       ]);
     });
   });
 
   describe('Google Play', () => {
-    const purchase = (
-      over: Partial<SubscriptionPurchaseV2> & { ref?: string } = {},
-    ): SubscriptionPurchaseV2 => ({
-      subscriptionState: 'SUBSCRIPTION_STATE_ACTIVE',
-      acknowledgementState: 'ACKNOWLEDGEMENT_STATE_PENDING',
-      externalAccountIdentifiers: { obfuscatedExternalAccountId: over.ref },
-      lineItems: [
-        {
-          productId: 'mirthmix_premium',
-          expiryTime: new Date(Date.now() + 30 * 86_400_000).toISOString(),
-          autoRenewingPlan: { autoRenewEnabled: true },
-          offerDetails: { basePlanId: 'monthly' },
-        },
-      ],
+    const purchase = (over: Partial<ProductPurchase> & { ref?: string } = {}): ProductPurchase => ({
+      purchaseState: 0,
+      acknowledgementState: 0,
+      purchaseTimeMillis: String(Date.now() - 1000),
+      orderId: 'GPA.1234',
+      obfuscatedExternalAccountId: over.ref,
       ...over,
     });
     const refFor = async (token: string) =>
@@ -409,55 +356,65 @@ describe.skipIf(!DB_URL)('billing (database e2e)', () => {
       expect(a1).not.toContain(USER_A.replace(/-/g, ''));
     });
 
-    it('verifies a purchase with Google, grants the plan and acknowledges it', async () => {
+    it('verifies a purchase with Google, unlocks Premium for good and acknowledges it', async () => {
       const ref = await refFor(tokenA);
-      play.getSubscription.mockResolvedValue(purchase({ ref }));
+      play.getProductPurchase.mockResolvedValue(purchase({ ref }));
       const res = await verify(tokenA).expect(200);
-      expect(res.body).toEqual({
-        planId: 'premium',
-        status: 'active',
-        duplicateSubscription: false,
-      });
-      expect(play.acknowledge).toHaveBeenCalledWith('mirthmix_premium', 'play-token-abcdef-1');
-      expect(await plan()).toMatchObject({ id: 'premium', source: 'subscription' });
+      expect(res.body).toEqual({ planId: 'premium', status: 'active', duplicatePurchase: false });
+      expect(play.getProductPurchase).toHaveBeenCalledWith(
+        'mirthmix_premium_unlock',
+        'play-token-abcdef-1',
+      );
+      expect(play.acknowledge).toHaveBeenCalledWith(
+        'mirthmix_premium_unlock',
+        'play-token-abcdef-1',
+      );
+      const me = (await asA(request(server()).get('/v1/me')).expect(200)).body;
+      expect(me).toMatchObject({ plan: { id: 'premium' }, lifetime: true, validUntil: null });
     });
 
-    it('does not acknowledge twice', async () => {
+    it('does not acknowledge twice, or a pending payment', async () => {
       const ref = await refFor(tokenA);
-      play.getSubscription.mockResolvedValue(
-        purchase({ ref, acknowledgementState: 'ACKNOWLEDGEMENT_STATE_ACKNOWLEDGED' }),
-      );
+      play.getProductPurchase.mockResolvedValue(purchase({ ref, acknowledgementState: 1 }));
       await verify(tokenA).expect(200);
+      play.getProductPurchase.mockResolvedValue(purchase({ ref, purchaseState: 2 }));
+      expect((await verify(tokenA, 'pending-token-1234').expect(200)).body.status).toBe('on_hold');
       expect(play.acknowledge).not.toHaveBeenCalled();
+    });
+
+    it('grants nothing while a payment is pending', async () => {
+      const ref = await refFor(tokenA);
+      play.getProductPurchase.mockResolvedValue(purchase({ ref, purchaseState: 2 }));
+      await verify(tokenA).expect(200);
+      expect((await plan()).id).toBe('free');
+      const me = (await asA(request(server()).get('/v1/me')).expect(200)).body;
+      expect(me.purchases[0]).toMatchObject({ provider: 'google_play', status: 'on_hold' });
     });
 
     it('refuses a purchase token bought under another account', async () => {
       const refB = await refFor(tokenB);
       await refFor(tokenA);
-      play.getSubscription.mockResolvedValue(purchase({ ref: refB }));
+      play.getProductPurchase.mockResolvedValue(purchase({ ref: refB }));
       expect((await verify(tokenA).expect(403)).body.code).toBe('purchase_account_mismatch');
-      play.getSubscription.mockResolvedValue(purchase({ ref: undefined }));
+      play.getProductPurchase.mockResolvedValue(purchase({ ref: undefined }));
       expect((await verify(tokenA).expect(403)).body.code).toBe('purchase_account_mismatch');
       expect((await plan()).id).toBe('free');
       expect(play.acknowledge).not.toHaveBeenCalled();
     });
 
-    it('rejects other products and unknown tokens', async () => {
-      const ref = await refFor(tokenA);
-      play.getSubscription.mockResolvedValue({
-        ...purchase({ ref }),
-        lineItems: [{ productId: 'other_app_sub' }],
-      });
+    it('rejects unknown tokens (including ones for other products)', async () => {
+      await refFor(tokenA);
+      play.getProductPurchase.mockRejectedValue(new ProviderError('nope', 404));
       expect((await verify(tokenA).expect(400)).body.code).toBe('invalid_purchase');
-      play.getSubscription.mockRejectedValue(new ProviderError('nope', 404));
-      expect((await verify(tokenA).expect(400)).body.code).toBe('invalid_purchase');
+      play.getProductPurchase.mockRejectedValue(new ProviderError('down', 503));
+      expect((await verify(tokenA).expect(502)).body.code).toBe('play_unreachable');
     });
 
-    it('warns when the user is already subscribed on the web', async () => {
-      await sendPaddle(paddleEvent({ userId: USER_A })).expect(200);
+    it('warns when Premium was already bought on the web', async () => {
+      await sendDodo(dodoPayment({ userId: USER_A })).expect(200);
       const ref = await refFor(tokenA);
-      play.getSubscription.mockResolvedValue(purchase({ ref }));
-      expect((await verify(tokenA).expect(200)).body.duplicateSubscription).toBe(true);
+      play.getProductPurchase.mockResolvedValue(purchase({ ref }));
+      expect((await verify(tokenA).expect(200)).body.duplicatePurchase).toBe(true);
     });
 
     describe('Real-time Developer Notifications', () => {
@@ -477,83 +434,79 @@ describe.skipIf(!DB_URL)('billing (database e2e)', () => {
           subscription: 'projects/p/subscriptions/s',
         });
       };
-      const note = (type: number, token = 'play-token-abcdef-1', at = Date.now()) => ({
+      const base = (at = Date.now()) => ({
         version: '1.0',
         packageName: 'com.mirthmix.app',
         eventTimeMillis: String(at),
-        subscriptionNotification: {
+      });
+      const note = (type: number, token = 'play-token-abcdef-1', at = Date.now()) => ({
+        ...base(at),
+        oneTimeProductNotification: {
           version: '1.0',
           notificationType: type,
           purchaseToken: token,
-          subscriptionId: 'mirthmix_premium',
+          sku: 'mirthmix_premium_unlock',
         },
+      });
+      const voided = (productType: number, token = 'play-token-abcdef-1', at = Date.now()) => ({
+        ...base(at),
+        voidedPurchaseNotification: { purchaseToken: token, orderId: 'GPA.1234', productType },
       });
 
       it('rejects pushes without a valid Google token', async () => {
-        await push(note(2), { token: null }).expect(401);
-        await push(note(2), {
+        await push(note(1), { token: null }).expect(401);
+        await push(note(1), {
           token: await signRtdn({ email: 'attacker@x.com', email_verified: true }),
         }).expect(401);
-        expect(play.getSubscription).not.toHaveBeenCalled();
+        expect(play.getProductPurchase).not.toHaveBeenCalled();
       });
 
-      it('handles a first purchase the app never reported, using the stored account reference', async () => {
+      it('handles a purchase the app never reported, using the stored account reference', async () => {
         const ref = await refFor(tokenA);
-        play.getSubscription.mockResolvedValue(purchase({ ref }));
-        expect((await push(note(4)).expect(200)).body).toEqual({ status: 'processed' });
+        play.getProductPurchase.mockResolvedValue(purchase({ ref }));
+        expect((await push(note(1)).expect(200)).body).toEqual({ status: 'processed' });
         expect(await plan()).toMatchObject({ id: 'premium' });
         expect(play.acknowledge).toHaveBeenCalledTimes(1);
       });
 
-      it('updates state on renewal/expiry and revokes refunded purchases', async () => {
+      it('finishes a pending payment, then takes Premium away when the purchase is voided', async () => {
         const ref = await refFor(tokenA);
-        play.getSubscription.mockResolvedValue(
-          purchase({ ref, acknowledgementState: 'ACKNOWLEDGEMENT_STATE_ACKNOWLEDGED' }),
-        );
-        await push(note(2, undefined, Date.now() - 2000)).expect(200); // renewed
-        expect((await plan()).id).toBe('premium');
-        await push(note(12, undefined, Date.now() - 1000)).expect(200); // revoked (refund)
+        play.getProductPurchase.mockResolvedValueOnce(purchase({ ref, purchaseState: 2 }));
+        await verify(tokenA).expect(200);
         expect((await plan()).id).toBe('free');
-        const me = (await asA(request(server()).get('/v1/me')).expect(200)).body;
-        expect(me.subscriptions[0].status).toBe('refunded');
+        play.getProductPurchase.mockResolvedValueOnce(purchase({ ref }));
+        await push(note(1, undefined, Date.now() + 1000)).expect(200); // paid
+        expect((await plan()).id).toBe('premium');
+        expect((await push(voided(1, undefined, Date.now() + 2000)).expect(200)).body).toEqual({
+          status: 'ignored',
+        }); // a subscription was voided: not ours
+        expect((await plan()).id).toBe('premium');
+        await push(voided(2, undefined, Date.now() + 3000)).expect(200); // refunded
+        expect((await plan()).id).toBe('free');
+        const [row] = await sql`select status from public.subscriptions where user_id = ${USER_A}`;
+        expect(row!.status).toBe('refunded');
       });
 
-      it('is idempotent per Pub/Sub message and ignores test notifications and other apps', async () => {
+      it('is idempotent per Pub/Sub message and ignores tests, other products and other apps', async () => {
         const ref = await refFor(tokenA);
-        play.getSubscription.mockResolvedValue(purchase({ ref }));
-        await push(note(4), { messageId: 'm-dup' }).expect(200);
-        expect((await push(note(4), { messageId: 'm-dup' }).expect(200)).body).toEqual({
+        play.getProductPurchase.mockResolvedValue(purchase({ ref }));
+        await push(note(1), { messageId: 'm-dup' }).expect(200);
+        expect((await push(note(1), { messageId: 'm-dup' }).expect(200)).body).toEqual({
           status: 'duplicate',
         });
-        expect(
-          (
-            await push({
-              version: '1.0',
-              packageName: 'com.mirthmix.app',
-              testNotification: { version: '1.0' },
-            }).expect(200)
-          ).body,
-        ).toEqual({ status: 'ignored' });
-        expect((await push({ ...note(4), packageName: 'com.other.app' }).expect(200)).body).toEqual(
-          { status: 'ignored' },
-        );
-        expect(play.getSubscription).toHaveBeenCalledTimes(1);
-      });
-
-      it('moves access to the replacement token on resubscribe', async () => {
-        const ref = await refFor(tokenA);
-        play.getSubscription.mockResolvedValueOnce(purchase({ ref }));
-        await verify(tokenA, 'old-token-123456').expect(200);
-        play.getSubscription.mockResolvedValueOnce(
-          purchase({ ref, linkedPurchaseToken: 'old-token-123456' }),
-        );
-        await push(note(4, 'new-token-654321')).expect(200);
-        const rows =
-          await sql`select provider_subscription_id, status from public.subscriptions where user_id = ${USER_A} order by provider_subscription_id`;
-        expect(rows.map((r) => [r.provider_subscription_id, r.status])).toEqual([
-          ['new-token-654321', 'active'],
-          ['old-token-123456', 'expired'],
-        ]);
+        const ignored = async (data: object) =>
+          expect((await push(data).expect(200)).body).toEqual({ status: 'ignored' });
+        await ignored({ ...base(), testNotification: { version: '1.0' } });
+        await ignored({ ...note(1), packageName: 'com.other.app' });
+        await ignored({
+          ...base(),
+          oneTimeProductNotification: { notificationType: 1, purchaseToken: 'x', sku: 'coins' },
+        });
+        await ignored({
+          ...base(),
+          subscriptionNotification: { notificationType: 4, purchaseToken: 'x' },
+        });
+        expect(play.getProductPurchase).toHaveBeenCalledTimes(1);
       });
     });
   });

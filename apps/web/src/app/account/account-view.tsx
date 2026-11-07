@@ -2,17 +2,19 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { CheckoutStatus, checkoutFailed, type CheckoutState } from '@/components/checkout-status';
 import { apiFetch, ApiError, errorMessage } from '@/lib/api';
+import { providerName, type Account, type AccountPurchase } from '@/lib/billing';
 import {
-  grantsAccess,
-  playManageUrl,
-  providerName,
-  useBillingConfig,
-  type Account,
-  type AccountSubscription,
-} from '@/lib/billing';
-import { authConfigured, authErrorMessage, getSupabase, useSession } from '@/lib/supabase';
+  authConfigured,
+  authErrorMessage,
+  getSupabase,
+  googleSignInEnabled,
+  safeNext,
+  signInWithGoogle,
+  useSession,
+} from '@/lib/supabase';
 import { field, primary, secondary } from '@/lib/ui';
 
 const day = (iso: string) =>
@@ -31,7 +33,10 @@ export function AccountView() {
   return session ? <SignedIn email={session.user.email} /> : <SignInForm />;
 }
 
-/** Email + one-time code, the same sign-in as the app. */
+const ADULT_ONLY =
+  'Accounts and purchases are for people aged 18 or over. Everything free works without an account.';
+
+/** "Continue with Google" or email + one-time code, the same sign-in as the app. */
 function SignInForm() {
   const router = useRouter();
   const [email, setEmail] = useState('');
@@ -49,9 +54,7 @@ function SignInForm() {
       return;
     }
     if (!adult) {
-      setError(
-        'Accounts and purchases are for people aged 18 or over. Everything free works without an account.',
-      );
+      setError(ADULT_ONLY);
       return;
     }
     setBusy(true);
@@ -80,6 +83,23 @@ function SignInForm() {
       router.push('/pricing');
   }
 
+  async function google() {
+    if (!adult) {
+      setError(ADULT_ONLY);
+      return;
+    }
+    setBusy(true);
+    setError(null);
+    const failed = await signInWithGoogle(
+      safeNext(new URLSearchParams(window.location.search).get('next')),
+    );
+    // On success the browser is already on its way to Google.
+    if (failed) {
+      setError(failed);
+      setBusy(false);
+    }
+  }
+
   return (
     <form onSubmit={sentTo ? verify : send} className="mt-8 flex flex-col gap-4" noValidate>
       <h2 className="font-display text-3xl font-semibold">Sign in</h2>
@@ -100,6 +120,31 @@ function SignInForm() {
         </>
       ) : (
         <>
+          <label className="flex min-h-12 items-center gap-3 font-bold">
+            <input
+              type="checkbox"
+              className="size-5"
+              checked={adult}
+              onChange={(e) => setAdult(e.target.checked)}
+            />
+            I’m 18 or older
+          </label>
+          {googleSignInEnabled && (
+            <>
+              <button
+                type="button"
+                disabled={busy}
+                onClick={google}
+                className={`${secondary} inline-flex items-center justify-center gap-3`}
+              >
+                <GoogleMark />
+                Continue with Google
+              </button>
+              <p className="text-center text-sm font-bold uppercase tracking-wide text-muted">
+                or use your email
+              </p>
+            </>
+          )}
           <p>We’ll email you a 6-digit code. No password needed.</p>
           <label className="flex flex-col gap-2 font-bold">
             Email
@@ -110,15 +155,6 @@ function SignInForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-          </label>
-          <label className="flex min-h-12 items-center gap-3 font-bold">
-            <input
-              type="checkbox"
-              className="size-5"
-              checked={adult}
-              onChange={(e) => setAdult(e.target.checked)}
-            />
-            I’m 18 or older
           </label>
         </>
       )}
@@ -150,49 +186,106 @@ function SignInForm() {
   );
 }
 
+/** Google's "G" mark, as Google's sign-in branding asks for. */
+function GoogleMark() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 48 48" className="size-5">
+      <path
+        fill="#FFC107"
+        d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"
+      />
+      <path
+        fill="#FF3D00"
+        d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+      />
+      <path
+        fill="#4CAF50"
+        d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"
+      />
+      <path
+        fill="#1976D2"
+        d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"
+      />
+    </svg>
+  );
+}
+
+/** Reads (once) and removes the checkout parameters Dodo adds to the return URL. */
+function readCheckoutReturn(): CheckoutState | null {
+  const params = new URLSearchParams(window.location.search);
+  const back = params.get('checkout') === 'success' || params.has('payment_id');
+  if (!back) return null;
+  const failed = checkoutFailed(params.get('status'));
+  for (const key of ['checkout', 'payment_id', 'status', 'email']) params.delete(key);
+  const rest = params.toString();
+  window.history.replaceState(null, '', `${window.location.pathname}${rest ? `?${rest}` : ''}`);
+  return failed ? 'failed' : 'confirming';
+}
+
+/** How often, and for how long, to re-check after checkout before saying it's still pending. */
+const POLL_MS = 2000;
+const POLL_FOR_MS = 20_000;
+
 function SignedIn({ email }: { email?: string }) {
-  const config = useBillingConfig();
   const [account, setAccount] = useState<Account | null>(null);
   const [error, setError] = useState<string | null>(null);
   // Only rendered in the browser (after the session loads), so reading the URL here is safe.
-  const [checkedOut] = useState(
-    () => new URLSearchParams(window.location.search).get('checkout') === 'success',
-  );
+  const [checkout, setCheckout] = useState<CheckoutState | null>(readCheckoutReturn);
+  const [pollUntil, setPollUntil] = useState(() => Date.now() + POLL_FOR_MS);
 
-  useEffect(() => {
-    let live = true;
-    const fetchAccount = () =>
+  const fetchAccount = useCallback(
+    () =>
       apiFetch<Account>('/v1/me').then(
         (a) => {
-          if (!live) return;
           setAccount(a);
           setError(null);
+          return a;
         },
         (err: unknown) => {
-          if (!live) return;
           // Session expired or account deleted: sign out, which shows the sign-in form.
           if (err instanceof ApiError && (err.status === 401 || err.status === 403))
             void getSupabase()?.auth.signOut();
           else setError(errorMessage(err));
+          return null;
         },
-      );
+      ),
+    [],
+  );
+
+  useEffect(() => {
     void fetchAccount();
-    // Webhooks can land a moment after the provider redirects back; check once more.
-    const timer = checkedOut ? setTimeout(fetchAccount, 4000) : undefined;
+  }, [fetchAccount]);
+
+  // After checkout, the webhook can land a moment after Dodo sends people back: keep checking.
+  useEffect(() => {
+    if (checkout !== 'confirming') return;
+    let live = true;
+    const timer = setInterval(async () => {
+      const a = await fetchAccount();
+      if (!live) return;
+      if (a?.entitlements.premiumContent) setCheckout('active');
+      else if (Date.now() > pollUntil) setCheckout('pending');
+    }, POLL_MS);
     return () => {
       live = false;
-      clearTimeout(timer);
+      clearInterval(timer);
     };
-  }, [checkedOut]);
+  }, [checkout, fetchAccount, pollUntil]);
 
-  const active = account?.subscriptions.filter(grantsAccess) ?? [];
+  const shownCheckout =
+    checkout === 'confirming' && account?.entitlements.premiumContent ? 'active' : checkout;
 
   return (
     <div className="mt-8 flex flex-col gap-6">
-      {checkedOut && (
-        <p role="status" className="rounded-card border-2 border-accent bg-surface p-4 font-bold">
-          Thanks! Your payment went through. Premium can take a few seconds to appear.
-        </p>
+      {shownCheckout && (
+        <CheckoutStatus
+          state={shownCheckout}
+          onCheckAgain={() => {
+            setPollUntil(Date.now() + POLL_FOR_MS);
+            setCheckout('confirming');
+          }}
+          onDismiss={() => setCheckout(null)}
+        />
       )}
       <section aria-labelledby="plan" className="rounded-card border border-border bg-surface p-5">
         <h2 id="plan" className="font-display text-3xl font-semibold">
@@ -208,16 +301,16 @@ function SignedIn({ email }: { email?: string }) {
         {account && (
           <>
             <p className="mt-3 text-2xl font-bold">
-              {account.entitlements.premiumContent ? 'Premium is on' : 'Free'}
+              {account.entitlements.premiumContent ? 'Premium is unlocked' : 'Free'}
             </p>
-            {active.length > 1 && (
+            {account.purchases.filter((p) => p.status === 'active').length > 1 && (
               <p role="alert" className="mt-3 rounded-card bg-surface-muted p-4 font-bold">
-                You have more than one active subscription. Cancel one so you aren’t charged twice.
+                You bought Premium more than once. Contact us and we’ll refund the extra purchase.
               </p>
             )}
             <ul className="mt-4 flex flex-col gap-3">
-              {account.subscriptions.map((s, i) => (
-                <SubscriptionRow key={i} sub={s} config={config} />
+              {account.purchases.map((p, i) => (
+                <PurchaseRow key={i} purchase={p} />
               ))}
             </ul>
             {!account.entitlements.premiumContent && (
@@ -240,64 +333,17 @@ function SignedIn({ email }: { email?: string }) {
   );
 }
 
-function SubscriptionRow({
-  sub,
-  config,
-}: {
-  sub: AccountSubscription;
-  config: ReturnType<typeof useBillingConfig>;
-}) {
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const live = grantsAccess(sub);
-
-  async function portal() {
-    setBusy(true);
-    setError(null);
-    try {
-      const { url } = await apiFetch<{ url: string }>('/v1/billing/portal', { method: 'POST' });
-      window.location.assign(url);
-      return;
-    } catch (err) {
-      setError(errorMessage(err));
-    }
-    setBusy(false);
-  }
-
+function PurchaseRow({ purchase }: { purchase: AccountPurchase }) {
   return (
     <li className="rounded-card bg-surface-muted p-4">
-      <p className="font-bold">
-        {sub.interval === 'annual' ? 'Yearly' : sub.interval === 'monthly' ? 'Monthly' : 'Premium'}{' '}
-        via {providerName[sub.provider]}
-      </p>
+      <p className="font-bold">Premium unlock via {providerName[purchase.provider]}</p>
       <p className="text-muted">
-        {!live
-          ? 'Ended'
-          : sub.cancelAtPeriodEnd && sub.currentPeriodEnd
-            ? `Cancelled. Premium stays on until ${day(sub.currentPeriodEnd)}.`
-            : sub.currentPeriodEnd
-              ? `Renews on ${day(sub.currentPeriodEnd)}`
-              : 'Active'}
+        {purchase.status === 'on_hold'
+          ? 'Waiting for the payment to finish'
+          : purchase.purchasedAt
+            ? `Bought on ${day(purchase.purchasedAt)}. Yours to keep.`
+            : 'Yours to keep.'}
       </p>
-      {live && sub.provider === 'google_play' && config && (
-        <a
-          className="mt-2 inline-flex min-h-12 items-center font-bold underline"
-          href={playManageUrl(config.googlePlay.packageName, config.googlePlay.subscriptionId)}
-          rel="noopener"
-        >
-          Manage in Google Play
-        </a>
-      )}
-      {live && sub.provider !== 'google_play' && (
-        <button type="button" disabled={busy} onClick={portal} className={`${secondary} mt-2`}>
-          {busy ? 'Opening…' : 'Manage subscription'}
-        </button>
-      )}
-      {error && (
-        <p role="alert" className="mt-2 font-bold">
-          {error}
-        </p>
-      )}
     </li>
   );
 }
@@ -330,8 +376,8 @@ function DeleteAccount() {
         Delete account
       </h2>
       <p className="mt-3">
-        This permanently deletes your MirthMix account. It doesn’t cancel a subscription: cancel it
-        first in Google Play or with “Manage subscription” above.
+        This permanently deletes your MirthMix account, including the Premium you bought: it can’t
+        be restored to a new account later.
       </p>
       <label className="mt-4 flex flex-col gap-2 font-bold">
         Type DELETE to confirm

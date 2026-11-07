@@ -193,7 +193,7 @@
   "settingsHapticsBody": "A small buzz when you tap a vote.",
   "settingsShowOnboarding": "Show the introduction again",
   "settingsPrivacy": "Privacy",
-  "settingsPrivacyBody": "You can play without an account. An account is only for buying Premium: it stores your email and subscription status on the MirthMix server. Games, settings and players are stored only on this phone.",
+  "settingsPrivacyBody": "You can play without an account. An account is only for buying Premium: it stores your email and whether you bought Premium on the MirthMix server. Games, settings and players are stored only on this phone.",
   "settingsAge": "Age guidance",
   "settingsAgeBody": "MirthMix is made for ages 13 and up. Categories marked 13+ include more mature themes, never explicit content.",
   "settingsAbout": "About",
@@ -495,66 +495,54 @@
   "homeAllModes": "Choose a game",
   "shareBroken": "This game link is broken or out of date.",
   "premiumTitle": "MirthMix Premium",
-  "premiumPitch": "Unlock every premium category in every game. Free play never needs a subscription.",
+  "premiumPitch": "Unlock every premium category in every game, once. No subscription, and free play never needs it.",
   "premiumIncludes": "Premium categories",
-  "premiumActive": "Premium is on",
-  "premiumPaidThrough": "Paid through {date}.",
-  "@premiumPaidThrough": {
+  "premiumUnlock": "Unlock Premium for {price}",
+  "@premiumUnlock": {
     "placeholders": {
-      "date": {
+      "price": {
         "type": "String"
       }
     }
   },
-  "premiumEndsOn": "Ends on {date}. You won’t be charged again.",
-  "@premiumEndsOn": {
+  "premiumOnce": "One payment. Yours to keep, on this phone and the website.",
+  "premiumBoughtOn": "Bought on {date} through {store}. Yours to keep.",
+  "@premiumBoughtOn": {
     "placeholders": {
       "date": {
+        "type": "String"
+      },
+      "store": {
         "type": "String"
       }
     }
   },
-  "premiumOffline": "You’re offline. Premium stays on until {date}.",
-  "@premiumOffline": {
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
+  "premiumStorePlay": "Google Play",
+  "premiumStoreWeb": "the website",
+  "premiumPaymentPending": "Your payment is still being processed. Premium unlocks as soon as it’s done.",
+  "premiumActive": "Premium is unlocked",
   "premiumUnavailableBuild": "Premium isn’t available in this version of the app yet.",
   "premiumUnavailableNow": "Premium purchases aren’t available right now. Please try again later.",
-  "premiumSignInPrompt": "Sign in with your email to buy Premium or restore it on this phone. Guests never need an account.",
-  "premiumSignIn": "Sign in to continue",
-  "premiumPerMonth": "{price} per month",
-  "@premiumPerMonth": {
-    "placeholders": {
-      "price": {
-        "type": "String"
-      }
-    }
-  },
-  "premiumPerYear": "{price} per year",
-  "@premiumPerYear": {
-    "placeholders": {
-      "price": {
-        "type": "String"
-      }
-    }
-  },
+  "premiumSignInPrompt": "Sign in to buy Premium or to use it on this phone. Guests never need an account.",
+  "premiumSignIn": "Sign in",
   "premiumRestore": "Restore purchases",
-  "premiumManagePlay": "Manage in Google Play",
-  "premiumManageWeb": "You subscribed on the website. Manage your subscription there.",
   "premiumPending": "Waiting for Google Play to confirm the payment…",
   "premiumVerifying": "Confirming your purchase…",
   "premiumSuccess": "Premium is unlocked. Enjoy!",
-  "premiumDuplicate": "You also have a subscription on the website. Cancel one so you aren’t charged twice.",
+  "premiumDuplicate": "You’d already bought Premium on the website. Contact us and we’ll refund one of the purchases.",
   "premiumErrorStore": "Google Play billing isn’t available on this device.",
   "premiumErrorPurchase": "The purchase didn’t go through. You haven’t been charged.",
   "premiumErrorMismatch": "This purchase belongs to a different MirthMix account. Sign in with that account to use it.",
-  "premiumErrorVerify": "We couldn’t confirm the purchase yet. We’ll try again the next time you open the app.",
+  "premiumErrorVerify": "We couldn’t confirm the purchase yet. Try again, or it’s checked again the next time you open the app.",
   "premiumErrorNetwork": "We couldn’t reach the server. Check your connection and try again.",
   "premiumSee": "See Premium",
+  "purchaseVerifyingTitle": "Confirming your purchase",
+  "purchaseVerifyingBody": "This usually takes a few seconds.",
+  "purchasePendingTitle": "Waiting for your payment",
+  "purchaseSuccessTitle": "Premium is unlocked!",
+  "purchaseFailedTitle": "The purchase didn’t go through",
+  "purchaseDelayedTitle": "Still confirming your purchase",
+  "tryAgain": "Try again",
   "signInTitle": "Sign in",
   "signInBody": "We’ll email you a 6-digit code. No password needed.",
   "signInEmail": "Email",
@@ -574,6 +562,14 @@
   "signInErrorCode": "That code is wrong or has expired.",
   "signInErrorRate": "Too many attempts. Please wait a few minutes.",
   "signInErrorUnknown": "Something went wrong. Please try again.",
+  "signInGoogle": "Continue with Google",
+  "signInOr": "or use your email",
+  "signInGoogleWaiting": "Finish signing in with Google in your browser, then come back here.",
+  "signInGoogleCancelled": "Google sign-in was cancelled.",
+  "signInGoogleClosed": "New accounts can’t be created right now.",
+  "signInGoogleFailed": "Google sign-in didn’t finish. Please try again.",
+  "settingsSignIn": "Sign in",
+  "settingsSignInBody": "To buy Premium, or use it on this phone",
   "accountTitle": "Account",
   "accountSignedInAs": "Signed in as {email}",
   "@accountSignedInAs": {
@@ -585,7 +581,7 @@
   },
   "accountSignOut": "Sign out",
   "accountDelete": "Delete account",
-  "accountDeleteBody": "This permanently deletes your MirthMix account. It doesn’t cancel a Google Play subscription, so cancel that in Google Play first. Type DELETE to confirm.",
+  "accountDeleteBody": "This permanently deletes your MirthMix account, including the Premium you bought: it can’t be moved to a new account later. Type DELETE to confirm.",
   "accountDeleteConfirm": "Delete",
   "accountDeleted": "Your account was deleted.",
   "accountDeleteFailed": "We couldn’t delete your account. Please try again.",

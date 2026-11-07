@@ -76,18 +76,22 @@ Run on a real Android phone (ideally a small, low-end one) before each release. 
 
 - [ ] Without the dart-defines, Premium says it isn't available and every free game still works.
 - [ ] A locked premium category shows "See Premium"; Premium lists the premium categories.
-- [ ] Sign-in needs "I'm 18 or older" ticked; an email code arrives, a wrong code is refused, the right one signs in.
-- [ ] Monthly and annual prices come from Google Play in local currency.
-- [ ] Buying as a license tester: Play sheet → "Confirming your purchase…" → "Premium is on"; the purchase shows as acknowledged in Play Console; premium categories unlock in setup.
+- [ ] Settings shows "Sign in" while signed out; the website header shows "Sign in".
+- [ ] Sign-in needs "I'm 18 or older" ticked (for Google and for the email code); an email code arrives, a wrong code is refused, the right one signs in.
+- [ ] Continue with Google (app): the browser opens Google, then the app comes back to the screen you were on, signed in. Cancelling on Google's page says "Google sign-in was cancelled."
+- [ ] Continue with Google (website): comes back through `/auth/callback` to Account (or Premium if you started there).
+- [ ] The price button says "Unlock Premium for …" with Google Play's local price, and "One payment. Yours to keep".
+- [ ] Buying as a license tester: Play sheet → spinning "Confirming your purchase" card → "Premium is unlocked!" with confetti; the purchase shows as acknowledged in Play Console; premium categories unlock in setup.
+- [ ] A slow test card (Play's "slow test card, approves after a few minutes"): "Waiting for your payment"; Premium unlocks once it approves.
 - [ ] Kill the app right after paying; on relaunch Premium turns on without paying again.
-- [ ] Airplane mode: Premium stays on; after the paid period plus 3 days offline it locks.
-- [ ] Restore purchases on a second phone signed in with the same email unlocks Premium.
-- [ ] Cancel in Google Play: Premium shows "Ends on …" and stays on until then.
+- [ ] Airplane mode for days: Premium stays on.
+- [ ] Restore purchases on a second phone signed in to the same account unlocks Premium.
 - [ ] Refund in Play Console: Premium turns off at the next app launch.
+- [ ] Leave the app in the background for over an hour, reopen: Premium and Account still load (the sign-in refreshes itself).
 - [ ] Delete account (type DELETE): signed out, Premium off; signing in again creates a fresh free account.
-- [ ] Website: sign in with the same email shows the Play subscription with "Manage in Google Play".
+- [ ] Website: sign in to the same account shows "Premium unlock via Google Play … Yours to keep".
 - [ ] Website `/play` signed in with Premium: premium categories can be ticked and played; signed out they're locked.
-- [ ] Website (sandbox provider): subscribe → provider checkout → Account shows Premium; "Manage subscription" opens the portal; the app shows "manage it on the website" for this account.
+- [ ] Website (Dodo test mode): "Unlock Premium for $2.99" → Dodo checkout → back on Account: "Confirming your payment" → "Premium is unlocked!"; a declined test card shows "Your payment didn't go through"; buying again is refused with "You already have Premium"; a refund in the Dodo dashboard turns Premium off.
 
 ## My questions
 

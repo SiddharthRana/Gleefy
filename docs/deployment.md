@@ -82,15 +82,13 @@ Every page is static (the web player runs in the browser), so the site is export
 3. Create an API token (My Profile → API Tokens → Create token) with **Account → Cloudflare Pages → Edit**. Copy your account ID from the dashboard sidebar.
 4. `web` environment:
 
-   | Kind     | Name                       | Value                                       |
-   | -------- | -------------------------- | ------------------------------------------- |
-   | secret   | `CLOUDFLARE_API_TOKEN`     | The token                                   |
-   | variable | `CLOUDFLARE_ACCOUNT_ID`    | Account ID                                  |
-   | variable | `CLOUDFLARE_PAGES_PROJECT` | Project name, if not `mirthmix`             |
-   | variable | `PADDLE_CLIENT_TOKEN`      | Paddle client-side token (public by design) |
-   | variable | `PADDLE_ENV`               | `sandbox` or `production`                   |
+   | Kind     | Name                       | Value                           |
+   | -------- | -------------------------- | ------------------------------- |
+   | secret   | `CLOUDFLARE_API_TOKEN`     | The token                       |
+   | variable | `CLOUDFLARE_ACCOUNT_ID`    | Account ID                      |
+   | variable | `CLOUDFLARE_PAGES_PROJECT` | Project name, if not `mirthmix` |
 
-   The site also reads the shared `SITE_URL`, `API_URL`, `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` repository variables. They're baked into the files at build time, so redeploy after changing them.
+   The site also reads the shared `SITE_URL`, `API_URL`, `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY` and `AUTH_GOOGLE_ENABLED` repository variables (the last one, `true` once Google sign-in is set up in Supabase, also goes into the Android build). They're baked into the files at build time, so redeploy after changing them.
 
 Cloudflare's free plan covers a static site of this size (check Cloudflare's current limits and terms before launch). Because nothing runs server-side, there's no server to pay for or scale.
 

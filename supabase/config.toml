@@ -23,13 +23,22 @@ port = 54324
 [auth]
 enabled = true
 site_url = "http://localhost:3000"
+# Where "Continue with Google" may send people back: the website's callback page and the app.
+additional_redirect_urls = ["http://localhost:3000/auth/callback", "mirthmix://auth-callback"]
 jwt_expiry = 3600
 enable_refresh_token_rotation = true
 enable_signup = true
 
-# Purchasers sign in with a 6-digit email code (app and website); no passwords or redirect links.
+# Purchasers sign in with Google or a 6-digit email code (app and website); no passwords.
 [auth.email]
 enable_signup = true
 enable_confirmations = false
 otp_length = 6
 otp_expiry = 3600
+
+# "Continue with Google" (docs/payments-setup.md §1). Off locally; turn it on in the hosted project.
+[auth.external.google]
+enabled = false
+client_id = "env(SUPABASE_AUTH_GOOGLE_CLIENT_ID)"
+secret = "env(SUPABASE_AUTH_GOOGLE_SECRET)"
+skip_nonce_check = false

@@ -14,17 +14,25 @@ final authRepositoryProvider = Provider<AuthRepository>((ref) => const Unconfigu
 /// Overridden in main() with the HTTP client when the build is configured.
 final accountApiProvider = Provider<AccountApi>((ref) => const UnconfiguredAccountApi());
 
-/// How long a cached Premium entitlement outlives its paid period when the phone can't reach the
-/// server, so Premium doesn't vanish at a party with bad signal (BUILD_PROMPT §11).
+/// How long a cached timed entitlement outlives its paid period when the phone can't reach the
+/// server, so Premium doesn't vanish at a party with bad signal (BUILD_PROMPT §11). A one-time
+/// unlock doesn't run out at all.
 const offlineGrace = Duration(days: 3);
 
 /// The last entitlement the server verified for the signed-in purchaser, as cached on the phone.
 class EntitlementSnapshot {
-  const EntitlementSnapshot({required this.userId, required this.premium, this.validUntil, required this.checkedAt});
+  const EntitlementSnapshot({
+    required this.userId,
+    required this.premium,
+    this.lifetime = false,
+    this.validUntil,
+    required this.checkedAt,
+  });
 
   factory EntitlementSnapshot.fromJson(Map<String, dynamic> j) => EntitlementSnapshot(
     userId: j['userId'] as String,
     premium: j['premium'] == true,
+    lifetime: j['lifetime'] == true,
     validUntil: j['validUntil'] == null ? null : DateTime.parse(j['validUntil'] as String),
     checkedAt: DateTime.parse(j['checkedAt'] as String),
   );
@@ -32,17 +40,23 @@ class EntitlementSnapshot {
   final String userId;
   final bool premium;
 
-  /// End of the paid period the server reported.
+  /// Premium is a one-time unlock: it stays on offline for good.
+  final bool lifetime;
+
+  /// End of the paid period the server reported (none for a one-time unlock).
   final DateTime? validUntil;
   final DateTime checkedAt;
 
-  /// Premium until the end of the verified period plus [offlineGrace]. A refresh replaces this, so
-  /// a cancellation or refund takes effect as soon as the phone is back online.
-  bool grantsPremiumAt(DateTime now) => premium && now.isBefore((validUntil ?? checkedAt).add(offlineGrace));
+  /// Premium for good when it was a one-time unlock, otherwise until the end of the verified period
+  /// plus [offlineGrace]. A refresh replaces this, so a refund takes effect as soon as the phone is
+  /// back online.
+  bool grantsPremiumAt(DateTime now) =>
+      premium && (lifetime || now.isBefore((validUntil ?? checkedAt).add(offlineGrace)));
 
   Map<String, Object?> toJson() => {
     'userId': userId,
     'premium': premium,
+    'lifetime': lifetime,
     'validUntil': validUntil?.toUtc().toIso8601String(),
     'checkedAt': checkedAt.toUtc().toIso8601String(),
   };
@@ -112,6 +126,7 @@ class EntitlementController extends Notifier<EntitlementState> {
       final snapshot = EntitlementSnapshot(
         userId: user.id,
         premium: account.premium,
+        lifetime: account.lifetime,
         validUntil: account.validUntil,
         checkedAt: ref.read(clockProvider)(),
       );

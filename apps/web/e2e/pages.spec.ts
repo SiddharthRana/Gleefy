@@ -19,7 +19,7 @@ const pages = [
   '/account-deletion',
   '/pricing',
   '/account',
-  '/checkout/paddle',
+  '/auth/callback',
   '/privacy',
   '/terms',
 ];

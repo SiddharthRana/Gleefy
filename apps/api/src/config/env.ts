@@ -38,27 +38,10 @@ export const envSchema = z.object({
     .default('true')
     .transform((v) => v === 'true'),
   // ---- Billing (all optional; with nothing set, billing stays unavailable)
-  /** Web checkout provider. Confirm seller eligibility first (docs/payments-setup.md). */
-  WEB_PAYMENT_PROVIDER: z.enum(['none', 'paddle', 'dodo']).default('none'),
+  /** Web checkout provider (Dodo Payments). Confirm seller eligibility first (docs/payments-setup.md). */
+  WEB_PAYMENT_PROVIDER: z.enum(['none', 'dodo']).default('none'),
   /** Where the provider sends customers after checkout (site URL + path). */
   BILLING_RETURN_URL: z.url().default('http://localhost:3000/account?checkout=success'),
-  PADDLE_ENV: z.enum(['sandbox', 'production']).default('sandbox'),
-  PADDLE_API_KEY: z
-    .string()
-    .optional()
-    .transform((v) => (v ? v : undefined)),
-  PADDLE_WEBHOOK_SECRET: z
-    .string()
-    .optional()
-    .transform((v) => (v ? v : undefined)),
-  PADDLE_PRICE_PREMIUM_MONTHLY: z
-    .string()
-    .optional()
-    .transform((v) => (v ? v : undefined)),
-  PADDLE_PRICE_PREMIUM_ANNUAL: z
-    .string()
-    .optional()
-    .transform((v) => (v ? v : undefined)),
   DODO_ENV: z.enum(['test', 'live']).default('test'),
   DODO_API_KEY: z
     .string()
@@ -68,18 +51,15 @@ export const envSchema = z.object({
     .string()
     .optional()
     .transform((v) => (v ? v : undefined)),
-  DODO_PRODUCT_PREMIUM_MONTHLY: z
-    .string()
-    .optional()
-    .transform((v) => (v ? v : undefined)),
-  DODO_PRODUCT_PREMIUM_ANNUAL: z
+  /** Dodo one-time product id for the Premium unlock (pdt_…). */
+  DODO_PRODUCT_PREMIUM: z
     .string()
     .optional()
     .transform((v) => (v ? v : undefined)),
   /** Android application id. */
   GOOGLE_PLAY_PACKAGE_NAME: z.string().default('com.mirthmix.app'),
-  /** Play subscription product id; base plans "monthly" and "annual". */
-  GOOGLE_PLAY_SUBSCRIPTION_ID: z.string().default('mirthmix_premium'),
+  /** Play one-time (non-consumable) in-app product id for the Premium unlock. */
+  GOOGLE_PLAY_PRODUCT_ID: z.string().default('mirthmix_premium_unlock'),
   /** Service account key JSON (raw or base64) with access to the Play Developer API. */
   GOOGLE_PLAY_SERVICE_ACCOUNT_JSON: z
     .string()

@@ -44,20 +44,20 @@ export default function AccountDeletionPage() {
         <li>
           Your account is disabled immediately, and your email and sign-in record are deleted.
         </li>
-        <li>Your subscription records are deleted with the account.</li>
+        <li>Your purchase records are deleted with the account.</li>
         <li>
-          Messages from Google Play or our payment partner about your subscription are kept for up
-          to 30 days for troubleshooting, then their contents are erased.
+          Messages from Google Play or our payment partner about your purchase are kept for up to 30
+          days for troubleshooting, then their contents are erased.
         </li>
         <li>
           Google Play and our payment partner keep their own purchase records, as the law requires
           them to.
         </li>
       </ul>
-      <h2 className="mt-10 font-display text-3xl font-semibold">Cancel your subscription first</h2>
+      <h2 className="mt-10 font-display text-3xl font-semibold">Premium goes with it</h2>
       <p className="mt-3 text-lg">
-        Deleting your account doesn’t cancel a subscription. Cancel it in Google Play (Payments &
-        subscriptions) or with “Manage subscription” on the Account page, then delete the account.
+        Premium belongs to your account, so deleting the account removes it, and it can’t be moved
+        to a new account later. There is nothing to cancel: Premium is a one-time purchase.
       </p>
     </article>
   );

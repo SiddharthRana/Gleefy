@@ -36,7 +36,7 @@ Confirm the name is free on Play and as a trademark before using it (BUILD_PROMP
 > • Works offline. A game survives a phone call or the app closing
 > • Share a game link: friends get the same questions in the app or their browser
 >
-> **Free to play, with optional Premium.** Every game and every free category is free, with no ads. MirthMix Premium adds premium categories in every game, as a monthly or yearly subscription. Cancel anytime in Google Play.
+> **Free to play, with optional Premium.** Every game and every free category is free, with no ads. MirthMix Premium adds premium categories in every game, for one small payment. No subscription: pay once and keep it.
 >
 > **Private by design.** No account needed to play, no ads, no tracking. Anonymous usage statistics are off unless you turn them on.
 >
@@ -63,4 +63,4 @@ Screenshots: run a release build on an emulator or phone and use `adb exec-out s
 - **Content rating:** see [`content-rating.md`](content-rating.md).
 - **Government apps / financial features / health:** No.
 - **News app:** No.
-- **App access:** All features are available without signing in; Premium needs a license-tester account for review. Give reviewers a test account with an active test subscription if Play asks.
+- **App access:** All features are available without signing in; Premium needs a license-tester account for review. Give reviewers a test account that has bought the test Premium unlock if Play asks.

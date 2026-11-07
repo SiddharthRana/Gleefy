@@ -30,6 +30,13 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <data android:scheme="https" android:host="mirthmix.example" android:pathPrefix="/play"/>
             </intent-filter>
+            <!-- "Continue with Google" returns here through Supabase Auth (mirthmix://auth-callback). -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="mirthmix" android:host="auth-callback"/>
+            </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

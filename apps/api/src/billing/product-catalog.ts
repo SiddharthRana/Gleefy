@@ -20,13 +20,11 @@ export class ProductCatalog {
   readonly entries: CatalogEntry[];
 
   constructor(@Inject(ENV) env: Env) {
+    // Premium is one product per channel, bought once: a Dodo one-time product and a Google Play
+    // one-time (non-consumable) in-app product.
     const raw: [PaymentProviderId, string | undefined, PlanId, BillingInterval][] = [
-      ['paddle', env.PADDLE_PRICE_PREMIUM_MONTHLY, 'premium', 'monthly'],
-      ['paddle', env.PADDLE_PRICE_PREMIUM_ANNUAL, 'premium', 'annual'],
-      ['dodo', env.DODO_PRODUCT_PREMIUM_MONTHLY, 'premium', 'monthly'],
-      ['dodo', env.DODO_PRODUCT_PREMIUM_ANNUAL, 'premium', 'annual'],
-      // Google Play: one subscription product, base plans "monthly"/"annual" (interval comes from the base plan).
-      ['google_play', env.GOOGLE_PLAY_SUBSCRIPTION_ID, 'premium', 'monthly'],
+      ['dodo', env.DODO_PRODUCT_PREMIUM, 'premium', 'one_time'],
+      ['google_play', env.GOOGLE_PLAY_PRODUCT_ID, 'premium', 'one_time'],
     ];
     this.entries = raw
       .filter((r): r is [PaymentProviderId, string, PlanId, BillingInterval] => Boolean(r[1]))
@@ -42,13 +40,7 @@ export class ProductCatalog {
     return this.entries.find((e) => e.provider === provider && e.productId === productId);
   }
 
-  forPlan(
-    provider: PaymentProviderId,
-    planId: PlanId,
-    interval: BillingInterval,
-  ): CatalogEntry | undefined {
-    return this.entries.find(
-      (e) => e.provider === provider && e.planId === planId && e.interval === interval,
-    );
+  forPlan(provider: PaymentProviderId, planId: PlanId): CatalogEntry | undefined {
+    return this.entries.find((e) => e.provider === provider && e.planId === planId);
   }
 }

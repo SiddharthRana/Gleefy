@@ -192,8 +192,7 @@ jobs:
           NEXT_PUBLIC_API_URL: ${{ vars.API_URL }}
           NEXT_PUBLIC_SUPABASE_URL: ${{ vars.SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ vars.SUPABASE_PUBLISHABLE_KEY }}
-          NEXT_PUBLIC_PADDLE_CLIENT_TOKEN: ${{ vars.PADDLE_CLIENT_TOKEN }}
-          NEXT_PUBLIC_PADDLE_ENV: ${{ vars.PADDLE_ENV }}
+          NEXT_PUBLIC_AUTH_GOOGLE_ENABLED: ${{ vars.AUTH_GOOGLE_ENABLED }}
           NEXT_PUBLIC_SENTRY_DSN: ${{ vars.WEB_SENTRY_DSN }}
           NEXT_PUBLIC_CONTACT_EMAIL: ${{ vars.CONTACT_EMAIL }}
         run: pnpm --filter @mirthmix/web build
@@ -254,6 +253,7 @@ jobs:
           SITE_URL: ${{ vars.SITE_URL }}
           SUPABASE_URL: ${{ vars.SUPABASE_URL }}
           SUPABASE_PUBLISHABLE_KEY: ${{ vars.SUPABASE_PUBLISHABLE_KEY }}
+          AUTH_GOOGLE_ENABLED: ${{ vars.AUTH_GOOGLE_ENABLED || 'false' }}
           # Optional, opt-in analytics; empty = the setting isn't offered.
           POSTHOG_KEY: ${{ vars.POSTHOG_KEY }}
           POSTHOG_HOST: ${{ vars.POSTHOG_HOST || 'https://eu.i.posthog.com' }}
@@ -262,6 +262,7 @@ jobs:
           --dart-define=API_BASE_URL="$API_URL" --dart-define=SITE_URL="$SITE_URL"
           --dart-define=SUPABASE_URL="$SUPABASE_URL"
           --dart-define=SUPABASE_PUBLISHABLE_KEY="$SUPABASE_PUBLISHABLE_KEY"
+          --dart-define=AUTH_GOOGLE_ENABLED="$AUTH_GOOGLE_ENABLED"
           --dart-define=POSTHOG_KEY="$POSTHOG_KEY" --dart-define=POSTHOG_HOST="$POSTHOG_HOST"
           --dart-define=APP_VERSION="$(grep '^version:' pubspec.yaml | cut -d' ' -f2 | cut -d+ -f1)"
       - name: Upload to Google Play

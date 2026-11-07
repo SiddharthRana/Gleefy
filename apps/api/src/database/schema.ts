@@ -53,7 +53,7 @@ export const subscriptions = pgTable('subscriptions', {
   lastEventAt: ts('last_event_at').notNull(),
   providerAccountRef: text('provider_account_ref'),
   linkedProviderSubscriptionId: text('linked_provider_subscription_id'),
-  billingInterval: text('billing_interval').$type<'monthly' | 'annual'>(),
+  billingInterval: text('billing_interval').$type<'monthly' | 'annual' | 'one_time'>(),
   createdAt: ts('created_at').notNull().defaultNow(),
   updatedAt: ts('updated_at').notNull().defaultNow(),
 });
