@@ -29,3 +29,26 @@ export const freeCategories = (mode: ShareMode) =>
 /** Categories this visitor may play: free ones, plus premium ones with Premium. */
 export const playableCategories = (mode: ShareMode, premium: boolean) =>
   packs[mode].categories.filter((c) => c.tier === 'free' || premium);
+
+export interface PremiumCategory {
+  id: string;
+  name: string;
+  mode: string;
+  count: number;
+}
+
+/** Every premium category with its real question count, for the homepage and pricing page. */
+export const premiumCategories: PremiumCategory[] = (Object.keys(packs) as ShareMode[]).flatMap(
+  (mode) =>
+    packs[mode].categories
+      .filter((c) => c.tier === 'premium')
+      .map((c) => ({
+        id: `${mode}-${c.id}`,
+        name: c.name,
+        mode: modeNames[mode],
+        count: (packs[mode].items as { category: string }[]).filter((i) => i.category === c.id)
+          .length,
+      })),
+);
+
+export const premiumQuestionCount = premiumCategories.reduce((n, c) => n + c.count, 0);

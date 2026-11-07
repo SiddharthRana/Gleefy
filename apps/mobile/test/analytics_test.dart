@@ -150,6 +150,8 @@ void main() {
       await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
       await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
       await expectLater(tester, meetsGuideline(textContrastGuideline));
+      await tester.ensureVisible(find.text('Share anonymous stats'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('Share anonymous stats'));
       await tester.pumpAndSettle();
       expect(find.text('Help make MirthMix better?'), findsNothing);
@@ -160,6 +162,8 @@ void main() {
     testWidgets('"No thanks" keeps sharing off and never asks again', (tester) async {
       final sink = FakeSink();
       final h = await finishGame(tester, sink: sink);
+      await tester.ensureVisible(find.text('No thanks'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('No thanks'));
       await tester.pumpAndSettle();
       expect(h.prefs.getBool('settings.shareUsage'), isNot(isTrue));

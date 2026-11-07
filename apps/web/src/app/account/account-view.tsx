@@ -18,7 +18,7 @@ import {
 import { field, primary, secondary } from '@/lib/ui';
 
 const day = (iso: string) =>
-  new Date(iso).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+  new Date(iso).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
 
 export function AccountView() {
   const session = useSession();

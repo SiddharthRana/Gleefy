@@ -625,7 +625,7 @@
   "usagePromptYes": "Share anonymous stats",
   "usagePromptNo": "No thanks",
   "playersEmpty": "No names yet",
-  "playersEmptyBody": "Add players to take turns, or teams like “Team Chai” and “Team Coffee”.",
+  "playersEmptyBody": "Add players to take turns, or teams like “Team Tea” and “Team Coffee”.",
   "playersCount": "{count} of {max}",
   "@playersCount": {
     "placeholders": {
@@ -636,5 +636,130 @@
         "type": "int"
       }
     }
-  }
+  },
+  "progressLevel": "Level {level}",
+  "@progressLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "progressXp": "{into} / {needed} XP",
+  "@progressXp": {
+    "placeholders": {
+      "into": {
+        "type": "int"
+      },
+      "needed": {
+        "type": "int"
+      }
+    }
+  },
+  "progressStreak": "day streak",
+  "progressStartTitle": "Start your party level",
+  "progressStartBody": "Finish a game to earn XP and your first trophy. Kept on this phone only.",
+  "progressSummary": "{trophies} of {total} trophies · {games} games",
+  "@progressSummary": {
+    "placeholders": {
+      "trophies": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "games": {
+        "type": "int"
+      }
+    }
+  },
+  "progressSemantics": "Level {level}, {into} of {needed} XP, {streak} day streak",
+  "@progressSemantics": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      },
+      "into": {
+        "type": "int"
+      },
+      "needed": {
+        "type": "int"
+      },
+      "streak": {
+        "type": "int"
+      }
+    }
+  },
+  "rewardXp": "+{xp} XP",
+  "@rewardXp": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "rewardToNext": "{xp} XP to level {level}",
+  "@rewardToNext": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      },
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "rewardLevelUp": "Level up! You’re now level {level}",
+  "@rewardLevelUp": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "rewardNewTrophies": "{count, plural, =1{New trophy!} other{New trophies!}}",
+  "@rewardNewTrophies": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "trophiesTitle": "Trophies",
+  "trophiesIntro": "Finish games to earn XP, level up and keep your streak alive. Your progress stays on this phone: no account, nothing uploaded.",
+  "trophiesCount": "{count} of {total} trophies",
+  "@trophiesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "trophiesSee": "See all trophies",
+  "trophyLocked": "Not earned yet",
+  "statTotalXp": "Total XP",
+  "statGames": "Games played",
+  "statStreak": "Day streak",
+  "statBestStreak": "Best streak",
+  "trophyFirstGame": "Ice Breaker",
+  "trophyFirstGameBody": "Finish your first game.",
+  "trophyRegular": "Regular",
+  "trophyRegularBody": "Finish 5 games.",
+  "trophyPartyAnimal": "Party Animal",
+  "trophyPartyAnimalBody": "Finish 25 games.",
+  "trophyAllModes": "Try Them All",
+  "trophyAllModesBody": "Finish a game of every mode.",
+  "trophyStreak3": "On a Roll",
+  "trophyStreak3Body": "Play 3 days in a row.",
+  "trophyStreak7": "Week of Fun",
+  "trophyStreak7Body": "Play 7 days in a row.",
+  "trophyMarathon": "Marathon",
+  "trophyMarathonBody": "Finish a game of 20 rounds or more.",
+  "trophyKnowItAll": "Know-It-All",
+  "trophyKnowItAllBody": "Get every answer right in a Trivia Blitz game.",
+  "trophyRisingStar": "Rising Star",
+  "trophyRisingStarBody": "Reach level 5."
 }

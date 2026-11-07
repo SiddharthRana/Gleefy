@@ -28,12 +28,12 @@
       "region": "global"
     },
     {
-      "id": "desi",
-      "name": "Desi Picks",
-      "description": "Chai or coffee, and many more Indian classics.",
+      "id": "big-debates",
+      "name": "Big Debates",
+      "description": "The classic arguments people have everywhere.",
       "tier": "free",
       "ageRating": "all",
-      "region": "in"
+      "region": "global"
     },
     {
       "id": "pop",
@@ -356,94 +356,94 @@
       "b": "Desert"
     },
     {
-      "id": "tot-desi-001",
-      "category": "desi",
-      "a": "Chai",
-      "b": "Coffee"
+      "id": "tot-big-debates-001",
+      "category": "big-debates",
+      "a": "Coffee",
+      "b": "Tea"
     },
     {
-      "id": "tot-desi-002",
-      "category": "desi",
-      "a": "Samosa",
-      "b": "Kachori"
+      "id": "tot-big-debates-002",
+      "category": "big-debates",
+      "a": "Cake",
+      "b": "Pie"
     },
     {
-      "id": "tot-desi-003",
-      "category": "desi",
-      "a": "Idli",
-      "b": "Dosa"
+      "id": "tot-big-debates-003",
+      "category": "big-debates",
+      "a": "Flying",
+      "b": "Invisibility"
     },
     {
-      "id": "tot-desi-004",
-      "category": "desi",
-      "a": "Cricket",
-      "b": "Football"
+      "id": "tot-big-debates-004",
+      "category": "big-debates",
+      "a": "Stairs",
+      "b": "Lift"
     },
     {
-      "id": "tot-desi-005",
-      "category": "desi",
-      "a": "Rajma chawal",
-      "b": "Chole bhature"
+      "id": "tot-big-debates-005",
+      "category": "big-debates",
+      "a": "Ketchup",
+      "b": "Mayo"
     },
     {
-      "id": "tot-desi-006",
-      "category": "desi",
-      "a": "Diwali",
-      "b": "Holi"
+      "id": "tot-big-debates-006",
+      "category": "big-debates",
+      "a": "Space",
+      "b": "Ocean"
     },
     {
-      "id": "tot-desi-007",
-      "category": "desi",
-      "a": "Paratha",
-      "b": "Poha"
+      "id": "tot-big-debates-007",
+      "category": "big-debates",
+      "a": "The past",
+      "b": "The future"
     },
     {
-      "id": "tot-desi-008",
-      "category": "desi",
-      "a": "Gulab jamun",
-      "b": "Rasgulla"
+      "id": "tot-big-debates-008",
+      "category": "big-debates",
+      "a": "Ghosts",
+      "b": "Aliens"
     },
     {
-      "id": "tot-desi-009",
-      "category": "desi",
-      "a": "Auto-rickshaw",
-      "b": "Metro"
+      "id": "tot-big-debates-009",
+      "category": "big-debates",
+      "a": "Pirates",
+      "b": "Ninjas"
     },
     {
-      "id": "tot-desi-010",
-      "category": "desi",
-      "a": "Mango",
-      "b": "Lychee"
+      "id": "tot-big-debates-010",
+      "category": "big-debates",
+      "a": "Robots",
+      "b": "Dinosaurs"
     },
     {
-      "id": "tot-desi-011",
-      "category": "desi",
-      "a": "Pani puri",
-      "b": "Bhel puri"
+      "id": "tot-big-debates-011",
+      "category": "big-debates",
+      "a": "Smooth peanut butter",
+      "b": "Crunchy peanut butter"
     },
     {
-      "id": "tot-desi-012",
-      "category": "desi",
-      "a": "Lassi",
-      "b": "Nimbu pani"
+      "id": "tot-big-debates-012",
+      "category": "big-debates",
+      "a": "Pen",
+      "b": "Pencil"
     },
     {
-      "id": "tot-desi-013",
-      "category": "desi",
-      "a": "Hill station",
-      "b": "Beach town"
+      "id": "tot-big-debates-013",
+      "category": "big-debates",
+      "a": "Sunglasses",
+      "b": "Hats"
     },
     {
-      "id": "tot-desi-014",
-      "category": "desi",
-      "a": "Biryani",
-      "b": "Pulao"
+      "id": "tot-big-debates-014",
+      "category": "big-debates",
+      "a": "Toast",
+      "b": "Cereal"
     },
     {
-      "id": "tot-desi-015",
-      "category": "desi",
-      "a": "Antakshari",
-      "b": "Dumb charades"
+      "id": "tot-big-debates-015",
+      "category": "big-debates",
+      "a": "Lemonade",
+      "b": "Iced tea"
     },
     {
       "id": "tot-pop-001",
@@ -629,7 +629,7 @@
       "id": "tot-sports-006",
       "category": "sports",
       "a": "Chess",
-      "b": "Carrom"
+      "b": "Checkers"
     },
     {
       "id": "tot-sports-007",
@@ -676,8 +676,8 @@
     {
       "id": "tot-sports-014",
       "category": "sports",
-      "a": "Kabaddi",
-      "b": "Kho-kho"
+      "a": "Football",
+      "b": "Rugby"
     },
     {
       "id": "tot-sports-015",

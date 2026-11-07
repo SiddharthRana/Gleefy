@@ -1,7 +1,7 @@
 # Progress
 
 **Current phase:** 5 of 5 — Polish and launch prep ✅ code complete. **Checkpoint: the remaining launch steps need the owner** (accounts, legal review, trivia verification, closed test); see `docs/launch/checklist.md`.
-**Last updated:** 2026-11-07
+**Last updated:** 2026-11-08
 
 ## Phase 5 — Polish and launch prep
 
@@ -34,6 +34,15 @@
 - **Analytics weren't checked against a real PostHog project** (payload shape follows PostHog's capture API docs; error events use the `$exception` properties).
 - Lighthouse ran locally against `wrangler pages dev`, not the deployed site. The pricing page's one best-practices point is a console error from the API not running locally.
 - Unfinished code at the Phase 5 checkpoint has since been built (see below); what remains is listed in `docs/launch/checklist.md`.
+
+## Game feel, progress and worldwide content (2026-11-08)
+
+| Area     | What                                                                                                                                                                                                                                                       | Verified by                                                     |
+| -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| Progress | XP, levels, daily streak and 9 trophies (`packages/game-engine/src/progress.ts`, Dart port `lib/game/progress.dart`), stored on the device only                                                                                                            | Engine tests + shared test vectors replayed in Dart             |
+| Website  | Doodle-lobby hero with mascots, stickers and a pulsing Play button; game cards with colour, icon and stats; Your progress; reward panel after games; `/trophies`; a Premium section listing every premium category; a gold Premium pill instead of Sign in | Playwright 178 incl. reward, level-up, trophies, axe light/dark |
+| App      | Progress card on Home, reward card on results (XP count-up, level bar, level-up, new trophies), trophy room                                                                                                                                                | Flutter 143 incl. accessibility guidelines light/dark           |
+| Content  | India-only categories replaced by worldwide ones; India-centred items swapped                                                                                                                                                                              | `content:validate`                                              |
 
 ## One-time unlock, Weblume's payment fixes, Google sign-in (2026-11-07)
 

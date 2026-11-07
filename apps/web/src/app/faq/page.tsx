@@ -18,9 +18,9 @@ const faqs: { q: string; a: React.ReactNode }[] = [
     q: 'What does Premium include?',
     a: (
       <>
-        Every premium category in every game, on Android and the website, for one small payment. It
-        isn’t a subscription. See <Link href="/pricing">Premium</Link> for the price and the full
-        list.
+        Every premium category in every game, in the Android and iOS apps and on the website, for
+        one small payment. It isn’t a subscription. See <Link href="/pricing">Premium</Link> for the
+        price and the full list.
       </>
     ),
   },
@@ -40,7 +40,7 @@ const faqs: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: 'Can I add my own questions?',
-    a: 'Yes, in the Android app: Settings → My questions, or “Write your own questions” when you set up Would You Rather or This or That. They stay on your phone and are never uploaded or shared.',
+    a: 'Yes, in the app: Settings → My questions, or “Write your own questions” when you set up Would You Rather or This or That. They stay on your phone and are never uploaded or shared.',
   },
   {
     q: 'Does it work offline?',
@@ -57,8 +57,8 @@ const faqs: { q: string; a: React.ReactNode }[] = [
     ),
   },
   {
-    q: 'Is there an iPhone app?',
-    a: 'Not yet. iPhone users can play the four games in the browser on the Play page, and shared game links open there too.',
+    q: 'Is there an app for iPhone and Android?',
+    a: 'Yes, MirthMix is coming to both Android and iOS. Until then, anyone can play the four games in the browser on the Play page, and shared game links open there too.',
   },
   {
     q: 'Who is MirthMix for?',

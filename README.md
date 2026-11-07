@@ -117,7 +117,9 @@ New categories need `tier` (`free` / `premium`), `ageRating` (`all` / `13+`), `r
 - **Entitlements in the app:** widget tests with a fake API, store and sign-in cover free vs premium, the offline grace window, revocation by the server, purchase success/rejection/cancel and account deletion.
 - **Manual:** [`docs/qa-checklist.md`](docs/qa-checklist.md).
 
-CI (`.github/workflows/ci.yml`) runs all of the above plus an Android release APK build.
+CI (`.github/workflows/ci.yml`) runs all of the above on pull requests and on pushes to `dev` and `main`. The Android release build runs on a Mac instead, to save build minutes: `scripts/android-build.sh` (release APKs per ABI, checked against the 25 MB budget).
+
+**Branches** (same as Weblume): `dev` is the default branch; start work on a branch from `dev` and open a pull request into it. `main` is what's released: merge `dev` into `main` to deploy.
 
 ## Deployment
 

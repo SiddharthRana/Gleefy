@@ -26,11 +26,11 @@ export default function ContactPage() {
         </li>
         <li>
           <strong>Premium or billing:</strong> the email you signed in with and whether you bought
-          in the Android app or on the website. Never send card details.
+          in the app or on the website. Never send card details.
         </li>
         <li>
-          <strong>Something broken:</strong> your phone model, Android version and what you were
-          doing.
+          <strong>Something broken:</strong> your phone model, Android or iOS version and what you
+          were doing.
         </li>
       </ul>
     </div>

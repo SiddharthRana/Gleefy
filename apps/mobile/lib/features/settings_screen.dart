@@ -9,6 +9,7 @@ import '../telemetry/analytics.dart';
 import '../state/settings.dart';
 import '../theme/app_theme.dart';
 import '../theme/tokens.g.dart';
+import '../widgets/insets.dart';
 
 const appVersion = '0.1.0';
 
@@ -38,7 +39,7 @@ class SettingsScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: Text(l.settings)),
       body: ListView(
-        padding: const EdgeInsets.only(bottom: MmSpace.s8),
+        padding: listPadding(context, const EdgeInsets.only(bottom: MmSpace.s8)),
         children: [
           section(l.settingsTheme),
           Padding(

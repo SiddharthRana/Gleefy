@@ -6,11 +6,11 @@ Paste this into a new Claude Code session on the `siddharthrana/mirthmix` reposi
 
 ## Status
 
-All five phases are complete in code (Phase 5 on branch `claude/phase-5-launch-prep` until merged). What's left is the owner's launch work in `docs/launch/checklist.md`: accounts, domain, legal review, a second-person trivia review, billing and deploy setup, Play Console forms and the closed test.
+All five phases are complete in code. What's left is the owner's launch work in `docs/launch/checklist.md`: accounts, domain, legal review, a second-person trivia review, billing and deploy setup, Play Console forms and the closed test.
 
 ## Where things are
 
-- **Branches:** `main` holds Phases 1–3. `claude/phase-4-payments` holds Phase 4 until merged. Start new work on a branch from `main` and open a PR into it.
+- **Branches** (same as Weblume): `dev` is the default branch; start new work on a branch from `dev` and open a PR into it. `main` is the release branch: merging `dev` into `main` is what deploys (each target still waits for approval).
 - **Launch:** `docs/launch/` (checklist, Play listing, Data safety, content rating, closed test) and `docs/privacy-data-map.md`.
 - **Analytics:** opt-in only, `apps/mobile/lib/telemetry/analytics.dart`; off unless built with `POSTHOG_KEY`.
 - **Deploys:** `.github/workflows/ci.yml` has approval-gated deploy jobs (environments `backend`, `web`, `play-store`), switched on by `DEPLOY_*` repository variables. Setup: `docs/deployment.md`.
@@ -31,7 +31,7 @@ export PATH=/opt/flutter/bin:$PATH
 cd apps/mobile && flutter pub get
 ```
 
-The Android SDK host (dl.google.com) was blocked in the container, so APK builds only run in GitHub Actions. On a Mac with the Android SDK, `flutter build apk --release --split-per-abi` works locally (Phase 4 was built that way).
+CI doesn't build the Android app (to save build minutes) until release signing for Play testing is set up. Build it on a Mac with the Android SDK: `scripts/android-build.sh`.
 
 Database tests need Postgres 17 and `psql`. Without a local `psql`, run Postgres in Docker and point `DB_ADMIN_URL` at it:
 

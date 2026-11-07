@@ -1,15 +1,18 @@
 name: CI
 
-# Every push and PR runs the checks. On main, three deploy jobs follow; each waits for approval in
-# its GitHub environment ("Review deployments" on the run page). Setup: docs/deployment.md.
+# Branches (same as Weblume): dev is the default branch that pull requests target; main is what's
+# released. Pushes to dev and main and every pull request run the checks. On main, three deploy jobs
+# follow; each waits for approval in its GitHub environment ("Review deployments" on the run page).
+# Setup: docs/deployment.md.
 on:
+  # Feature branches are checked through their pull request; pushing to them as well ran everything twice.
   push:
-    branches: ['**']
+    branches: [dev, main]
   pull_request:
 
 concurrency:
-  # Branch builds cancel older ones. Main builds never cancel each other, so a deploy is never cut
-  # off half way and a build waiting for approval doesn't hold up the next one.
+  # Pull request builds cancel older ones. Main builds never cancel each other, so a deploy is never
+  # cut off half way and a build waiting for approval doesn't hold up the next one.
   group: ci-${{ github.ref }}-${{ github.ref == 'refs/heads/main' && github.sha || 'branch' }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
@@ -101,15 +104,8 @@ jobs:
       - run: flutter analyze
       # Includes the shared engine test vectors in packages/game-engine/test-vectors.
       - run: flutter test
-      # GitHub's Ubuntu runners include the Android SDK; this verifies the Android release build compiles.
-      - uses: actions/setup-java@v5
-        with:
-          distribution: temurin
-          java-version: '17'
-      - name: Build Android release APK (debug-signed unless a keystore is configured)
-        run: flutter build apk --release --split-per-abi
-      - name: Report APK sizes
-        run: ls -la build/app/outputs/flutter-apk/*.apk
+      # The Android build isn't run here to save build minutes: run scripts/android-build.sh on a Mac
+      # before merging. It moves back to CI once release signing for Google Play testing is set up.
 
   api-image:
     name: API container image

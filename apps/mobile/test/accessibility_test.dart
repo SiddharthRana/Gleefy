@@ -5,6 +5,7 @@ import 'package:mirthmix/router/router.dart';
 import 'package:mirthmix/telemetry/analytics.dart';
 
 import 'premium_test.dart' show FakeApi, FakeAuth, FakeGateway, fakes, premiumAccount, user;
+import 'analytics_test.dart' show playShortGame;
 import 'support/harness.dart';
 
 class _NullSink implements AnalyticsSink {
@@ -25,7 +26,7 @@ void main() {
     final theme = dark ? 'dark' : 'light';
     final prefs = <String, Object>{'settings.themeMode': dark ? 'dark' : 'light'};
 
-    for (final route in ['/', '/games', '/settings', '/players', '/party', '/play/trivia/setup']) {
+    for (final route in ['/', '/games', '/settings', '/players', '/party', '/play/trivia/setup', '/trophies']) {
       testWidgets('$route meets the guidelines ($theme)', (tester) async {
         final h = await pumpApp(
           tester,
@@ -79,6 +80,15 @@ void main() {
       gateway.emit(const StorePurchaseUpdate(status: StorePurchaseStatus.purchased, purchaseToken: 'tok'));
       await tester.pumpAndSettle();
       expect(find.text('Premium is unlocked!'), findsOneWidget);
+      await checkGuidelines(tester);
+    });
+
+    testWidgets('Results with a reward meet the guidelines ($theme)', (tester) async {
+      final h = await pumpApp(tester, content: tinyContent(casual: 6), initialPrefs: prefs);
+      playShortGame(h);
+      h.container.read(routerProvider).go('/play/would-you-rather/results');
+      await tester.pumpAndSettle();
+      expect(find.text('+25 XP'), findsOneWidget);
       await checkGuidelines(tester);
     });
 
