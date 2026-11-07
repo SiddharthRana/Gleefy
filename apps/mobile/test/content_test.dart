@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mirthmix/content/content.dart';
+import 'package:gleefy/content/content.dart';
 
 import 'support/harness.dart';
 

@@ -40,8 +40,8 @@ Shared repository variables (read by more than one job):
 
 | Variable                   | Example                               | Used by          |
 | -------------------------- | ------------------------------------- | ---------------- |
-| `API_URL`                  | `https://api.mirthmix.example`        | backend, Android |
-| `SITE_URL`                 | `https://mirthmix.example`            | web, Android     |
+| `API_URL`                  | `https://api.gleefy.party`            | backend, Android |
+| `SITE_URL`                 | `https://gleefy.party`                | web, Android     |
 | `SUPABASE_URL`             | `https://<ref>.supabase.co`           | Android          |
 | `SUPABASE_PUBLISHABLE_KEY` | `sb_publishable_…` (public by design) | Android          |
 
@@ -50,22 +50,22 @@ Shared repository variables (read by more than one job):
 1. **Supabase:** create the project (Mumbai is nearest India), set up email codes and SMTP as in `docs/payments-setup.md` §1. Copy the **session pooler** connection string (Connect → Session pooler, port 5432). The direct connection is IPv6-only, and GitHub's runners have no IPv6.
 2. **Fly.io:** install `flyctl`, then once, from the repo root:
    ```bash
-   fly apps create mirthmix-api          # or another name; set FLY_APP to match
-   fly secrets set --app mirthmix-api \
+   fly apps create gleefy-api          # or another name; set FLY_APP to match
+   fly secrets set --app gleefy-api \
      DATABASE_URL='<Supabase pooler connection string>' \
      SUPABASE_URL='https://<ref>.supabase.co' \
      SUPABASE_SECRET_KEY='sb_secret_…' \
-     CORS_ORIGINS='https://mirthmix.example'
+     CORS_ORIGINS='https://gleefy.party'
    ```
    Add billing secrets from `apps/api/.env.example` when you set up payments, and optionally `SENTRY_DSN` for API error reports. Non-secret settings (`NODE_ENV`, `PORT`, `TRUST_PROXY_HOPS=1`) are in `apps/api/fly.toml`. Point `api.<domain>` at the app with `fly certs add api.<domain>`.
-3. Create a deploy token: `fly tokens create deploy --app mirthmix-api`.
+3. Create a deploy token: `fly tokens create deploy --app gleefy-api`.
 4. `backend` environment:
 
    | Kind     | Name              | Value                                                        |
    | -------- | ----------------- | ------------------------------------------------------------ |
    | secret   | `SUPABASE_DB_URL` | Session pooler connection string, with the database password |
    | secret   | `FLY_API_TOKEN`   | The deploy token                                             |
-   | variable | `FLY_APP`         | App name, if not `mirthmix-api`                              |
+   | variable | `FLY_APP`         | App name, if not `gleefy-api`                                |
 
 The machine keeps running (`min_machines_running = 1`) because store webhooks and Play notifications can arrive any time. Fly checks `/ready` (API and database up) and rolls machines one at a time.
 
@@ -75,18 +75,18 @@ Every page is static (the web player runs in the browser), so the site is export
 
 1. Create the project once (no Git connection, so production only changes through the approved workflow):
    ```bash
-   pnpm --filter @mirthmix/web exec wrangler login
-   pnpm --filter @mirthmix/web exec wrangler pages project create mirthmix --production-branch main
+   pnpm --filter @gleefy/web exec wrangler login
+   pnpm --filter @gleefy/web exec wrangler pages project create gleefy --production-branch main
    ```
 2. Add your domain under the project's **Custom domains**, and add it to the API's `CORS_ORIGINS`.
 3. Create an API token (My Profile → API Tokens → Create token) with **Account → Cloudflare Pages → Edit**. Copy your account ID from the dashboard sidebar.
 4. `web` environment:
 
-   | Kind     | Name                       | Value                           |
-   | -------- | -------------------------- | ------------------------------- |
-   | secret   | `CLOUDFLARE_API_TOKEN`     | The token                       |
-   | variable | `CLOUDFLARE_ACCOUNT_ID`    | Account ID                      |
-   | variable | `CLOUDFLARE_PAGES_PROJECT` | Project name, if not `mirthmix` |
+   | Kind     | Name                       | Value                         |
+   | -------- | -------------------------- | ----------------------------- |
+   | secret   | `CLOUDFLARE_API_TOKEN`     | The token                     |
+   | variable | `CLOUDFLARE_ACCOUNT_ID`    | Account ID                    |
+   | variable | `CLOUDFLARE_PAGES_PROJECT` | Project name, if not `gleefy` |
 
    The site also reads the shared `SITE_URL`, `API_URL`, `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY` and `AUTH_GOOGLE_ENABLED` repository variables (the last one, `true` once Google sign-in is set up in Supabase, also goes into the Android build). They're baked into the files at build time, so redeploy after changing them.
 
@@ -101,7 +101,7 @@ Cloudflare's free plan covers a static site of this size (check Cloudflare's cur
 
    | Kind     | Name                        | Value                                                        |
    | -------- | --------------------------- | ------------------------------------------------------------ |
-   | secret   | `ANDROID_KEYSTORE_BASE64`   | `base64 -i mirthmix-upload.jks` output                       |
+   | secret   | `ANDROID_KEYSTORE_BASE64`   | `base64 -i gleefy-upload.jks` output                         |
    | secret   | `ANDROID_KEYSTORE_PASSWORD` | Keystore password                                            |
    | secret   | `ANDROID_KEY_ALIAS`         | `upload`                                                     |
    | secret   | `ANDROID_KEY_PASSWORD`      | Key password                                                 |
@@ -113,7 +113,7 @@ Start on `internal`, move to `alpha` for the closed test (≥ 12 testers for 14 
 
 ## Rollback
 
-- **API:** `fly releases --app mirthmix-api`, then `fly deploy --image <previous image>`; or revert the commit on `main` and approve the backend deploy.
+- **API:** `fly releases --app gleefy-api`, then `fly deploy --image <previous image>`; or revert the commit on `main` and approve the backend deploy.
 - **Website:** in the Pages project's **Deployments**, open an earlier production deployment and choose **Rollback**.
 - **Android:** halt the rollout in Play Console; ship a fix with a higher version code (Play never accepts a lower one).
 - **Database:** migrations are forward-only. Write a new migration to undo a change and check it with `pnpm db:verify`.

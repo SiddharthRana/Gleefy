@@ -3,7 +3,7 @@ import { TrophyRoom } from './trophy-room';
 
 export const metadata: Metadata = {
   title: 'Trophies',
-  description: 'Your MirthMix level, streak and trophies, kept on this device.',
+  description: 'Your Gleefy level, streak and trophies, kept on this device.',
   alternates: { canonical: '/trophies' },
   robots: { index: false, follow: true },
 };

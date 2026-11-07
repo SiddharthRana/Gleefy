@@ -3,7 +3,7 @@ import { AccountView } from './account-view';
 
 export const metadata: Metadata = {
   title: 'Account',
-  description: 'Sign in to buy or manage MirthMix Premium.',
+  description: 'Sign in to buy or manage Gleefy Premium.',
   alternates: { canonical: '/account' },
   robots: { index: false, follow: true },
 };

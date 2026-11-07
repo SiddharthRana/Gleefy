@@ -4,13 +4,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mirthmix/account/api_client.dart';
-import 'package:mirthmix/account/auth_repository.dart';
-import 'package:mirthmix/account/entitlement.dart';
-import 'package:mirthmix/billing/billing_controller.dart';
-import 'package:mirthmix/billing/billing_gateway.dart';
-import 'package:mirthmix/router/router.dart';
-import 'package:mirthmix/state/providers.dart';
+import 'package:gleefy/account/api_client.dart';
+import 'package:gleefy/account/auth_repository.dart';
+import 'package:gleefy/account/entitlement.dart';
+import 'package:gleefy/billing/billing_controller.dart';
+import 'package:gleefy/billing/billing_gateway.dart';
+import 'package:gleefy/router/router.dart';
+import 'package:gleefy/state/providers.dart';
 
 import 'support/harness.dart';
 
@@ -72,7 +72,7 @@ class FakeApi implements AccountApi {
   ApiException? verifyError;
   BillingConfig config = const BillingConfig(
     playAvailable: true,
-    productId: 'mirthmix_premium_unlock',
+    productId: 'gleefy_premium_unlock',
     webAvailable: false,
   );
 
@@ -295,9 +295,9 @@ void main() {
   });
 
   testWidgets('the Google sign-in link back into the app doesn’t change the screen', (tester) async {
-    expect(isAuthCallback(Uri.parse('mirthmix://auth-callback?code=abc')), isTrue);
+    expect(isAuthCallback(Uri.parse('gleefy://auth-callback?code=abc')), isTrue);
     expect(isAuthCallback(Uri.parse('/auth-callback?code=abc')), isTrue);
-    expect(isAuthCallback(Uri.parse('https://mirthmix.example/play?c=x')), isFalse);
+    expect(isAuthCallback(Uri.parse('https://gleefy.party/play?c=x')), isFalse);
     final h = await pumpApp(tester, overrides: fakes(FakeAuth(), FakeApi()));
     await go(tester, h, '/settings');
     h.container.read(routerProvider).go('/auth-callback?code=abc');
@@ -372,7 +372,7 @@ void main() {
     // While the store sheet is open a spinner turns, so pump instead of settling.
     await tester.tap(find.text(unlock));
     await tester.pump(const Duration(milliseconds: 100));
-    expect(gateway.bought, ['mirthmix_premium_unlock:ref-u-1']);
+    expect(gateway.bought, ['gleefy_premium_unlock:ref-u-1']);
     expect(find.text('Confirming your purchase'), findsOneWidget);
 
     gateway.emit(const StorePurchaseUpdate(status: StorePurchaseStatus.pending));
@@ -409,7 +409,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(gateway.completed, isEmpty);
     expect(find.text('The purchase didn’t go through'), findsOneWidget);
-    expect(find.textContaining('belongs to a different MirthMix account'), findsOneWidget);
+    expect(find.textContaining('belongs to a different Gleefy account'), findsOneWidget);
     expect(find.text('Try again'), findsNothing);
     expect(h.container.read(premiumProvider), isFalse);
 

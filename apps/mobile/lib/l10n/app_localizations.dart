@@ -94,7 +94,7 @@ abstract class AppLocalizations {
   /// No description provided for @appTitle.
   ///
   /// In en, this message translates to:
-  /// **'MirthMix'**
+  /// **'Gleefy'**
   String get appTitle;
 
   /// No description provided for @tagline.
@@ -160,7 +160,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingAge.
   ///
   /// In en, this message translates to:
-  /// **'MirthMix is made for ages 13 and up.'**
+  /// **'Gleefy is made for ages 13 and up.'**
   String get onboardingAge;
 
   /// No description provided for @homeGreeting.
@@ -682,7 +682,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsPrivacyBody.
   ///
   /// In en, this message translates to:
-  /// **'You can play without an account. An account is only for buying Premium: it stores your email and whether you bought Premium on the MirthMix server. Games, settings and players are stored only on this phone.'**
+  /// **'You can play without an account. An account is only for buying Premium: it stores your email and whether you bought Premium on the Gleefy server. Games, settings and players are stored only on this phone.'**
   String get settingsPrivacyBody;
 
   /// No description provided for @settingsAge.
@@ -694,7 +694,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsAgeBody.
   ///
   /// In en, this message translates to:
-  /// **'MirthMix is made for ages 13 and up. Categories marked 13+ include more mature themes, never explicit content.'**
+  /// **'Gleefy is made for ages 13 and up. Categories marked 13+ include more mature themes, never explicit content.'**
   String get settingsAgeBody;
 
   /// No description provided for @settingsAbout.
@@ -1192,7 +1192,7 @@ abstract class AppLocalizations {
   /// No description provided for @premiumTitle.
   ///
   /// In en, this message translates to:
-  /// **'MirthMix Premium'**
+  /// **'Gleefy Premium'**
   String get premiumTitle;
 
   /// No description provided for @premiumPitch.
@@ -1318,7 +1318,7 @@ abstract class AppLocalizations {
   /// No description provided for @premiumErrorMismatch.
   ///
   /// In en, this message translates to:
-  /// **'This purchase belongs to a different MirthMix account. Sign in with that account to use it.'**
+  /// **'This purchase belongs to a different Gleefy account. Sign in with that account to use it.'**
   String get premiumErrorMismatch;
 
   /// No description provided for @premiumErrorVerify.
@@ -1528,7 +1528,7 @@ abstract class AppLocalizations {
   /// No description provided for @accountDeleteBody.
   ///
   /// In en, this message translates to:
-  /// **'This permanently deletes your MirthMix account, including the Premium you bought: it can’t be moved to a new account later. Type DELETE to confirm.'**
+  /// **'This permanently deletes your Gleefy account, including the Premium you bought: it can’t be moved to a new account later. Type DELETE to confirm.'**
   String get accountDeleteBody;
 
   /// No description provided for @accountDeleteConfirm.
@@ -1576,7 +1576,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsShareUsageBody.
   ///
   /// In en, this message translates to:
-  /// **'Which games are played, how far you get, and crash reports, to help improve MirthMix. Never names, questions, answers or your email. Off unless you turn it on.'**
+  /// **'Which games are played, how far you get, and crash reports, to help improve Gleefy. Never names, questions, answers or your email. Off unless you turn it on.'**
   String get settingsShareUsageBody;
 
   /// No description provided for @myQuestionsTitle.
@@ -1684,7 +1684,7 @@ abstract class AppLocalizations {
   /// No description provided for @usagePromptTitle.
   ///
   /// In en, this message translates to:
-  /// **'Help make MirthMix better?'**
+  /// **'Help make Gleefy better?'**
   String get usagePromptTitle;
 
   /// No description provided for @usagePromptYes.

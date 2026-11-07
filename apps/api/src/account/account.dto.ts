@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Equals, IsString } from 'class-validator';
-import { PLAN_IDS, SUBSCRIPTION_STATUSES } from '@mirthmix/plans';
+import { PLAN_IDS, SUBSCRIPTION_STATUSES } from '@gleefy/plans';
 
 export class DeleteAccountBody {
   @ApiProperty({ example: 'DELETE', description: 'Must be exactly "DELETE"' })

@@ -14,8 +14,8 @@ const _localizationsDelegates = [
   GlobalCupertinoLocalizations.delegate,
 ];
 
-class MirthMixApp extends ConsumerWidget {
-  const MirthMixApp({super.key});
+class GleefyApp extends ConsumerWidget {
+  const GleefyApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

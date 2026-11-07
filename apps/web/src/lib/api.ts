@@ -23,7 +23,7 @@ export class ApiError extends Error {
   }
 }
 
-/** Calls the MirthMix API, sending the purchaser's access token when signed in. */
+/** Calls the Gleefy API, sending the purchaser's access token when signed in. */
 export async function apiFetch<T>(
   path: `/v1/${string}`,
   init: { method?: 'GET' | 'POST' | 'DELETE'; body?: unknown; timeoutMs?: number } = {},
@@ -56,5 +56,5 @@ export function errorMessage(err: unknown): string {
     if (statusCode === 401) return 'Your session has expired. Please sign in again.';
     if (statusCode === 429) return 'Too many requests. Please wait a minute and try again.';
   }
-  return 'We couldn’t reach MirthMix. Check your connection and try again.';
+  return 'We couldn’t reach Gleefy. Check your connection and try again.';
 }

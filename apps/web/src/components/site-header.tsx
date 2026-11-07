@@ -9,12 +9,12 @@ export function SiteHeader() {
         <Link
           href="/"
           className="flex min-h-12 items-center gap-2 font-display text-2xl font-bold"
-          aria-label="MirthMix home"
+          aria-label="Gleefy home"
         >
           <span className="wiggle inline-flex">
-            <Logo />
+            <Logo size={40} />
           </span>
-          <span className="hidden min-[460px]:inline">MirthMix</span>
+          <span className="hidden min-[460px]:inline">Gleefy</span>
         </Link>
         <nav aria-label="Main">
           <ul className="flex items-center gap-1 font-bold">

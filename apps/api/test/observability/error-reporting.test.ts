@@ -16,7 +16,7 @@ describe('scrubEvent', () => {
       type: undefined,
       user: { id: 'u1', email: 'asha@example.com', ip_address: '203.0.113.9' },
       request: {
-        url: 'https://api.mirthmix.example/v1/billing/google-play/verify?x=1',
+        url: 'https://api.gleefy.party/v1/billing/google-play/verify?x=1',
         query_string: 'x=1',
         cookies: { sb: 'x' },
         data: '{"purchaseToken":"SECRET-PURCHASE-TOKEN"}',
@@ -31,7 +31,7 @@ describe('scrubEvent', () => {
     } as ErrorEvent);
     expect(event.user).toBeUndefined();
     expect(event.request).toEqual({
-      url: 'https://api.mirthmix.example/v1/billing/google-play/verify',
+      url: 'https://api.gleefy.party/v1/billing/google-play/verify',
       headers: { 'user-agent': 'Mozilla' },
     });
     expect(event.breadcrumbs?.[0]?.data?.url).toBe('https://x.test/v1/me');

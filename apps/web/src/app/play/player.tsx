@@ -21,7 +21,7 @@ import {
   type ShareMode,
   type TriviaState,
   type WyrState,
-} from '@mirthmix/game-engine';
+} from '@gleefy/game-engine';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
@@ -132,7 +132,7 @@ export function Setup() {
           <p className="mt-3 text-muted">
             Premium categories unlock with{' '}
             <Link href="/pricing" className="font-bold text-primary underline">
-              MirthMix Premium
+              Gleefy Premium
             </Link>
             .
           </p>

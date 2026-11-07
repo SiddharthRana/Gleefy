@@ -12,7 +12,7 @@ import { DODO_SECRET, dodoHeaders, dodoPayment, dodoRefund } from './sign';
 
 const catalog = new ProductCatalog({
   DODO_PRODUCT_PREMIUM: 'pdt_unlock',
-  GOOGLE_PLAY_PRODUCT_ID: 'mirthmix_premium_unlock',
+  GOOGLE_PLAY_PRODUCT_ID: 'gleefy_premium_unlock',
 } as Env);
 const dodo = new DodoProvider({ apiKey: 'k', webhookSecret: DODO_SECRET, env: 'test' }, catalog);
 const buf = (s: string) => Buffer.from(s);
@@ -95,12 +95,12 @@ describe('Google Play mapping', () => {
   };
   const now = { eventAt: new Date() };
   it('maps a purchase to a lifetime unlock with the account ref', () => {
-    const m = mapPlayProduct('mirthmix_premium_unlock', 'tok', base, now);
+    const m = mapPlayProduct('gleefy_premium_unlock', 'tok', base, now);
     expect(m).toMatchObject({
       status: 'active',
       interval: 'one_time',
       accountRef: 'ref1',
-      productId: 'mirthmix_premium_unlock',
+      productId: 'gleefy_premium_unlock',
       providerSubscriptionId: 'tok',
       currentPeriodEnd: null,
     });
@@ -128,19 +128,19 @@ describe('GooglePlayClient', () => {
       return new Response(JSON.stringify({ purchaseState: 0 }));
     }) as unknown as typeof fetch;
     const client = new GooglePlayClient(
-      'com.mirthmix.app',
+      'com.gleefy.app',
       { client_email: 'svc@x.iam.gserviceaccount.com', private_key: pem },
       fake,
     );
-    expect(
-      (await client.getProductPurchase('mirthmix_premium_unlock', 'tok/1')).purchaseState,
-    ).toBe(0);
-    await client.acknowledge('mirthmix_premium_unlock', 'tok/1');
+    expect((await client.getProductPurchase('gleefy_premium_unlock', 'tok/1')).purchaseState).toBe(
+      0,
+    );
+    await client.acknowledge('gleefy_premium_unlock', 'tok/1');
     expect(calls.filter((c) => c.url.includes('oauth2'))).toHaveLength(1); // cached
     const tokenBody = new URLSearchParams(String(calls[0]!.init!.body));
     expect(tokenBody.get('grant_type')).toBe('urn:ietf:params:oauth:grant-type:jwt-bearer');
     expect(calls[1]!.url).toBe(
-      'https://androidpublisher.googleapis.com/androidpublisher/v3/applications/com.mirthmix.app/purchases/products/mirthmix_premium_unlock/tokens/tok%2F1',
+      'https://androidpublisher.googleapis.com/androidpublisher/v3/applications/com.gleefy.app/purchases/products/gleefy_premium_unlock/tokens/tok%2F1',
     );
     expect(calls[2]!.url).toBe(`${calls[1]!.url}:acknowledge`);
     expect((calls[1]!.init!.headers as Record<string, string>).Authorization).toBe('Bearer at');

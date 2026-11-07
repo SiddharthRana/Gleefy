@@ -4,7 +4,7 @@ import { Player, Setup } from './player';
 
 export const metadata: Metadata = {
   title: 'Play',
-  description: 'Play MirthMix party games in your browser on one shared screen. No sign-up.',
+  description: 'Play Gleefy party games in your browser on one shared screen. No sign-up.',
   alternates: { canonical: '/play' },
 };
 

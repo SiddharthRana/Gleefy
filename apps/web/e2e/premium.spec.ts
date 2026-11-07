@@ -4,7 +4,7 @@ import { account, API, signIn } from './session';
 const config = (available: boolean) => ({
   enabled: available,
   web: { provider: 'dodo', available },
-  googlePlay: { available, packageName: 'com.mirthmix.app', productId: 'mirthmix_premium_unlock' },
+  googlePlay: { available, packageName: 'com.gleefy.app', productId: 'gleefy_premium_unlock' },
 });
 
 test('the Premium page shows the one-time price and what premium adds', async ({ page }) => {
@@ -14,7 +14,7 @@ test('the Premium page shows the one-time price and what premium adds', async ({
     .getByRole('link', { name: 'Premium' })
     .click();
   await expect(page.getByRole('heading', { level: 1, name: 'Premium' })).toBeVisible();
-  const premium = page.getByRole('region', { name: 'MirthMix Premium' });
+  const premium = page.getByRole('region', { name: 'Gleefy Premium' });
   await expect(premium).toContainText('$2.99 once');
   await expect(premium).toContainText('No subscription');
   const included = page.getByRole('region', { name: 'Premium categories' });

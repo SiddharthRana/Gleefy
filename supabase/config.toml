@@ -1,6 +1,6 @@
 # Supabase CLI config. Local development: `supabase start`. Production migrations are applied by
 # the deploy workflow with `supabase db push` (see docs/deployment.md).
-project_id = "mirthmix"
+project_id = "gleefy"
 
 [api]
 enabled = true
@@ -24,7 +24,7 @@ port = 54324
 enabled = true
 site_url = "http://localhost:3000"
 # Where "Continue with Google" may send people back: the website's callback page and the app.
-additional_redirect_urls = ["http://localhost:3000/auth/callback", "mirthmix://auth-callback"]
+additional_redirect_urls = ["http://localhost:3000/auth/callback", "gleefy://auth-callback"]
 jwt_expiry = 3600
 enable_refresh_token_rotation = true
 enable_signup = true

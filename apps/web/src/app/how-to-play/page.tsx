@@ -5,7 +5,7 @@ import { guideHref, guides } from '@/lib/guides';
 export const metadata: Metadata = {
   title: 'How to play',
   description:
-    'How MirthMix works: one phone, a host who reads, and a room that answers. Players, teams, timers and sharing explained.',
+    'How Gleefy works: one phone, a host who reads, and a room that answers. Players, teams, timers and sharing explained.',
   alternates: { canonical: '/how-to-play' },
 };
 
@@ -28,7 +28,7 @@ const basics = [
   },
   {
     title: 'Saved automatically',
-    body: 'A game in progress survives the app closing. Open MirthMix again and tap Resume.',
+    body: 'A game in progress survives the app closing. Open Gleefy again and tap Resume.',
   },
   {
     title: 'Share a game',
@@ -41,7 +41,7 @@ export default function HowToPlayPage() {
     <div className="py-12">
       <h1 className="font-display text-5xl font-bold">How to play</h1>
       <p className="mt-3 max-w-2xl text-lg text-muted">
-        MirthMix is made for people in the same room. Nobody needs to install anything except the
+        Gleefy is made for people in the same room. Nobody needs to install anything except the
         host, and you never need an account to play.
       </p>
       <ul className="mt-10 grid gap-4 md:grid-cols-2">

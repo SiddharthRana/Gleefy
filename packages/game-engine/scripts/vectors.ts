@@ -343,7 +343,7 @@ for (const [name, data] of Object.entries(files)) {
   }
 }
 if (stale) {
-  console.error('test-vectors are stale. Run `pnpm --filter @mirthmix/game-engine vectors`.');
+  console.error('test-vectors are stale. Run `pnpm --filter @gleefy/game-engine vectors`.');
   process.exit(1);
 }
 if (process.argv.includes('--check')) console.log('Engine test vectors are up to date.');

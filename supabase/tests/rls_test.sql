@@ -11,7 +11,7 @@ do $$ begin
 end $$;
 
 insert into public.subscriptions (user_id, provider, provider_subscription_id, product_id, plan_id, status, last_event_at) values
-  ('00000000-0000-0000-0000-00000000000a', 'google_play', 'tok-a', 'mirthmix_premium', 'premium', 'active', now()),
+  ('00000000-0000-0000-0000-00000000000a', 'google_play', 'tok-a', 'gleefy_premium', 'premium', 'active', now()),
   ('00000000-0000-0000-0000-00000000000b', 'paddle', 'sub-b', 'pri_x', 'premium', 'active', now());
 insert into public.webhook_events (provider, event_id, event_type) values ('paddle', 'evt_1', 'subscription.created');
 

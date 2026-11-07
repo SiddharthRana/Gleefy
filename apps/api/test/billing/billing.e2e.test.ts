@@ -26,7 +26,7 @@ const DB_URL = process.env.TEST_DATABASE_URL;
 const USER_A = '00000000-0000-4000-8000-0000000000c1';
 const USER_B = '00000000-0000-4000-8000-0000000000c2';
 const RTDN_AUD = 'https://api.test/v1/billing/google-play/rtdn';
-const RTDN_SA = 'pubsub-push@mirthmix.iam.gserviceaccount.com';
+const RTDN_SA = 'pubsub-push@gleefy.iam.gserviceaccount.com';
 
 describe.skipIf(!DB_URL)('billing (database e2e)', () => {
   let app: NestExpressApplication;
@@ -139,8 +139,8 @@ describe.skipIf(!DB_URL)('billing (database e2e)', () => {
         web: { provider: 'dodo', available: true },
         googlePlay: {
           available: true,
-          packageName: 'com.mirthmix.app',
-          productId: 'mirthmix_premium_unlock',
+          packageName: 'com.gleefy.app',
+          productId: 'gleefy_premium_unlock',
         },
       });
       await sql`update public.feature_flags set enabled = false where key = 'billing'`;
@@ -362,13 +362,10 @@ describe.skipIf(!DB_URL)('billing (database e2e)', () => {
       const res = await verify(tokenA).expect(200);
       expect(res.body).toEqual({ planId: 'premium', status: 'active', duplicatePurchase: false });
       expect(play.getProductPurchase).toHaveBeenCalledWith(
-        'mirthmix_premium_unlock',
+        'gleefy_premium_unlock',
         'play-token-abcdef-1',
       );
-      expect(play.acknowledge).toHaveBeenCalledWith(
-        'mirthmix_premium_unlock',
-        'play-token-abcdef-1',
-      );
+      expect(play.acknowledge).toHaveBeenCalledWith('gleefy_premium_unlock', 'play-token-abcdef-1');
       const me = (await asA(request(server()).get('/v1/me')).expect(200)).body;
       expect(me).toMatchObject({ plan: { id: 'premium' }, lifetime: true, validUntil: null });
     });
@@ -436,7 +433,7 @@ describe.skipIf(!DB_URL)('billing (database e2e)', () => {
       };
       const base = (at = Date.now()) => ({
         version: '1.0',
-        packageName: 'com.mirthmix.app',
+        packageName: 'com.gleefy.app',
         eventTimeMillis: String(at),
       });
       const note = (type: number, token = 'play-token-abcdef-1', at = Date.now()) => ({
@@ -445,7 +442,7 @@ describe.skipIf(!DB_URL)('billing (database e2e)', () => {
           version: '1.0',
           notificationType: type,
           purchaseToken: token,
-          sku: 'mirthmix_premium_unlock',
+          sku: 'gleefy_premium_unlock',
         },
       });
       const voided = (productType: number, token = 'play-token-abcdef-1', at = Date.now()) => ({

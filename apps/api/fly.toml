@@ -2,7 +2,7 @@
 #   flyctl deploy --config apps/api/fly.toml --dockerfile apps/api/Dockerfile --app <name>
 # Secrets (DATABASE_URL, SUPABASE_*, billing keys) are set with `fly secrets set`, never here.
 # See docs/deployment.md.
-app = "mirthmix-api"
+app = "gleefy-api"
 # Mumbai, nearest the first users. Change before the first deploy if needed.
 primary_region = "bom"
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { levelProgress, TROPHIES } from '@mirthmix/game-engine';
+import { levelProgress, TROPHIES } from '@gleefy/game-engine';
 import Link from 'next/link';
 import { LevelBadge } from '@/components/reward-panel';
 import { trophyInfo, useProgress } from '@/lib/progress';

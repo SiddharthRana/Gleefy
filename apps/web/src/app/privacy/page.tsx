@@ -3,7 +3,7 @@ import { LegalDraftNotice } from '@/components/legal-draft';
 
 export const metadata: Metadata = {
   title: 'Privacy',
-  description: 'What MirthMix collects (very little) and why.',
+  description: 'What Gleefy collects (very little) and why.',
   alternates: { canonical: '/privacy' },
 };
 
@@ -72,8 +72,7 @@ export default function PrivacyPage() {
       </p>
       <h2 className="mt-10 font-display text-3xl font-semibold">Age</h2>
       <p className="mt-3">
-        MirthMix is made for ages 13 and up. We do not knowingly collect personal data from
-        children.
+        Gleefy is made for ages 13 and up. We do not knowingly collect personal data from children.
       </p>
       <h2 className="mt-10 font-display text-3xl font-semibold">Changes</h2>
       <p className="mt-3">

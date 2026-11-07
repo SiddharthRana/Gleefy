@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mirthmix/app.dart';
-import 'package:mirthmix/content/content.dart';
-import 'package:mirthmix/state/providers.dart';
+import 'package:gleefy/app.dart';
+import 'package:gleefy/content/content.dart';
+import 'package:gleefy/state/providers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FakeScreenAwake implements ScreenAwake {
@@ -135,7 +135,7 @@ Future<Harness> pumpApp(
     ],
   );
   addTearDown(container.dispose);
-  await tester.pumpWidget(UncontrolledProviderScope(container: container, child: const MirthMixApp()));
+  await tester.pumpWidget(UncontrolledProviderScope(container: container, child: const GleefyApp()));
   await tester.pumpAndSettle();
   return Harness(prefs, container, awake);
 }

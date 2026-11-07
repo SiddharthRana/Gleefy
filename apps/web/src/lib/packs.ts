@@ -1,9 +1,9 @@
-import type { GuessPack, TotPack, TriviaPack, WyrPack } from '@mirthmix/content';
-import guessJson from '@mirthmix/content/packs/guess.json';
-import totJson from '@mirthmix/content/packs/this-or-that.json';
-import triviaJson from '@mirthmix/content/packs/trivia.json';
-import wyrJson from '@mirthmix/content/packs/would-you-rather.json';
-import type { ShareMode } from '@mirthmix/game-engine';
+import type { GuessPack, TotPack, TriviaPack, WyrPack } from '@gleefy/content';
+import guessJson from '@gleefy/content/packs/guess.json';
+import totJson from '@gleefy/content/packs/this-or-that.json';
+import triviaJson from '@gleefy/content/packs/trivia.json';
+import wyrJson from '@gleefy/content/packs/would-you-rather.json';
+import type { ShareMode } from '@gleefy/game-engine';
 
 export const packs = {
   'would-you-rather': wyrJson as WyrPack,

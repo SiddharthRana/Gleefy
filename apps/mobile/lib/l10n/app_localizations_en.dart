@@ -10,7 +10,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appTitle => 'MirthMix';
+  String get appTitle => 'Gleefy';
 
   @override
   String get tagline => 'Party games for one phone';
@@ -44,7 +44,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboarding3Body => 'Start a game in seconds. Nothing you play leaves your phone.';
 
   @override
-  String get onboardingAge => 'MirthMix is made for ages 13 and up.';
+  String get onboardingAge => 'Gleefy is made for ages 13 and up.';
 
   @override
   String get homeGreeting => 'Ready to play?';
@@ -339,14 +339,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsPrivacyBody =>
-      'You can play without an account. An account is only for buying Premium: it stores your email and whether you bought Premium on the MirthMix server. Games, settings and players are stored only on this phone.';
+      'You can play without an account. An account is only for buying Premium: it stores your email and whether you bought Premium on the Gleefy server. Games, settings and players are stored only on this phone.';
 
   @override
   String get settingsAge => 'Age guidance';
 
   @override
   String get settingsAgeBody =>
-      'MirthMix is made for ages 13 and up. Categories marked 13+ include more mature themes, never explicit content.';
+      'Gleefy is made for ages 13 and up. Categories marked 13+ include more mature themes, never explicit content.';
 
   @override
   String get settingsAbout => 'About';
@@ -654,7 +654,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shareBroken => 'This game link is broken or out of date.';
 
   @override
-  String get premiumTitle => 'MirthMix Premium';
+  String get premiumTitle => 'Gleefy Premium';
 
   @override
   String get premiumPitch =>
@@ -724,7 +724,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get premiumErrorMismatch =>
-      'This purchase belongs to a different MirthMix account. Sign in with that account to use it.';
+      'This purchase belongs to a different Gleefy account. Sign in with that account to use it.';
 
   @override
   String get premiumErrorVerify =>
@@ -835,7 +835,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get accountDeleteBody =>
-      'This permanently deletes your MirthMix account, including the Premium you bought: it can’t be moved to a new account later. Type DELETE to confirm.';
+      'This permanently deletes your Gleefy account, including the Premium you bought: it can’t be moved to a new account later. Type DELETE to confirm.';
 
   @override
   String get accountDeleteConfirm => 'Delete';
@@ -861,7 +861,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsShareUsageBody =>
-      'Which games are played, how far you get, and crash reports, to help improve MirthMix. Never names, questions, answers or your email. Off unless you turn it on.';
+      'Which games are played, how far you get, and crash reports, to help improve Gleefy. Never names, questions, answers or your email. Off unless you turn it on.';
 
   @override
   String get myQuestionsTitle => 'My questions';
@@ -920,7 +920,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setupWriteOwn => 'Write your own questions';
 
   @override
-  String get usagePromptTitle => 'Help make MirthMix better?';
+  String get usagePromptTitle => 'Help make Gleefy better?';
 
   @override
   String get usagePromptYes => 'Share anonymous stats';

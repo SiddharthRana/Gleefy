@@ -44,7 +44,7 @@ abstract class AuthRepository {
   bool get googleEnabled;
 
   /// Opens Google's sign-in page in the browser. It returns to the app through the
-  /// mirthmix://auth-callback deep link, and [events] reports signedIn when it's done.
+  /// gleefy://auth-callback deep link, and [events] reports signedIn when it's done.
   Future<void> signInWithGoogle();
 
   /// Why a Google sign-in failed after Google sent the person back to the app: an error code for

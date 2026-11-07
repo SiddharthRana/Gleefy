@@ -1,5 +1,5 @@
 {
-  "name": "@mirthmix/game-engine",
+  "name": "@gleefy/game-engine",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -22,7 +22,7 @@
     "vectors": "node --experimental-strip-types scripts/vectors.ts"
   },
   "dependencies": {
-    "@mirthmix/content": "workspace:*"
+    "@gleefy/content": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^22.20.5",

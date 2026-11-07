@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mirthmix/router/router.dart';
-import 'package:mirthmix/state/games.dart';
-import 'package:mirthmix/state/sessions.dart';
+import 'package:gleefy/router/router.dart';
+import 'package:gleefy/state/games.dart';
+import 'package:gleefy/state/sessions.dart';
 
 import 'support/harness.dart';
 

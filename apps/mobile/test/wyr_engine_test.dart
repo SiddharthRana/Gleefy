@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mirthmix/content/content.dart';
-import 'package:mirthmix/game/wyr_engine.dart';
+import 'package:gleefy/content/content.dart';
+import 'package:gleefy/game/wyr_engine.dart';
 
 void main() {
   final pool = [for (var i = 1; i <= 4; i++) WyrItem(id: 'wyr-casual-00$i', category: 'casual', a: 'a$i', b: 'b$i')];
