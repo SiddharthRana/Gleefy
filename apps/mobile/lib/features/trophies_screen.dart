@@ -8,6 +8,7 @@ import '../theme/app_theme.dart';
 import '../theme/tokens.g.dart';
 import '../widgets/motion.dart';
 import '../widgets/progress_widgets.dart';
+import '../widgets/insets.dart';
 
 /// The trophy room: level, stats and every trophy, earned or still locked.
 class TrophiesScreen extends ConsumerWidget {
@@ -30,7 +31,7 @@ class TrophiesScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: Text(l.trophiesTitle)),
       body: ListView(
-        padding: const EdgeInsets.all(MmSpace.s4),
+        padding: listPadding(context, const EdgeInsets.all(MmSpace.s4)),
         children: [
           Text(l.trophiesIntro, style: theme.textTheme.bodyLarge?.copyWith(color: palette.textMuted)),
           const SizedBox(height: MmSpace.s4),

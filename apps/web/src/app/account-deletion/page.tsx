@@ -21,8 +21,7 @@ export default function AccountDeletionPage() {
       <h2 className="mt-10 font-display text-3xl font-semibold">How to delete it</h2>
       <ul className="mt-3 list-disc space-y-2 pl-6 text-lg">
         <li>
-          <strong>In the Android app:</strong> Settings → Account → Delete account, then type
-          DELETE.
+          <strong>In the app:</strong> Settings → Account → Delete account, then type DELETE.
         </li>
         <li>
           <strong>On the website:</strong> sign in on the{' '}

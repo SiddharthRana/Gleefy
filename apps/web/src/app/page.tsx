@@ -43,7 +43,7 @@ const reasons = [
 const premiumPerks = [
   'Every premium category in every game',
   'Pay once and keep it: no subscription',
-  'Works in the Android app and on this website',
+  'Works in the Android and iOS apps and on this website',
 ];
 
 export default function HomePage() {
@@ -114,7 +114,7 @@ export default function HomePage() {
               See the games
             </Link>
           </div>
-          <p className="mt-4 font-bold text-muted">Android app coming soon.</p>
+          <p className="mt-4 font-bold text-muted">Android and iOS apps coming soon.</p>
         </div>
         <TryOne samples={wyrSamples} />
       </section>

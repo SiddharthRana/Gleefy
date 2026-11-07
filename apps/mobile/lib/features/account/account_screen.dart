@@ -6,6 +6,7 @@ import '../../account/entitlement.dart';
 import '../../l10n/app_localizations.dart';
 import '../../state/providers.dart';
 import '../../theme/tokens.g.dart';
+import '../../widgets/insets.dart';
 
 class AccountScreen extends ConsumerWidget {
   const AccountScreen({super.key});
@@ -48,7 +49,7 @@ class AccountScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: Text(l.accountTitle)),
       body: ListView(
-        padding: const EdgeInsets.symmetric(vertical: MmSpace.s4),
+        padding: listPadding(context, const EdgeInsets.symmetric(vertical: MmSpace.s4)),
         children: [
           ListTile(
             leading: const Icon(Icons.person_outline_rounded),

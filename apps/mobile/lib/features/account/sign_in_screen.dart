@@ -9,6 +9,7 @@ import '../../account/entitlement.dart';
 import '../../l10n/app_localizations.dart';
 import '../../theme/tokens.g.dart';
 import '../../widgets/motion.dart';
+import '../../widgets/insets.dart';
 
 /// "Continue with Google", or email + one-time code. Only purchasers come here; guests never need
 /// an account.
@@ -145,7 +146,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     return Scaffold(
       appBar: AppBar(title: Text(l.signInTitle)),
       body: ListView(
-        padding: const EdgeInsets.all(MmSpace.s4),
+        padding: listPadding(context, const EdgeInsets.all(MmSpace.s4)),
         children: [
           if (!sent)
             CheckboxListTile(

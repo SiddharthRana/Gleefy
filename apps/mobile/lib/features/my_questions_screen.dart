@@ -7,6 +7,7 @@ import '../state/custom_questions.dart';
 import '../theme/app_theme.dart';
 import '../theme/tokens.g.dart';
 import 'modes.dart';
+import '../widgets/insets.dart';
 
 String describeProblem(AppLocalizations l, CustomProblem p, GameMode mode) => switch (p) {
   CustomProblem.empty => l.myQuestionsErrorEmpty,
@@ -66,7 +67,7 @@ class _MyQuestionsScreenState extends ConsumerState<MyQuestionsScreen> {
         label: Text(l.myQuestionsAdd),
       ),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(MmSpace.s4, MmSpace.s4, MmSpace.s4, 96),
+        padding: listPadding(context, const EdgeInsets.fromLTRB(MmSpace.s4, MmSpace.s4, MmSpace.s4, 96)),
         children: [
           Text(l.myQuestionsIntro, style: theme.textTheme.bodyLarge),
           const SizedBox(height: MmSpace.s1),

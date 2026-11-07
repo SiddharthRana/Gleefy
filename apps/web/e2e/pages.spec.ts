@@ -89,7 +89,7 @@ test('the landing page demo plays real questions', async ({ page }) => {
 
 test('every mode is listed as available in the app', async ({ page }) => {
   await page.goto('/games');
-  await expect(page.getByText('In the Android app')).toHaveCount(5);
+  await expect(page.getByText('Android & iOS')).toHaveCount(5);
   await expect(page.getByText('In development')).toHaveCount(0);
 });
 

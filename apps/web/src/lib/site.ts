@@ -82,6 +82,6 @@ export const modes: ModeInfo[] = [
 ];
 
 export const statusLabel: Record<ModeStatus, string> = {
-  available: 'In the Android app',
+  available: 'Android & iOS',
   'in-development': 'In development',
 };
