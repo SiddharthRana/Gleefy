@@ -47,7 +47,7 @@ for (const path of pages) {
   test(`${path} has one h1, a title and no horizontal scroll`, async ({ page }) => {
     await page.goto(path);
     await expect(page.locator('h1')).toHaveCount(1);
-    await expect(page).toHaveTitle(/MirthMix/);
+    await expect(page).toHaveTitle(/Gleefy/);
     const overflow = await page.evaluate(
       () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
     );

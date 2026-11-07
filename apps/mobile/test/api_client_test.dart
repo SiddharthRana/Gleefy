@@ -3,8 +3,8 @@ import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mirthmix/account/api_client.dart';
-import 'package:mirthmix/account/auth_repository.dart';
+import 'package:gleefy/account/api_client.dart';
+import 'package:gleefy/account/auth_repository.dart';
 
 /// Answers requests from a table instead of the network, and records them.
 class FakeAdapter implements HttpClientAdapter {
@@ -110,13 +110,13 @@ void main() {
         {
           'enabled': true,
           'web': {'provider': 'dodo', 'available': true},
-          'googlePlay': {'available': true, 'productId': 'mirthmix_premium_unlock'},
+          'googlePlay': {'available': true, 'productId': 'gleefy_premium_unlock'},
         },
       ),
     });
     final c = await api(adapter, token: null).billingConfig();
     expect(adapter.requests.single.headers.containsKey('Authorization'), isFalse);
-    expect((c.playAvailable, c.productId, c.webAvailable), (true, 'mirthmix_premium_unlock', true));
+    expect((c.playAvailable, c.productId, c.webAvailable), (true, 'gleefy_premium_unlock', true));
   });
 
   test('sends the purchase token and maps API error codes', () async {

@@ -1,5 +1,7 @@
 # Progress
 
+> The product was renamed from MirthMix to **Gleefy** on 2026-11-08. Older entries keep the old name.
+
 **Current phase:** 5 of 5 — Polish and launch prep ✅ code complete. **Checkpoint: the remaining launch steps need the owner** (accounts, legal review, trivia verification, closed test); see `docs/launch/checklist.md`.
 **Last updated:** 2026-11-08
 
@@ -34,6 +36,10 @@
 - **Analytics weren't checked against a real PostHog project** (payload shape follows PostHog's capture API docs; error events use the `$exception` properties).
 - Lighthouse ran locally against `wrangler pages dev`, not the deployed site. The pricing page's one best-practices point is a console error from the API not running locally.
 - Unfinished code at the Phase 5 checkpoint has since been built (see below); what remains is listed in `docs/launch/checklist.md`.
+
+## Renamed to Gleefy (2026-11-08)
+
+MirthMix is now **Gleefy** (gleefy.party), with a new party-face icon generated for every platform by `scripts/brand-icons.mjs`. The reasons are in DECISIONS.
 
 ## Game feel, progress and worldwide content (2026-11-08)
 

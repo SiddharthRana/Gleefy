@@ -1,7 +1,7 @@
 import { createHmac, randomBytes } from 'node:crypto';
 import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common';
 import { eq } from 'drizzle-orm';
-import { subscriptionGrantsAccess } from '@mirthmix/plans';
+import { subscriptionGrantsAccess } from '@gleefy/plans';
 import type { JWTVerifyGetKey } from 'jose';
 import type { AuthUser } from '../auth/auth.types';
 import { FeatureFlags } from '../common/feature-flags.service';

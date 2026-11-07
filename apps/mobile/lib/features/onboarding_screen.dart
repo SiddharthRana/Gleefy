@@ -63,7 +63,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               padding: const EdgeInsets.fromLTRB(MmSpace.s6, MmSpace.s4, MmSpace.s2, 0),
               child: Row(
                 children: [
-                  const MirthMixWordmark(size: 22),
+                  const GleefyWordmark(size: 22),
                   const Spacer(),
                   if (_page < 2) TextButton(onPressed: _finish, child: Text(l.onboardingSkip)),
                 ],

@@ -1,4 +1,4 @@
-/** The MirthMix crew: four round party characters, one per brand colour. Decorative only. */
+/** The Gleefy crew: four round party characters, one per brand colour. Decorative only. */
 const members = [
   { fill: 'var(--mm-option-a)', mouth: 'grin', tilt: -8, hat: true },
   { fill: 'var(--mm-option-b)', mouth: 'oh', tilt: 6, hat: false },

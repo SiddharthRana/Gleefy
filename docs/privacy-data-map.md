@@ -1,6 +1,6 @@
 # Privacy data map
 
-Everything MirthMix stores or sends, where it lives and when it's deleted. Keep this, `/privacy`, and `docs/launch/data-safety.md` in step. Reviewed 2026-11-07 against the code.
+Everything Gleefy stores or sends, where it lives and when it's deleted. Keep this, `/privacy`, and `docs/launch/data-safety.md` in step. Reviewed 2026-11-07 against the code.
 
 ## On the phone only (never sent anywhere)
 
@@ -31,7 +31,7 @@ Everything MirthMix stores or sends, where it lives and when it's deleted. Keep 
 | Store/provider webhook events (payload may contain an email)                                          | Supabase Postgres `webhook_events` | Idempotency, troubleshooting       | Payload erased after 30 days by the API's hourly maintenance; the event id/type row stays |
 | API request logs (method, path, status, request id; no bodies, headers or query strings)              | Fly.io                             | Operations                         | Fly's log retention                                                                       |
 
-Payment details (cards, UPI) are entered only in Google Play's or the payment partner's checkout and never reach MirthMix.
+Payment details (cards, UPI) are entered only in Google Play's or the payment partner's checkout and never reach Gleefy.
 
 ## Opt-in analytics (only if the person turns it on)
 

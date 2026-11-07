@@ -1,5 +1,5 @@
 {
-  "name": "@mirthmix/api",
+  "name": "@gleefy/api",
   "version": "0.1.0",
   "private": true,
   "type": "commonjs",
@@ -15,7 +15,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@mirthmix/plans": "workspace:*",
+    "@gleefy/plans": "workspace:*",
     "@nestjs/common": "^12.3.2",
     "@nestjs/core": "^12.3.2",
     "@nestjs/platform-express": "^12.3.2",

@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mirthmix/billing/billing_gateway.dart';
-import 'package:mirthmix/content/content.dart';
-import 'package:mirthmix/router/router.dart';
-import 'package:mirthmix/telemetry/analytics.dart';
+import 'package:gleefy/billing/billing_gateway.dart';
+import 'package:gleefy/content/content.dart';
+import 'package:gleefy/router/router.dart';
+import 'package:gleefy/telemetry/analytics.dart';
 
 import 'premium_test.dart' show FakeApi, FakeAuth, FakeGateway, fakes, premiumAccount, user;
 import 'analytics_test.dart' show playShortGame;

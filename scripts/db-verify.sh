@@ -7,7 +7,7 @@
 set -euo pipefail
 
 ADMIN_URL="${DB_ADMIN_URL:-postgres://postgres:postgres@localhost:5432/postgres}"
-DB_NAME="mirthmix_verify_$$"
+DB_NAME="gleefy_verify_$$"
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 TARGET_URL="${ADMIN_URL%/*}/${DB_NAME}"
 

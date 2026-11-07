@@ -1,4 +1,4 @@
-import type { PlanId, SubscriptionStatus } from '@mirthmix/plans';
+import type { PlanId, SubscriptionStatus } from '@gleefy/plans';
 import type { PaymentProviderId } from '../database/schema';
 
 /** Premium is sold as a one-time unlock; monthly and annual remain for older subscription rows. */
@@ -20,7 +20,7 @@ export interface NormalizedSubscription {
   currentPeriodStart: Date | null;
   currentPeriodEnd: Date | null;
   cancelAtPeriodEnd: boolean;
-  /** MirthMix user id when the provider echoes it back (web checkout custom data). */
+  /** Gleefy user id when the provider echoes it back (web checkout custom data). */
   userId?: string | null;
   /**
    * The payer's email, used only when the provider doesn't echo our user id back. It can only match

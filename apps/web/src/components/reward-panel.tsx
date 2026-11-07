@@ -1,6 +1,6 @@
 'use client';
 
-import { levelProgress, type GameReward } from '@mirthmix/game-engine';
+import { levelProgress, type GameReward } from '@gleefy/game-engine';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { trophyInfo } from '@/lib/progress';

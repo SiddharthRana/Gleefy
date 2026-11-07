@@ -1,4 +1,4 @@
-# MirthMix
+# Gleefy
 
 Party games for one shared phone: Would You Rather, This or That, Trivia Blitz, Guess the Answer and custom party packs, for friends, couples and families playing together in person. No sign-up needed.
 
@@ -71,20 +71,20 @@ cd apps/mobile && flutter pub get
 
 ## Commands
 
-| Command                                       | What it does                                                                                  |
-| --------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| `pnpm dev:web`                                | Website at http://localhost:3000                                                              |
-| `pnpm dev:api`                                | Billing API at http://localhost:4000 (needs `apps/api/.env`)                                  |
-| `pnpm db:verify`                              | Apply migrations to a throwaway database and run the RLS tests                                |
-| `pnpm db:test-setup`                          | Create `mirthmix_test` for the API's database e2e tests                                       |
-| `pnpm lint` / `pnpm typecheck` / `pnpm test`  | All TypeScript packages and the website                                                       |
-| `pnpm format` / `pnpm format:check`           | Prettier                                                                                      |
-| `pnpm tokens`                                 | Regenerate CSS/TS/Dart design tokens after editing `tokens.json`                              |
-| `pnpm content:validate`                       | Validate every pack, refresh the JSON Schema, check the app's copy                            |
-| `pnpm content:sync`                           | Copy packs into `apps/mobile/assets/content/`                                                 |
-| `pnpm --filter @mirthmix/game-engine vectors` | Regenerate engine test vectors after changing engine behaviour                                |
-| `pnpm --filter @mirthmix/web test:e2e`        | Playwright + axe tests against the static export via `wrangler pages dev` (run `build` first) |
-| `pnpm mobile:analyze` / `pnpm mobile:test`    | `flutter analyze` / `flutter test`                                                            |
+| Command                                      | What it does                                                                                  |
+| -------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `pnpm dev:web`                               | Website at http://localhost:3000                                                              |
+| `pnpm dev:api`                               | Billing API at http://localhost:4000 (needs `apps/api/.env`)                                  |
+| `pnpm db:verify`                             | Apply migrations to a throwaway database and run the RLS tests                                |
+| `pnpm db:test-setup`                         | Create `gleefy_test` for the API's database e2e tests                                         |
+| `pnpm lint` / `pnpm typecheck` / `pnpm test` | All TypeScript packages and the website                                                       |
+| `pnpm format` / `pnpm format:check`          | Prettier                                                                                      |
+| `pnpm tokens`                                | Regenerate CSS/TS/Dart design tokens after editing `tokens.json`                              |
+| `pnpm content:validate`                      | Validate every pack, refresh the JSON Schema, check the app's copy                            |
+| `pnpm content:sync`                          | Copy packs into `apps/mobile/assets/content/`                                                 |
+| `pnpm --filter @gleefy/game-engine vectors`  | Regenerate engine test vectors after changing engine behaviour                                |
+| `pnpm --filter @gleefy/web test:e2e`         | Playwright + axe tests against the static export via `wrangler pages dev` (run `build` first) |
+| `pnpm mobile:analyze` / `pnpm mobile:test`   | `flutter analyze` / `flutter test`                                                            |
 
 ## Adding or editing questions
 
@@ -96,15 +96,15 @@ New categories need `tier` (`free` / `premium`), `ageRating` (`all` / `13+`), `r
 
 ## Environment variables
 
-| App    | Variable                                                                               | Purpose                                                                 |
-| ------ | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| web    | `NEXT_PUBLIC_SITE_URL`                                                                 | Canonical URLs, sitemap and robots (default `https://mirthmix.example`) |
-| web    | `NEXT_PUBLIC_API_URL`                                                                  | Billing API origin (default `http://localhost:4000`)                    |
-| web    | `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`                     | Purchaser sign-in; without them the Account page says it's unavailable  |
-| web    | `NEXT_PUBLIC_AUTH_GOOGLE_ENABLED`                                                      | `true` shows "Continue with Google" (set up the provider in Supabase)   |
-| api    | see `apps/api/.env.example`                                                            | Database, Supabase, billing providers, kill switch behaviour            |
-| mobile | `--dart-define` `API_BASE_URL`, `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, `SITE_URL` | Premium and sign-in; without them the app is free-only                  |
-| mobile | `--dart-define` `AUTH_GOOGLE_ENABLED=true`                                             | Shows "Continue with Google" (same switch as the website)               |
+| App    | Variable                                                                               | Purpose                                                                |
+| ------ | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| web    | `NEXT_PUBLIC_SITE_URL`                                                                 | Canonical URLs, sitemap and robots (default `https://gleefy.party`)    |
+| web    | `NEXT_PUBLIC_API_URL`                                                                  | Billing API origin (default `http://localhost:4000`)                   |
+| web    | `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`                     | Purchaser sign-in; without them the Account page says it's unavailable |
+| web    | `NEXT_PUBLIC_AUTH_GOOGLE_ENABLED`                                                      | `true` shows "Continue with Google" (set up the provider in Supabase)  |
+| api    | see `apps/api/.env.example`                                                            | Database, Supabase, billing providers, kill switch behaviour           |
+| mobile | `--dart-define` `API_BASE_URL`, `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, `SITE_URL` | Premium and sign-in; without them the app is free-only                 |
+| mobile | `--dart-define` `AUTH_GOOGLE_ENABLED=true`                                             | Shows "Continue with Google" (same switch as the website)              |
 
 `.env.example` files contain placeholders only; never commit real values.
 
@@ -125,14 +125,14 @@ CI (`.github/workflows/ci.yml`) runs all of the above on pull requests and on pu
 
 Nothing is deployed yet. The CI workflow deploys from `main` only after you approve each target: backend (Supabase migrations + API on Fly.io), website (Cloudflare Pages) and Android (Google Play). Every target is off until its accounts and secrets exist. Setup and rollback: [`docs/deployment.md`](docs/deployment.md).
 
-- **Website:** a static export (`pnpm --filter @mirthmix/web build` → `apps/web/out/`) served by Cloudflare Pages, with headers from `apps/web/public/_headers`. Set the `NEXT_PUBLIC_*` variables above at build time.
-- **API:** any Node 22 host (Fly.io, Render, a small VM): `pnpm --filter @mirthmix/api build && node apps/api/dist/main.js`, with the env from `apps/api/.env.example`, `TRUST_PROXY_HOPS` set behind a proxy, liveness `/health` and readiness `/ready`. Database and auth: a Supabase project with `supabase/migrations` applied. Full steps in `docs/payments-setup.md`.
+- **Website:** a static export (`pnpm --filter @gleefy/web build` → `apps/web/out/`) served by Cloudflare Pages, with headers from `apps/web/public/_headers`. Set the `NEXT_PUBLIC_*` variables above at build time.
+- **API:** any Node 22 host (Fly.io, Render, a small VM): `pnpm --filter @gleefy/api build && node apps/api/dist/main.js`, with the env from `apps/api/.env.example`, `TRUST_PROXY_HOPS` set behind a proxy, liveness `/health` and readiness `/ready`. Database and auth: a Supabase project with `supabase/migrations` applied. Full steps in `docs/payments-setup.md`.
 - **Android:** build an app bundle signed with the upload key (see `apps/mobile/README.md`). New personal Play Console accounts must run a closed test with at least 12 testers for 14 consecutive days before production access.
 
 ## Troubleshooting
 
 - **`apps/mobile/assets/content/... is stale`:** run `pnpm content:sync`.
 - **`tokens.g.dart is stale`:** run `pnpm tokens`.
-- **`test-vectors are stale`:** engine behaviour changed. If intended, regenerate with `pnpm --filter @mirthmix/game-engine vectors` and make the Dart engine match (`flutter test` will tell you).
-- **Web or API can't resolve `@mirthmix/*`:** build the packages first (`pnpm --filter "./packages/*" run build`).
+- **`test-vectors are stale`:** engine behaviour changed. If intended, regenerate with `pnpm --filter @gleefy/game-engine vectors` and make the Dart engine match (`flutter test` will tell you).
+- **Web or API can't resolve `@gleefy/*`:** build the packages first (`pnpm --filter "./packages/*" run build`).
 - **API database tests are skipped:** set `TEST_DATABASE_URL` after `pnpm db:test-setup` (e.g. `docker run -e POSTGRES_PASSWORD=postgres -p 5432:5432 postgres:17`).

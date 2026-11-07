@@ -33,7 +33,7 @@ importers:
 
   apps/api:
     dependencies:
-      '@mirthmix/plans':
+      '@gleefy/plans':
         specifier: workspace:*
         version: link:../../packages/plans
       '@nestjs/common':
@@ -133,16 +133,16 @@ importers:
       '@mdx-js/react':
         specifier: ^3.1.1
         version: 3.1.1(@types/react@19.3.0)(react@19.3.1)
-      '@mirthmix/content':
+      '@gleefy/content':
         specifier: workspace:*
         version: link:../../packages/content
-      '@mirthmix/design-tokens':
+      '@gleefy/design-tokens':
         specifier: workspace:*
         version: link:../../packages/design-tokens
-      '@mirthmix/game-engine':
+      '@gleefy/game-engine':
         specifier: workspace:*
         version: link:../../packages/game-engine
-      '@mirthmix/plans':
+      '@gleefy/plans':
         specifier: workspace:*
         version: link:../../packages/plans
       '@next/mdx':
@@ -222,7 +222,7 @@ importers:
 
   packages/game-engine:
     dependencies:
-      '@mirthmix/content':
+      '@gleefy/content':
         specifier: workspace:*
         version: link:../content
     devDependencies:

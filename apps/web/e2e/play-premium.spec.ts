@@ -1,4 +1,4 @@
-import { encodeShare } from '@mirthmix/game-engine';
+import { encodeShare } from '@gleefy/game-engine';
 import { expect, test } from '@playwright/test';
 import { signIn } from './session';
 
@@ -9,7 +9,7 @@ test('signed out, premium categories are shown but locked', async ({ page }) => 
   await page.goto('/play');
   const premium = page.getByRole('checkbox', { name: /Time Travel/ });
   await expect(premium).toBeDisabled();
-  await expect(page.getByRole('link', { name: 'MirthMix Premium' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Gleefy Premium' })).toBeVisible();
 });
 
 test('someone who unlocked Premium can pick premium categories', async ({ page }) => {
@@ -17,7 +17,7 @@ test('someone who unlocked Premium can pick premium categories', async ({ page }
   await page.goto('/play');
   const premium = page.getByRole('checkbox', { name: /Time Travel/ });
   await expect(premium).toBeEnabled();
-  await expect(page.getByRole('link', { name: 'MirthMix Premium' })).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'Gleefy Premium' })).toHaveCount(0);
 });
 
 test('a shared link with premium categories plays only the free ones without Premium', async ({

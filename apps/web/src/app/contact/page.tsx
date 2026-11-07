@@ -3,7 +3,7 @@ import { contactEmail } from '@/lib/contact';
 
 export const metadata: Metadata = {
   title: 'Contact',
-  description: 'Get in touch with MirthMix: questions, feedback, content reports and account help.',
+  description: 'Get in touch with Gleefy: questions, feedback, content reports and account help.',
   alternates: { canonical: '/contact' },
 };
 

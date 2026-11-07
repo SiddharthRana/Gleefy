@@ -1,8 +1,8 @@
-# Handoff — resume MirthMix in a new chat
+# Handoff — resume Gleefy in a new chat
 
-Paste this into a new Claude Code session on the `siddharthrana/mirthmix` repository:
+Paste this into a new Claude Code session on the `siddharthrana/gleefy` repository:
 
-> Continue building MirthMix. Read `docs/HANDOFF.md`, `docs/PROGRESS.md`, `docs/DECISIONS.md` and `docs/BUILD_PROMPT.md` first, then carry on from "Next" in PROGRESS.md. Branch from `main` for new work. Payments are built (`apps/api`, ported from Weblume) and set up per `docs/payments-setup.md`. Commit and push after each step.
+> Continue building Gleefy. Read `docs/HANDOFF.md`, `docs/PROGRESS.md`, `docs/DECISIONS.md` and `docs/BUILD_PROMPT.md` first, then carry on from "Next" in PROGRESS.md. Branch from `main` for new work. Payments are built (`apps/api`, ported from Weblume) and set up per `docs/payments-setup.md`. Commit and push after each step.
 
 ## Status
 
@@ -36,9 +36,9 @@ CI doesn't build the Android app (to save build minutes) until release signing f
 Database tests need Postgres 17 and `psql`. Without a local `psql`, run Postgres in Docker and point `DB_ADMIN_URL` at it:
 
 ```bash
-docker run -d --name mirthmix-pg -e POSTGRES_PASSWORD=postgres -p 5432:5432 postgres:17
+docker run -d --name gleefy-pg -e POSTGRES_PASSWORD=postgres -p 5432:5432 postgres:17
 pnpm db:verify && pnpm db:test-setup
-TEST_DATABASE_URL=postgres://postgres:postgres@localhost:5432/mirthmix_test pnpm test
+TEST_DATABASE_URL=postgres://postgres:postgres@localhost:5432/gleefy_test pnpm test
 ```
 
 ## Checks to run before every commit
@@ -46,14 +46,14 @@ TEST_DATABASE_URL=postgres://postgres:postgres@localhost:5432/mirthmix_test pnpm
 ```bash
 pnpm format && pnpm format:check && pnpm content:validate && pnpm lint && pnpm typecheck && pnpm test   # with TEST_DATABASE_URL for the API e2e
 pnpm db:verify
-pnpm --filter @mirthmix/web build && pnpm --filter @mirthmix/web test:e2e
+pnpm --filter @gleefy/web build && pnpm --filter @gleefy/web test:e2e
 cd apps/mobile && dart format lib test && flutter analyze && flutter test
 ```
 
 ## Conventions that matter
 
 - Content lives in `packages/content/packs/*.json`; after editing run `pnpm content:validate` and `pnpm content:sync`.
-- Game rules exist twice: TypeScript (`packages/game-engine`) is the reference, Dart (`apps/mobile/lib/game`) is a port. After changing rules, run `pnpm --filter @mirthmix/game-engine vectors` and make `flutter test` pass.
+- Game rules exist twice: TypeScript (`packages/game-engine`) is the reference, Dart (`apps/mobile/lib/game`) is a port. After changing rules, run `pnpm --filter @gleefy/game-engine vectors` and make `flutter test` pass.
 - UI strings go in `apps/mobile/lib/l10n/app_en.arb`.
 - Never trust a client-side premium flag: `premiumProvider` derives only from the server-verified entitlement (`lib/account/entitlement.dart`). Entitlements change in `packages/plans`; the API's `SubscriptionStore` is the only writer of `subscriptions`.
 - API errors carry a stable `code`; the app and website branch on codes, not messages.

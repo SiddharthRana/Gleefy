@@ -2,6 +2,12 @@
 
 Short, dated records of non-trivial choices. Newest first.
 
+## 2026-11-08 — Renamed to Gleefy, with a new icon
+
+**The product is now Gleefy, at gleefy.party.** The mirthmix domains were taken. Short coined names were checked against WIPO's Global Brand Database (classes 9, 28 and 41), the Play Store and the web: "Gleefy" had no trademark anywhere and no app of that name, while the alternatives clashed (Jollo and Mirthy have class-41 registrations, Yippo and Gigzo class-28 ones, and two apps are already called Mimzo). `.party` costs about $5 a year to keep on Cloudflare. Everything was renamed: packages (`@gleefy/*`, Dart `gleefy`), the app ID `com.gleefy.app`, the deep link `gleefy://auth-callback`, the Play product `gleefy_premium_unlock`, storage keys and copy. Nothing had shipped, so no migration was needed. The GitHub repository and local folder are still called MirthMix; renaming them is optional. Earlier entries below keep the old name. Internal design-token prefixes (`--mm-*`, `Mm*`) were left as they are.
+
+**New icon: a grinning party face.** A cream face with happy closed eyes, rosy cheeks, a big grin and a tilted gold party hat on the brand gradient, with a little confetti. It matches the mascot crew and reads at 48 px. One drawing, `scripts/brand-icons.mjs`, generates every icon (Play Store, Android launcher, iOS app icons, website favicon and Apple touch icon), rasterised with Playwright's Chromium. The same drawing is the website `Logo` and the app's `GleefyMark`.
+
 ## 2026-11-08 — Game-style site and app, progress, worldwide content
 
 **XP, levels, a daily streak and trophies, on the device only.** Inspired by how games keep players coming back, and by game sites like Jackbox, Gartic Phone and skribbl (chunky buttons, a doodle lobby wallpaper, a mascot row, bold game cards). Finishing a game earns 10 XP + 2 per round (capped at 30 rounds) + 5 for the first game of the day + 15 for a perfect Trivia game; level L needs 25 × L × (L − 1) XP in total. Nine trophies. The rules live in `packages/game-engine/src/progress.ts` with a Dart port checked against `test-vectors/progress.json`, like the game engines. Progress is stored in shared preferences (app) and localStorage (website) and never sent anywhere, so it needs no account and keeps the privacy promise. _Rejected:_ server-side progress or leaderboards (would need accounts for everyone).

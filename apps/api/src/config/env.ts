@@ -57,9 +57,9 @@ export const envSchema = z.object({
     .optional()
     .transform((v) => (v ? v : undefined)),
   /** Android application id. */
-  GOOGLE_PLAY_PACKAGE_NAME: z.string().default('com.mirthmix.app'),
+  GOOGLE_PLAY_PACKAGE_NAME: z.string().default('com.gleefy.app'),
   /** Play one-time (non-consumable) in-app product id for the Premium unlock. */
-  GOOGLE_PLAY_PRODUCT_ID: z.string().default('mirthmix_premium_unlock'),
+  GOOGLE_PLAY_PRODUCT_ID: z.string().default('gleefy_premium_unlock'),
   /** Service account key JSON (raw or base64) with access to the Play Developer API. */
   GOOGLE_PLAY_SERVICE_ACCOUNT_JSON: z
     .string()

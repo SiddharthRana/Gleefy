@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mirthmix/state/providers.dart';
-import 'package:mirthmix/theme/app_theme.dart';
-import 'package:mirthmix/widgets/motion.dart';
+import 'package:gleefy/state/providers.dart';
+import 'package:gleefy/theme/app_theme.dart';
+import 'package:gleefy/widgets/motion.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> pumpMotion(WidgetTester tester, Widget child, {bool reduceMotion = false}) async {

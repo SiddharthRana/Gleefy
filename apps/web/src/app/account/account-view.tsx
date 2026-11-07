@@ -376,8 +376,8 @@ function DeleteAccount() {
         Delete account
       </h2>
       <p className="mt-3">
-        This permanently deletes your MirthMix account, including the Premium you bought: it can’t
-        be restored to a new account later.
+        This permanently deletes your Gleefy account, including the Premium you bought: it can’t be
+        restored to a new account later.
       </p>
       <label className="mt-4 flex flex-col gap-2 font-bold">
         Type DELETE to confirm

@@ -4,7 +4,7 @@ New personal Google Play developer accounts must run a **closed test with at lea
 
 ## Before day 1
 
-1. Play Console developer account verified, app created as `com.mirthmix.app`, first bundle uploaded by hand (see `docs/deployment.md` §4).
+1. Play Console developer account verified, app created as `com.gleefy.app`, first bundle uploaded by hand (see `docs/deployment.md` §4).
 2. Store listing, Data safety, content rating and target audience filled in (`docs/launch/`).
 3. Billing configured in **test mode**, testers added under Setup → License testing so test purchases are free (`docs/payments-setup.md`).
 4. Recruit **15–20 testers** (some always drop out): friends, family, colleagues with Android phones, ideally including a few low-end phones and older Android versions. Collect their Google account emails in a Google Group or an email list.

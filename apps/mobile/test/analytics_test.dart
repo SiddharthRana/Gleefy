@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mirthmix/content/content.dart';
-import 'package:mirthmix/game/wyr_engine.dart';
-import 'package:mirthmix/router/router.dart';
-import 'package:mirthmix/state/games.dart';
-import 'package:mirthmix/state/sessions.dart';
-import 'package:mirthmix/telemetry/analytics.dart';
+import 'package:gleefy/content/content.dart';
+import 'package:gleefy/game/wyr_engine.dart';
+import 'package:gleefy/router/router.dart';
+import 'package:gleefy/state/games.dart';
+import 'package:gleefy/state/sessions.dart';
+import 'package:gleefy/telemetry/analytics.dart';
 
 import 'support/harness.dart';
 
@@ -145,7 +145,7 @@ void main() {
     testWidgets('asks once, and "Share" turns sharing on', (tester) async {
       final sink = FakeSink();
       final h = await finishGame(tester, sink: sink);
-      expect(find.text('Help make MirthMix better?'), findsOneWidget);
+      expect(find.text('Help make Gleefy better?'), findsOneWidget);
       expect(sink.events, isEmpty); // nothing before the answer
       await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
       await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
@@ -154,7 +154,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.text('Share anonymous stats'));
       await tester.pumpAndSettle();
-      expect(find.text('Help make MirthMix better?'), findsNothing);
+      expect(find.text('Help make Gleefy better?'), findsNothing);
       expect(h.prefs.getBool('settings.shareUsage'), isTrue);
       expect(h.prefs.getBool('analytics.asked'), isTrue);
     });
@@ -172,13 +172,13 @@ void main() {
       await tester.pumpAndSettle();
       h.container.read(routerProvider).go('/play/would-you-rather/results');
       await tester.pumpAndSettle();
-      expect(find.text('Help make MirthMix better?'), findsNothing);
+      expect(find.text('Help make Gleefy better?'), findsNothing);
       expect(sink.events, isEmpty);
     });
 
     testWidgets('never asks in a build without analytics', (tester) async {
       await finishGame(tester);
-      expect(find.text('Help make MirthMix better?'), findsNothing);
+      expect(find.text('Help make Gleefy better?'), findsNothing);
     });
   });
 }

@@ -3,42 +3,93 @@ import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 import '../theme/tokens.g.dart';
 
-/// Original geometric mark: two overlapping "speech" circles, one per answer colour.
-class MirthMixMark extends StatelessWidget {
-  const MirthMixMark({super.key, this.size = 40});
+/// The Gleefy mark: a grinning party face in a gold hat (same drawing as scripts/brand-icons.mjs).
+class GleefyMark extends StatelessWidget {
+  const GleefyMark({super.key, this.size = 40});
 
   final double size;
 
   @override
-  Widget build(BuildContext context) {
-    final p = MmPalette.of(context);
-    return ExcludeSemantics(
-      child: CustomPaint(size: Size.square(size), painter: _MarkPainter(p.optionA, p.optionB, p.accent)),
-    );
-  }
+  Widget build(BuildContext context) => ExcludeSemantics(
+    child: CustomPaint(size: Size.square(size), painter: const _MarkPainter()),
+  );
 }
 
 class _MarkPainter extends CustomPainter {
-  _MarkPainter(this.a, this.b, this.spark);
+  const _MarkPainter();
 
-  final Color a;
-  final Color b;
-  final Color spark;
+  static const _ink = Color(0xFF1D1530);
+  static const _cream = Color(0xFFFFF6E5);
 
   @override
   void paint(Canvas canvas, Size size) {
-    final r = size.width * 0.34;
-    canvas.drawCircle(Offset(size.width * 0.36, size.height * 0.56), r, Paint()..color = a);
-    canvas.drawCircle(Offset(size.width * 0.64, size.height * 0.44), r, Paint()..color = b.withValues(alpha: 0.88));
-    canvas.drawCircle(Offset(size.width * 0.86, size.height * 0.14), size.width * 0.1, Paint()..color = spark);
+    // The drawing lives in the box (150, 30)–(850, 900) of a 1024 canvas; fit it, centred.
+    final scale = size.height / 870;
+    canvas
+      ..save()
+      ..translate((size.width - 700 * scale) / 2, 0)
+      ..scale(scale)
+      ..translate(-150, -30);
+    Paint fill(Color c) => Paint()..color = c;
+    Paint stroke(double w, [Color c = _ink]) => Paint()
+      ..color = c
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = w
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
+
+    const head = Offset(512, 580);
+    canvas
+      ..drawCircle(head, 300, fill(_cream))
+      ..drawCircle(head, 300, stroke(30))
+      ..drawCircle(const Offset(372, 650), 40, fill(const Color(0xBFFF8FAB)))
+      ..drawCircle(const Offset(652, 650), 40, fill(const Color(0xBFFF8FAB)));
+    final eyes = Path()
+      ..moveTo(370, 548)
+      ..relativeQuadraticBezierTo(50, -62, 100, 0)
+      ..moveTo(554, 548)
+      ..relativeQuadraticBezierTo(50, -62, 100, 0);
+    canvas.drawPath(eyes, stroke(34));
+    final mouth = Path()
+      ..moveTo(384, 628)
+      ..quadraticBezierTo(512, 820, 640, 628)
+      ..close();
+    canvas
+      ..drawPath(mouth, fill(_ink))
+      ..drawPath(mouth, stroke(22));
+    final tongue = Path()
+      ..moveTo(458, 684)
+      ..relativeQuadraticBezierTo(54, 30, 108, 0)
+      ..relativeQuadraticBezierTo(-10, 34, -54, 36)
+      ..relativeQuadraticBezierTo(-44, -2, -54, -36)
+      ..close();
+    canvas.drawPath(tongue, fill(const Color(0xFFFF5C8A)));
+    final hat = Path()
+      ..moveTo(548, 292)
+      ..lineTo(742, 72)
+      ..lineTo(790, 350)
+      ..close();
+    canvas
+      ..drawPath(hat, fill(const Color(0xFFFFB020)))
+      ..drawPath(hat, stroke(26));
+    final stripes = Path()
+      ..moveTo(622, 232)
+      ..lineTo(754, 196)
+      ..moveTo(650, 290)
+      ..lineTo(770, 262);
+    canvas
+      ..drawPath(stripes, stroke(22, const Color(0xFFC42654)))
+      ..drawCircle(const Offset(742, 72), 44, fill(_cream))
+      ..drawCircle(const Offset(742, 72), 44, stroke(22))
+      ..restore();
   }
 
   @override
-  bool shouldRepaint(_MarkPainter old) => old.a != a || old.b != b || old.spark != spark;
+  bool shouldRepaint(_MarkPainter old) => false;
 }
 
-class MirthMixWordmark extends StatelessWidget {
-  const MirthMixWordmark({super.key, this.size = 28});
+class GleefyWordmark extends StatelessWidget {
+  const GleefyWordmark({super.key, this.size = 28});
 
   final double size;
 
@@ -46,15 +97,15 @@ class MirthMixWordmark extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       header: true,
-      label: 'MirthMix',
+      label: 'Gleefy',
       child: ExcludeSemantics(
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            MirthMixMark(size: size * 1.2),
+            GleefyMark(size: size * 1.2),
             const SizedBox(width: MmSpace.s2),
             Text(
-              'MirthMix',
+              'Gleefy',
               style: TextStyle(fontFamily: MmFont.display, fontWeight: FontWeight.w700, fontSize: size),
             ),
           ],

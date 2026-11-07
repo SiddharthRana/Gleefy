@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mirthmix/content/content.dart';
-import 'package:mirthmix/game/guess_engine.dart';
-import 'package:mirthmix/game/trivia_engine.dart';
-import 'package:mirthmix/game/wyr_engine.dart';
+import 'package:gleefy/content/content.dart';
+import 'package:gleefy/game/guess_engine.dart';
+import 'package:gleefy/game/trivia_engine.dart';
+import 'package:gleefy/game/wyr_engine.dart';
 
 Map<String, dynamic> load(String name) =>
     jsonDecode(File('../../packages/game-engine/test-vectors/$name').readAsStringSync()) as Map<String, dynamic>;

@@ -39,7 +39,7 @@ export const PLANS: Record<PlanId, PlanConfig> = {
   },
   premium: {
     id: 'premium',
-    name: 'MirthMix Premium',
+    name: 'Gleefy Premium',
     paid: true,
     entitlements: { premiumContent: true },
     displayPrice: { currency: 'USD', amount: 299 },

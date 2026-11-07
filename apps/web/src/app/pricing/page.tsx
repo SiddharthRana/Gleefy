@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
-import { formatPrice, PLANS } from '@mirthmix/plans';
+import { formatPrice, PLANS } from '@gleefy/plans';
 import { modeNames, packs } from '@/lib/packs';
 import { UnlockButton } from './unlock-button';
 
 export const metadata: Metadata = {
   title: 'Premium',
   description:
-    'MirthMix is free to play. Premium is a one-time unlock for every premium category in every game, in the Android and iOS apps and on the web.',
+    'Gleefy is free to play. Premium is a one-time unlock for every premium category in every game, in the Android and iOS apps and on the web.',
   alternates: { canonical: '/pricing' },
 };
 
@@ -94,7 +94,7 @@ export default function PricingPage() {
           In the apps
         </h2>
         <p className="mt-3">
-          MirthMix is coming to Android and iOS. In the apps, Premium is a one-time purchase through
+          Gleefy is coming to Android and iOS. In the apps, Premium is a one-time purchase through
           Google Play or the App Store. Sign in with the same account on the website and the app,
           and one purchase unlocks both.
         </p>

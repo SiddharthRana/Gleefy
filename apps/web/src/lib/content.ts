@@ -1,5 +1,5 @@
-import type { WyrPack } from '@mirthmix/content';
-import wyrJson from '@mirthmix/content/packs/would-you-rather.json';
+import type { WyrPack } from '@gleefy/content';
+import wyrJson from '@gleefy/content/packs/would-you-rather.json';
 
 /** The same validated pack the app ships (validated in CI by `pnpm content:validate`). */
 export const wyr = wyrJson as WyrPack;

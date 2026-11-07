@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="Gleefy">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6B2BD9"/>
+      <stop offset="0.55" stop-color="#C42654"/>
+      <stop offset="1" stop-color="#C2410C"/>
+    </linearGradient>
+  </defs><rect width="1024" height="1024" rx="230" fill="url(#bg)"/>
+  <g stroke="none">
+    <circle cx="190" cy="250" r="30" fill="#FFB020"/>
+    <rect x="820" y="560" width="54" height="34" rx="8" fill="#FFF6E5" transform="rotate(-24 847 577)"/>
+    <circle cx="150" cy="760" r="22" fill="#FFF6E5"/>
+    <rect x="300" y="120" width="50" height="30" rx="8" fill="#FF8FAB" transform="rotate(20 325 135)"/>
+  </g><g transform="translate(512 512) scale(0.86) translate(-512 -540)">
+  <g stroke="#1D1530" stroke-linejoin="round" stroke-linecap="round">
+    <circle cx="512" cy="580" r="300" fill="#FFF6E5" stroke-width="30"/>
+    <circle cx="372" cy="650" r="40" fill="#FF8FAB" stroke="none" opacity="0.75"/>
+    <circle cx="652" cy="650" r="40" fill="#FF8FAB" stroke="none" opacity="0.75"/>
+    <path d="M370 548q50-62 100 0M554 548q50-62 100 0" fill="none" stroke-width="34"/>
+    <path d="M384 628Q512 820 640 628Z" fill="#1D1530" stroke-width="22"/>
+    <path d="M458 684q54 30 108 0q-10 34-54 36q-44-2-54-36z" fill="#FF5C8A" stroke="none"/>
+    <path d="M548 292 742 72 790 350Z" fill="#FFB020" stroke-width="26"/>
+    <path d="M622 232 754 196M650 290 770 262" fill="none" stroke="#C42654" stroke-width="22"/>
+    <circle cx="742" cy="72" r="44" fill="#FFF6E5" stroke-width="22"/>
+  </g></g></svg>

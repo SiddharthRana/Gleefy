@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { PLAN_IDS, PLANS, type PlanConfig } from '@mirthmix/plans';
+import { PLAN_IDS, PLANS, type PlanConfig } from '@gleefy/plans';
 import { Public } from '../auth/decorators';
 
 @ApiTags('plans')

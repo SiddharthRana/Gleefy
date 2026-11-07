@@ -94,5 +94,5 @@ Future<void> main() async {
     container.read(billingControllerProvider);
     unawaited(container.read(entitlementProvider.notifier).refresh());
   }
-  runApp(UncontrolledProviderScope(container: container, child: const MirthMixApp()));
+  runApp(UncontrolledProviderScope(container: container, child: const GleefyApp()));
 }

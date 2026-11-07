@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mirthmix/app.dart';
-import 'package:mirthmix/state/sessions.dart';
+import 'package:gleefy/app.dart';
+import 'package:gleefy/state/sessions.dart';
 
 import 'support/harness.dart';
 
@@ -31,7 +31,7 @@ void main() {
   testWidgets('first launch shows onboarding once, then home', (tester) async {
     final h = await pumpApp(tester, onboarded: false);
     expect(find.text('Party games for one phone'), findsWidgets);
-    expect(find.text('MirthMix is made for ages 13 and up.'), findsOneWidget);
+    expect(find.text('Gleefy is made for ages 13 and up.'), findsOneWidget);
     await tapText(tester, 'Next');
     await tapText(tester, 'Next');
     await tapText(tester, "Let's play");

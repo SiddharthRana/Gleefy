@@ -1,7 +1,7 @@
 import type { Route } from 'next';
 import { guideHref } from './guides';
 
-export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://mirthmix.example').replace(
+export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://gleefy.party').replace(
   /\/$/,
   '',
 );
