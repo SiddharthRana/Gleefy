@@ -18,19 +18,27 @@ final now = DateTime.utc(2026, 11, 1, 12);
 const user = AppUser(id: 'u-1', email: 'host@example.test');
 
 class FakeAuth implements AuthRepository {
-  FakeAuth({this.currentUser});
+  FakeAuth({this.currentUser, this.googleEnabled = false});
 
   @override
   AppUser? currentUser;
+  @override
+  final bool googleEnabled;
   final _events = StreamController<AuthEvent>.broadcast();
+  final _googleErrors = StreamController<String>.broadcast();
   final sentTo = <String>[];
+  int googleStarts = 0;
 
   @override
   bool get configured => true;
   @override
-  String? get accessToken => currentUser == null ? null : 'token';
+  Future<String?> accessToken() async => currentUser == null ? null : 'token';
+  @override
+  Future<String?> refreshAccessToken() async => null;
   @override
   Stream<AuthEvent> get events => _events.stream;
+  @override
+  Stream<String> get googleErrors => _googleErrors.stream;
 
   @override
   Future<void> sendCode(String email) async => sentTo.add(email);
@@ -40,6 +48,18 @@ class FakeAuth implements AuthRepository {
     if (code != '123456') throw AuthFailure('invalid_code');
     currentUser = AppUser(id: user.id, email: email);
   }
+
+  @override
+  Future<void> signInWithGoogle() async => googleStarts++;
+
+  /// Google sent the person back to the app, signed in.
+  void finishGoogle() {
+    currentUser = user;
+    _events.add(AuthEvent.signedIn);
+  }
+
+  /// Google sent the person back with an error.
+  void failGoogle(String code) => _googleErrors.add(code);
 
   @override
   Future<void> signOut() async => currentUser = null;
@@ -52,9 +72,12 @@ class FakeApi implements AccountApi {
   ApiException? verifyError;
   BillingConfig config = const BillingConfig(
     playAvailable: true,
-    subscriptionId: 'mirthmix_premium',
+    productId: 'mirthmix_premium_unlock',
     webAvailable: false,
   );
+
+  /// Play hasn't been paid yet (a cash or bank payment).
+  bool paymentPending = false;
   final verified = <String>[];
   bool deleted = false;
 
@@ -75,8 +98,9 @@ class FakeApi implements AccountApi {
   Future<PlayVerifyResult> verifyPlayPurchase(String purchaseToken) async {
     if (verifyError != null) throw verifyError!;
     verified.add(purchaseToken);
-    account = premiumAccount(now.add(const Duration(days: 30)));
-    return const PlayVerifyResult(premium: true, duplicateSubscription: false);
+    if (paymentPending) return const PlayVerifyResult(premium: false, pending: true, duplicatePurchase: false);
+    account = premiumAccount();
+    return const PlayVerifyResult(premium: true, duplicatePurchase: false);
   }
 
   @override
@@ -93,13 +117,10 @@ class FakeGateway implements BillingGateway {
   @override
   Future<bool> isAvailable() async => true;
   @override
-  Future<List<StoreOffer>> loadOffers(String productId) async => const [
-    StoreOffer(basePlanId: 'monthly', interval: StoreInterval.monthly, price: '₹99'),
-    StoreOffer(basePlanId: 'annual', interval: StoreInterval.annual, price: '₹699'),
-  ];
+  Future<StoreOffer?> loadOffer(String productId) async => StoreOffer(productId: productId, price: r'$2.99');
   @override
   Future<void> buy(StoreOffer offer, {required String accountRef}) async =>
-      bought.add('${offer.basePlanId}:$accountRef');
+      bought.add('${offer.productId}:$accountRef');
   @override
   Stream<StorePurchaseUpdate> get purchases => _purchases.stream;
   @override
@@ -108,25 +129,29 @@ class FakeGateway implements BillingGateway {
   Future<void> restore() async {}
 }
 
-AccountInfo premiumAccount(DateTime until) => AccountInfo(
+AccountInfo premiumAccount({String provider = 'google_play'}) => AccountInfo(
   id: 'u-1',
   email: user.email,
   premium: true,
-  validUntil: until,
-  subscriptions: [
-    SubscriptionInfo(
-      provider: 'google_play',
-      status: 'active',
-      interval: 'monthly',
-      currentPeriodEnd: until,
-      cancelAtPeriodEnd: false,
-    ),
-  ],
+  lifetime: true,
+  purchases: [PurchaseInfo(provider: provider, status: 'active', purchasedAt: DateTime.utc(2026, 10, 30))],
 );
 
-Map<String, Object> cached({String userId = 'u-1', bool premium = true, required DateTime validUntil}) => {
+Map<String, Object> cached({
+  String userId = 'u-1',
+  bool premium = true,
+  bool lifetime = false,
+  DateTime? validUntil,
+  DateTime? checkedAt,
+}) => {
   'entitlement.v1': jsonEncode(
-    EntitlementSnapshot(userId: userId, premium: premium, validUntil: validUntil, checkedAt: now).toJson(),
+    EntitlementSnapshot(
+      userId: userId,
+      premium: premium,
+      lifetime: lifetime,
+      validUntil: validUntil,
+      checkedAt: checkedAt ?? now,
+    ).toJson(),
   ),
 };
 
@@ -158,26 +183,33 @@ Future<void> go(WidgetTester tester, Harness h, String location) async {
 const locked = 'Unlock with Premium.';
 const wyrSetup = '/play/would-you-rather/setup';
 
+const unlock = r'Unlock Premium for $2.99';
+
 void main() {
   group('EntitlementSnapshot', () {
     final until = DateTime.utc(2026, 12, 1);
     final snap = EntitlementSnapshot(userId: 'u', premium: true, validUntil: until, checkedAt: now);
 
-    test('grants premium through the paid period plus the offline grace window', () {
+    test('a timed entitlement lasts through its period plus the offline grace window', () {
       expect(snap.grantsPremiumAt(until.subtract(const Duration(days: 1))), isTrue);
       expect(snap.grantsPremiumAt(until.add(const Duration(days: 2))), isTrue);
       expect(snap.grantsPremiumAt(until.add(offlineGrace + const Duration(minutes: 1))), isFalse);
     });
 
+    test('a one-time unlock never runs out offline', () {
+      final forever = EntitlementSnapshot(userId: 'u', premium: true, lifetime: true, checkedAt: now);
+      expect(forever.grantsPremiumAt(now.add(const Duration(days: 3650))), isTrue);
+    });
+
     test('never grants premium for a free answer', () {
-      final free = EntitlementSnapshot(userId: 'u', premium: false, validUntil: until, checkedAt: now);
+      final free = EntitlementSnapshot(userId: 'u', premium: false, lifetime: true, checkedAt: now);
       expect(free.grantsPremiumAt(now), isFalse);
     });
 
     test('round-trips through JSON', () {
-      final back = EntitlementSnapshot.fromJson(jsonDecode(jsonEncode(snap.toJson())) as Map<String, dynamic>);
-      expect(back.validUntil, until);
-      expect(back.premium, isTrue);
+      final lifetime = EntitlementSnapshot(userId: 'u', premium: true, lifetime: true, checkedAt: now);
+      final back = EntitlementSnapshot.fromJson(jsonDecode(jsonEncode(lifetime.toJson())) as Map<String, dynamic>);
+      expect((back.premium, back.lifetime, back.validUntil), (true, true, null));
     });
   });
 
@@ -186,19 +218,29 @@ void main() {
     await go(tester, h, '/premium');
     expect(find.text('Premium isn’t available in this version of the app yet.'), findsOneWidget);
     expect(find.text('Deep'), findsOneWidget); // listed as included
+    await go(tester, h, '/settings');
+    expect(find.text('To buy Premium, or use it on this phone'), findsNothing);
     await go(tester, h, wyrSetup);
     await reveal(tester, find.textContaining(locked));
     expect(find.textContaining(locked), findsOneWidget);
   });
 
+  testWidgets('Settings has a Sign in row while signed out', (tester) async {
+    final h = await pumpApp(tester, overrides: fakes(FakeAuth(), FakeApi()));
+    await go(tester, h, '/settings');
+    await tapText(tester, 'To buy Premium, or use it on this phone');
+    expect(find.text('Send code'), findsOneWidget);
+  });
+
   testWidgets('a guest signs in with an email code and the verified entitlement unlocks premium', (tester) async {
     final auth = FakeAuth();
-    final api = FakeApi()..account = premiumAccount(now.add(const Duration(days: 30)));
+    final api = FakeApi()..account = premiumAccount();
     final h = await pumpApp(tester, overrides: fakes(auth, api));
     await go(tester, h, wyrSetup);
     await reveal(tester, find.text('See Premium'));
     await tapText(tester, 'See Premium');
-    await tapText(tester, 'Sign in to continue');
+    await tapText(tester, 'Sign in');
+    expect(find.text('Continue with Google'), findsNothing); // not switched on in this build
 
     await tester.enterText(find.byType(TextField), 'not-an-email');
     await tapText(tester, 'Send code');
@@ -218,27 +260,64 @@ void main() {
     await tapText(tester, 'Sign in');
 
     // Back on the Premium screen, now verified by the (fake) server.
-    expect(find.text('Premium is on'), findsOneWidget);
+    expect(find.text('Premium is unlocked'), findsOneWidget);
+    expect(find.textContaining('through Google Play. Yours to keep.'), findsOneWidget);
     expect(h.container.read(premiumProvider), isTrue);
-    expect(h.prefs.getString('entitlement.v1'), contains('"premium":true'));
+    expect(h.prefs.getString('entitlement.v1'), contains('"lifetime":true'));
     await go(tester, h, wyrSetup);
     expect(find.textContaining(locked), findsNothing);
   });
 
-  testWidgets('offline: the cached entitlement lasts until the period end plus the grace window', (tester) async {
+  testWidgets('Continue with Google needs 18+, then signs in when Google sends the person back', (tester) async {
+    final auth = FakeAuth(googleEnabled: true);
+    final api = FakeApi()..account = premiumAccount();
+    final h = await pumpApp(tester, overrides: fakes(auth, api));
+    await go(tester, h, '/premium');
+    await tapText(tester, 'Sign in');
+    await tapText(tester, 'Continue with Google');
+    expect(find.textContaining('aged 18 or over'), findsOneWidget);
+    expect(auth.googleStarts, 0);
+
+    await tapText(tester, 'I’m 18 or older');
+    await tapText(tester, 'Continue with Google');
+    expect(auth.googleStarts, 1);
+    expect(find.textContaining('Finish signing in with Google'), findsOneWidget);
+
+    auth.failGoogle('google_cancelled');
+    await tester.pumpAndSettle();
+    expect(find.text('Google sign-in was cancelled.'), findsOneWidget);
+
+    await tapText(tester, 'Continue with Google');
+    auth.finishGoogle();
+    await tester.pumpAndSettle();
+    expect(find.text('Premium is unlocked'), findsOneWidget);
+    expect(h.container.read(premiumProvider), isTrue);
+  });
+
+  testWidgets('the Google sign-in link back into the app doesn’t change the screen', (tester) async {
+    expect(isAuthCallback(Uri.parse('mirthmix://auth-callback?code=abc')), isTrue);
+    expect(isAuthCallback(Uri.parse('/auth-callback?code=abc')), isTrue);
+    expect(isAuthCallback(Uri.parse('https://mirthmix.example/play?c=x')), isFalse);
+    final h = await pumpApp(tester, overrides: fakes(FakeAuth(), FakeApi()));
+    await go(tester, h, '/settings');
+    h.container.read(routerProvider).go('/auth-callback?code=abc');
+    await tester.pumpAndSettle();
+    expect(h.container.read(routerProvider).state.matchedLocation, '/settings');
+  });
+
+  testWidgets('offline, a one-time unlock stays on however long ago it was checked', (tester) async {
     final api = FakeApi()..meError = ApiException(isNetworkError: true);
-    // Paid period ended yesterday; still inside the 3-day grace window.
     final h = await pumpApp(
       tester,
-      initialPrefs: cached(validUntil: now.subtract(const Duration(days: 1))),
+      initialPrefs: cached(lifetime: true, checkedAt: now.subtract(const Duration(days: 400))),
       overrides: fakes(FakeAuth(currentUser: user), api),
     );
     await go(tester, h, '/premium');
     expect(h.container.read(premiumProvider), isTrue);
-    expect(find.textContaining('You’re offline. Premium stays on until'), findsOneWidget);
+    expect(find.text('Premium is unlocked'), findsOneWidget);
   });
 
-  testWidgets('offline past the grace window, premium locks again', (tester) async {
+  testWidgets('offline past the grace window, a timed entitlement locks again', (tester) async {
     final api = FakeApi()..meError = ApiException(isNetworkError: true);
     final h = await pumpApp(
       tester,
@@ -254,7 +333,7 @@ void main() {
   testWidgets('a cached entitlement never carries over to another account or a signed-out phone', (tester) async {
     final other = await pumpApp(
       tester,
-      initialPrefs: cached(userId: 'someone-else', validUntil: now.add(const Duration(days: 30))),
+      initialPrefs: cached(userId: 'someone-else', lifetime: true),
       overrides: fakes(FakeAuth(currentUser: user), FakeApi()..meError = ApiException(isNetworkError: true)),
     );
     expect(other.container.read(premiumProvider), isFalse);
@@ -264,7 +343,7 @@ void main() {
     final api = FakeApi()..account = const AccountInfo(id: 'u-1', premium: false);
     final h = await pumpApp(
       tester,
-      initialPrefs: cached(validUntil: now.add(const Duration(days: 30))),
+      initialPrefs: cached(lifetime: true),
       overrides: fakes(FakeAuth(currentUser: user), api),
     );
     expect(h.container.read(premiumProvider), isTrue);
@@ -276,42 +355,52 @@ void main() {
   testWidgets('an expired session or deleted account signs out and drops the cache', (tester) async {
     final auth = FakeAuth(currentUser: user);
     final api = FakeApi()..meError = ApiException(status: 403, code: 'account_deleted');
-    final h = await pumpApp(
-      tester,
-      initialPrefs: cached(validUntil: now.add(const Duration(days: 30))),
-      overrides: fakes(auth, api),
-    );
+    final h = await pumpApp(tester, initialPrefs: cached(lifetime: true), overrides: fakes(auth, api));
     await go(tester, h, '/premium');
     expect(auth.currentUser, isNull);
     expect(h.container.read(premiumProvider), isFalse);
     expect(h.prefs.getString('entitlement.v1'), isNull);
-    expect(find.text('Sign in to continue'), findsOneWidget);
+    expect(find.widgetWithText(FilledButton, 'Sign in'), findsOneWidget);
   });
 
-  testWidgets('buying on Google Play: server verifies before the purchase is completed', (tester) async {
+  testWidgets('buying on Google Play: one price, verified by the server before it is completed', (tester) async {
     final api = FakeApi();
     final gateway = FakeGateway();
     final h = await pumpApp(tester, overrides: fakes(FakeAuth(currentUser: user), api, gateway));
     await go(tester, h, '/premium');
-    expect(find.text('₹99 per month'), findsOneWidget);
-    // While the store sheet is open a progress bar animates, so pump instead of settling.
-    await tester.tap(find.text('₹699 per year'));
+    expect(find.text('One payment. Yours to keep, on this phone and the website.'), findsOneWidget);
+    // While the store sheet is open a spinner turns, so pump instead of settling.
+    await tester.tap(find.text(unlock));
     await tester.pump(const Duration(milliseconds: 100));
-    expect(gateway.bought, ['annual:ref-u-1']);
+    expect(gateway.bought, ['mirthmix_premium_unlock:ref-u-1']);
+    expect(find.text('Confirming your purchase'), findsOneWidget);
 
     gateway.emit(const StorePurchaseUpdate(status: StorePurchaseStatus.pending));
-    await tester.pump(const Duration(milliseconds: 100));
-    expect(find.text('Waiting for Google Play to confirm the payment…'), findsOneWidget);
+    await tester.pumpAndSettle();
+    expect(find.text('Waiting for your payment'), findsOneWidget);
 
     gateway.emit(const StorePurchaseUpdate(status: StorePurchaseStatus.purchased, purchaseToken: 'tok-1'));
     await tester.pumpAndSettle();
     expect(api.verified, ['tok-1']);
     expect(gateway.completed.single.purchaseToken, 'tok-1');
-    expect(find.text('Premium is on'), findsOneWidget);
+    expect(find.text('Premium is unlocked!'), findsOneWidget);
+    expect(find.text(unlock), findsNothing);
     expect(h.container.read(premiumProvider), isTrue);
   });
 
-  testWidgets('a purchase the server rejects is not completed on the device', (tester) async {
+  testWidgets('a payment Play hasn’t received yet unlocks nothing and isn’t completed', (tester) async {
+    final api = FakeApi()..paymentPending = true;
+    final gateway = FakeGateway();
+    final h = await pumpApp(tester, overrides: fakes(FakeAuth(currentUser: user), api, gateway));
+    await go(tester, h, '/premium');
+    gateway.emit(const StorePurchaseUpdate(status: StorePurchaseStatus.purchased, purchaseToken: 'tok-p'));
+    await tester.pumpAndSettle();
+    expect(find.text('Waiting for your payment'), findsOneWidget);
+    expect(gateway.completed, isEmpty);
+    expect(h.container.read(premiumProvider), isFalse);
+  });
+
+  testWidgets('a purchase the server rejects is not completed; an unconfirmed one can be retried', (tester) async {
     final api = FakeApi()..verifyError = ApiException(status: 403, code: 'purchase_account_mismatch');
     final gateway = FakeGateway();
     final h = await pumpApp(tester, overrides: fakes(FakeAuth(currentUser: user), api, gateway));
@@ -319,14 +408,22 @@ void main() {
     gateway.emit(const StorePurchaseUpdate(status: StorePurchaseStatus.restored, purchaseToken: 'tok-2'));
     await tester.pumpAndSettle();
     expect(gateway.completed, isEmpty);
+    expect(find.text('The purchase didn’t go through'), findsOneWidget);
     expect(find.textContaining('belongs to a different MirthMix account'), findsOneWidget);
+    expect(find.text('Try again'), findsNothing);
     expect(h.container.read(premiumProvider), isFalse);
 
     api.verifyError = ApiException(isNetworkError: true);
     gateway.emit(const StorePurchaseUpdate(status: StorePurchaseStatus.purchased, purchaseToken: 'tok-3'));
     await tester.pumpAndSettle();
     expect(gateway.completed, isEmpty);
-    expect(find.textContaining('couldn’t reach the server'), findsOneWidget);
+    expect(find.text('Still confirming your purchase'), findsOneWidget);
+
+    api.verifyError = null;
+    await tapText(tester, 'Try again');
+    expect(api.verified, ['tok-3']);
+    expect(gateway.completed.single.purchaseToken, 'tok-3');
+    expect(find.text('Premium is unlocked!'), findsOneWidget);
   });
 
   testWidgets('a cancelled purchase is finished without granting anything', (tester) async {
@@ -338,31 +435,17 @@ void main() {
     await tester.pumpAndSettle();
     expect(gateway.completed, hasLength(1));
     expect(api.verified, isEmpty);
-    expect(find.text('₹99 per month'), findsOneWidget);
+    expect(find.text(unlock), findsOneWidget);
   });
 
-  testWidgets('a web subscriber is pointed to the website instead of being sold a second plan', (tester) async {
-    final api = FakeApi()
-      ..account = AccountInfo(
-        id: 'u-1',
-        email: user.email,
-        premium: true,
-        validUntil: now.add(const Duration(days: 10)),
-        subscriptions: [
-          SubscriptionInfo(
-            provider: 'paddle',
-            status: 'canceled',
-            currentPeriodEnd: now.add(const Duration(days: 10)),
-            cancelAtPeriodEnd: true,
-          ),
-        ],
-      );
+  testWidgets('Premium bought on the website shows as unlocked, with nothing to buy', (tester) async {
+    final api = FakeApi()..account = premiumAccount(provider: 'dodo');
     final gateway = FakeGateway();
     final h = await pumpApp(tester, overrides: fakes(FakeAuth(currentUser: user), api, gateway));
     await go(tester, h, '/premium');
-    expect(find.textContaining('subscribed on the website'), findsOneWidget);
-    expect(find.textContaining('Ends on'), findsOneWidget);
-    expect(find.text('₹99 per month'), findsNothing);
+    expect(find.text('Premium is unlocked'), findsOneWidget);
+    expect(find.textContaining('through the website. Yours to keep.'), findsOneWidget);
+    expect(find.text(unlock), findsNothing);
   });
 
   testWidgets('deleting the account needs DELETE typed, then signs out', (tester) async {

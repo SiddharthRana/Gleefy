@@ -1,14 +1,13 @@
 import { expect, test } from '@playwright/test';
-
-const API = 'http://localhost:4000';
+import { account, API, signIn } from './session';
 
 const config = (available: boolean) => ({
   enabled: available,
-  web: { provider: 'paddle', available, intervals: available ? ['monthly', 'annual'] : [] },
-  googlePlay: { available, packageName: 'com.mirthmix.app', subscriptionId: 'mirthmix_premium' },
+  web: { provider: 'dodo', available },
+  googlePlay: { available, packageName: 'com.mirthmix.app', productId: 'mirthmix_premium_unlock' },
 });
 
-test('the Premium page shows plans, indicative prices and what premium adds', async ({ page }) => {
+test('the Premium page shows the one-time price and what premium adds', async ({ page }) => {
   await page.goto('/');
   await page
     .getByRole('navigation', { name: 'Main' })
@@ -16,29 +15,60 @@ test('the Premium page shows plans, indicative prices and what premium adds', as
     .click();
   await expect(page.getByRole('heading', { level: 1, name: 'Premium' })).toBeVisible();
   const premium = page.getByRole('region', { name: 'MirthMix Premium' });
-  await expect(premium).toContainText('₹99 a month or ₹699 a year');
-  await expect(premium).toContainText('$2.99 a month or $19.99 a year');
+  await expect(premium).toContainText('$2.99 once');
+  await expect(premium).toContainText('No subscription');
   const included = page.getByRole('region', { name: 'Premium categories' });
   await expect(included.getByRole('listitem').first()).toContainText(/\d+ questions?/);
 });
 
-test('without a reachable API, checkout is honestly unavailable', async ({ page }) => {
+test('the header has a sign-in link', async ({ page }) => {
+  await page.goto('/');
+  await page
+    .getByRole('navigation', { name: 'Main' })
+    .getByRole('link', { name: 'Sign in' })
+    .click();
+  await expect(page).toHaveURL(/\/account$/);
+});
+
+test('without a reachable API, the page says so instead of waiting', async ({ page }) => {
   await page.route(`${API}/**`, (route) => route.abort());
   await page.goto('/pricing');
+  await expect(page.getByText('We can’t check whether checkout is open right now.')).toBeVisible();
+  await expect(page.getByRole('button', { name: /Unlock/ })).toHaveCount(0);
+});
+
+test('with billing off, checkout is honestly unavailable', async ({ page }) => {
+  await page.route(`${API}/v1/billing/config`, (route) => route.fulfill({ json: config(false) }));
+  await page.goto('/pricing');
   await expect(page.getByText('Premium isn’t on sale on the website yet.')).toBeVisible();
-  await expect(page.getByRole('button', { name: /Subscribe/ })).toHaveCount(0);
 });
 
 test('with billing on, a signed-out visitor is asked to sign in first', async ({ page }) => {
   await page.route(`${API}/v1/billing/config`, (route) => route.fulfill({ json: config(true) }));
   await page.goto('/pricing');
-  // This build has no Supabase configuration, so nobody can be signed in.
-  await page.getByRole('link', { name: 'Sign in to subscribe' }).click();
+  await page.getByRole('link', { name: 'Sign in to unlock' }).click();
   await expect(page).toHaveURL(/\/account\?next=pricing/);
   await expect(page.getByRole('heading', { name: 'Sign in' })).toBeVisible();
 });
 
-test('sign-in requires confirming 18 or older', async ({ page }) => {
+test('a signed-in visitor goes to checkout for the one-time unlock', async ({ page }) => {
+  await signIn(page, false);
+  await page.route(`${API}/v1/billing/config`, (route) => route.fulfill({ json: config(true) }));
+  let checkoutBody: unknown;
+  await page.route(`${API}/v1/billing/checkout`, (route) => {
+    checkoutBody = route.request().postDataJSON();
+    return route.fulfill({ json: { url: 'https://checkout.dodo.test/cks_1' } });
+  });
+  await page.route('https://checkout.dodo.test/**', (route) =>
+    route.fulfill({ contentType: 'text/html', body: '<h1>Dodo checkout</h1>' }),
+  );
+  await page.goto('/pricing');
+  await page.getByRole('button', { name: 'Unlock Premium for $2.99' }).click();
+  await expect(page).toHaveURL('https://checkout.dodo.test/cks_1');
+  expect(checkoutBody).toEqual({});
+});
+
+test('sign-in requires confirming 18 or older, for email and for Google', async ({ page }) => {
   let otpRequests = 0;
   await page.route('http://supabase.test/**', (route) => {
     if (route.request().url().includes('/otp')) otpRequests++;
@@ -48,6 +78,8 @@ test('sign-in requires confirming 18 or older', async ({ page }) => {
   await page.getByLabel('Email').fill('host@example.test');
   await page.getByRole('button', { name: 'Send code' }).click();
   await expect(page.getByText(/aged 18 or over/)).toBeVisible();
+  await page.getByRole('button', { name: 'Continue with Google' }).click();
+  await expect(page).toHaveURL(/\/account$/);
   expect(otpRequests).toBe(0);
   await page.getByLabel('I’m 18 or older').check();
   await page.getByRole('button', { name: 'Send code' }).click();
@@ -55,9 +87,65 @@ test('sign-in requires confirming 18 or older', async ({ page }) => {
   expect(otpRequests).toBe(1);
 });
 
-test('the checkout page explains when Paddle can’t be opened', async ({ page }) => {
-  await page.goto('/checkout/paddle?_ptxn=txn_1');
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Checkout couldn’t be opened');
-  await page.getByRole('link', { name: 'Back to Premium' }).click();
-  await expect(page.getByRole('heading', { level: 1, name: 'Premium' })).toBeVisible();
+test('Continue with Google goes to Google through Supabase and comes back to the page', async ({
+  page,
+}) => {
+  await page.route('http://supabase.test/auth/v1/authorize**', (route) =>
+    route.fulfill({ contentType: 'text/html', body: '<h1>Google</h1>' }),
+  );
+  await page.goto('/account?next=pricing');
+  await page.getByLabel('I’m 18 or older').check();
+  await page.getByRole('button', { name: 'Continue with Google' }).click();
+  await expect(page).toHaveURL(/supabase\.test\/auth\/v1\/authorize/);
+  const url = new URL(page.url());
+  expect(url.searchParams.get('provider')).toBe('google');
+  expect(url.searchParams.get('redirect_to')).toMatch(/\/auth\/callback\?next=%2Fpricing$/);
+  expect(url.searchParams.get('code_challenge')).toBeTruthy(); // PKCE
+});
+
+test('a cancelled Google sign-in says so', async ({ page }) => {
+  await page.goto('/auth/callback?error=access_denied&error_description=cancelled');
+  await expect(page.getByRole('alert').filter({ hasText: 'Couldn’t sign you in' })).toContainText(
+    'Google sign-in was cancelled.',
+  );
+  await page.getByRole('link', { name: 'Try again' }).click();
+  await expect(page).toHaveURL(/\/account$/);
+});
+
+test('after checkout, the account page confirms Premium with a celebration', async ({ page }) => {
+  await signIn(page, false);
+  let calls = 0;
+  await page.route(`${API}/v1/me`, (route) => {
+    calls++;
+    return route.fulfill({
+      json:
+        calls < 2
+          ? account(false)
+          : account(true, [
+              {
+                provider: 'dodo',
+                planId: 'premium',
+                status: 'active',
+                purchasedAt: new Date().toISOString(),
+              },
+            ]),
+    });
+  });
+  await page.goto('/account?checkout=success&payment_id=pay_1&status=succeeded');
+  await expect(
+    page.getByRole('status').filter({ hasText: 'Confirming your payment' }),
+  ).toBeVisible();
+  await expect(page).toHaveURL(/\/account$/); // Dodo's parameters are removed
+  await expect(page.getByText('Premium is unlocked!')).toBeVisible({ timeout: 10_000 });
+  await expect(page.getByText('Premium unlock via the website')).toBeVisible();
+  await expect(page.getByText(/Yours to keep/)).toBeVisible();
+});
+
+test('a declined checkout shows a failed card, not a pending one', async ({ page }) => {
+  await signIn(page, false);
+  await page.goto('/account?checkout=success&payment_id=pay_1&status=failed');
+  const card = page.getByRole('alert').filter({ hasText: 'Your payment didn’t go through' });
+  await expect(card).toContainText('You haven’t been charged.');
+  await page.getByRole('button', { name: 'Dismiss' }).click();
+  await expect(card).toHaveCount(0);
 });

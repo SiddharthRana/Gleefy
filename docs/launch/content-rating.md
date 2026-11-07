@@ -13,8 +13,8 @@ Play Console → App content → Content rating runs the IARC questionnaire. The
 | Gambling (real or simulated)                    | No     | Points only; no betting, wagering or loot boxes                           |
 | Users can interact or communicate               | No     | No chat or user-generated content; games are played in person             |
 | Shares the user's location                      | No     |                                                                           |
-| Digital purchases                               | Yes    | Optional subscription (Google Play Billing)                               |
-| Unrestricted internet access                    | No     | Links open the website or Google Play subscriptions only                  |
+| Digital purchases                               | Yes    | Optional one-time Premium unlock (Google Play)                            |
+| Unrestricted internet access                    | No     | Links open the website, Google sign-in or Google Play only                |
 | Miscellaneous: crude/discriminatory humour      | No     | Content guidelines (BUILD_PROMPT §7) forbid it                            |
 
 Expected outcome: the lowest age bands (e.g. PEGI 3 / ESRB Everyone), with an "In-app purchases" notice. The app's own guidance stays **13+** (some Would You Rather categories are marked 13+ for discussion topics) and the Play target audience is 13+, which is separate from the IARC rating.

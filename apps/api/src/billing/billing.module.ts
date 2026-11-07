@@ -12,7 +12,6 @@ import {
 import { googleOidcKeys, RTDN_KEY_RESOLVER } from './google-play/rtdn-verifier';
 import { ProductCatalog } from './product-catalog';
 import { DodoProvider } from './providers/dodo.provider';
-import { PaddleProvider } from './providers/paddle.provider';
 import { SubscriptionStore } from './subscription-store';
 import { WebhookLedger } from './webhook-ledger';
 
@@ -27,16 +26,6 @@ import { WebhookLedger } from './webhook-ledger';
       provide: WEB_PAYMENT_PROVIDER,
       inject: [ENV, ProductCatalog],
       useFactory: (env: Env, catalog: ProductCatalog): WebPaymentProvider | null => {
-        if (env.WEB_PAYMENT_PROVIDER === 'paddle') {
-          return new PaddleProvider(
-            {
-              apiKey: env.PADDLE_API_KEY,
-              webhookSecret: env.PADDLE_WEBHOOK_SECRET,
-              env: env.PADDLE_ENV,
-            },
-            catalog,
-          );
-        }
         if (env.WEB_PAYMENT_PROVIDER === 'dodo') {
           return new DodoProvider(
             { apiKey: env.DODO_API_KEY, webhookSecret: env.DODO_WEBHOOK_SECRET, env: env.DODO_ENV },

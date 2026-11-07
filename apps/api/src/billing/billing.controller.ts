@@ -1,18 +1,12 @@
 import { Body, Controller, Get, Headers, HttpCode, Param, Post, Req } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse, ApiProperty, ApiTags } from '@nestjs/swagger';
 import { SkipThrottle, Throttle } from '@nestjs/throttler';
-import { IsIn, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsString, MaxLength, MinLength } from 'class-validator';
 import type { Request } from 'express';
 import type { AuthUser } from '../auth/auth.types';
 import { CurrentUser, Public } from '../auth/decorators';
 import { ApiErrorDto } from '../common/api-error';
 import { BillingService } from './billing.service';
-
-class CheckoutBody {
-  @ApiProperty({ enum: ['monthly', 'annual'] })
-  @IsIn(['monthly', 'annual'])
-  interval: 'monthly' | 'annual';
-}
 
 class PlayVerifyBody {
   @ApiProperty({ description: 'Google Play purchase token' })
@@ -27,15 +21,15 @@ class UrlDto {
 }
 
 class WebBillingDto {
-  @ApiProperty({ enum: ['none', 'paddle', 'dodo'] }) provider: 'none' | 'paddle' | 'dodo';
+  @ApiProperty({ enum: ['none', 'dodo'] }) provider: 'none' | 'dodo';
   @ApiProperty() available: boolean;
-  @ApiProperty({ enum: ['monthly', 'annual'], isArray: true }) intervals: ('monthly' | 'annual')[];
 }
 
 class PlayBillingDto {
   @ApiProperty() available: boolean;
   @ApiProperty() packageName: string;
-  @ApiProperty() subscriptionId: string;
+  @ApiProperty({ description: 'One-time in-app product id of the Premium unlock' })
+  productId: string;
 }
 
 class BillingConfigDtoClass {
@@ -53,9 +47,9 @@ class PlayVerifyResponse {
   @ApiProperty() planId: string;
   @ApiProperty() status: string;
   @ApiProperty({
-    description: 'True when another channel already has an active subscription (warn the user)',
+    description: 'True when Premium was already bought on another channel (warn the user)',
   })
-  duplicateSubscription: boolean;
+  duplicatePurchase: boolean;
 }
 
 type RawRequest = Request & { rawBody?: Buffer };
@@ -72,23 +66,14 @@ export class BillingController {
     return this.billing.config();
   }
 
-  /** Start a web checkout with the configured Merchant of Record. */
+  /** Start a web checkout for the Premium unlock with the configured Merchant of Record. */
   @Post('checkout')
   @HttpCode(200)
   @ApiBearerAuth()
   @Throttle({ default: { limit: 10, ttl: 60_000 } })
   @ApiOkResponse({ type: UrlDto, description: 'Hosted checkout URL to redirect to' })
-  checkout(@CurrentUser() user: AuthUser, @Body() body: CheckoutBody): Promise<UrlDto> {
-    return this.billing.checkout(user, body.interval);
-  }
-
-  /** Customer portal for subscriptions bought on the web (cancel, payment method, invoices). */
-  @Post('portal')
-  @HttpCode(200)
-  @ApiBearerAuth()
-  @ApiOkResponse({ type: UrlDto })
-  portal(@CurrentUser() user: AuthUser): Promise<UrlDto> {
-    return this.billing.portal(user);
+  checkout(@CurrentUser() user: AuthUser): Promise<UrlDto> {
+    return this.billing.checkout(user);
   }
 
   @Get('google-play/account-ref')

@@ -1198,7 +1198,7 @@ abstract class AppLocalizations {
   /// No description provided for @premiumPitch.
   ///
   /// In en, this message translates to:
-  /// **'Unlock every premium category in every game. Free play never needs a subscription.'**
+  /// **'Unlock every premium category in every game, once. No subscription, and free play never needs it.'**
   String get premiumPitch;
 
   /// No description provided for @premiumIncludes.
@@ -1207,29 +1207,47 @@ abstract class AppLocalizations {
   /// **'Premium categories'**
   String get premiumIncludes;
 
+  /// No description provided for @premiumUnlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock Premium for {price}'**
+  String premiumUnlock(String price);
+
+  /// No description provided for @premiumOnce.
+  ///
+  /// In en, this message translates to:
+  /// **'One payment. Yours to keep, on this phone and the website.'**
+  String get premiumOnce;
+
+  /// No description provided for @premiumBoughtOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Bought on {date} through {store}. Yours to keep.'**
+  String premiumBoughtOn(String date, String store);
+
+  /// No description provided for @premiumStorePlay.
+  ///
+  /// In en, this message translates to:
+  /// **'Google Play'**
+  String get premiumStorePlay;
+
+  /// No description provided for @premiumStoreWeb.
+  ///
+  /// In en, this message translates to:
+  /// **'the website'**
+  String get premiumStoreWeb;
+
+  /// No description provided for @premiumPaymentPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Your payment is still being processed. Premium unlocks as soon as it’s done.'**
+  String get premiumPaymentPending;
+
   /// No description provided for @premiumActive.
   ///
   /// In en, this message translates to:
-  /// **'Premium is on'**
+  /// **'Premium is unlocked'**
   String get premiumActive;
-
-  /// No description provided for @premiumPaidThrough.
-  ///
-  /// In en, this message translates to:
-  /// **'Paid through {date}.'**
-  String premiumPaidThrough(String date);
-
-  /// No description provided for @premiumEndsOn.
-  ///
-  /// In en, this message translates to:
-  /// **'Ends on {date}. You won’t be charged again.'**
-  String premiumEndsOn(String date);
-
-  /// No description provided for @premiumOffline.
-  ///
-  /// In en, this message translates to:
-  /// **'You’re offline. Premium stays on until {date}.'**
-  String premiumOffline(String date);
 
   /// No description provided for @premiumUnavailableBuild.
   ///
@@ -1246,44 +1264,20 @@ abstract class AppLocalizations {
   /// No description provided for @premiumSignInPrompt.
   ///
   /// In en, this message translates to:
-  /// **'Sign in with your email to buy Premium or restore it on this phone. Guests never need an account.'**
+  /// **'Sign in to buy Premium or to use it on this phone. Guests never need an account.'**
   String get premiumSignInPrompt;
 
   /// No description provided for @premiumSignIn.
   ///
   /// In en, this message translates to:
-  /// **'Sign in to continue'**
+  /// **'Sign in'**
   String get premiumSignIn;
-
-  /// No description provided for @premiumPerMonth.
-  ///
-  /// In en, this message translates to:
-  /// **'{price} per month'**
-  String premiumPerMonth(String price);
-
-  /// No description provided for @premiumPerYear.
-  ///
-  /// In en, this message translates to:
-  /// **'{price} per year'**
-  String premiumPerYear(String price);
 
   /// No description provided for @premiumRestore.
   ///
   /// In en, this message translates to:
   /// **'Restore purchases'**
   String get premiumRestore;
-
-  /// No description provided for @premiumManagePlay.
-  ///
-  /// In en, this message translates to:
-  /// **'Manage in Google Play'**
-  String get premiumManagePlay;
-
-  /// No description provided for @premiumManageWeb.
-  ///
-  /// In en, this message translates to:
-  /// **'You subscribed on the website. Manage your subscription there.'**
-  String get premiumManageWeb;
 
   /// No description provided for @premiumPending.
   ///
@@ -1306,7 +1300,7 @@ abstract class AppLocalizations {
   /// No description provided for @premiumDuplicate.
   ///
   /// In en, this message translates to:
-  /// **'You also have a subscription on the website. Cancel one so you aren’t charged twice.'**
+  /// **'You’d already bought Premium on the website. Contact us and we’ll refund one of the purchases.'**
   String get premiumDuplicate;
 
   /// No description provided for @premiumErrorStore.
@@ -1330,7 +1324,7 @@ abstract class AppLocalizations {
   /// No description provided for @premiumErrorVerify.
   ///
   /// In en, this message translates to:
-  /// **'We couldn’t confirm the purchase yet. We’ll try again the next time you open the app.'**
+  /// **'We couldn’t confirm the purchase yet. Try again, or it’s checked again the next time you open the app.'**
   String get premiumErrorVerify;
 
   /// No description provided for @premiumErrorNetwork.
@@ -1344,6 +1338,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'See Premium'**
   String get premiumSee;
+
+  /// No description provided for @purchaseVerifyingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirming your purchase'**
+  String get purchaseVerifyingTitle;
+
+  /// No description provided for @purchaseVerifyingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This usually takes a few seconds.'**
+  String get purchaseVerifyingBody;
+
+  /// No description provided for @purchasePendingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for your payment'**
+  String get purchasePendingTitle;
+
+  /// No description provided for @purchaseSuccessTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Premium is unlocked!'**
+  String get purchaseSuccessTitle;
+
+  /// No description provided for @purchaseFailedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The purchase didn’t go through'**
+  String get purchaseFailedTitle;
+
+  /// No description provided for @purchaseDelayedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Still confirming your purchase'**
+  String get purchaseDelayedTitle;
+
+  /// No description provided for @tryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get tryAgain;
 
   /// No description provided for @signInTitle.
   ///
@@ -1417,6 +1453,54 @@ abstract class AppLocalizations {
   /// **'Something went wrong. Please try again.'**
   String get signInErrorUnknown;
 
+  /// No description provided for @signInGoogle.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Google'**
+  String get signInGoogle;
+
+  /// No description provided for @signInOr.
+  ///
+  /// In en, this message translates to:
+  /// **'or use your email'**
+  String get signInOr;
+
+  /// No description provided for @signInGoogleWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish signing in with Google in your browser, then come back here.'**
+  String get signInGoogleWaiting;
+
+  /// No description provided for @signInGoogleCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Google sign-in was cancelled.'**
+  String get signInGoogleCancelled;
+
+  /// No description provided for @signInGoogleClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'New accounts can’t be created right now.'**
+  String get signInGoogleClosed;
+
+  /// No description provided for @signInGoogleFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Google sign-in didn’t finish. Please try again.'**
+  String get signInGoogleFailed;
+
+  /// No description provided for @settingsSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get settingsSignIn;
+
+  /// No description provided for @settingsSignInBody.
+  ///
+  /// In en, this message translates to:
+  /// **'To buy Premium, or use it on this phone'**
+  String get settingsSignInBody;
+
   /// No description provided for @accountTitle.
   ///
   /// In en, this message translates to:
@@ -1444,7 +1528,7 @@ abstract class AppLocalizations {
   /// No description provided for @accountDeleteBody.
   ///
   /// In en, this message translates to:
-  /// **'This permanently deletes your MirthMix account. It doesn’t cancel a Google Play subscription, so cancel that in Google Play first. Type DELETE to confirm.'**
+  /// **'This permanently deletes your MirthMix account, including the Premium you bought: it can’t be moved to a new account later. Type DELETE to confirm.'**
   String get accountDeleteBody;
 
   /// No description provided for @accountDeleteConfirm.

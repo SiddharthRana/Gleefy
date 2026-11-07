@@ -30,16 +30,16 @@ export default function TermsPage() {
         </a>
         ).
       </p>
-      <h2 className="mt-10 font-display text-3xl font-semibold">Premium subscriptions</h2>
+      <h2 className="mt-10 font-display text-3xl font-semibold">Premium</h2>
       <ul className="mt-3 list-disc space-y-2 pl-6">
         <li>
-          Premium is a monthly or yearly subscription. In the Android app it is sold and billed by
-          Google Play; on the website by our payment partner, who is the seller of record and
-          handles tax and invoices.
+          Premium is a one-time purchase, not a subscription: you pay once and nothing renews. In
+          the Android app it is sold and billed by Google Play; on the website by our payment
+          partner, who is the seller of record and handles tax and receipts.
         </li>
         <li>
-          Subscriptions renew automatically until cancelled. Cancel in Google Play or with “Manage
-          subscription” on your Account page; Premium stays on until the end of the paid period.
+          Premium belongs to the account you bought it with, on every device where you sign in to
+          that account. A refunded purchase no longer unlocks Premium.
         </li>
         <li>
           Refunds follow Google Play’s policy for app purchases, and our payment partner’s policy

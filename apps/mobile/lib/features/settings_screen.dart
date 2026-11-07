@@ -97,6 +97,14 @@ class SettingsScreen extends ConsumerWidget {
               title: Text(l.accountTitle),
               trailing: const Icon(Icons.chevron_right_rounded),
               onTap: () => context.push('/account'),
+            )
+          else if (ref.watch(authRepositoryProvider).configured)
+            ListTile(
+              leading: const Icon(Icons.login_rounded),
+              title: Text(l.settingsSignIn),
+              subtitle: Text(l.settingsSignInBody),
+              trailing: const Icon(Icons.chevron_right_rounded),
+              onTap: () => context.push('/account/sign-in'),
             ),
           section(l.settingsPrivacy),
           note(l.settingsPrivacyBody),

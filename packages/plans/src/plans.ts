@@ -12,23 +12,22 @@ export interface Entitlements {
 }
 
 export interface DisplayPrice {
-  currency: 'INR' | 'USD';
-  /** Minor units (paise / cents) to avoid float rounding. */
-  monthly: number;
-  annual: number;
+  currency: 'USD';
+  /** Minor units (cents) to avoid float rounding. */
+  amount: number;
 }
 
 export interface PlanConfig {
   id: PlanId;
   name: string;
-  /** Paid plans are purchasable; free is not. */
+  /** Paid plans are purchasable; free is not. Premium is a one-time unlock, not a subscription. */
   paid: boolean;
   entitlements: Entitlements;
   /**
-   * Indicative prices for marketing pages only. The amount actually charged always comes from the
-   * store or payment provider (localised by country), never from this table.
+   * Indicative one-time price for marketing pages only, in US dollars. The amount actually charged
+   * always comes from the store or payment provider (converted per country), never from this table.
    */
-  displayPrices?: DisplayPrice[];
+  displayPrice?: DisplayPrice;
 }
 
 export const PLANS: Record<PlanId, PlanConfig> = {
@@ -43,10 +42,7 @@ export const PLANS: Record<PlanId, PlanConfig> = {
     name: 'MirthMix Premium',
     paid: true,
     entitlements: { premiumContent: true },
-    displayPrices: [
-      { currency: 'INR', monthly: 9900, annual: 69900 },
-      { currency: 'USD', monthly: 299, annual: 1999 },
-    ],
+    displayPrice: { currency: 'USD', amount: 299 },
   },
 };
 
@@ -79,8 +75,10 @@ export const SUBSCRIPTION_STATUSES = [
 export type SubscriptionStatus = (typeof SUBSCRIPTION_STATUSES)[number];
 
 /**
- * Whether a subscription in this state grants its plan right now. `canceled` keeps access until
- * the end of the paid period; `grace_period` keeps access while the store retries payment.
+ * Whether a purchase record in this state grants its plan right now. A one-time unlock is `active`
+ * for good (no period end) until it's `refunded`. The other states are kept for subscription
+ * records: `canceled` keeps access until the end of the paid period; `grace_period` keeps access
+ * while the store retries payment.
  */
 export function subscriptionGrantsAccess(
   status: SubscriptionStatus,

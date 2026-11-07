@@ -657,28 +657,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get premiumTitle => 'MirthMix Premium';
 
   @override
-  String get premiumPitch => 'Unlock every premium category in every game. Free play never needs a subscription.';
+  String get premiumPitch =>
+      'Unlock every premium category in every game, once. No subscription, and free play never needs it.';
 
   @override
   String get premiumIncludes => 'Premium categories';
 
   @override
-  String get premiumActive => 'Premium is on';
-
-  @override
-  String premiumPaidThrough(String date) {
-    return 'Paid through $date.';
+  String premiumUnlock(String price) {
+    return 'Unlock Premium for $price';
   }
 
   @override
-  String premiumEndsOn(String date) {
-    return 'Ends on $date. You won’t be charged again.';
+  String get premiumOnce => 'One payment. Yours to keep, on this phone and the website.';
+
+  @override
+  String premiumBoughtOn(String date, String store) {
+    return 'Bought on $date through $store. Yours to keep.';
   }
 
   @override
-  String premiumOffline(String date) {
-    return 'You’re offline. Premium stays on until $date.';
-  }
+  String get premiumStorePlay => 'Google Play';
+
+  @override
+  String get premiumStoreWeb => 'the website';
+
+  @override
+  String get premiumPaymentPending => 'Your payment is still being processed. Premium unlocks as soon as it’s done.';
+
+  @override
+  String get premiumActive => 'Premium is unlocked';
 
   @override
   String get premiumUnavailableBuild => 'Premium isn’t available in this version of the app yet.';
@@ -687,30 +695,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get premiumUnavailableNow => 'Premium purchases aren’t available right now. Please try again later.';
 
   @override
-  String get premiumSignInPrompt =>
-      'Sign in with your email to buy Premium or restore it on this phone. Guests never need an account.';
+  String get premiumSignInPrompt => 'Sign in to buy Premium or to use it on this phone. Guests never need an account.';
 
   @override
-  String get premiumSignIn => 'Sign in to continue';
-
-  @override
-  String premiumPerMonth(String price) {
-    return '$price per month';
-  }
-
-  @override
-  String premiumPerYear(String price) {
-    return '$price per year';
-  }
+  String get premiumSignIn => 'Sign in';
 
   @override
   String get premiumRestore => 'Restore purchases';
-
-  @override
-  String get premiumManagePlay => 'Manage in Google Play';
-
-  @override
-  String get premiumManageWeb => 'You subscribed on the website. Manage your subscription there.';
 
   @override
   String get premiumPending => 'Waiting for Google Play to confirm the payment…';
@@ -722,7 +713,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get premiumSuccess => 'Premium is unlocked. Enjoy!';
 
   @override
-  String get premiumDuplicate => 'You also have a subscription on the website. Cancel one so you aren’t charged twice.';
+  String get premiumDuplicate =>
+      'You’d already bought Premium on the website. Contact us and we’ll refund one of the purchases.';
 
   @override
   String get premiumErrorStore => 'Google Play billing isn’t available on this device.';
@@ -736,13 +728,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get premiumErrorVerify =>
-      'We couldn’t confirm the purchase yet. We’ll try again the next time you open the app.';
+      'We couldn’t confirm the purchase yet. Try again, or it’s checked again the next time you open the app.';
 
   @override
   String get premiumErrorNetwork => 'We couldn’t reach the server. Check your connection and try again.';
 
   @override
   String get premiumSee => 'See Premium';
+
+  @override
+  String get purchaseVerifyingTitle => 'Confirming your purchase';
+
+  @override
+  String get purchaseVerifyingBody => 'This usually takes a few seconds.';
+
+  @override
+  String get purchasePendingTitle => 'Waiting for your payment';
+
+  @override
+  String get purchaseSuccessTitle => 'Premium is unlocked!';
+
+  @override
+  String get purchaseFailedTitle => 'The purchase didn’t go through';
+
+  @override
+  String get purchaseDelayedTitle => 'Still confirming your purchase';
+
+  @override
+  String get tryAgain => 'Try again';
 
   @override
   String get signInTitle => 'Sign in';
@@ -783,6 +796,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signInErrorUnknown => 'Something went wrong. Please try again.';
 
   @override
+  String get signInGoogle => 'Continue with Google';
+
+  @override
+  String get signInOr => 'or use your email';
+
+  @override
+  String get signInGoogleWaiting => 'Finish signing in with Google in your browser, then come back here.';
+
+  @override
+  String get signInGoogleCancelled => 'Google sign-in was cancelled.';
+
+  @override
+  String get signInGoogleClosed => 'New accounts can’t be created right now.';
+
+  @override
+  String get signInGoogleFailed => 'Google sign-in didn’t finish. Please try again.';
+
+  @override
+  String get settingsSignIn => 'Sign in';
+
+  @override
+  String get settingsSignInBody => 'To buy Premium, or use it on this phone';
+
+  @override
   String get accountTitle => 'Account';
 
   @override
@@ -798,7 +835,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get accountDeleteBody =>
-      'This permanently deletes your MirthMix account. It doesn’t cancel a Google Play subscription, so cancel that in Google Play first. Type DELETE to confirm.';
+      'This permanently deletes your MirthMix account, including the Premium you bought: it can’t be moved to a new account later. Type DELETE to confirm.';
 
   @override
   String get accountDeleteConfirm => 'Delete';

@@ -1,7 +1,7 @@
 # Progress
 
 **Current phase:** 5 of 5 — Polish and launch prep ✅ code complete. **Checkpoint: the remaining launch steps need the owner** (accounts, legal review, trivia verification, closed test); see `docs/launch/checklist.md`.
-**Last updated:** 2026-11-03
+**Last updated:** 2026-11-07
 
 ## Phase 5 — Polish and launch prep
 
@@ -34,6 +34,17 @@
 - **Analytics weren't checked against a real PostHog project** (payload shape follows PostHog's capture API docs; error events use the `$exception` properties).
 - Lighthouse ran locally against `wrangler pages dev`, not the deployed site. The pricing page's one best-practices point is a console error from the API not running locally.
 - Unfinished code at the Phase 5 checkpoint has since been built (see below); what remains is listed in `docs/launch/checklist.md`.
+
+## One-time unlock, Weblume's payment fixes, Google sign-in (2026-11-07)
+
+| Area    | What                                                                                                                                                                                                                                                                                                           | Verified by                                                                                                             |
+| ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Price   | Premium is a one-time $2.99 unlock (`packages/plans` `displayPrice`), USD only on the website                                                                                                                                                                                                                  | Plans tests; Playwright pricing test                                                                                    |
+| API     | Play one-time product (`purchases.products`, acknowledge, RTDN one-time + voided), Dodo one-time payments (`payment.succeeded`, `refund.succeeded`, `dispute.lost`), payer-email fallback, `lifetime` + `purchases` in `/v1/me`, Paddle and the portal removed; migration `20261107000000_one_time_unlock.sql` | 77 API tests incl. database e2e (refunds, out-of-order, pending, email match, voided purchases)                         |
+| Website | "Unlock Premium for $2.99", Continue with Google + `/auth/callback`, header "Sign in", animated checkout result (confirming / unlocked with confetti / still waiting / failed), 10-second availability check, terms/FAQ/privacy copy                                                                           | Playwright 169 incl. Google redirect (PKCE), cancelled sign-in, success and declined checkouts, axe                     |
+| App     | One-time Play purchase, animated purchase card (spinner, drawn check + confetti, clock, shaking cross, Try again), Continue with Google, Settings "Sign in", Keystore session, token refresh, lifetime offline                                                                                                 | 130 Flutter tests; release build on the emulator: Settings sign-in row, sign-in screen, auth deep link keeps the screen |
+
+Not verified: nothing touches a real Supabase project, Google OAuth client, Play Console product or Dodo account yet (`docs/payments-setup.md`).
 
 ## After Phase 5 — closing the known gaps (2026-11-03)
 

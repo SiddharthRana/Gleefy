@@ -13,24 +13,24 @@ final billingGatewayProvider = Provider<BillingGateway>((ref) => UnavailableBill
 enum PurchasePhase { idle, loading, ready, purchasing, pending, verifying, success, error }
 
 class BillingState {
-  const BillingState({
-    this.phase = PurchasePhase.idle,
-    this.offers = const [],
-    this.error,
-    this.duplicateWarning = false,
-  });
+  const BillingState({this.phase = PurchasePhase.idle, this.offer, this.error, this.duplicateWarning = false});
 
   final PurchasePhase phase;
-  final List<StoreOffer> offers;
+
+  /// The Premium unlock with its local price, once loaded.
+  final StoreOffer? offer;
 
   /// Error code: store_unavailable, purchase_failed, account_mismatch, verify_failed, network.
   final String? error;
   final bool duplicateWarning;
 
-  BillingState copyWith({PurchasePhase? phase, List<StoreOffer>? offers, String? error, bool? duplicateWarning}) =>
+  /// A paid purchase the server couldn't confirm yet: "Try again" re-checks it right away.
+  bool get canRetryVerify => phase == PurchasePhase.error && (error == 'verify_failed' || error == 'network');
+
+  BillingState copyWith({PurchasePhase? phase, StoreOffer? offer, String? error, bool? duplicateWarning}) =>
       BillingState(
         phase: phase ?? this.phase,
-        offers: offers ?? this.offers,
+        offer: offer ?? this.offer,
         error: error,
         duplicateWarning: duplicateWarning ?? this.duplicateWarning,
       );
@@ -41,6 +41,9 @@ class BillingState {
 /// interrupted flow is redelivered by Play on the next launch and verified then. Same flow as Weblume.
 class BillingController extends Notifier<BillingState> {
   StreamSubscription<StorePurchaseUpdate>? _sub;
+
+  /// The last paid purchase whose verification failed, kept so "Try again" can re-check it.
+  StorePurchaseUpdate? _unverified;
 
   @override
   BillingState build() {
@@ -58,11 +61,11 @@ class BillingController extends Notifier<BillingState> {
         state = state.copyWith(phase: PurchasePhase.error, error: 'store_unavailable');
         return;
       }
-      final offers = await gateway.loadOffers(productId);
+      final offer = await gateway.loadOffer(productId);
       state = state.copyWith(
-        phase: offers.isEmpty ? PurchasePhase.error : PurchasePhase.ready,
-        offers: offers,
-        error: offers.isEmpty ? 'store_unavailable' : null,
+        phase: offer == null ? PurchasePhase.error : PurchasePhase.ready,
+        offer: offer,
+        error: offer == null ? 'store_unavailable' : null,
       );
     } on Object {
       state = state.copyWith(phase: PurchasePhase.error, error: 'store_unavailable');
@@ -83,6 +86,13 @@ class BillingController extends Notifier<BillingState> {
 
   Future<void> restore() => ref.read(billingGatewayProvider).restore();
 
+  /// Re-checks a paid purchase the server couldn't confirm, or reloads the offer after an error.
+  Future<void> retry(String productId) async {
+    final update = _unverified;
+    if (update != null && state.canRetryVerify) return _onUpdate(update);
+    await load(productId);
+  }
+
   Future<void> _onUpdate(StorePurchaseUpdate update) async {
     final gateway = ref.read(billingGatewayProvider);
     switch (update.status) {
@@ -90,7 +100,7 @@ class BillingController extends Notifier<BillingState> {
         state = state.copyWith(phase: PurchasePhase.pending);
       case StorePurchaseStatus.canceled:
         await gateway.complete(update);
-        state = state.copyWith(phase: state.offers.isEmpty ? PurchasePhase.idle : PurchasePhase.ready);
+        state = state.copyWith(phase: state.offer == null ? PurchasePhase.idle : PurchasePhase.ready);
       case StorePurchaseStatus.error:
         await gateway.complete(update);
         state = state.copyWith(phase: PurchasePhase.error, error: 'purchase_failed');
@@ -103,13 +113,20 @@ class BillingController extends Notifier<BillingState> {
         state = state.copyWith(phase: PurchasePhase.verifying);
         try {
           final res = await ref.read(accountApiProvider).verifyPlayPurchase(token);
+          _unverified = null;
+          if (res.pending) {
+            // Play hasn't been paid yet (cash or bank payment); it's redelivered once it is.
+            state = state.copyWith(phase: PurchasePhase.pending);
+            return;
+          }
           await gateway.complete(update);
           await ref.read(entitlementProvider.notifier).refresh();
           ref.read(analyticsProvider).track('purchase_verified', {
             'restored': update.status == StorePurchaseStatus.restored,
           });
-          state = state.copyWith(phase: PurchasePhase.success, duplicateWarning: res.duplicateSubscription);
+          state = state.copyWith(phase: PurchasePhase.success, duplicateWarning: res.duplicatePurchase);
         } on ApiException catch (e) {
+          _unverified = update;
           // Not completed: Play redelivers it and we retry verification later.
           state = state.copyWith(
             phase: PurchasePhase.error,

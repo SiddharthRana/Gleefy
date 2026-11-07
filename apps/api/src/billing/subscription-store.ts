@@ -8,14 +8,18 @@ export type ApplyResult =
   | { applied: true; userId: string }
   | { applied: false; reason: 'unknown_user' | 'stale' | 'account_deleted' };
 
-/** Writes verified subscription state. The only writer of the subscriptions table. */
+/** Writes verified purchase state. The only writer of the subscriptions (purchases) table. */
 @Injectable()
 export class SubscriptionStore {
   private readonly logger = new Logger(SubscriptionStore.name);
 
   constructor(private readonly database: Database) {}
 
-  /** Finds the Weblume user an event belongs to: explicit id, existing row, linked token, or account ref. */
+  /**
+   * Finds the MirthMix user an event belongs to: explicit id, existing row, linked token, account
+   * ref, then the payer's email. The email match can only ever give Premium to the account the
+   * payer chose, so it can't hand out access for free (same rule as Weblume).
+   */
   private async resolveUser(s: NormalizedSubscription): Promise<string | null> {
     const db = this.database.db;
     if (s.userId) return s.userId;
@@ -41,6 +45,18 @@ export class SubscriptionStore {
         .where(eq(profiles.billingAccountRef, s.accountRef))
         .limit(1);
       if (p) return p.id;
+    }
+    if (s.customerEmail) {
+      const found = await db.execute<{ id: string }>(
+        sql`select id from auth.users where lower(email) = lower(${s.customerEmail}) limit 1`,
+      );
+      const rows = Array.isArray(found)
+        ? found
+        : ((found as { rows?: { id: string }[] }).rows ?? []);
+      if (rows[0]) {
+        this.logger.log(`Matched a ${s.provider} purchase to its user by email`);
+        return rows[0].id;
+      }
     }
     return null;
   }
@@ -107,5 +123,39 @@ export class SubscriptionStore {
         );
     }
     return { applied: true, userId };
+  }
+
+  /**
+   * A refund, chargeback or lost dispute: the purchase stops granting access. Unknown ids are
+   * ignored (nothing was granted), as are events older than the stored state.
+   */
+  async markRefunded(
+    provider: NormalizedSubscription['provider'],
+    providerSubscriptionId: string,
+    eventAt: Date,
+  ): Promise<ApplyResult> {
+    const rows = await this.database.db
+      .update(subscriptions)
+      .set({ status: 'refunded', lastEventAt: eventAt })
+      .where(
+        and(
+          eq(subscriptions.provider, provider),
+          eq(subscriptions.providerSubscriptionId, providerSubscriptionId),
+          lte(subscriptions.lastEventAt, eventAt),
+        ),
+      )
+      .returning({ userId: subscriptions.userId });
+    if (rows[0]) return { applied: true, userId: rows[0].userId };
+    const [existing] = await this.database.db
+      .select({ id: subscriptions.id })
+      .from(subscriptions)
+      .where(
+        and(
+          eq(subscriptions.provider, provider),
+          eq(subscriptions.providerSubscriptionId, providerSubscriptionId),
+        ),
+      )
+      .limit(1);
+    return { applied: false, reason: existing ? 'stale' : 'unknown_user' };
   }
 }

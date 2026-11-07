@@ -18,12 +18,9 @@ describe('plans', () => {
     expect(planRank('premium')).toBeGreaterThan(planRank('free'));
   });
 
-  it('shows the BUILD_PROMPT price hypotheses', () => {
-    const [inr, usd] = PLANS.premium.displayPrices!;
-    expect(formatPrice(inr!.monthly, 'INR')).toBe('₹99');
-    expect(formatPrice(inr!.annual, 'INR')).toBe('₹699');
-    expect(formatPrice(usd!.monthly, 'USD')).toBe('$2.99');
-    expect(formatPrice(usd!.annual, 'USD')).toBe('$19.99');
+  it('shows the one-time unlock price in US dollars', () => {
+    const price = PLANS.premium.displayPrice!;
+    expect(formatPrice(price.amount, price.currency)).toBe('$2.99');
   });
 });
 

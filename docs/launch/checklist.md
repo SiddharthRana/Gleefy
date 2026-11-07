@@ -8,7 +8,9 @@ Everything between today and a production release, in order. Code work is done u
 - [ ] Buy the domain. Replace `mirthmix.example` everywhere: `NEXT_PUBLIC_SITE_URL`, `SITE_URL`, the App Links host in `apps/mobile/android/app/src/main/AndroidManifest.xml`, and `NEXT_PUBLIC_CONTACT_EMAIL`.
 - [ ] Set up a support email address (shown on `/contact` and in the Play listing).
 - [ ] Google Play developer account (one-time $25 fee); identity verification.
-- [ ] Confirm Paddle or Dodo Payments accepts you as a seller (`docs/payments-setup.md` §0), or launch with Google Play billing only (`WEB_PAYMENT_PROVIDER=none`).
+- [ ] Confirm Dodo Payments accepts you as a seller (`docs/payments-setup.md` §0), or launch with Google Play billing only (`WEB_PAYMENT_PROVIDER=none`).
+- [ ] Google sign-in: OAuth client and consent screen in Google Cloud, Google provider in Supabase, then `AUTH_GOOGLE_ENABLED=true` (`docs/payments-setup.md` §1).
+- [ ] Create the $2.99 one-time products in Play Console (`mirthmix_premium_unlock`) and Dodo; set any local prices (for example India).
 - [ ] Supabase project (Free while testing; Pro before taking real payments), Fly.io app, Cloudflare Pages project, optional PostHog project (EU) with a retention period set, optional Sentry project (EU region) for the API and website.
 
 ## 2. Content (owner + a second person)

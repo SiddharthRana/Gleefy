@@ -1,73 +1,47 @@
 import type { SubscriptionStatus } from '@mirthmix/plans';
-import type { BillingInterval, NormalizedSubscription } from '../billing.types';
-import type { SubscriptionPurchaseV2 } from './play-client';
+import type { NormalizedSubscription } from '../billing.types';
+import type { ProductPurchase } from './play-client';
 
-/** RTDN SubscriptionNotification types we treat specially (others just trigger a re-read). */
-export const PLAY_NOTIFICATION = { REVOKED: 12 } as const;
+/** RTDN OneTimeProductNotification types. */
+export const PLAY_ONE_TIME_NOTIFICATION = { PURCHASED: 1, CANCELED: 2 } as const;
 
-export function intervalFromBasePlan(basePlanId: string | undefined): BillingInterval | null {
-  if (!basePlanId) return null;
-  if (/annual|year|yearly|12m/i.test(basePlanId)) return 'annual';
-  if (/month|1m/i.test(basePlanId)) return 'monthly';
-  return null;
-}
+/** VoidedPurchaseNotification productType for one-time products. */
+export const PLAY_VOIDED_ONE_TIME = 2;
 
 /**
- * Maps a Play SubscriptionPurchaseV2 to our model. The API is the source of truth; RTDN only says
- * "something changed". `revoked` marks refunds/revocations (notification type 12).
+ * Maps a Play ProductPurchase (one-time product) to our model. The API is the source of truth; RTDN
+ * only says "something changed". A purchased unlock is active with no end; a canceled one
+ * (refunded or voided) is refunded; a pending one (cash or bank payment not finished) grants
+ * nothing yet.
  */
-export function mapPlaySubscription(
+export function mapPlayProduct(
+  productId: string,
   purchaseToken: string,
-  p: SubscriptionPurchaseV2,
-  opts: { eventAt: Date; revoked?: boolean },
-): Omit<NormalizedSubscription, 'planId'> & { planId: 'premium' } {
-  const item = p.lineItems?.[0];
-  const expiry = item?.expiryTime ? new Date(item.expiryTime) : null;
-  const interval = intervalFromBasePlan(item?.offerDetails?.basePlanId);
-  const autoRenew = item?.autoRenewingPlan?.autoRenewEnabled !== false;
+  p: ProductPurchase,
+  opts: { eventAt: Date },
+): NormalizedSubscription & { planId: 'premium' } {
   let status: SubscriptionStatus;
-  switch (p.subscriptionState) {
-    case 'SUBSCRIPTION_STATE_ACTIVE':
-      status = autoRenew ? 'active' : 'canceled';
+  switch (p.purchaseState) {
+    case 0:
+      status = 'active';
       break;
-    case 'SUBSCRIPTION_STATE_IN_GRACE_PERIOD':
-      status = 'grace_period';
-      break;
-    case 'SUBSCRIPTION_STATE_ON_HOLD':
-      status = 'on_hold';
-      break;
-    case 'SUBSCRIPTION_STATE_PAUSED':
-      status = 'paused';
-      break;
-    case 'SUBSCRIPTION_STATE_CANCELED':
-      status = 'canceled'; // access continues until expiryTime
-      break;
-    case 'SUBSCRIPTION_STATE_PENDING':
-      status = 'on_hold'; // payment not completed yet: no access
+    case 1:
+      status = 'refunded';
       break;
     default:
-      status = 'expired'; // EXPIRED, PENDING_PURCHASE_CANCELED, unknown
-  }
-  if (opts.revoked) status = 'refunded';
-  // The v2 resource has no current-period start; derive it from the expiry and the base plan length.
-  let start: Date | null = null;
-  if (expiry && interval) {
-    start = new Date(expiry);
-    if (interval === 'annual') start.setUTCFullYear(start.getUTCFullYear() - 1);
-    else start.setUTCMonth(start.getUTCMonth() - 1);
+      status = 'on_hold'; // 2 = pending: no access until Play says it's paid
   }
   return {
     provider: 'google_play',
     providerSubscriptionId: purchaseToken,
-    productId: item?.productId ?? '',
+    productId,
     planId: 'premium',
-    interval,
+    interval: 'one_time',
     status,
-    currentPeriodStart: start,
-    currentPeriodEnd: expiry,
-    cancelAtPeriodEnd: status === 'canceled',
-    accountRef: p.externalAccountIdentifiers?.obfuscatedExternalAccountId ?? null,
-    linkedProviderSubscriptionId: p.linkedPurchaseToken ?? null,
+    currentPeriodStart: p.purchaseTimeMillis ? new Date(Number(p.purchaseTimeMillis)) : null,
+    currentPeriodEnd: null,
+    cancelAtPeriodEnd: false,
+    accountRef: p.obfuscatedExternalAccountId ?? null,
     eventAt: opts.eventAt,
   };
 }

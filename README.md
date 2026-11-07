@@ -45,7 +45,7 @@ packages/
   design-tokens/       tokens.json → CSS variables, TS object, Dart constants; WCAG contrast tests
   content/             starter packs, zod schema, generated JSON Schema, validator, sync script
   game-engine/         seeded shuffle + Would You Rather reducer; generates test-vectors/*.json
-  plans/               plan config (free / premium), indicative prices, subscription access rules
+  plans/               plan config (free / premium), the one-time price, purchase access rules
 supabase/              migrations (schema source of truth) and RLS tests
 scripts/               db-verify.sh (migrations + RLS on plain Postgres), db-test-setup.sh (API e2e DB)
 docs/                  BUILD_PROMPT, PROGRESS, DECISIONS, QA checklist, brand assets
@@ -101,9 +101,10 @@ New categories need `tier` (`free` / `premium`), `ageRating` (`all` / `13+`), `r
 | web    | `NEXT_PUBLIC_SITE_URL`                                                                 | Canonical URLs, sitemap and robots (default `https://mirthmix.example`) |
 | web    | `NEXT_PUBLIC_API_URL`                                                                  | Billing API origin (default `http://localhost:4000`)                    |
 | web    | `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`                     | Purchaser sign-in; without them the Account page says it's unavailable  |
-| web    | `NEXT_PUBLIC_PADDLE_CLIENT_TOKEN`, `NEXT_PUBLIC_PADDLE_ENV`                            | Paddle.js on `/checkout/paddle`                                         |
+| web    | `NEXT_PUBLIC_AUTH_GOOGLE_ENABLED`                                                      | `true` shows "Continue with Google" (set up the provider in Supabase)   |
 | api    | see `apps/api/.env.example`                                                            | Database, Supabase, billing providers, kill switch behaviour            |
 | mobile | `--dart-define` `API_BASE_URL`, `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, `SITE_URL` | Premium and sign-in; without them the app is free-only                  |
+| mobile | `--dart-define` `AUTH_GOOGLE_ENABLED=true`                                             | Shows "Continue with Google" (same switch as the website)               |
 
 `.env.example` files contain placeholders only; never commit real values.
 

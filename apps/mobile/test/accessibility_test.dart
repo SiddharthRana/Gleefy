@@ -1,9 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mirthmix/billing/billing_gateway.dart';
 import 'package:mirthmix/content/content.dart';
 import 'package:mirthmix/router/router.dart';
 import 'package:mirthmix/telemetry/analytics.dart';
 
-import 'premium_test.dart' show FakeApi, FakeAuth, FakeGateway, fakes, premiumAccount, now, user;
+import 'premium_test.dart' show FakeApi, FakeAuth, FakeGateway, fakes, premiumAccount, user;
 import 'support/harness.dart';
 
 class _NullSink implements AnalyticsSink {
@@ -46,12 +47,12 @@ void main() {
       );
       h.container.read(routerProvider).go('/premium');
       await tester.pumpAndSettle();
-      expect(find.text('₹99 per month'), findsOneWidget);
+      expect(find.text(r'Unlock Premium for $2.99'), findsOneWidget);
       await checkGuidelines(tester);
     });
 
     testWidgets('Premium when active, and Account, meet the guidelines ($theme)', (tester) async {
-      final api = FakeApi()..account = premiumAccount(now.add(const Duration(days: 20)));
+      final api = FakeApi()..account = premiumAccount();
       final h = await pumpApp(
         tester,
         initialPrefs: prefs,
@@ -59,15 +60,30 @@ void main() {
       );
       h.container.read(routerProvider).go('/premium');
       await tester.pumpAndSettle();
-      expect(find.text('Premium is on'), findsOneWidget);
+      expect(find.text('Premium is unlocked'), findsOneWidget);
       await checkGuidelines(tester);
       h.container.read(routerProvider).go('/account');
       await tester.pumpAndSettle();
       await checkGuidelines(tester);
     });
 
+    testWidgets('The purchase result card meets the guidelines ($theme)', (tester) async {
+      final gateway = FakeGateway();
+      final h = await pumpApp(
+        tester,
+        initialPrefs: prefs,
+        overrides: fakes(FakeAuth(currentUser: user), FakeApi(), gateway),
+      );
+      h.container.read(routerProvider).go('/premium');
+      await tester.pumpAndSettle();
+      gateway.emit(const StorePurchaseUpdate(status: StorePurchaseStatus.purchased, purchaseToken: 'tok'));
+      await tester.pumpAndSettle();
+      expect(find.text('Premium is unlocked!'), findsOneWidget);
+      await checkGuidelines(tester);
+    });
+
     testWidgets('Sign-in meets the guidelines ($theme)', (tester) async {
-      final h = await pumpApp(tester, initialPrefs: prefs, overrides: fakes(FakeAuth(), FakeApi()));
+      final h = await pumpApp(tester, initialPrefs: prefs, overrides: fakes(FakeAuth(googleEnabled: true), FakeApi()));
       h.container.read(routerProvider).go('/account/sign-in');
       await tester.pumpAndSettle();
       await checkGuidelines(tester);

@@ -7,7 +7,14 @@ abstract final class AppConfig {
   static const supabaseUrl = String.fromEnvironment('SUPABASE_URL');
   static const supabasePublishableKey = String.fromEnvironment('SUPABASE_PUBLISHABLE_KEY');
 
-  /// Website, where web subscriptions are managed.
+  /// Where Supabase sends people back after "Continue with Google" (an Android deep link).
+  static const authRedirectUrl = 'mirthmix://auth-callback';
+
+  /// Offer "Continue with Google": on once the Google provider is set up in Supabase
+  /// (same switch as the website's NEXT_PUBLIC_AUTH_GOOGLE_ENABLED).
+  static const googleSignInEnabled = bool.fromEnvironment('AUTH_GOOGLE_ENABLED');
+
+  /// Website, where Premium can also be bought.
   static const siteUrl = String.fromEnvironment('SITE_URL', defaultValue: 'https://mirthmix.example');
 
   static const packageName = 'com.mirthmix.app';

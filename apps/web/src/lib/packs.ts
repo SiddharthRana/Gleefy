@@ -22,7 +22,7 @@ export const modeNames: Record<ShareMode, string> = {
   guess: 'Guess the Answer',
 };
 
-/** Free categories; premium ones need a verified subscription (see usePremium). */
+/** Free categories; premium ones need a verified Premium purchase (see usePremium). */
 export const freeCategories = (mode: ShareMode) =>
   packs[mode].categories.filter((c) => c.tier === 'free');
 

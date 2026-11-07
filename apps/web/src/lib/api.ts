@@ -26,7 +26,7 @@ export class ApiError extends Error {
 /** Calls the MirthMix API, sending the purchaser's access token when signed in. */
 export async function apiFetch<T>(
   path: `/v1/${string}`,
-  init: { method?: 'GET' | 'POST' | 'DELETE'; body?: unknown } = {},
+  init: { method?: 'GET' | 'POST' | 'DELETE'; body?: unknown; timeoutMs?: number } = {},
 ): Promise<T> {
   const token = await currentAccessToken();
   let res: Response;
@@ -38,6 +38,7 @@ export async function apiFetch<T>(
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
       },
       body: init.body !== undefined ? JSON.stringify(init.body) : undefined,
+      signal: init.timeoutMs ? AbortSignal.timeout(init.timeoutMs) : undefined,
     });
   } catch {
     throw new ApiError(null, null);

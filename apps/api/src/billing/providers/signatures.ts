@@ -15,28 +15,6 @@ function assertFresh(timestampSeconds: number, now: Date): void {
 }
 
 /**
- * Paddle Billing: `Paddle-Signature: ts=<unix>;h1=<hex hmac>` (several h1 during secret rotation),
- * HMAC-SHA256 over `${ts}:${rawBody}` with the notification destination's secret key.
- */
-export function verifyPaddleSignature(
-  header: string | undefined,
-  rawBody: Buffer,
-  secret: string,
-  now = new Date(),
-): void {
-  if (!header) throw new WebhookSignatureError('missing signature');
-  const parts = header.split(';').map((p) => p.trim().split('='));
-  const ts = parts.find(([k]) => k === 'ts')?.[1];
-  const sigs = parts.filter(([k]) => k === 'h1').map(([, v]) => v ?? '');
-  if (!ts || !sigs.length) throw new WebhookSignatureError('malformed signature');
-  assertFresh(Number(ts), now);
-  const expected = createHmac('sha256', secret).update(`${ts}:`).update(rawBody).digest();
-  if (!sigs.some((s) => /^[0-9a-f]+$/i.test(s) && safeEqual(Buffer.from(s, 'hex'), expected))) {
-    throw new WebhookSignatureError('signature mismatch');
-  }
-}
-
-/**
  * Standard Webhooks (https://www.standardwebhooks.com), used by Dodo Payments: headers
  * `webhook-id`, `webhook-timestamp`, `webhook-signature: v1,<base64> [v1,<base64>…]`;
  * HMAC-SHA256 over `${id}.${timestamp}.${rawBody}` with the base64 key after the `whsec_` prefix.

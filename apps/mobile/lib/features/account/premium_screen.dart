@@ -4,19 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-import '../../account/api_client.dart';
 import '../../account/entitlement.dart';
 import '../../billing/billing_controller.dart';
-import '../../billing/billing_gateway.dart';
-import '../../config/app_config.dart';
 import '../../content/content.dart';
 import '../../l10n/app_localizations.dart';
 import '../../state/providers.dart';
 import '../../telemetry/analytics.dart';
 import '../../theme/app_theme.dart';
 import '../../theme/tokens.g.dart';
+import '../../widgets/motion.dart';
+import 'purchase_status_card.dart';
 import '../modes.dart';
 
 String formatDay(BuildContext context, DateTime d) =>
@@ -54,7 +52,18 @@ class _PremiumScreenState extends ConsumerState<PremiumScreen> {
 
     Widget status;
     if (premium) {
-      status = _ActiveStatus(entitlement: entitlement);
+      final bought = ref.watch(billingControllerProvider.select((b) => b.phase == PurchasePhase.success));
+      status = Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // The celebration stays up after a purchase turns Premium on.
+          if (bought) ...[
+            PurchaseStatusCard(state: ref.watch(billingControllerProvider)),
+            const SizedBox(height: MmSpace.s4),
+          ],
+          _ActiveStatus(entitlement: entitlement),
+        ],
+      );
     } else if (!api.configured || !ref.watch(authRepositoryProvider).configured) {
       status = _Message(l.premiumUnavailableBuild);
     } else if (!entitlement.signedIn) {
@@ -70,8 +79,7 @@ class _PremiumScreenState extends ConsumerState<PremiumScreen> {
       status = ref
           .watch(billingConfigProvider)
           .when(
-            data: (c) =>
-                c.playAvailable ? _Offers(subscriptionId: c.subscriptionId) : _Message(l.premiumUnavailableNow),
+            data: (c) => c.playAvailable ? _Offer(productId: c.productId) : _Message(l.premiumUnavailableNow),
             loading: () => const Center(child: CircularProgressIndicator()),
             error: (_, _) => _Message(l.premiumUnavailableNow),
           );
@@ -130,10 +138,8 @@ class _ActiveStatus extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final until = entitlement.snapshot?.validUntil;
-    final subs = entitlement.account?.subscriptions ?? const <SubscriptionInfo>[];
-    final granting = subs.where((s) => s.currentPeriodEnd == until).firstOrNull ?? subs.firstOrNull;
-    final config = ref.watch(billingConfigProvider).value;
+    final purchase = entitlement.account?.purchases.where((p) => !p.pending).firstOrNull;
+    final bought = purchase?.purchasedAt;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -144,47 +150,25 @@ class _ActiveStatus extends ConsumerWidget {
             Expanded(child: Text(l.premiumActive, style: theme.textTheme.titleLarge)),
           ],
         ),
-        if (until != null) ...[
+        if (purchase != null && bought != null) ...[
           const SizedBox(height: MmSpace.s2),
-          Text(
-            entitlement.offline
-                ? l.premiumOffline(formatDay(context, until.add(offlineGrace)))
-                : granting?.cancelAtPeriodEnd == true
-                ? l.premiumEndsOn(formatDay(context, until))
-                : l.premiumPaidThrough(formatDay(context, until)),
-          ),
-        ],
-        if (granting != null) ...[
-          const SizedBox(height: MmSpace.s3),
-          if (granting.isWeb)
-            Text(l.premiumManageWeb)
-          else
-            OutlinedButton.icon(
-              icon: const Icon(Icons.open_in_new_rounded),
-              label: Text(l.premiumManagePlay),
-              onPressed: () => launchUrl(
-                Uri.https('play.google.com', '/store/account/subscriptions', {
-                  if (config != null && config.subscriptionId.isNotEmpty) 'sku': config.subscriptionId,
-                  'package': AppConfig.packageName,
-                }),
-                mode: LaunchMode.externalApplication,
-              ),
-            ),
+          Text(l.premiumBoughtOn(formatDay(context, bought), purchase.isWeb ? l.premiumStoreWeb : l.premiumStorePlay)),
         ],
       ],
     );
   }
 }
 
-class _Offers extends ConsumerStatefulWidget {
-  const _Offers({required this.subscriptionId});
-  final String subscriptionId;
+/// The Google Play purchase: the price button, then an animated card with the result.
+class _Offer extends ConsumerStatefulWidget {
+  const _Offer({required this.productId});
+  final String productId;
 
   @override
-  ConsumerState<_Offers> createState() => _OffersState();
+  ConsumerState<_Offer> createState() => _OfferState();
 }
 
-class _OffersState extends ConsumerState<_Offers> {
+class _OfferState extends ConsumerState<_Offer> {
   @override
   void initState() {
     super.initState();
@@ -192,7 +176,7 @@ class _OffersState extends ConsumerState<_Offers> {
       if (!mounted) return;
       final phase = ref.read(billingControllerProvider).phase;
       if (phase == PurchasePhase.idle || phase == PurchasePhase.error) {
-        unawaited(ref.read(billingControllerProvider.notifier).load(widget.subscriptionId));
+        unawaited(ref.read(billingControllerProvider.notifier).load(widget.productId));
       }
     });
   }
@@ -200,48 +184,46 @@ class _OffersState extends ConsumerState<_Offers> {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
+    final theme = Theme.of(context);
     final billing = ref.watch(billingControllerProvider);
     final controller = ref.read(billingControllerProvider.notifier);
+    final offer = billing.offer;
     final busy = switch (billing.phase) {
       PurchasePhase.loading || PurchasePhase.purchasing || PurchasePhase.pending || PurchasePhase.verifying => true,
       _ => false,
     };
-    final message = switch (billing.phase) {
-      PurchasePhase.pending => l.premiumPending,
-      PurchasePhase.verifying => l.premiumVerifying,
-      PurchasePhase.success => l.premiumSuccess,
-      PurchasePhase.error => switch (billing.error) {
-        'store_unavailable' => l.premiumErrorStore,
-        'account_mismatch' => l.premiumErrorMismatch,
-        'verify_failed' => l.premiumErrorVerify,
-        'network' => l.premiumErrorNetwork,
-        _ => l.premiumErrorPurchase,
-      },
-      _ => null,
+    final showCard = switch (billing.phase) {
+      PurchasePhase.idle || PurchasePhase.loading || PurchasePhase.ready => false,
+      _ => true,
     };
+    final pendingPurchase = ref.watch(entitlementProvider).account?.purchases.any((p) => p.pending) ?? false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        for (final offer in billing.offers) ...[
-          FilledButton(
-            onPressed: busy ? null : () => controller.buy(offer),
-            child: Text(
-              offer.interval == StoreInterval.annual ? l.premiumPerYear(offer.price) : l.premiumPerMonth(offer.price),
+        if (pendingPurchase && !showCard) ...[
+          Text(l.premiumPaymentPending, style: theme.textTheme.bodyLarge),
+          const SizedBox(height: MmSpace.s3),
+        ],
+        if (offer != null && billing.phase != PurchasePhase.success) ...[
+          Pressable(
+            enabled: !busy,
+            child: FilledButton(
+              onPressed: busy ? null : () => controller.buy(offer),
+              child: Text(l.premiumUnlock(offer.price)),
             ),
           ),
           const SizedBox(height: MmSpace.s2),
+          Text(l.premiumOnce, textAlign: TextAlign.center, style: theme.textTheme.bodyMedium),
+          const SizedBox(height: MmSpace.s3),
         ],
-        if (busy) const Padding(padding: EdgeInsets.all(MmSpace.s2), child: LinearProgressIndicator()),
-        if (message != null)
-          Semantics(
-            liveRegion: true,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: MmSpace.s2),
-              child: Text(message),
-            ),
-          ),
-        if (billing.duplicateWarning) Text(l.premiumDuplicate),
-        TextButton(onPressed: busy ? null : controller.restore, child: Text(l.premiumRestore)),
+        if (billing.phase == PurchasePhase.loading)
+          const Padding(padding: EdgeInsets.all(MmSpace.s2), child: LinearProgressIndicator()),
+        if (showCard) ...[
+          PurchaseStatusCard(state: billing, onRetry: () => unawaited(controller.retry(widget.productId))),
+          const SizedBox(height: MmSpace.s2),
+        ],
+        if (billing.phase != PurchasePhase.success)
+          TextButton(onPressed: busy ? null : controller.restore, child: Text(l.premiumRestore)),
       ],
     );
   }

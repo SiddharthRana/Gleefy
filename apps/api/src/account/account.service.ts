@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { eq } from 'drizzle-orm';
-import type { Entitlements } from '@mirthmix/plans';
+import { subscriptionGrantsAccess, type Entitlements } from '@mirthmix/plans';
 import type { AuthUser } from '../auth/auth.types';
 import { Database } from '../database/database.module';
 import { profiles, subscriptions } from '../database/schema';
@@ -13,15 +13,16 @@ export interface AccountDto {
   createdAt: string;
   plan: { id: string; name: string; paid: boolean; source: 'default' | 'subscription' };
   entitlements: Entitlements;
-  /** When the current entitlement must be re-checked (end of the paid period), or null for free. */
+  /** True when Premium is a one-time unlock: keep it until the server says otherwise. */
+  lifetime: boolean;
+  /** When a timed entitlement must be re-checked, or null for a one-time unlock and for free. */
   validUntil: string | null;
-  subscriptions: {
+  /** Purchases that give access, or are still waiting for payment; refunded and failed ones are left out. */
+  purchases: {
     provider: string;
     planId: string;
     status: string;
-    interval: 'monthly' | 'annual' | null;
-    currentPeriodEnd: string | null;
-    cancelAtPeriodEnd: boolean;
+    purchasedAt: string | null;
   }[];
 }
 
@@ -56,15 +57,18 @@ export class AccountService {
         source: resolved.source,
       },
       entitlements: resolved.entitlements,
+      lifetime: resolved.lifetime,
       validUntil: resolved.validUntil?.toISOString() ?? null,
-      subscriptions: subs.map((s) => ({
-        provider: s.provider,
-        planId: s.planId,
-        status: s.status,
-        interval: s.billingInterval ?? null,
-        currentPeriodEnd: s.currentPeriodEnd?.toISOString() ?? null,
-        cancelAtPeriodEnd: s.cancelAtPeriodEnd,
-      })),
+      purchases: subs
+        .filter(
+          (s) => subscriptionGrantsAccess(s.status, s.currentPeriodEnd) || s.status === 'on_hold',
+        )
+        .map((s) => ({
+          provider: s.provider,
+          planId: s.planId,
+          status: s.status,
+          purchasedAt: (s.currentPeriodStart ?? s.createdAt).toISOString(),
+        })),
     };
   }
 
@@ -72,7 +76,7 @@ export class AccountService {
    * Deletes the account (required by Google Play for apps that let people create one). The profile
    * is marked immediately, so the account stops working; the Supabase Auth user (and, by cascade,
    * profile and subscription records) is then deleted. If that can't run now, maintenance retries.
-   * Store subscriptions are not cancelled by this: the person cancels in Google Play or the portal.
+   * A bought unlock is not refunded by this; the person asks Google Play or us for a refund.
    */
   async delete(user: AuthUser): Promise<DeletionResult> {
     await this.entitlements.forUser(user.id); // 403 if already deleted

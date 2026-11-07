@@ -1,6 +1,6 @@
 import { createHmac, randomBytes } from 'node:crypto';
 import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common';
-import { and, desc, eq } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import { subscriptionGrantsAccess } from '@mirthmix/plans';
 import type { JWTVerifyGetKey } from 'jose';
 import type { AuthUser } from '../auth/auth.types';
@@ -14,12 +14,11 @@ import {
   ProviderError,
   WEB_PAYMENT_PROVIDER,
   WebhookSignatureError,
-  type BillingInterval,
   type WebhookRequest,
   type WebPaymentProvider,
 } from './billing.types';
 import { PLAY_API, type PlayApi } from './google-play/play-client';
-import { mapPlaySubscription, PLAY_NOTIFICATION } from './google-play/play-mapper';
+import { mapPlayProduct, PLAY_VOIDED_ONE_TIME } from './google-play/play-mapper';
 import { decodeRtdn, RTDN_KEY_RESOLVER, verifyPubSubPush } from './google-play/rtdn-verifier';
 import { ProductCatalog } from './product-catalog';
 import { SubscriptionStore } from './subscription-store';
@@ -27,14 +26,9 @@ import { WebhookLedger } from './webhook-ledger';
 
 export interface BillingConfigDto {
   enabled: boolean;
-  web: { provider: 'none' | 'paddle' | 'dodo'; available: boolean; intervals: BillingInterval[] };
-  googlePlay: { available: boolean; packageName: string; subscriptionId: string };
+  web: { provider: 'none' | 'dodo'; available: boolean };
+  googlePlay: { available: boolean; packageName: string; productId: string };
 }
-
-const ACKNOWLEDGEABLE = new Set([
-  'SUBSCRIPTION_STATE_ACTIVE',
-  'SUBSCRIPTION_STATE_IN_GRACE_PERIOD',
-]);
 
 @Injectable()
 export class BillingService {
@@ -59,25 +53,22 @@ export class BillingService {
 
   async config(): Promise<BillingConfigDto> {
     const enabled = await this.flags.isEnabled('billing');
-    const intervals = (['monthly', 'annual'] as const).filter((i) =>
-      this.web ? Boolean(this.catalog.forPlan(this.web.id, 'premium', i)) : false,
-    );
+    const webProduct = this.web ? this.catalog.forPlan(this.web.id, 'premium') : undefined;
     return {
       enabled,
       web: {
         provider: this.web?.id ?? 'none',
-        available: enabled && Boolean(this.web?.configured) && intervals.length > 0,
-        intervals,
+        available: enabled && Boolean(this.web?.configured) && Boolean(webProduct),
       },
       googlePlay: {
         available: enabled && this.play.configured,
         packageName: this.env.GOOGLE_PLAY_PACKAGE_NAME,
-        subscriptionId: this.env.GOOGLE_PLAY_SUBSCRIPTION_ID,
+        productId: this.env.GOOGLE_PLAY_PRODUCT_ID,
       },
     };
   }
 
-  /** Subscriptions that currently grant access, across all channels. */
+  /** Purchases that currently grant access, across all channels. */
   private async activeSubscriptions(userId: string) {
     const rows = await this.database.db
       .select()
@@ -92,7 +83,7 @@ export class BillingService {
     }
   }
 
-  async checkout(user: AuthUser, interval: BillingInterval): Promise<{ url: string }> {
+  async checkout(user: AuthUser): Promise<{ url: string }> {
     await this.assertBillingEnabled();
     await this.entitlements.forUser(user.id); // rejects deleted accounts
     if (!this.web?.configured) {
@@ -104,16 +95,11 @@ export class BillingService {
     }
     const active = await this.activeSubscriptions(user.id);
     if (active.length) {
-      throw new ApiError(
-        HttpStatus.CONFLICT,
-        'already_subscribed',
-        'You already have an active subscription.',
-        {
-          provider: active[0]!.provider,
-        },
-      );
+      throw new ApiError(HttpStatus.CONFLICT, 'already_purchased', 'You already have Premium.', {
+        provider: active[0]!.provider,
+      });
     }
-    const entry = this.catalog.forPlan(this.web.id, 'premium', interval);
+    const entry = this.catalog.forPlan(this.web.id, 'premium');
     if (!entry)
       throw new ApiError(HttpStatus.BAD_REQUEST, 'plan_unavailable', 'That plan isn’t available.');
     try {
@@ -135,42 +121,7 @@ export class BillingService {
     }
   }
 
-  async portal(user: AuthUser): Promise<{ url: string }> {
-    if (!this.web?.configured) {
-      throw new ApiError(
-        HttpStatus.SERVICE_UNAVAILABLE,
-        'portal_unavailable',
-        'Subscription management isn’t available right now.',
-      );
-    }
-    const [sub] = await this.database.db
-      .select()
-      .from(subscriptions)
-      .where(and(eq(subscriptions.userId, user.id), eq(subscriptions.provider, this.web.id)))
-      .orderBy(desc(subscriptions.lastEventAt))
-      .limit(1);
-    if (!sub?.providerCustomerId) {
-      throw new ApiError(
-        HttpStatus.NOT_FOUND,
-        'no_web_subscription',
-        'You don’t have a subscription bought on the web.',
-      );
-    }
-    try {
-      return await this.web.createPortalSession({
-        customerId: sub.providerCustomerId,
-        subscriptionId: sub.providerSubscriptionId,
-      });
-    } catch {
-      throw new ApiError(
-        HttpStatus.BAD_GATEWAY,
-        'portal_failed',
-        'We couldn’t open subscription management. Please try again.',
-      );
-    }
-  }
-
-  /** Verified web provider webhook → subscription state. Idempotent; out-of-order safe. */
+  /** Verified web provider webhook → purchase state. Idempotent; out-of-order safe. */
   async handleWebhook(providerId: string, req: WebhookRequest): Promise<{ status: string }> {
     if (!this.web || this.web.id !== providerId || !this.web.configured) {
       throw new ApiError(HttpStatus.NOT_FOUND, 'not_found', 'Not found.');
@@ -185,6 +136,14 @@ export class BillingService {
       throw err;
     }
     return this.process(this.web.id, parsed.eventId, parsed.eventType, req.rawBody, async () => {
+      if (parsed.refund) {
+        const r = await this.store.markRefunded(
+          this.web!.id,
+          parsed.refund.providerSubscriptionId,
+          parsed.refund.eventAt,
+        );
+        return r.applied ? { status: 'processed' } : { status: 'ignored', reason: r.reason };
+      }
       if (!parsed.subscription) return { status: 'ignored', reason: parsed.ignoredReason };
       const r = await this.store.apply(parsed.subscription);
       return r.applied ? { status: 'processed' } : { status: 'ignored', reason: r.reason };
@@ -235,7 +194,7 @@ export class BillingService {
   async verifyPlayPurchase(
     user: AuthUser,
     purchaseToken: string,
-  ): Promise<{ planId: string; status: string; duplicateSubscription: boolean }> {
+  ): Promise<{ planId: string; status: string; duplicatePurchase: boolean }> {
     await this.assertBillingEnabled();
     if (!this.play.configured) {
       throw new ApiError(
@@ -245,9 +204,11 @@ export class BillingService {
       );
     }
     const ref = await this.playAccountRef(user);
+    const productId = this.env.GOOGLE_PLAY_PRODUCT_ID;
     let purchase;
     try {
-      purchase = await this.play.getSubscription(purchaseToken);
+      // Asking for our product id means a token for any other product is simply "not found".
+      purchase = await this.play.getProductPurchase(productId, purchaseToken);
     } catch (err) {
       const status = err instanceof ProviderError ? err.status : undefined;
       if (status === 400 || status === 404 || status === 410) {
@@ -263,14 +224,7 @@ export class BillingService {
         'We couldn’t reach Google Play. Please try again.',
       );
     }
-    const mapped = mapPlaySubscription(purchaseToken, purchase, { eventAt: new Date() });
-    if (mapped.productId !== this.env.GOOGLE_PLAY_SUBSCRIPTION_ID) {
-      throw new ApiError(
-        HttpStatus.BAD_REQUEST,
-        'invalid_purchase',
-        'That purchase isn’t a MirthMix subscription.',
-      );
-    }
+    const mapped = mapPlayProduct(productId, purchaseToken, purchase, { eventAt: new Date() });
     // A token bought under another account (or without our account id) can't be claimed.
     if (mapped.accountRef !== ref) {
       throw new ApiError(
@@ -280,20 +234,26 @@ export class BillingService {
       );
     }
     const otherActive = (await this.activeSubscriptions(user.id)).filter(
-      (s) => s.provider !== 'google_play' && s.providerSubscriptionId !== purchaseToken,
+      (s) => s.provider !== 'google_play',
     );
     await this.store.apply({ ...mapped, userId: user.id });
-    if (
-      purchase.acknowledgementState === 'ACKNOWLEDGEMENT_STATE_PENDING' &&
-      ACKNOWLEDGEABLE.has(purchase.subscriptionState ?? '')
-    ) {
-      await this.play.acknowledge(mapped.productId, purchaseToken);
-    }
+    await this.acknowledgeIfNeeded(productId, purchaseToken, purchase);
     return {
       planId: mapped.planId,
       status: mapped.status,
-      duplicateSubscription: otherActive.length > 0,
+      duplicatePurchase: otherActive.length > 0,
     };
+  }
+
+  /** Play refunds unacknowledged purchases after three days, so every paid one is acknowledged. */
+  private async acknowledgeIfNeeded(
+    productId: string,
+    purchaseToken: string,
+    purchase: { purchaseState?: number; acknowledgementState?: number },
+  ): Promise<void> {
+    if (purchase.purchaseState === 0 && purchase.acknowledgementState !== 1) {
+      await this.play.acknowledge(productId, purchaseToken);
+    }
   }
 
   /** Real-time Developer Notification via Pub/Sub push. The API read is the source of truth. */
@@ -311,12 +271,17 @@ export class BillingService {
     const decoded = decodeRtdn(body as { message?: { data?: string; messageId?: string } });
     if (!decoded) throw new ApiError(HttpStatus.BAD_REQUEST, 'invalid_message', 'Invalid message.');
     const { messageId, data } = decoded;
-    const n = data.subscriptionNotification;
-    const type = n
-      ? `subscription.${n.notificationType}`
-      : data.testNotification
-        ? 'test'
-        : 'other';
+    const oneTime = data.oneTimeProductNotification;
+    const voided = data.voidedPurchaseNotification;
+    const type = oneTime
+      ? `one_time.${oneTime.notificationType}`
+      : voided
+        ? 'voided'
+        : data.subscriptionNotification
+          ? `subscription.${data.subscriptionNotification.notificationType}`
+          : data.testNotification
+            ? 'test'
+            : 'other';
     return this.process(
       'google_play',
       messageId,
@@ -325,25 +290,23 @@ export class BillingService {
       async () => {
         if (data.packageName !== this.env.GOOGLE_PLAY_PACKAGE_NAME)
           return { status: 'ignored', reason: 'other_package' };
-        if (!n?.purchaseToken)
-          return { status: 'ignored', reason: data.testNotification ? 'test' : 'unhandled' };
-        const purchase = await this.play.getSubscription(n.purchaseToken);
         const eventAt = data.eventTimeMillis ? new Date(Number(data.eventTimeMillis)) : new Date();
-        const mapped = mapPlaySubscription(n.purchaseToken, purchase, {
-          eventAt,
-          revoked: n.notificationType === PLAY_NOTIFICATION.REVOKED,
-        });
-        if (mapped.productId !== this.env.GOOGLE_PLAY_SUBSCRIPTION_ID)
-          return { status: 'ignored', reason: 'other_product' };
+        if (voided?.purchaseToken) {
+          if (voided.productType !== PLAY_VOIDED_ONE_TIME)
+            return { status: 'ignored', reason: 'other_product' };
+          const r = await this.store.markRefunded('google_play', voided.purchaseToken, eventAt);
+          return r.applied ? { status: 'processed' } : { status: 'ignored', reason: r.reason };
+        }
+        if (!oneTime?.purchaseToken)
+          return { status: 'ignored', reason: data.testNotification ? 'test' : 'unhandled' };
+        const productId = this.env.GOOGLE_PLAY_PRODUCT_ID;
+        if (oneTime.sku !== productId) return { status: 'ignored', reason: 'other_product' };
+        const purchase = await this.play.getProductPurchase(productId, oneTime.purchaseToken);
+        const mapped = mapPlayProduct(productId, oneTime.purchaseToken, purchase, { eventAt });
         const r = await this.store.apply(mapped);
         if (!r.applied) return { status: 'ignored', reason: r.reason };
         // Acknowledge here too, in case the app never reported the purchase (avoids Play's 3-day auto-refund).
-        if (
-          purchase.acknowledgementState === 'ACKNOWLEDGEMENT_STATE_PENDING' &&
-          ACKNOWLEDGEABLE.has(purchase.subscriptionState ?? '')
-        ) {
-          await this.play.acknowledge(mapped.productId, n.purchaseToken);
-        }
+        await this.acknowledgeIfNeeded(productId, oneTime.purchaseToken, purchase);
         return { status: 'processed' };
       },
     );

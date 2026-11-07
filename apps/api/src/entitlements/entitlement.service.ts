@@ -15,11 +15,13 @@ import { profiles, subscriptions } from '../database/schema';
 export interface ResolvedPlan {
   plan: PlanConfig;
   entitlements: Entitlements;
-  /** Where the plan came from: a verified subscription, or the free default. */
+  /** Where the plan came from: a verified purchase, or the free default. */
   source: 'default' | 'subscription';
+  /** True when the plan comes from a one-time unlock: it never runs out, only a refund ends it. */
+  lifetime: boolean;
   /**
-   * End of the paid period of the granting subscription. The app caches the entitlement until this
-   * moment (plus a short offline grace window) and re-checks with the API before relying on it longer.
+   * End of the paid period of a granting subscription, or null for a one-time unlock and for free.
+   * The app caches a timed entitlement until this moment (plus a short offline grace window).
    */
   validUntil: Date | null;
 }
@@ -52,6 +54,7 @@ export class EntitlementService {
       plan: free,
       entitlements: free.entitlements,
       source: 'default',
+      lifetime: false,
       validUntil: null,
     };
     // With billing switched off, everyone gets free-plan entitlements.
@@ -62,16 +65,19 @@ export class EntitlementService {
     for (const s of subs) {
       if (!subscriptionGrantsAccess(s.status, s.currentPeriodEnd, now)) continue;
       const plan = getPlan(s.planId);
+      const lifetime = s.billingInterval === 'one_time';
+      const end = (r: { lifetime: boolean; validUntil: Date | null }) =>
+        r.lifetime ? Infinity : (r.validUntil?.getTime() ?? 0);
       const outranks = planRank(plan.id) > planRank(best.plan.id);
       const lastsLonger =
-        plan.id === best.plan.id &&
-        (s.currentPeriodEnd?.getTime() ?? 0) > (best.validUntil?.getTime() ?? 0);
+        plan.id === best.plan.id && end({ lifetime, validUntil: s.currentPeriodEnd }) > end(best);
       if (!plan.paid || !(outranks || lastsLonger)) continue;
       best = {
         plan,
         entitlements: plan.entitlements,
         source: 'subscription',
-        validUntil: s.currentPeriodEnd,
+        lifetime,
+        validUntil: lifetime ? null : s.currentPeriodEnd,
       };
     }
     return best;

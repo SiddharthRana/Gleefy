@@ -12,6 +12,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'account/api_client.dart';
 import 'account/auth_repository.dart';
 import 'account/entitlement.dart';
+import 'account/secure_session_storage.dart';
 import 'billing/billing_controller.dart';
 import 'billing/billing_gateway.dart';
 import 'config/app_config.dart';
@@ -44,7 +45,16 @@ Future<void> main() async {
     bundledContentProvider.overrideWithValue(content),
   ];
   if (AppConfig.accountsConfigured) {
-    await Supabase.initialize(url: AppConfig.supabaseUrl, publishableKey: AppConfig.supabasePublishableKey);
+    await Supabase.initialize(
+      url: AppConfig.supabaseUrl,
+      publishableKey: AppConfig.supabasePublishableKey,
+      authOptions: FlutterAuthClientOptions(
+        authFlowType: AuthFlowType.pkce,
+        // Tokens live in the Android Keystore, not plain SharedPreferences (as in Weblume).
+        localStorage: SecureSessionStorage(persistSessionKey: supabaseSessionKey(AppConfig.supabaseUrl)),
+        pkceAsyncStorage: SecurePkceStorage(),
+      ),
+    );
     final auth = SupabaseAuthRepository(Supabase.instance.client.auth);
     final dio = Dio(
       BaseOptions(
@@ -55,7 +65,7 @@ Future<void> main() async {
     );
     overrides.addAll([
       authRepositoryProvider.overrideWithValue(auth),
-      accountApiProvider.overrideWithValue(HttpAccountApi(dio, () => auth.accessToken)),
+      accountApiProvider.overrideWithValue(HttpAccountApi(dio, auth)),
       if (defaultTargetPlatform == TargetPlatform.android)
         billingGatewayProvider.overrideWithValue(PlayBillingGateway(InAppPurchase.instance)),
     ]);

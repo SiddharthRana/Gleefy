@@ -3,75 +3,22 @@ import { createLocalJWKSet, exportJWK, generateKeyPair, SignJWT, type JWK } from
 import type { Env } from '../../src/config/env';
 import { WebhookSignatureError } from '../../src/billing/billing.types';
 import { GooglePlayClient } from '../../src/billing/google-play/play-client';
-import {
-  intervalFromBasePlan,
-  mapPlaySubscription,
-} from '../../src/billing/google-play/play-mapper';
+import { mapPlayProduct } from '../../src/billing/google-play/play-mapper';
 import { decodeRtdn, verifyPubSubPush } from '../../src/billing/google-play/rtdn-verifier';
 import { ProductCatalog } from '../../src/billing/product-catalog';
 import { DodoProvider } from '../../src/billing/providers/dodo.provider';
-import { PaddleProvider } from '../../src/billing/providers/paddle.provider';
-import {
-  verifyPaddleSignature,
-  verifyStandardWebhook,
-} from '../../src/billing/providers/signatures';
-import {
-  DODO_SECRET,
-  dodoEvent,
-  dodoHeaders,
-  PADDLE_SECRET,
-  paddleEvent,
-  paddleHeaders,
-} from './sign';
+import { verifyStandardWebhook } from '../../src/billing/providers/signatures';
+import { DODO_SECRET, dodoHeaders, dodoPayment, dodoRefund } from './sign';
 
 const catalog = new ProductCatalog({
-  PADDLE_PRICE_PREMIUM_MONTHLY: 'pri_monthly',
-  PADDLE_PRICE_PREMIUM_ANNUAL: 'pri_annual',
-  DODO_PRODUCT_PREMIUM_MONTHLY: 'pdt_monthly',
-  GOOGLE_PLAY_SUBSCRIPTION_ID: 'mirthmix_premium',
+  DODO_PRODUCT_PREMIUM: 'pdt_unlock',
+  GOOGLE_PLAY_PRODUCT_ID: 'mirthmix_premium_unlock',
 } as Env);
-const paddle = new PaddleProvider(
-  { apiKey: 'k', webhookSecret: PADDLE_SECRET, env: 'sandbox' },
-  catalog,
-);
 const dodo = new DodoProvider({ apiKey: 'k', webhookSecret: DODO_SECRET, env: 'test' }, catalog);
 const buf = (s: string) => Buffer.from(s);
 
-describe('Paddle signature', () => {
-  const body = paddleEvent({ userId: 'u1' });
-  it('accepts a valid signature', () => {
-    expect(() =>
-      verifyPaddleSignature(paddleHeaders(body)['paddle-signature'], buf(body), PADDLE_SECRET),
-    ).not.toThrow();
-  });
-  it('accepts any h1 during secret rotation', () => {
-    const good = paddleHeaders(body)['paddle-signature'];
-    const [ts, h1] = good.split(';');
-    expect(() =>
-      verifyPaddleSignature(`${ts};h1=${'0'.repeat(64)};${h1}`, buf(body), PADDLE_SECRET),
-    ).not.toThrow();
-  });
-  it.each([
-    ['missing header', undefined],
-    ['malformed header', 'nonsense'],
-    ['wrong secret', paddleHeaders(body, { secret: 'other' })['paddle-signature']],
-    [
-      'stale timestamp',
-      paddleHeaders(body, { ts: Math.floor(Date.now() / 1000) - 3600 })['paddle-signature'],
-    ],
-  ])('rejects %s', (_l, h) => {
-    expect(() => verifyPaddleSignature(h, buf(body), PADDLE_SECRET)).toThrow(WebhookSignatureError);
-  });
-  it('rejects a tampered body', () => {
-    const h = paddleHeaders(body)['paddle-signature'];
-    expect(() => verifyPaddleSignature(h, buf(body.replace('u1', 'u2')), PADDLE_SECRET)).toThrow(
-      WebhookSignatureError,
-    );
-  });
-});
-
 describe('Standard Webhooks signature (Dodo)', () => {
-  const body = dodoEvent({ userId: 'u1' });
+  const body = dodoPayment({ userId: 'u1' });
   const h = dodoHeaders(body);
   const verify = (headers: Record<string, string>, b = body, secret = DODO_SECRET) =>
     verifyStandardWebhook(
@@ -101,125 +48,69 @@ describe('Standard Webhooks signature (Dodo)', () => {
   ])('rejects %s', (_l, fn) => expect(fn).toThrow(WebhookSignatureError));
 });
 
-describe('Paddle event mapping', () => {
-  const parse = (body: string) =>
-    paddle.parseWebhook({ rawBody: buf(body), headers: paddleHeaders(body) });
-  it('maps an active subscription with our user id and period', () => {
-    const p = parse(paddleEvent({ userId: 'u1', subId: 'sub_9' }));
-    expect(p.subscription).toMatchObject({
-      provider: 'paddle',
-      providerSubscriptionId: 'sub_9',
-      userId: 'u1',
-      planId: 'premium',
-      interval: 'monthly',
-      status: 'active',
-      providerCustomerId: 'ctm_01',
-    });
-    expect(p.subscription!.currentPeriodEnd).toBeInstanceOf(Date);
-  });
-  it.each([
-    ['active + scheduled cancel', { status: 'active', scheduledCancel: true }, 'canceled'],
-    ['trialing', { status: 'trialing' }, 'trialing'],
-    ['past_due', { status: 'past_due' }, 'grace_period'],
-    ['paused', { status: 'paused' }, 'paused'],
-    ['canceled (ended)', { status: 'canceled' }, 'expired'],
-  ])('%s → %s', (_l, over, expected) => {
-    expect(parse(paddleEvent({ userId: 'u1', ...over })).subscription!.status).toBe(expected);
-  });
-  it('maps the annual price to the annual interval', () => {
-    expect(parse(paddleEvent({ userId: 'u1', priceId: 'pri_annual' })).subscription!.interval).toBe(
-      'annual',
-    );
-  });
-  it('ignores unknown prices and non-subscription events', () => {
-    expect(parse(paddleEvent({ userId: 'u1', priceId: 'pri_other' })).ignoredReason).toBe(
-      'unknown_price',
-    );
-    expect(parse(paddleEvent({ userId: 'u1', type: 'transaction.completed' })).ignoredReason).toBe(
-      'unhandled_event',
-    );
-  });
-});
-
 describe('Dodo event mapping', () => {
   const parse = (body: string) =>
     dodo.parseWebhook({ rawBody: buf(body), headers: dodoHeaders(body, { id: 'msg_1' }) });
-  it('uses the webhook id as the event id and maps metadata', () => {
-    const p = parse(dodoEvent({ userId: 'u1' }));
+  it('maps a succeeded one-time payment to a lifetime unlock', () => {
+    const p = parse(dodoPayment({ userId: 'u1', paymentId: 'pay_9' }));
     expect(p.eventId).toBe('msg_1');
     expect(p.subscription).toMatchObject({
       provider: 'dodo',
+      providerSubscriptionId: 'pay_9',
+      productId: 'pdt_unlock',
       userId: 'u1',
+      customerEmail: 'a@x.dev',
       status: 'active',
-      interval: 'monthly',
+      interval: 'one_time',
+      currentPeriodEnd: null,
       providerCustomerId: 'cus_1',
     });
   });
-  it.each([
-    ['active + cancel at end', { cancelAtEnd: true }, 'canceled'],
-    ['on_hold', { status: 'on_hold' }, 'on_hold'],
-    ['cancelled', { status: 'cancelled' }, 'canceled'],
-    ['failed', { status: 'failed' }, 'expired'],
-    ['expired', { status: 'expired' }, 'expired'],
-  ])('%s → %s', (_l, over, expected) => {
-    expect(parse(dodoEvent({ userId: 'u1', ...over })).subscription!.status).toBe(expected);
+  it('maps refunds and lost disputes to the payment they undo', () => {
+    for (const type of ['refund.succeeded', 'dispute.lost']) {
+      const p = parse(dodoRefund({ type, paymentId: 'pay_9' }));
+      expect(p.subscription).toBeNull();
+      expect(p.refund!.providerSubscriptionId).toBe('pay_9');
+    }
   });
-  it('ignores payment events and unknown products', () => {
-    expect(parse(dodoEvent({ type: 'payment.succeeded' })).subscription).toBeNull();
-    expect(parse(dodoEvent({ productId: 'pdt_x' })).ignoredReason).toBe('unknown_product');
+  it.each([
+    ['a failed payment', dodoPayment({ type: 'payment.failed' }), 'unhandled_event'],
+    ['a pending refund', dodoRefund({ type: 'refund.failed' }), 'unhandled_event'],
+    ['an opened dispute', dodoRefund({ type: 'dispute.opened' }), 'unhandled_event'],
+    ['a subscription renewal', dodoPayment({ subscriptionId: 'sub_1' }), 'subscription_payment'],
+    ['an unknown product', dodoPayment({ productId: 'pdt_x' }), 'unknown_product'],
+  ])('ignores %s', (_l, body, reason) => {
+    const p = parse(body);
+    expect(p.subscription).toBeNull();
+    expect(p.refund ?? null).toBeNull();
+    expect(p.ignoredReason).toBe(reason);
   });
 });
 
 describe('Google Play mapping', () => {
-  const expiry = '2026-12-01T00:00:00Z';
   const base = {
-    subscriptionState: 'SUBSCRIPTION_STATE_ACTIVE',
-    externalAccountIdentifiers: { obfuscatedExternalAccountId: 'ref1' },
-    lineItems: [
-      {
-        productId: 'mirthmix_premium',
-        expiryTime: expiry,
-        autoRenewingPlan: { autoRenewEnabled: true },
-        offerDetails: { basePlanId: 'monthly' },
-      },
-    ],
+    purchaseState: 0,
+    purchaseTimeMillis: '1793491200000',
+    obfuscatedExternalAccountId: 'ref1',
   };
   const now = { eventAt: new Date() };
-  it('maps state, expiry, derived period start, interval and account ref', () => {
-    const m = mapPlaySubscription('tok', base, now);
+  it('maps a purchase to a lifetime unlock with the account ref', () => {
+    const m = mapPlayProduct('mirthmix_premium_unlock', 'tok', base, now);
     expect(m).toMatchObject({
       status: 'active',
-      interval: 'monthly',
+      interval: 'one_time',
       accountRef: 'ref1',
-      productId: 'mirthmix_premium',
+      productId: 'mirthmix_premium_unlock',
       providerSubscriptionId: 'tok',
+      currentPeriodEnd: null,
     });
-    expect(m.currentPeriodEnd!.toISOString()).toBe('2026-12-01T00:00:00.000Z');
-    expect(m.currentPeriodStart!.toISOString()).toBe('2026-11-01T00:00:00.000Z');
+    expect(m.currentPeriodStart!.getTime()).toBe(1793491200000);
   });
   it.each([
-    [
-      'auto-renew off',
-      { lineItems: [{ ...base.lineItems[0], autoRenewingPlan: { autoRenewEnabled: false } }] },
-      'canceled',
-    ],
-    ['grace period', { subscriptionState: 'SUBSCRIPTION_STATE_IN_GRACE_PERIOD' }, 'grace_period'],
-    ['on hold', { subscriptionState: 'SUBSCRIPTION_STATE_ON_HOLD' }, 'on_hold'],
-    ['paused', { subscriptionState: 'SUBSCRIPTION_STATE_PAUSED' }, 'paused'],
-    ['canceled', { subscriptionState: 'SUBSCRIPTION_STATE_CANCELED' }, 'canceled'],
-    ['expired', { subscriptionState: 'SUBSCRIPTION_STATE_EXPIRED' }, 'expired'],
-    ['pending', { subscriptionState: 'SUBSCRIPTION_STATE_PENDING' }, 'on_hold'],
-  ])('%s → %s', (_l, over, expected) => {
-    expect(mapPlaySubscription('tok', { ...base, ...over }, now).status).toBe(expected);
-  });
-  it('marks revocations as refunded', () => {
-    expect(mapPlaySubscription('tok', base, { ...now, revoked: true }).status).toBe('refunded');
-  });
-  it('derives intervals from base plan ids', () => {
-    expect(intervalFromBasePlan('annual')).toBe('annual');
-    expect(intervalFromBasePlan('premium-yearly')).toBe('annual');
-    expect(intervalFromBasePlan('monthly')).toBe('monthly');
-    expect(intervalFromBasePlan('weird')).toBeNull();
+    ['canceled (refunded or voided)', 1, 'refunded'],
+    ['pending', 2, 'on_hold'],
+  ])('%s → %s', (_l, purchaseState, expected) => {
+    expect(mapPlayProduct('p', 'tok', { ...base, purchaseState }, now).status).toBe(expected);
   });
 });
 
@@ -234,26 +125,24 @@ describe('GooglePlayClient', () => {
       if (String(url).includes('oauth2'))
         return new Response(JSON.stringify({ access_token: 'at', expires_in: 3600 }));
       if (String(url).includes(':acknowledge')) return new Response('{}');
-      return new Response(JSON.stringify({ subscriptionState: 'SUBSCRIPTION_STATE_ACTIVE' }));
+      return new Response(JSON.stringify({ purchaseState: 0 }));
     }) as unknown as typeof fetch;
     const client = new GooglePlayClient(
       'com.mirthmix.app',
       { client_email: 'svc@x.iam.gserviceaccount.com', private_key: pem },
       fake,
     );
-    expect((await client.getSubscription('tok/1')).subscriptionState).toBe(
-      'SUBSCRIPTION_STATE_ACTIVE',
-    );
-    await client.acknowledge('mirthmix_premium', 'tok/1');
+    expect(
+      (await client.getProductPurchase('mirthmix_premium_unlock', 'tok/1')).purchaseState,
+    ).toBe(0);
+    await client.acknowledge('mirthmix_premium_unlock', 'tok/1');
     expect(calls.filter((c) => c.url.includes('oauth2'))).toHaveLength(1); // cached
     const tokenBody = new URLSearchParams(String(calls[0]!.init!.body));
     expect(tokenBody.get('grant_type')).toBe('urn:ietf:params:oauth:grant-type:jwt-bearer');
     expect(calls[1]!.url).toBe(
-      'https://androidpublisher.googleapis.com/androidpublisher/v3/applications/com.mirthmix.app/purchases/subscriptionsv2/tokens/tok%2F1',
+      'https://androidpublisher.googleapis.com/androidpublisher/v3/applications/com.mirthmix.app/purchases/products/mirthmix_premium_unlock/tokens/tok%2F1',
     );
-    expect(calls[2]!.url).toContain(
-      '/purchases/subscriptions/mirthmix_premium/tokens/tok%2F1:acknowledge',
-    );
+    expect(calls[2]!.url).toBe(`${calls[1]!.url}:acknowledge`);
     expect((calls[1]!.init!.headers as Record<string, string>).Authorization).toBe('Bearer at');
   });
 });

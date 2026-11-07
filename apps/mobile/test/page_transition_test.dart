@@ -16,6 +16,8 @@ void main() {
   testWidgets('a new page springs in, overshooting slightly before it settles', (tester) async {
     final h = await pumpApp(tester);
     unawaited(h.container.read(routerProvider).push<void>('/settings'));
+    // The router checks the destination first (onEnter), then adds the route.
+    await tester.pump();
     await tester.pump(); // route added
     await tester.pump(const Duration(milliseconds: 60));
     final page = find.text('Theme');
@@ -39,6 +41,7 @@ void main() {
     final h = await pumpApp(tester);
     final home = find.text('Ready to play?');
     unawaited(h.container.read(routerProvider).push<void>('/settings'));
+    await tester.pump();
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 150));
     expect(incomingScale(tester, home), lessThan(1));

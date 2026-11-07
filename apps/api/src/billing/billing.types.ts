@@ -1,9 +1,14 @@
 import type { PlanId, SubscriptionStatus } from '@mirthmix/plans';
 import type { PaymentProviderId } from '../database/schema';
 
-export type BillingInterval = 'monthly' | 'annual';
+/** Premium is sold as a one-time unlock; monthly and annual remain for older subscription rows. */
+export type BillingInterval = 'monthly' | 'annual' | 'one_time';
 
-/** Provider-independent subscription state derived from a verified provider event or API read. */
+/**
+ * Provider-independent purchase state derived from a verified provider event or API read. For a
+ * one-time unlock, providerSubscriptionId is the Play purchase token or the Dodo payment id, the
+ * status is active (or refunded) and there is no period end.
+ */
 export interface NormalizedSubscription {
   provider: PaymentProviderId;
   providerSubscriptionId: string;
@@ -17,6 +22,11 @@ export interface NormalizedSubscription {
   cancelAtPeriodEnd: boolean;
   /** MirthMix user id when the provider echoes it back (web checkout custom data). */
   userId?: string | null;
+  /**
+   * The payer's email, used only when the provider doesn't echo our user id back. It can only match
+   * the account the payer chose, so it can't hand Premium to anyone else.
+   */
+  customerEmail?: string | null;
   /** Opaque account reference (Google Play obfuscatedAccountId). */
   accountRef?: string | null;
   linkedProviderSubscriptionId?: string | null;
@@ -24,11 +34,13 @@ export interface NormalizedSubscription {
   eventAt: Date;
 }
 
-/** A verified, parsed provider webhook. `subscription` is null for events we don't act on. */
+/** A verified, parsed provider webhook. `subscription` and `refund` are null for events we don't act on. */
 export interface ParsedWebhook {
   eventId: string;
   eventType: string;
   subscription: NormalizedSubscription | null;
+  /** A refund or lost dispute: the purchase with this provider id stops granting access. */
+  refund?: { providerSubscriptionId: string; eventAt: Date } | null;
   /** Reason when subscription is null and the event is still interesting to log. */
   ignoredReason?: string;
 }
@@ -38,9 +50,9 @@ export interface WebhookRequest {
   headers: Record<string, string | string[] | undefined>;
 }
 
-/** A Merchant-of-Record web payment provider (Paddle, Dodo, …). */
+/** A Merchant-of-Record web payment provider (Dodo). */
 export interface WebPaymentProvider {
-  readonly id: Extract<PaymentProviderId, 'paddle' | 'dodo'>;
+  readonly id: Extract<PaymentProviderId, 'dodo'>;
   /** True when API key, webhook secret and prices are configured. */
   readonly configured: boolean;
   createCheckout(input: {
@@ -48,10 +60,6 @@ export interface WebPaymentProvider {
     email?: string;
     productId: string;
     returnUrl: string;
-  }): Promise<{ url: string }>;
-  createPortalSession(input: {
-    customerId: string;
-    subscriptionId: string;
   }): Promise<{ url: string }>;
   /** Verifies the signature (throws WebhookSignatureError) and parses the event. */
   parseWebhook(req: WebhookRequest, now?: Date): ParsedWebhook;
