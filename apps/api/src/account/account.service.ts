@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { eq } from 'drizzle-orm';
-import { subscriptionGrantsAccess, type Entitlements } from '@mirthmix/plans';
+import { subscriptionGrantsAccess, type Entitlements } from '@gleefy/plans';
 import type { AuthUser } from '../auth/auth.types';
 import { Database } from '../database/database.module';
 import { profiles, subscriptions } from '../database/schema';

@@ -1,7 +1,7 @@
 // Drizzle table definitions mirroring supabase/migrations (the schema source of truth).
 // Only the tables and columns the API uses are declared.
 import { boolean, jsonb, pgEnum, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
-import type { PlanId, SubscriptionStatus } from '@mirthmix/plans';
+import type { PlanId, SubscriptionStatus } from '@gleefy/plans';
 
 export const planIdEnum = pgEnum('plan_id', ['free', 'premium']);
 export const paymentProvider = pgEnum('payment_provider', ['google_play', 'paddle', 'dodo']);

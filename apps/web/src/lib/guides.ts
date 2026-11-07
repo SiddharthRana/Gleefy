@@ -1,5 +1,5 @@
 import type { Route } from 'next';
-import type { ShareMode } from '@mirthmix/game-engine';
+import type { ShareMode } from '@gleefy/game-engine';
 import { packs } from './packs';
 
 export type GuideId = ShareMode | 'custom-party-pack';
@@ -111,7 +111,7 @@ export const guides: ModeGuide[] = [
     id: 'custom-party-pack',
     name: 'Custom Party Pack',
     description:
-      'Build your own party session: pick several MirthMix games, set the rounds for each, and play them back to back.',
+      'Build your own party session: pick several Gleefy games, set the rounds for each, and play them back to back.',
     intro:
       'Can’t pick one game? Line several up. A party pack plays your chosen games in order, with a tap between each.',
     rules: [

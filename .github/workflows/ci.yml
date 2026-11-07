@@ -35,7 +35,7 @@ jobs:
     env:
       DB_ADMIN_URL: postgres://postgres:postgres@localhost:5432/postgres
       # Enables the database-backed API e2e tests (apps/api/test/billing/billing.e2e.test.ts).
-      TEST_DATABASE_URL: postgres://postgres:postgres@localhost:5432/mirthmix_test
+      TEST_DATABASE_URL: postgres://postgres:postgres@localhost:5432/gleefy_test
     steps:
       - uses: actions/checkout@v5
       - uses: pnpm/action-setup@v4
@@ -55,14 +55,14 @@ jobs:
         run: bash scripts/db-test-setup.sh
       - run: pnpm test
       - name: Build API and web
-        run: pnpm --filter @mirthmix/api --filter @mirthmix/web run build
+        run: pnpm --filter @gleefy/api --filter @gleefy/web run build
       - name: Install Playwright browser
-        run: pnpm --filter @mirthmix/web exec playwright install --with-deps chromium
+        run: pnpm --filter @gleefy/web exec playwright install --with-deps chromium
       # Same site, built with a fake Supabase address so tests can sign in with a seeded session.
       - name: Build web for end-to-end tests
-        run: pnpm --filter @mirthmix/web run build:e2e
+        run: pnpm --filter @gleefy/web run build:e2e
       - name: Web end-to-end and accessibility tests
-        run: pnpm --filter @mirthmix/web run test:e2e
+        run: pnpm --filter @gleefy/web run test:e2e
       - name: Dependency audit (high and critical)
         run: pnpm audit --prod --audit-level high
 
@@ -114,7 +114,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - name: Build the image Fly.io deploys
-        run: docker build -f apps/api/Dockerfile -t mirthmix-api:ci .
+        run: docker build -f apps/api/Dockerfile -t gleefy-api:ci .
 
   # ---------------------------------------------------------------------------------------------
   # Deploys: main only, after every check passes, each behind its environment's required reviewers.
@@ -148,7 +148,7 @@ jobs:
       - name: Deploy the API to Fly.io
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-          FLY_APP: ${{ vars.FLY_APP || 'mirthmix-api' }}
+          FLY_APP: ${{ vars.FLY_APP || 'gleefy-api' }}
         run: >-
           flyctl deploy --remote-only --config apps/api/fly.toml --dockerfile apps/api/Dockerfile
           --app "$FLY_APP" --wait-timeout 300
@@ -191,16 +191,16 @@ jobs:
           NEXT_PUBLIC_AUTH_GOOGLE_ENABLED: ${{ vars.AUTH_GOOGLE_ENABLED }}
           NEXT_PUBLIC_SENTRY_DSN: ${{ vars.WEB_SENTRY_DSN }}
           NEXT_PUBLIC_CONTACT_EMAIL: ${{ vars.CONTACT_EMAIL }}
-        run: pnpm --filter @mirthmix/web build
+        run: pnpm --filter @gleefy/web build
       # Deploying to the project's production branch makes this the live site.
       - name: Upload to Cloudflare Pages
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
-          PAGES_PROJECT: ${{ vars.CLOUDFLARE_PAGES_PROJECT || 'mirthmix' }}
+          PAGES_PROJECT: ${{ vars.CLOUDFLARE_PAGES_PROJECT || 'gleefy' }}
           WRANGLER_SEND_METRICS: 'false'
         run: >-
-          pnpm --filter @mirthmix/web exec wrangler pages deploy out
+          pnpm --filter @gleefy/web exec wrangler pages deploy out
           --project-name "$PAGES_PROJECT" --branch main --commit-hash "$GITHUB_SHA"
 
   deploy-android:
@@ -265,7 +265,7 @@ jobs:
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
-          packageName: com.mirthmix.app
+          packageName: com.gleefy.app
           releaseFiles: apps/mobile/build/app/outputs/bundle/release/app-release.aab
           # internal → closed → production; promote in Play Console or change the variable.
           track: ${{ vars.PLAY_TRACK || 'internal' }}

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import type { ShareMode } from '@mirthmix/game-engine';
+import type { ShareMode } from '@gleefy/game-engine';
 import { categoryCount, guide, guideHref, guides } from '@/lib/guides';
 import { packs } from '@/lib/packs';
 import { primary } from '@/lib/ui';

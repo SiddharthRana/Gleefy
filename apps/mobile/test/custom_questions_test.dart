@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mirthmix/content/content.dart';
-import 'package:mirthmix/content/profanity.dart';
-import 'package:mirthmix/router/router.dart';
-import 'package:mirthmix/state/custom_questions.dart';
-import 'package:mirthmix/state/sessions.dart';
+import 'package:gleefy/content/content.dart';
+import 'package:gleefy/content/profanity.dart';
+import 'package:gleefy/router/router.dart';
+import 'package:gleefy/state/custom_questions.dart';
+import 'package:gleefy/state/sessions.dart';
 
 import 'support/harness.dart';
 

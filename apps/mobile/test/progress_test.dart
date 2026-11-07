@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mirthmix/router/router.dart';
-import 'package:mirthmix/state/progress.dart';
+import 'package:gleefy/router/router.dart';
+import 'package:gleefy/state/progress.dart';
 
 import 'analytics_test.dart' show playShortGame;
 import 'support/harness.dart';

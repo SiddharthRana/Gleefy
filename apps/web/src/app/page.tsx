@@ -5,7 +5,7 @@ import { ProgressPanel } from '@/components/progress-panel';
 import { TryOne } from '@/components/try-one';
 import { wyrCount, wyrSamples } from '@/lib/content';
 import { premiumCategories, premiumQuestionCount } from '@/lib/packs';
-import { formatPrice, PLANS } from '@mirthmix/plans';
+import { formatPrice, PLANS } from '@gleefy/plans';
 import { modes } from '@/lib/site';
 
 const steps = [
@@ -36,7 +36,7 @@ const reasons = [
   {
     icon: '🌍',
     title: 'Made for friends anywhere',
-    body: 'Original questions about the whole world, written for MirthMix and fine for ages 13+.',
+    body: 'Original questions about the whole world, written for Gleefy and fine for ages 13+.',
   },
 ];
 
@@ -165,7 +165,7 @@ export default function HomePage() {
 
       <section aria-labelledby="why-heading" className="py-12">
         <h2 id="why-heading" className="font-display text-4xl font-semibold">
-          Why MirthMix
+          Why Gleefy
         </h2>
         <ul className="mt-8 grid gap-4 sm:grid-cols-2">
           {reasons.map((r, i) => (

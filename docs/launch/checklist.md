@@ -4,13 +4,13 @@ Everything between today and a production release, in order. Code work is done u
 
 ## 1. Names, accounts and money (owner)
 
-- [ ] Check "MirthMix" for trademark conflicts, and that the Play Store name and a domain are free (BUILD_PROMPT §18).
-- [ ] Buy the domain. Replace `mirthmix.example` everywhere: `NEXT_PUBLIC_SITE_URL`, `SITE_URL`, the App Links host in `apps/mobile/android/app/src/main/AndroidManifest.xml`, and `NEXT_PUBLIC_CONTACT_EMAIL`.
+- [ ] Trademark: a quick search (WIPO Global Brand Database, Play Store, web) on 2026-11-08 found no "Gleefy" trademark in any class and no app of that name. Before launch, get a professional clearance search, and consider filing "Gleefy" in classes 9 and 41.
+- [ ] Buy **gleefy.party** (Cloudflare Registrar, about $5 a year). The code already uses it (`NEXT_PUBLIC_SITE_URL`, `SITE_URL`, the App Links host in `apps/mobile/android/app/src/main/AndroidManifest.xml`); set `NEXT_PUBLIC_CONTACT_EMAIL` to a real address on it. Grab matching social handles.
 - [ ] Set up a support email address (shown on `/contact` and in the Play listing).
 - [ ] Google Play developer account (one-time $25 fee); identity verification.
 - [ ] Confirm Dodo Payments accepts you as a seller (`docs/payments-setup.md` §0), or launch with Google Play billing only (`WEB_PAYMENT_PROVIDER=none`).
 - [ ] Google sign-in: OAuth client and consent screen in Google Cloud, Google provider in Supabase, then `AUTH_GOOGLE_ENABLED=true` (`docs/payments-setup.md` §1).
-- [ ] Create the $2.99 one-time products in Play Console (`mirthmix_premium_unlock`) and Dodo; set any local prices (for example India).
+- [ ] Create the $2.99 one-time products in Play Console (`gleefy_premium_unlock`) and Dodo; set any local prices (for example India).
 - [ ] Supabase project (Free while testing; Pro before taking real payments), Fly.io app, Cloudflare Pages project, optional PostHog project (EU) with a retention period set, optional Sentry project (EU region) for the API and website.
 
 ## 2. Content (owner + a second person)

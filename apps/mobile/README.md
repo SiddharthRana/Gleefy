@@ -1,11 +1,11 @@
-# MirthMix mobile (Flutter)
+# Gleefy mobile (Flutter)
 
 Android-first Flutter app. iOS is structurally supported but not in scope yet (no iOS builds or payments).
 
 - Flutter 3.47 stable / Dart 3.13, Material 3 with a custom playful theme
 - State: Riverpod 3 · Routing: go_router 18 · Storage: shared_preferences · Screen-awake: wakelock_plus · i18n: `flutter gen-l10n` (ARB in `lib/l10n`)
 - Fonts: Fredoka (display) and Nunito (body), bundled under the SIL Open Font License (`assets/fonts/OFL.txt`)
-- Package: `com.mirthmix.app` (permanent once published on Google Play)
+- Package: `com.gleefy.app` (permanent once published on Google Play)
 
 ## Structure
 
@@ -71,10 +71,10 @@ flutter build appbundle --release             # Play upload
 Without a keystore, release builds are signed with the debug key (fine locally; **not** accepted by Play). To sign for Play:
 
 1. Create an upload keystore (keep it and its passwords safe, outside the repo):
-   `keytool -genkey -v -keystore ~/mirthmix-upload.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload`
+   `keytool -genkey -v -keystore ~/gleefy-upload.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload`
 2. Create `android/key.properties` (git-ignored):
    ```
-   storeFile=/absolute/path/to/mirthmix-upload.jks
+   storeFile=/absolute/path/to/gleefy-upload.jks
    storePassword=...
    keyAlias=upload
    keyPassword=...

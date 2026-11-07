@@ -6,7 +6,7 @@ Copy for Play Console → Grow → Store presence → Main store listing. Check 
 
 | Field                    | Value                                                                       |
 | ------------------------ | --------------------------------------------------------------------------- |
-| App name (≤ 30)          | MirthMix: Party Games                                                       |
+| App name (≤ 30)          | Gleefy: Party Games                                                         |
 | Short description (≤ 80) | Party games for one phone: Would You Rather, trivia, This or That and more. |
 | Category                 | Games → Casual (alternative: Trivia)                                        |
 | Tags                     | Party, Trivia, Casual, Offline, Family (pick the closest Play offers)       |
@@ -19,7 +19,7 @@ Confirm the name is free on Play and as a trademark before using it (BUILD_PROMP
 
 ## Full description (≤ 4000)
 
-> **Party games for the people in the room.** MirthMix turns one phone into a game night: pick a game, read it out, and let everyone answer. Nobody else needs to install anything, and you never need an account to play.
+> **Party games for the people in the room.** Gleefy turns one phone into a game night: pick a game, read it out, and let everyone answer. Nobody else needs to install anything, and you never need an account to play.
 >
 > **Five ways to play**
 > • **Would You Rather**: two choices, everyone votes, and the reveal shows how the room split. See the most divisive and most unanimous questions at the end.
@@ -36,11 +36,11 @@ Confirm the name is free on Play and as a trademark before using it (BUILD_PROMP
 > • Works offline. A game survives a phone call or the app closing
 > • Share a game link: friends get the same questions in the app or their browser
 >
-> **Free to play, with optional Premium.** Every game and every free category is free, with no ads. MirthMix Premium adds premium categories in every game, for one small payment. No subscription: pay once and keep it.
+> **Free to play, with optional Premium.** Every game and every free category is free, with no ads. Gleefy Premium adds premium categories in every game, for one small payment. No subscription: pay once and keep it.
 >
 > **Private by design.** No account needed to play, no ads, no tracking. Anonymous usage statistics are off unless you turn them on.
 >
-> MirthMix is made for ages 13 and up. Accounts and purchases are for people aged 18 or over.
+> Gleefy is made for ages 13 and up. Accounts and purchases are for people aged 18 or over.
 
 Keep these claims true when the app changes: counts on the store must not exceed what ships (BUILD_PROMPT §6).
 

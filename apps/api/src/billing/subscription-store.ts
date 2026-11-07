@@ -16,7 +16,7 @@ export class SubscriptionStore {
   constructor(private readonly database: Database) {}
 
   /**
-   * Finds the MirthMix user an event belongs to: explicit id, existing row, linked token, account
+   * Finds the Gleefy user an event belongs to: explicit id, existing row, linked token, account
    * ref, then the payer's email. The email match can only ever give Premium to the account the
    * payer chose, so it can't hand out access for free (same rule as Weblume).
    */

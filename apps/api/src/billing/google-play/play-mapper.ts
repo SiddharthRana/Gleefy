@@ -1,4 +1,4 @@
-import type { SubscriptionStatus } from '@mirthmix/plans';
+import type { SubscriptionStatus } from '@gleefy/plans';
 import type { NormalizedSubscription } from '../billing.types';
 import type { ProductPurchase } from './play-client';
 

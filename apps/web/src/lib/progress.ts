@@ -9,15 +9,15 @@ import {
   type FinishedGame,
   type GameReward,
   type Progress,
-} from '@mirthmix/game-engine';
+} from '@gleefy/game-engine';
 import { useEffect, useState } from 'react';
 
 /**
  * XP, level, streak and trophies earned in the web player. Kept only in this browser's local
  * storage (never sent anywhere), and separate from the app's, which lives on the phone.
  */
-const KEY = 'mirthmix.progress.v1';
-const EVENT = 'mirthmix-progress';
+const KEY = 'gleefy.progress.v1';
+const EVENT = 'gleefy-progress';
 
 export function readProgress(): Progress {
   try {

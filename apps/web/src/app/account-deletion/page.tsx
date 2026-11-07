@@ -5,7 +5,7 @@ import { contactEmail } from '@/lib/contact';
 
 export const metadata: Metadata = {
   title: 'Delete your account',
-  description: 'How to delete your MirthMix account and what happens to your data.',
+  description: 'How to delete your Gleefy account and what happens to your data.',
   alternates: { canonical: '/account-deletion' },
 };
 
@@ -15,7 +15,7 @@ export default function AccountDeletionPage() {
       <h1 className="font-display text-5xl font-bold">Delete your account</h1>
       <LegalDraftNotice />
       <p className="mt-6 text-lg">
-        You only have a MirthMix account if you signed in to buy or restore Premium. Playing without
+        You only have a Gleefy account if you signed in to buy or restore Premium. Playing without
         an account stores nothing on our servers, so there is nothing to delete.
       </p>
       <h2 className="mt-10 font-display text-3xl font-semibold">How to delete it</h2>

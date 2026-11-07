@@ -4,7 +4,7 @@ export function SiteFooter() {
   return (
     <footer className="mt-24 border-t border-border">
       <div className="mx-auto flex max-w-5xl flex-col gap-4 px-4 py-8 text-muted sm:flex-row sm:items-center sm:justify-between">
-        <p>© {new Date().getFullYear()} MirthMix · Made for ages 13+</p>
+        <p>© {new Date().getFullYear()} Gleefy · Made for ages 13+</p>
         <nav aria-label="Footer">
           <ul className="flex flex-wrap gap-x-6 gap-y-2 font-bold">
             <li>

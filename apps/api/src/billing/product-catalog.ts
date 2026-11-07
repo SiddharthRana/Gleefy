@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import type { PlanId } from '@mirthmix/plans';
+import type { PlanId } from '@gleefy/plans';
 import { ENV, type Env } from '../config/env';
 import type { PaymentProviderId } from '../database/schema';
 import type { BillingInterval } from './billing.types';
@@ -12,7 +12,7 @@ export interface CatalogEntry {
 }
 
 /**
- * Maps provider product/price ids (configured per environment) to MirthMix plans. Prices themselves
+ * Maps provider product/price ids (configured per environment) to Gleefy plans. Prices themselves
  * live in the provider dashboards; this mapping is the only place a provider id becomes a plan.
  */
 @Injectable()

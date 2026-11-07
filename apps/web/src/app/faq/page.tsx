@@ -5,13 +5,13 @@ import { contactEmail } from '@/lib/contact';
 export const metadata: Metadata = {
   title: 'FAQ',
   description:
-    'Answers about MirthMix: free play, Premium, accounts, privacy, offline play, sharing and devices.',
+    'Answers about Gleefy: free play, Premium, accounts, privacy, offline play, sharing and devices.',
   alternates: { canonical: '/faq' },
 };
 
 const faqs: { q: string; a: React.ReactNode }[] = [
   {
-    q: 'Is MirthMix free?',
+    q: 'Is Gleefy free?',
     a: 'Yes. Every game and every free category is free to play, with no ads and no account. Premium adds extra categories in every game.',
   },
   {
@@ -58,10 +58,10 @@ const faqs: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: 'Is there an app for iPhone and Android?',
-    a: 'Yes, MirthMix is coming to both Android and iOS. Until then, anyone can play the four games in the browser on the Play page, and shared game links open there too.',
+    a: 'Yes, Gleefy is coming to both Android and iOS. Until then, anyone can play the four games in the browser on the Play page, and shared game links open there too.',
   },
   {
-    q: 'Who is MirthMix for?',
+    q: 'Who is Gleefy for?',
     a: 'Friends, couples and families playing together in person, aged 13 and up. Each category shows its age guidance and any content note before you play.',
   },
   {

@@ -1,4 +1,4 @@
-package com.mirthmix.app
+package com.gleefy.app
 
 import io.flutter.embedding.android.FlutterActivity
 

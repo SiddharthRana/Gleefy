@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mirthmix/game/progress.dart';
+import 'package:gleefy/game/progress.dart';
 
 /// Replays packages/game-engine/test-vectors/progress.json, generated from the TypeScript engine.
 void main() {

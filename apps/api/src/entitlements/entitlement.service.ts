@@ -6,7 +6,7 @@ import {
   subscriptionGrantsAccess,
   type Entitlements,
   type PlanConfig,
-} from '@mirthmix/plans';
+} from '@gleefy/plans';
 import { ApiError } from '../common/api-error';
 import { FeatureFlags } from '../common/feature-flags.service';
 import { Database } from '../database/database.module';

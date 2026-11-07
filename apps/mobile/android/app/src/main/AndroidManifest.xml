@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Only used to verify Premium with the MirthMix API; games work offline. -->
+    <!-- Only used to verify Premium with the Gleefy API; games work offline. -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="MirthMix"
+        android:label="Gleefy"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -22,20 +22,20 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
-            <!-- Shared game links. Replace mirthmix.example with the real domain and publish
+            <!-- Shared game links. Replace gleefy.party with the real domain and publish
                  /.well-known/assetlinks.json there (see apps/web/public/.well-known). -->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:scheme="https" android:host="mirthmix.example" android:pathPrefix="/play"/>
+                <data android:scheme="https" android:host="gleefy.party" android:pathPrefix="/play"/>
             </intent-filter>
-            <!-- "Continue with Google" returns here through Supabase Auth (mirthmix://auth-callback). -->
+            <!-- "Continue with Google" returns here through Supabase Auth (gleefy://auth-callback). -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:scheme="mirthmix" android:host="auth-callback"/>
+                <data android:scheme="gleefy" android:host="auth-callback"/>
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

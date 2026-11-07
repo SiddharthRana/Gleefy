@@ -1,6 +1,6 @@
 # Payments setup
 
-MirthMix sells one thing: **MirthMix Premium, a one-time unlock** (indicative price **$2.99**, no subscription). It's sold through two channels that grant the same entitlement (`premiumContent`). The design and code are ported from Weblume (`apps/api/src/billing`), including Weblume's later fixes (Dodo as the web provider, payer-email matching, honest checkout results, token refresh in the app, Google sign-in). Weblume sells subscriptions; MirthMix uses the same pipeline for a one-time product.
+Gleefy sells one thing: **Gleefy Premium, a one-time unlock** (indicative price **$2.99**, no subscription). It's sold through two channels that grant the same entitlement (`premiumContent`). The design and code are ported from Weblume (`apps/api/src/billing`), including Weblume's later fixes (Dodo as the web provider, payer-email matching, honest checkout results, token refresh in the app, Google sign-in). Weblume sells subscriptions; Gleefy uses the same pipeline for a one-time product.
 
 | Channel                                     | Who it's for                                                         | How it works                                                                                                     |
 | ------------------------------------------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
@@ -22,9 +22,9 @@ Everything below uses **test** modes. Nothing is charged until you switch to liv
 1. Create a project. Copy the **project URL** and the **publishable key** (or legacy anon key).
 2. **Authentication → Providers → Email:** enabled. **Authentication → Email templates:** edit **Confirm signup** (first sign-in) and **Magic Link** (later sign-ins) to show `{{ .Token }}`, so people get a 6-digit code rather than a link. Check the OTP length is 6.
 3. **Continue with Google** (same as Weblume):
-   1. In Google Cloud → **APIs & Services → Credentials**, create an **OAuth client ID** of type **Web application**. Authorised redirect URI: `https://<ref>.supabase.co/auth/v1/callback`. Fill in the OAuth consent screen (app name MirthMix, support email, privacy policy URL; scopes `email`, `profile`, `openid` only).
+   1. In Google Cloud → **APIs & Services → Credentials**, create an **OAuth client ID** of type **Web application**. Authorised redirect URI: `https://<ref>.supabase.co/auth/v1/callback`. Fill in the OAuth consent screen (app name Gleefy, support email, privacy policy URL; scopes `email`, `profile`, `openid` only).
    2. **Supabase → Authentication → Providers → Google:** enable it and paste the client ID and secret.
-   3. **Authentication → URL configuration:** site URL = your website; **Redirect URLs:** `https://<your-site>/auth/callback` and `mirthmix://auth-callback` (the Android app's deep link).
+   3. **Authentication → URL configuration:** site URL = your website; **Redirect URLs:** `https://<your-site>/auth/callback` and `gleefy://auth-callback` (the Android app's deep link).
    4. Set the GitHub repository variable **`AUTH_GOOGLE_ENABLED=true`**. It turns the button on in the website build (`NEXT_PUBLIC_AUTH_GOOGLE_ENABLED`) and the Android build (`--dart-define=AUTH_GOOGLE_ENABLED`). Leave it unset until the provider works, and the button stays hidden.
    5. Test once from the website and once from the app: the browser opens Google, then returns to `/auth/callback` (website) or straight back into the app.
 4. Apply the database migrations: `supabase db push`, or run `supabase/migrations/*.sql` in the SQL editor. They create `profiles`, `subscriptions` (the purchase records), `webhook_events` and `feature_flags` with row-level security (users can only read their own rows; all writes go through the API).
@@ -40,7 +40,7 @@ Everything below uses **test** modes. Nothing is charged until you switch to liv
 ## 3. Dodo Payments (test mode)
 
 1. Create an account, complete business verification, and stay in **Test mode**.
-2. **Products:** create a **one-time** product "MirthMix Premium" at $2.99. Copy its product ID → **`DODO_PRODUCT_PREMIUM`**.
+2. **Products:** create a **one-time** product "Gleefy Premium" at $2.99. Copy its product ID → **`DODO_PRODUCT_PREMIUM`**.
 3. **Developer → API keys:** `DODO_API_KEY`; `DODO_ENV=test`; `WEB_PAYMENT_PROVIDER=dodo`.
 4. **Developer → Webhooks:** `https://<your-api>/v1/billing/webhooks/dodo`, with at least `payment.succeeded`, `refund.succeeded` and `dispute.lost`. Signing secret (`whsec_…`) → `DODO_WEBHOOK_SECRET`.
 5. `BILLING_RETURN_URL=https://<your-site>/account?checkout=success`. Dodo adds `payment_id` and `status`; the account page reads them, shows a "confirming / unlocked / still waiting / didn't go through" card, and removes them from the address.
@@ -52,8 +52,8 @@ The checkout carries the user id in `metadata`; if Dodo doesn't copy it onto the
 
 ### Play Console
 
-1. Create the app with package name **`com.mirthmix.app`** and upload a release (internal testing is fine) signed with the upload key (`apps/mobile/README.md`). Play only offers billing to uploaded apps.
-2. **Monetize → Products → One-time products:** create **`mirthmix_premium_unlock`** (must match `GOOGLE_PLAY_PRODUCT_ID`), non-consumable, price $2.99 (Play suggests converted prices per country). Activate it.
+1. Create the app with package name **`com.gleefy.app`** and upload a release (internal testing is fine) signed with the upload key (`apps/mobile/README.md`). Play only offers billing to uploaded apps.
+2. **Monetize → Products → One-time products:** create **`gleefy_premium_unlock`** (must match `GOOGLE_PLAY_PRODUCT_ID`), non-consumable, price $2.99 (Play suggests converted prices per country). Activate it.
 3. **Setup → License testing:** add tester accounts so test purchases aren't charged.
 
 ### Google Cloud: server access
@@ -73,7 +73,7 @@ The checkout carries the user id in `metadata`; if Dodo doesn't copy it onto the
 
 1. The person signs in, opens **Premium**, and taps **Unlock Premium for $2.99** (the price comes from Play, in local currency). The app gets their account reference (`GET /v1/billing/google-play/account-ref`) and starts the purchase with it as `obfuscatedAccountId`.
 2. Play returns a purchase token; the app sends it to `POST /v1/billing/google-play/verify`.
-3. The API reads `purchases.products` for `mirthmix_premium_unlock` from Google (a token for any other product is "not found"), checks the account reference matches the signed-in user (so a token can't be claimed by another account), saves the purchase and **acknowledges** it (unacknowledged purchases are refunded after 3 days).
+3. The API reads `purchases.products` for `gleefy_premium_unlock` from Google (a token for any other product is "not found"), checks the account reference matches the signed-in user (so a token can't be claimed by another account), saves the purchase and **acknowledges** it (unacknowledged purchases are refunded after 3 days).
 4. Only then does the app complete the purchase on the device and refresh the entitlement; an animated card shows confirming → unlocked (with confetti), or why it didn't work, with **Try again** for a paid purchase the server couldn't confirm yet. If the app is killed mid-way, Play redelivers the purchase on next launch, and RTDN also acknowledges it as a fallback.
 5. **Pending payments** (cash or bank methods) unlock nothing until Play reports them paid (`oneTimeProductNotification` PURCHASED). **Refunds and chargebacks** arrive as `voidedPurchaseNotification` and set the purchase to `refunded`.
 

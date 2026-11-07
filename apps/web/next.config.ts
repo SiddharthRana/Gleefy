@@ -11,10 +11,10 @@ const nextConfig: NextConfig = {
   typedRoutes: true,
   poweredByHeader: false,
   transpilePackages: [
-    '@mirthmix/content',
-    '@mirthmix/design-tokens',
-    '@mirthmix/game-engine',
-    '@mirthmix/plans',
+    '@gleefy/content',
+    '@gleefy/design-tokens',
+    '@gleefy/game-engine',
+    '@gleefy/plans',
   ],
 };
 

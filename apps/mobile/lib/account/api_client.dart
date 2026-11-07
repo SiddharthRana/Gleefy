@@ -104,7 +104,7 @@ class PlayVerifyResult {
 
 DateTime? _date(Object? v) => v is String ? DateTime.tryParse(v) : null;
 
-/// The MirthMix API, as far as the app uses it. Tests use a fake.
+/// The Gleefy API, as far as the app uses it. Tests use a fake.
 abstract class AccountApi {
   bool get configured;
   Future<BillingConfig> billingConfig();

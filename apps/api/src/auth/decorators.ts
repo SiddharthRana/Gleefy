@@ -1,12 +1,12 @@
 import { createParamDecorator, ExecutionContext, SetMetadata } from '@nestjs/common';
 import type { AuthenticatedRequest, AuthUser } from './auth.types';
 
-export const IS_PUBLIC = 'mirthmix:isPublic';
+export const IS_PUBLIC = 'gleefy:isPublic';
 
 /** Marks a route as reachable without authentication. Every other route requires a valid JWT. */
 export const Public = () => SetMetadata(IS_PUBLIC, true);
 
-export const OPTIONAL_AUTH = 'mirthmix:optionalAuth';
+export const OPTIONAL_AUTH = 'gleefy:optionalAuth';
 
 /** Route works signed out, but if a bearer token is sent it must be valid and the user is attached. */
 export const OptionalAuth = () => SetMetadata(OPTIONAL_AUTH, true);

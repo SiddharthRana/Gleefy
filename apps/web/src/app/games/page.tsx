@@ -4,7 +4,7 @@ import { modes } from '@/lib/site';
 
 export const metadata: Metadata = {
   title: 'Games',
-  description: 'Every MirthMix party game: Would You Rather, This or That, Trivia Blitz and more.',
+  description: 'Every Gleefy party game: Would You Rather, This or That, Trivia Blitz and more.',
   alternates: { canonical: '/games' },
 };
 

@@ -44,7 +44,7 @@ export async function createApp(
 
 export function buildOpenApi(app: INestApplication): OpenAPIObject {
   const config = new DocumentBuilder()
-    .setTitle('MirthMix API')
+    .setTitle('Gleefy API')
     .setDescription(
       'Purchaser accounts and subscriptions. Routes require a Supabase access token unless noted.',
     )
