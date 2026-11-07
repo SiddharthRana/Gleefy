@@ -2,6 +2,14 @@
 
 Short, dated records of non-trivial choices. Newest first.
 
+## 2026-11-08 — Game-style site and app, progress, worldwide content
+
+**XP, levels, a daily streak and trophies, on the device only.** Inspired by how games keep players coming back, and by game sites like Jackbox, Gartic Phone and skribbl (chunky buttons, a doodle lobby wallpaper, a mascot row, bold game cards). Finishing a game earns 10 XP + 2 per round (capped at 30 rounds) + 5 for the first game of the day + 15 for a perfect Trivia game; level L needs 25 × L × (L − 1) XP in total. Nine trophies. The rules live in `packages/game-engine/src/progress.ts` with a Dart port checked against `test-vectors/progress.json`, like the game engines. Progress is stored in shared preferences (app) and localStorage (website) and never sent anywhere, so it needs no account and keeps the privacy promise. _Rejected:_ server-side progress or leaderboards (would need accounts for everyone).
+
+**The header promotes Premium, not sign-in.** Playing never needs an account, so a "Sign in" link on every page sent the wrong message. The header shows a gold Premium pill (and a level chip once you've played); sign-in lives on the Premium and Account pages and in the app's Settings.
+
+**Worldwide content.** The four India-only categories (Desi Days, Desi Picks, India trivia, Desi Food) became Around the World, Big Debates, Around the World trivia and World Food, and India-centred items in worldwide categories were swapped for international ones. The `region` field stays, so clearly labelled country packs can come back later.
+
 ## 2026-11-07 — Premium becomes a one-time unlock; Weblume's payment fixes; Google sign-in
 
 **Premium is a one-time $2.99 unlock, not a subscription.** The owner asked for a minimal price because many players won't pay for party games, and chose a one-time unlock over $0.99–$1.99 subscriptions. A party game is an occasional purchase, "yours to keep" is easy to say yes to, and at $2.99 store fees stay reasonable (Play 15%, Dodo ≈ 4% + 15¢). Prices are set in US dollars; cheaper local prices (for example ₹99 in India) are per-country overrides in Play and Dodo, not code. _Rejected:_ $0.99/month (fees take ~20% on the web and buyers still face a subscription), keeping $2.99/$19.99 subscriptions.

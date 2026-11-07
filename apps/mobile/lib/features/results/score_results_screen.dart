@@ -13,6 +13,7 @@ import '../../theme/tokens.g.dart';
 import '../../widgets/brand.dart';
 import '../../widgets/results_actions.dart';
 import '../../widgets/motion.dart';
+import '../../widgets/progress_widgets.dart';
 import '../../widgets/usage_prompt.dart';
 import '../modes.dart';
 
@@ -105,6 +106,7 @@ class ScoreResultsScreen extends ConsumerWidget {
                   ),
                 ),
               ),
+              const RewardCard(),
               const UsagePrompt(),
               const SizedBox(height: MmSpace.s4),
               for (final (i, row) in rows.indexed)

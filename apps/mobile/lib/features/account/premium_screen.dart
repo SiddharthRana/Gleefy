@@ -16,6 +16,7 @@ import '../../theme/tokens.g.dart';
 import '../../widgets/motion.dart';
 import 'purchase_status_card.dart';
 import '../modes.dart';
+import '../../widgets/insets.dart';
 
 String formatDay(BuildContext context, DateTime d) =>
     DateFormat.yMMMd(Localizations.localeOf(context).toLanguageTag()).format(d.toLocal());
@@ -88,7 +89,7 @@ class _PremiumScreenState extends ConsumerState<PremiumScreen> {
     return Scaffold(
       appBar: AppBar(title: Text(l.premiumTitle)),
       body: ListView(
-        padding: const EdgeInsets.all(MmSpace.s4),
+        padding: listPadding(context, const EdgeInsets.all(MmSpace.s4)),
         children: [
           Text(l.premiumPitch, style: theme.textTheme.titleMedium),
           const SizedBox(height: MmSpace.s4),

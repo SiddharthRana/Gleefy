@@ -1,7 +1,11 @@
 import Link from 'next/link';
+import { Crew } from '@/components/crew';
 import { ModeCard } from '@/components/mode-card';
+import { ProgressPanel } from '@/components/progress-panel';
 import { TryOne } from '@/components/try-one';
 import { wyrCount, wyrSamples } from '@/lib/content';
+import { premiumCategories, premiumQuestionCount } from '@/lib/packs';
+import { formatPrice, PLANS } from '@mirthmix/plans';
 import { modes } from '@/lib/site';
 
 const steps = [
@@ -14,22 +18,38 @@ const steps = [
 ];
 
 const reasons = [
-  { title: 'One phone is enough', body: 'Nobody else needs to install anything or join a room.' },
-  { title: 'No sign-up', body: 'Open the app and play. No account, no email, no profile.' },
   {
-    title: 'Private by design',
-    body: 'Games, settings and player names stay on your phone. Usage stats only if you opt in.',
+    icon: '🎉',
+    title: 'Free to play, no sign-up',
+    body: 'Every game and every free category works straight away. No account, no email, no ads.',
   },
   {
-    title: 'Original questions',
-    body: 'Every question is written for MirthMix and suitable for ages 13+.',
+    icon: '📱',
+    title: 'One phone is enough',
+    body: 'Nobody else needs to install anything or join a room. Just pass the phone.',
   },
+  {
+    icon: '🏆',
+    title: 'Level up as you play',
+    body: 'Earn XP, keep a daily streak going and collect trophies. Kept on your device.',
+  },
+  {
+    icon: '🌍',
+    title: 'Made for friends anywhere',
+    body: 'Original questions about the whole world, written for MirthMix and fine for ages 13+.',
+  },
+];
+
+const premiumPerks = [
+  'Every premium category in every game',
+  'Pay once and keep it: no subscription',
+  'Works in the Android and iOS apps and on this website',
 ];
 
 export default function HomePage() {
   return (
     <>
-      <section className="relative grid items-center gap-10 py-12 md:grid-cols-2 md:py-20">
+      <section className="doodle-bg relative -mx-4 grid items-center gap-10 px-4 py-12 md:grid-cols-2 md:py-20">
         {/* Drifting party bits behind the hero. Decorative; still under reduced motion. */}
         <div
           aria-hidden="true"
@@ -50,26 +70,62 @@ export default function HomePage() {
           />
         </div>
         <div>
-          <h1 className="font-display text-5xl font-bold leading-tight sm:text-6xl">
+          <Crew className="mb-4" />
+          <p className="flex flex-wrap gap-3">
+            <span
+              className="sticker bg-accent text-on-accent"
+              style={{ '--tilt': '-4deg' } as React.CSSProperties}
+            >
+              Free to play
+            </span>
+            <span
+              className="sticker bg-surface"
+              style={{ '--tilt': '3deg' } as React.CSSProperties}
+            >
+              No sign-up
+            </span>
+            <span
+              className="sticker bg-option-b text-on-option"
+              style={{ '--tilt': '-2deg' } as React.CSSProperties}
+            >
+              One phone
+            </span>
+          </p>
+          <h1 className="mt-6 font-display text-5xl font-bold leading-tight sm:text-6xl">
             Party games for <span className="text-primary">one phone</span>.
           </h1>
           <p className="mt-5 text-lg text-muted">
-            Quick, silly and surprisingly deep games for friends, couples and families sitting
-            together. Start in seconds, no sign-up needed.
+            Would You Rather, Trivia Blitz and more. Pass one phone around the room and play
+            together in seconds, free and with nothing to sign up for.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <span className="pulse inline-flex rounded-full">
+              <Link
+                href="/play"
+                className="press btn-3d brand-gradient inline-flex min-h-16 items-center gap-2 rounded-full px-8 font-display text-2xl font-bold"
+              >
+                <span aria-hidden="true">▶</span> Play now
+              </Link>
+            </span>
             <Link
               href="/games"
-              className="press btn-3d brand-gradient inline-flex min-h-14 items-center rounded-full px-7 text-lg font-bold"
+              className="press btn-3d-soft inline-flex min-h-14 items-center rounded-full border-2 border-border bg-surface px-6 text-lg font-bold"
             >
               See the games
             </Link>
-            <p className="inline-flex min-h-14 items-center rounded-full border-2 border-border px-6 font-bold text-muted">
-              Android app coming soon
-            </p>
           </div>
+          <p className="mt-4 font-bold text-muted">Android and iOS apps coming soon.</p>
         </div>
         <TryOne samples={wyrSamples} />
+      </section>
+
+      <section aria-labelledby="progress-heading" className="py-12">
+        <h2 id="progress-heading" className="font-display text-4xl font-semibold">
+          Your progress
+        </h2>
+        <div className="mt-6">
+          <ProgressPanel />
+        </div>
       </section>
 
       <section id="how-it-works" aria-labelledby="how-heading" className="scroll-mt-8 py-12">
@@ -101,8 +157,8 @@ export default function HomePage() {
           questions.
         </p>
         <ul className="mt-8 grid gap-4 md:grid-cols-2">
-          {modes.map((m) => (
-            <ModeCard key={m.id} mode={m} />
+          {modes.map((m, i) => (
+            <ModeCard key={m.id} mode={m} index={i} />
           ))}
         </ul>
       </section>
@@ -112,13 +168,68 @@ export default function HomePage() {
           Why MirthMix
         </h2>
         <ul className="mt-8 grid gap-4 sm:grid-cols-2">
-          {reasons.map((r) => (
-            <li key={r.title} className="lift rounded-card border border-border bg-surface p-5">
-              <h3 className="font-display text-2xl font-semibold">{r.title}</h3>
+          {reasons.map((r, i) => (
+            <li
+              key={r.title}
+              className="game-card rounded-card bg-surface p-5"
+              style={{ '--tilt': `${i % 2 ? 0.6 : -0.6}deg` } as React.CSSProperties}
+            >
+              <span aria-hidden="true" className="text-4xl">
+                {r.icon}
+              </span>
+              <h3 className="mt-2 font-display text-2xl font-semibold">{r.title}</h3>
               <p className="mt-1 text-muted">{r.body}</p>
             </li>
           ))}
         </ul>
+      </section>
+
+      <section
+        aria-labelledby="premium-heading"
+        className="my-12 rounded-panel border-2 border-accent bg-surface p-6 sm:p-8"
+      >
+        <p
+          className="sticker premium-pill border-0"
+          style={{ '--tilt': '-2deg' } as React.CSSProperties}
+        >
+          <span aria-hidden="true">★</span> Premium
+        </p>
+        <h2 id="premium-heading" className="mt-4 font-display text-4xl font-semibold">
+          Want more? Unlock {premiumCategories.length} extra categories.
+        </h2>
+        <p className="mt-2 text-lg text-muted">
+          {premiumQuestionCount} more questions across every game, for{' '}
+          <strong className="text-text">
+            {formatPrice(PLANS.premium.displayPrice!.amount, 'USD')} once
+          </strong>
+          .
+        </p>
+        <ul className="mt-6 flex flex-wrap gap-2" aria-label="Premium categories">
+          {premiumCategories.map((c) => (
+            <li
+              key={c.id}
+              className="rounded-full border-2 border-border bg-surface-muted px-3 py-1 font-bold"
+            >
+              {c.name} <span className="font-normal text-muted">· {c.mode}</span>
+            </li>
+          ))}
+        </ul>
+        <ul className="mt-6 grid gap-2 sm:grid-cols-3">
+          {premiumPerks.map((p) => (
+            <li key={p} className="flex items-start gap-2 font-bold">
+              <span aria-hidden="true" className="text-success">
+                ✔
+              </span>
+              {p}
+            </li>
+          ))}
+        </ul>
+        <Link
+          href="/pricing"
+          className="press premium-pill mt-6 inline-flex min-h-14 items-center gap-2 rounded-full px-7 text-lg font-bold"
+        >
+          <span aria-hidden="true">★</span> Unlock Premium
+        </Link>
       </section>
     </>
   );

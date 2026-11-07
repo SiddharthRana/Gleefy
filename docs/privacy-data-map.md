@@ -9,15 +9,17 @@ Everything MirthMix stores or sends, where it lives and when it's deleted. Keep 
 | Settings (theme, big text, motion, haptics, analytics opt-in)         | shared_preferences           | App data cleared / uninstall                             |
 | Player and team names                                                 | shared_preferences           | Edited, or app data cleared                              |
 | Game in progress, last setups, favourites, recent games, party packs  | shared_preferences           | Finished/discarded, or app data cleared                  |
+| Progress: XP, level, streak, trophies, games played per mode          | shared_preferences           | App data cleared / uninstall                             |
 | Cached Premium entitlement (user id, premium yes/no, one-time unlock) | shared_preferences           | Sign-out, account deletion, or a server answer of "free" |
 | Supabase session (sign-in token)                                      | Android Keystore (encrypted) | Sign-out / account deletion                              |
 
 ## On the website (browser only)
 
-| Data                          | Where            | Notes                                                    |
-| ----------------------------- | ---------------- | -------------------------------------------------------- |
-| Supabase session if signed in | localStorage     | No cookies, no analytics on the website                  |
-| Shared game links             | URL (`/play?c=`) | Mode, categories, rounds and seed only; no personal data |
+| Data                                              | Where            | Notes                                                    |
+| ------------------------------------------------- | ---------------- | -------------------------------------------------------- |
+| Supabase session if signed in                     | localStorage     | No cookies, no analytics on the website                  |
+| Shared game links                                 | URL (`/play?c=`) | Mode, categories, rounds and seed only; no personal data |
+| Web player progress (XP, level, streak, trophies) | localStorage     | Never sent anywhere; cleared with the site data          |
 
 ## On our servers (purchasers only)
 

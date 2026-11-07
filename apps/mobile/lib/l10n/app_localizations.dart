@@ -1708,7 +1708,7 @@ abstract class AppLocalizations {
   /// No description provided for @playersEmptyBody.
   ///
   /// In en, this message translates to:
-  /// **'Add players to take turns, or teams like “Team Chai” and “Team Coffee”.'**
+  /// **'Add players to take turns, or teams like “Team Tea” and “Team Coffee”.'**
   String get playersEmptyBody;
 
   /// No description provided for @playersCount.
@@ -1716,6 +1716,234 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count} of {max}'**
   String playersCount(int count, int max);
+
+  /// No description provided for @progressLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Level {level}'**
+  String progressLevel(int level);
+
+  /// No description provided for @progressXp.
+  ///
+  /// In en, this message translates to:
+  /// **'{into} / {needed} XP'**
+  String progressXp(int into, int needed);
+
+  /// No description provided for @progressStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'day streak'**
+  String get progressStreak;
+
+  /// No description provided for @progressStartTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Start your party level'**
+  String get progressStartTitle;
+
+  /// No description provided for @progressStartBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish a game to earn XP and your first trophy. Kept on this phone only.'**
+  String get progressStartBody;
+
+  /// No description provided for @progressSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'{trophies} of {total} trophies · {games} games'**
+  String progressSummary(int trophies, int total, int games);
+
+  /// No description provided for @progressSemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'Level {level}, {into} of {needed} XP, {streak} day streak'**
+  String progressSemantics(int level, int into, int needed, int streak);
+
+  /// No description provided for @rewardXp.
+  ///
+  /// In en, this message translates to:
+  /// **'+{xp} XP'**
+  String rewardXp(int xp);
+
+  /// No description provided for @rewardToNext.
+  ///
+  /// In en, this message translates to:
+  /// **'{xp} XP to level {level}'**
+  String rewardToNext(int xp, int level);
+
+  /// No description provided for @rewardLevelUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Level up! You’re now level {level}'**
+  String rewardLevelUp(int level);
+
+  /// No description provided for @rewardNewTrophies.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{New trophy!} other{New trophies!}}'**
+  String rewardNewTrophies(int count);
+
+  /// No description provided for @trophiesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trophies'**
+  String get trophiesTitle;
+
+  /// No description provided for @trophiesIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish games to earn XP, level up and keep your streak alive. Your progress stays on this phone: no account, nothing uploaded.'**
+  String get trophiesIntro;
+
+  /// No description provided for @trophiesCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} of {total} trophies'**
+  String trophiesCount(int count, int total);
+
+  /// No description provided for @trophiesSee.
+  ///
+  /// In en, this message translates to:
+  /// **'See all trophies'**
+  String get trophiesSee;
+
+  /// No description provided for @trophyLocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Not earned yet'**
+  String get trophyLocked;
+
+  /// No description provided for @statTotalXp.
+  ///
+  /// In en, this message translates to:
+  /// **'Total XP'**
+  String get statTotalXp;
+
+  /// No description provided for @statGames.
+  ///
+  /// In en, this message translates to:
+  /// **'Games played'**
+  String get statGames;
+
+  /// No description provided for @statStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'Day streak'**
+  String get statStreak;
+
+  /// No description provided for @statBestStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'Best streak'**
+  String get statBestStreak;
+
+  /// No description provided for @trophyFirstGame.
+  ///
+  /// In en, this message translates to:
+  /// **'Ice Breaker'**
+  String get trophyFirstGame;
+
+  /// No description provided for @trophyFirstGameBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish your first game.'**
+  String get trophyFirstGameBody;
+
+  /// No description provided for @trophyRegular.
+  ///
+  /// In en, this message translates to:
+  /// **'Regular'**
+  String get trophyRegular;
+
+  /// No description provided for @trophyRegularBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish 5 games.'**
+  String get trophyRegularBody;
+
+  /// No description provided for @trophyPartyAnimal.
+  ///
+  /// In en, this message translates to:
+  /// **'Party Animal'**
+  String get trophyPartyAnimal;
+
+  /// No description provided for @trophyPartyAnimalBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish 25 games.'**
+  String get trophyPartyAnimalBody;
+
+  /// No description provided for @trophyAllModes.
+  ///
+  /// In en, this message translates to:
+  /// **'Try Them All'**
+  String get trophyAllModes;
+
+  /// No description provided for @trophyAllModesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish a game of every mode.'**
+  String get trophyAllModesBody;
+
+  /// No description provided for @trophyStreak3.
+  ///
+  /// In en, this message translates to:
+  /// **'On a Roll'**
+  String get trophyStreak3;
+
+  /// No description provided for @trophyStreak3Body.
+  ///
+  /// In en, this message translates to:
+  /// **'Play 3 days in a row.'**
+  String get trophyStreak3Body;
+
+  /// No description provided for @trophyStreak7.
+  ///
+  /// In en, this message translates to:
+  /// **'Week of Fun'**
+  String get trophyStreak7;
+
+  /// No description provided for @trophyStreak7Body.
+  ///
+  /// In en, this message translates to:
+  /// **'Play 7 days in a row.'**
+  String get trophyStreak7Body;
+
+  /// No description provided for @trophyMarathon.
+  ///
+  /// In en, this message translates to:
+  /// **'Marathon'**
+  String get trophyMarathon;
+
+  /// No description provided for @trophyMarathonBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish a game of 20 rounds or more.'**
+  String get trophyMarathonBody;
+
+  /// No description provided for @trophyKnowItAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Know-It-All'**
+  String get trophyKnowItAll;
+
+  /// No description provided for @trophyKnowItAllBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Get every answer right in a Trivia Blitz game.'**
+  String get trophyKnowItAllBody;
+
+  /// No description provided for @trophyRisingStar.
+  ///
+  /// In en, this message translates to:
+  /// **'Rising Star'**
+  String get trophyRisingStar;
+
+  /// No description provided for @trophyRisingStarBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Reach level 5.'**
+  String get trophyRisingStarBody;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

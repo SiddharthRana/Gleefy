@@ -6,7 +6,7 @@ import { UnlockButton } from './unlock-button';
 export const metadata: Metadata = {
   title: 'Premium',
   description:
-    'MirthMix is free to play. Premium is a one-time unlock for every premium category in every game, on Android and the web.',
+    'MirthMix is free to play. Premium is a one-time unlock for every premium category in every game, in the Android and iOS apps and on the web.',
   alternates: { canonical: '/pricing' },
 };
 
@@ -66,7 +66,7 @@ export default function PricingPage() {
           <ul className="mt-4 list-disc space-y-2 pl-6">
             <li>Everything in Free</li>
             <li>Every premium category in every game</li>
-            <li>One account for the Android app and the website</li>
+            <li>One account for the Android and iOS apps and the website</li>
             <li>Pay once, keep it for good</li>
           </ul>
           <UnlockButton price={price} />
@@ -89,13 +89,14 @@ export default function PricingPage() {
         </ul>
       </section>
 
-      <section aria-labelledby="android" className="mt-12 max-w-3xl">
-        <h2 id="android" className="font-display text-3xl font-semibold">
-          On Android
+      <section aria-labelledby="apps" className="mt-12 max-w-3xl">
+        <h2 id="apps" className="font-display text-3xl font-semibold">
+          In the apps
         </h2>
         <p className="mt-3">
-          In the Android app, Premium is a one-time purchase through Google Play. Sign in with the
-          same Google account or email on the website and the app, and one purchase unlocks both.
+          MirthMix is coming to Android and iOS. In the apps, Premium is a one-time purchase through
+          Google Play or the App Store. Sign in with the same account on the website and the app,
+          and one purchase unlocks both.
         </p>
       </section>
     </div>

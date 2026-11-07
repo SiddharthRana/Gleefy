@@ -34,8 +34,8 @@ export default function TermsPage() {
       <ul className="mt-3 list-disc space-y-2 pl-6">
         <li>
           Premium is a one-time purchase, not a subscription: you pay once and nothing renews. In
-          the Android app it is sold and billed by Google Play; on the website by our payment
-          partner, who is the seller of record and handles tax and receipts.
+          the apps it is sold and billed by Google Play (Android) or the App Store (iOS); on the
+          website by our payment partner, who is the seller of record and handles tax and receipts.
         </li>
         <li>
           Premium belongs to the account you bought it with, on every device where you sign in to

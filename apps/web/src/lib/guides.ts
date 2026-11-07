@@ -115,7 +115,7 @@ export const guides: ModeGuide[] = [
     intro:
       'Can’t pick one game? Line several up. A party pack plays your chosen games in order, with a tap between each.',
     rules: [
-      'In the Android app, open Party pack and pick two or more games.',
+      'In the app, open Party pack and pick two or more games.',
       'Set the rounds for each game and put them in the order you like.',
       'Save it with a name to play it again later.',
       'When one game ends, the next starts with a tap. Results appear after each game.',

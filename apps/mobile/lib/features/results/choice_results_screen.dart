@@ -10,6 +10,7 @@ import '../../state/games.dart';
 import '../../state/sessions.dart';
 import '../../widgets/results_actions.dart';
 import '../../widgets/motion.dart';
+import '../../widgets/progress_widgets.dart';
 import '../../widgets/usage_prompt.dart';
 import '../modes.dart';
 import '../../theme/app_theme.dart';
@@ -81,6 +82,7 @@ class ChoiceResultsScreen extends ConsumerWidget {
                   ),
                 ),
               ),
+              const RewardCard(),
               const UsagePrompt(),
               if (sync != null) ...[
                 const SizedBox(height: MmSpace.s4),

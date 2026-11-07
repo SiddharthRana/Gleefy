@@ -6,6 +6,7 @@ import '../state/games.dart';
 import '../theme/app_theme.dart';
 import '../theme/tokens.g.dart';
 import '../widgets/motion.dart';
+import '../widgets/insets.dart';
 
 class PlayersScreen extends ConsumerStatefulWidget {
   const PlayersScreen({super.key});
@@ -56,7 +57,7 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
         ],
       ),
       body: ListView(
-        padding: const EdgeInsets.all(MmSpace.s4),
+        padding: listPadding(context, const EdgeInsets.all(MmSpace.s4)),
         children: [
           Text(l.playersBody, style: theme.textTheme.bodyMedium?.copyWith(color: palette.textMuted)),
           const SizedBox(height: MmSpace.s4),

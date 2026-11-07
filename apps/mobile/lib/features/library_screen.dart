@@ -5,6 +5,7 @@ import '../theme/tokens.g.dart';
 import '../widgets/mode_tile.dart';
 import '../widgets/motion.dart';
 import 'modes.dart';
+import '../widgets/insets.dart';
 
 class LibraryScreen extends StatelessWidget {
   const LibraryScreen({super.key});
@@ -14,7 +15,7 @@ class LibraryScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context).libraryTitle)),
       body: ListView.separated(
-        padding: const EdgeInsets.all(MmSpace.s4),
+        padding: listPadding(context, const EdgeInsets.all(MmSpace.s4)),
         itemCount: LibraryEntry.values.length,
         separatorBuilder: (_, _) => const SizedBox(height: MmSpace.s3),
         itemBuilder: (_, i) => StaggerIn(

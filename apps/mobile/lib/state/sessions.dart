@@ -9,6 +9,7 @@ import '../game/random.dart';
 import '../game/trivia_engine.dart';
 import '../game/wyr_engine.dart';
 import '../telemetry/analytics.dart';
+import 'progress.dart';
 import 'providers.dart';
 
 /// A game session persisted on every change, so it survives navigation, backgrounding and the
@@ -24,6 +25,9 @@ abstract class PersistedSession<S> extends Notifier<S?> {
   bool isPlaying(S state);
   int roundNumber(S state);
   int totalRounds(S state);
+
+  /// Trivia overrides this: every question answered correctly.
+  bool? perfect(S state) => null;
 
   @override
   S? build() {
@@ -51,6 +55,7 @@ abstract class PersistedSession<S> extends Notifier<S?> {
   @protected
   void begin(S session, List<String> names) {
     ref.read(sharedPreferencesProvider).setStringList('$storageKey.names', names);
+    ref.read(lastRewardProvider.notifier).clear();
     put(session);
   }
 
@@ -59,6 +64,7 @@ abstract class PersistedSession<S> extends Notifier<S?> {
     final previous = state;
     if (previous != null && isPlaying(previous) && !isPlaying(next)) {
       ref.read(analyticsProvider).track('game_completed', {'mode': mode.id, 'rounds': totalRounds(next)});
+      ref.read(progressProvider.notifier).record(mode: mode.id, rounds: roundNumber(next), perfect: perfect(next));
     }
     state = next;
     ref.read(sharedPreferencesProvider).setString(storageKey, jsonEncode(encode(next)));
@@ -149,6 +155,8 @@ class TriviaSessionController extends PersistedSession<TriviaState> {
   int roundNumber(TriviaState s) => s.roundNumber;
   @override
   int totalRounds(TriviaState s) => s.totalRounds;
+  @override
+  bool? perfect(TriviaState state) => state.rounds.isNotEmpty && state.rounds.every((r) => r.correct);
 
   void start(TriviaConfig config, {List<String> names = const []}) {
     final pack = ref.read(contentProvider).trivia;
