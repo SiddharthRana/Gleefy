@@ -339,7 +339,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsPrivacyBody =>
-      'You can play without an account. An account is only for buying Premium: it stores your email and subscription status on the MirthMix server. Games, settings and players are stored only on this phone.';
+      'You can play without an account. An account is only for buying Premium: it stores your email and whether you bought Premium on the MirthMix server. Games, settings and players are stored only on this phone.';
 
   @override
   String get settingsAge => 'Age guidance';

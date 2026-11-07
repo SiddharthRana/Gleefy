@@ -682,7 +682,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsPrivacyBody.
   ///
   /// In en, this message translates to:
-  /// **'You can play without an account. An account is only for buying Premium: it stores your email and subscription status on the MirthMix server. Games, settings and players are stored only on this phone.'**
+  /// **'You can play without an account. An account is only for buying Premium: it stores your email and whether you bought Premium on the MirthMix server. Games, settings and players are stored only on this phone.'**
   String get settingsPrivacyBody;
 
   /// No description provided for @settingsAge.

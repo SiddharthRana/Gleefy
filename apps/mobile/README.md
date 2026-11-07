@@ -64,7 +64,7 @@ flutter test
 ## Release builds
 
 ```bash
-flutter build apk --release --split-per-abi   # sideload / size check
+flutter build apk --release --split-per-abi   # sideload / size check (or ../../scripts/android-build.sh)
 flutter build appbundle --release             # Play upload
 ```
 

@@ -12,11 +12,11 @@ Supabase hosts the database and sign-in but can't run the NestJS API, so the API
 
 ## How a release works
 
-1. Merge to `main`. CI runs the usual checks plus an API image build.
+1. Merge `dev` into `main` (day-to-day work goes into `dev` through pull requests). CI runs the usual checks plus an API image build.
 2. When everything passes, the run shows **Review deployments**. Tick `backend`, `web` and/or `play-store` and approve; the rest stay waiting (approve later, or reject).
 3. Each deploy runs on its own. **Approve `backend` first** when a release needs new API or database changes; migrations must work with the API version already running (add columns before using them; drop them a release later).
 
-Deploys never cancel each other, and branch builds never deploy. A target whose repository variable isn't `"true"` is skipped, so nothing fails before its accounts exist.
+Deploys never cancel each other, and only `main` deploys. CI doesn't build the Android app until release signing is set up (build it locally with `scripts/android-build.sh`); `deploy-android` stays off while `DEPLOY_ANDROID` isn't `"true"`. A target whose repository variable isn't `"true"` is skipped, so nothing fails before its accounts exist.
 
 ## One-time setup
 
