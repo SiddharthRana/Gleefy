@@ -32,6 +32,7 @@ flutter:
   generate: true
   uses-material-design: true
   assets:
+    - assets/brand/
     - assets/content/
     - assets/fonts/OFL.txt
   fonts:

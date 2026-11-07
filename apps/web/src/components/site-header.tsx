@@ -12,7 +12,7 @@ export function SiteHeader() {
           aria-label="Gleefy home"
         >
           <span className="wiggle inline-flex">
-            <Logo />
+            <Logo size={40} />
           </span>
           <span className="hidden min-[460px]:inline">Gleefy</span>
         </Link>

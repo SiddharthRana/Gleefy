@@ -7,6 +7,7 @@ import '../state/settings.dart';
 import '../theme/app_theme.dart';
 import '../theme/tokens.g.dart';
 import '../widgets/brand.dart';
+import '../widgets/motion.dart';
 
 class OnboardingScreen extends ConsumerStatefulWidget {
   const OnboardingScreen({super.key});
@@ -50,7 +51,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     final theme = Theme.of(context);
     final palette = MmPalette.of(context);
     final pages = [
-      (Icons.celebration_rounded, l.onboarding1Title, l.onboarding1Body),
+      (null, l.onboarding1Title, l.onboarding1Body),
       (Icons.record_voice_over_rounded, l.onboarding2Title, l.onboarding2Body),
       (Icons.bolt_rounded, l.onboarding3Title, l.onboarding3Body),
     ];
@@ -80,7 +81,15 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       child: Column(
                         children: [
                           const SizedBox(height: MmSpace.s8),
-                          GradientPanel(padding: const EdgeInsets.all(MmSpace.s10), child: Icon(icon, size: 72)),
+                          // The first page shows the app icon itself; the others an illustration.
+                          if (icon == null)
+                            PopIn(
+                              child: ExcludeSemantics(
+                                child: Image.asset('assets/brand/icon.png', width: 176, height: 176),
+                              ),
+                            )
+                          else
+                            GradientPanel(padding: const EdgeInsets.all(MmSpace.s10), child: Icon(icon, size: 72)),
                           const SizedBox(height: MmSpace.s8),
                           Text(title, style: theme.textTheme.headlineMedium, textAlign: TextAlign.center),
                           const SizedBox(height: MmSpace.s4),
