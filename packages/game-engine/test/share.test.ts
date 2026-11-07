@@ -4,7 +4,7 @@ import { decodeShare, encodeShare, type SharedGame } from '../src/share.ts';
 describe('share links', () => {
   const game: SharedGame = {
     mode: 'trivia',
-    categoryIds: ['science', 'india'],
+    categoryIds: ['science', 'world'],
     rounds: 10,
     seed: 4294967295,
     timeLimitMs: 10000,

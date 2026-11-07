@@ -10,6 +10,7 @@ import '../state/providers.dart';
 import '../state/sessions.dart';
 import '../theme/app_theme.dart';
 import '../theme/tokens.g.dart';
+import '../widgets/progress_widgets.dart';
 import '../widgets/brand.dart';
 import '../widgets/mode_tile.dart';
 import '../widgets/motion.dart';
@@ -121,6 +122,8 @@ class HomeScreen extends ConsumerWidget {
             ),
             const SizedBox(height: MmSpace.s4),
           ],
+          const ProgressCard(),
+          const SizedBox(height: MmSpace.s4),
           Pressable(
             scale: 0.97,
             child: GradientPanel(

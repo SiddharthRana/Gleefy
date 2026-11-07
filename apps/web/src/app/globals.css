@@ -100,6 +100,39 @@ body {
   background: color-mix(in oklab, var(--mm-primary) 10%, var(--mm-surface));
 }
 
+/* Game-site looks (static). A faint doodle wallpaper of party bits, like a games lobby. */
+.doodle-bg {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' fill='none' stroke='%237a6cff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' opacity='0.16'%3E%3Cpath d='M20 30l6 12 13 2-9 9 2 13-12-6-12 6 2-13-9-9 13-2z'/%3E%3Ccircle cx='110' cy='34' r='12'/%3E%3Cpath d='M104 30h0M116 30h0M104 40q6 5 12 0'/%3E%3Crect x='70' y='92' width='26' height='26' rx='6'/%3E%3Ccircle cx='78' cy='100' r='1.5'/%3E%3Ccircle cx='88' cy='110' r='1.5'/%3E%3Cpath d='M18 118q10-14 20 0t20 0'/%3E%3Cpath d='M128 96v26M118 112l10 10 10-10'/%3E%3Cpath d='M140 140l8 8M148 140l-8 8'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+/* Tilted sticker labels ("Free to play", "No sign-up"). */
+.sticker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 2px solid var(--mm-text);
+  border-radius: 999px;
+  padding: 0.25rem 0.85rem;
+  font-weight: 800;
+  font-size: 0.9rem;
+  box-shadow: 0 3px 0 var(--mm-text);
+  transform: rotate(var(--tilt, -3deg));
+}
+
+/* Gold "Premium" pill in the header. */
+.premium-pill {
+  background: linear-gradient(135deg, #ffd34d, #ffae2b);
+  color: #3b2400;
+  box-shadow: 0 3px 0 #b86f00;
+}
+
+/* A game card: its mode colour as a chunky header band. */
+.game-card {
+  border: 2px solid var(--mm-border);
+  box-shadow: 0 5px 0 var(--mm-border);
+}
+
 /* Revealed vote split: a darker band behind the option text (it only raises text contrast). */
 .fill {
   position: absolute;
@@ -240,6 +273,31 @@ body {
   /* Gentle drifting party bits behind the hero (decorative). */
   .float {
     animation: float 6s ease-in-out infinite;
+  }
+
+  /* The big Play button breathes gently to invite a tap. */
+  .pulse {
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  .xp-fill {
+    transform-origin: left;
+    animation: grow 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+  }
+  .game-card {
+    transition:
+      transform 0.2s var(--bounce),
+      box-shadow 0.2s ease;
+  }
+  .game-card:hover {
+    transform: translateY(-4px) rotate(var(--tilt, -0.6deg));
+    box-shadow: 0 9px 0 var(--mm-border);
+  }
+  .game-card:active {
+    transform: translateY(2px) scale(0.98);
+    box-shadow: 0 2px 0 var(--mm-border);
+  }
+  .sticker:hover {
+    animation: wiggle 0.5s ease-in-out;
   }
 
   .confetti-piece {
@@ -384,5 +442,21 @@ body {
   100% {
     opacity: 0;
     transform: translate(var(--x), var(--y)) rotate(var(--r));
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+@keyframes grow {
+  from {
+    transform: scaleX(0);
   }
 }

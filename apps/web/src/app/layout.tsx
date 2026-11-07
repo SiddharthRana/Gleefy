@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   title: { default: 'MirthMix: party games for one phone', template: '%s · MirthMix' },
   description:
     'Quick party games for friends, couples and families, played together on one phone. No sign-up needed.',
-  openGraph: { type: 'website', siteName: 'MirthMix', locale: 'en_IN' },
+  openGraph: { type: 'website', siteName: 'MirthMix', locale: 'en_GB' },
   alternates: { canonical: '/' },
 };
 

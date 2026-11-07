@@ -28,12 +28,12 @@
       "region": "global"
     },
     {
-      "id": "desi-food",
-      "name": "Desi Food",
-      "description": "Dishes, snacks and sweets from across India.",
+      "id": "world-food",
+      "name": "World Food",
+      "description": "Dishes loved around the globe.",
       "tier": "free",
       "ageRating": "all",
-      "region": "in"
+      "region": "global"
     },
     {
       "id": "jobs",
@@ -226,7 +226,7 @@
       "category": "animals",
       "answer": "Peacock",
       "clues": [
-        "I'm India's national bird.",
+        "My females are called peahens.",
         "I dance when it's about to rain.",
         "I show off a huge fan of colourful feathers."
       ]
@@ -344,11 +344,11 @@
     {
       "id": "gta-places-009",
       "category": "places",
-      "answer": "Goa",
+      "answer": "Santorini",
       "clues": [
-        "I'm India's smallest state by area.",
-        "I'm famous for beaches and Portuguese-era churches.",
-        "Tourists flock to me for sun and sand."
+        "I'm a crescent-shaped island left by a huge volcano.",
+        "Visitors watch famous sunsets from my cliffs.",
+        "I'm a Greek island of white houses and blue domes."
       ]
     },
     {
@@ -362,103 +362,123 @@
       ]
     },
     {
-      "id": "gta-desi-food-001",
-      "category": "desi-food",
-      "answer": "Dosa",
+      "id": "gta-world-food-001",
+      "category": "world-food",
+      "answer": "Sushi",
       "clues": [
-        "I'm thin, crispy and bigger than your plate.",
-        "I'm made from a fermented rice and lentil batter.",
-        "I'm a South Indian pancake served with sambar."
+        "Vinegar is mixed into my rice.",
+        "I'm often rolled up in seaweed.",
+        "I'm a Japanese dish of rice with raw fish."
       ]
     },
     {
-      "id": "gta-desi-food-002",
-      "category": "desi-food",
-      "answer": "Jalebi",
+      "id": "gta-world-food-002",
+      "category": "world-food",
+      "answer": "Tacos",
       "clues": [
-        "I'm a tangle with no beginning or end.",
-        "I'm fried and then soaked in syrup.",
-        "I'm a bright orange, sticky spiral sweet."
+        "Some people celebrate me every Tuesday.",
+        "I can be soft or crunchy, filled with meat, beans or fish.",
+        "I'm a folded Mexican tortilla full of fillings."
       ]
     },
     {
-      "id": "gta-desi-food-003",
-      "category": "desi-food",
-      "answer": "Samosa",
+      "id": "gta-world-food-003",
+      "category": "world-food",
+      "answer": "Croissant",
       "clues": [
-        "I'm a snack with three corners.",
-        "I'm stuffed with spiced potato and peas.",
-        "I'm fried and served with chutney."
+        "My dough is folded with butter again and again.",
+        "I'm flaky and shaped like a crescent.",
+        "I'm a French breakfast pastry."
       ]
     },
     {
-      "id": "gta-desi-food-004",
-      "category": "desi-food",
-      "answer": "Biryani",
+      "id": "gta-world-food-004",
+      "category": "world-food",
+      "answer": "Paella",
       "clues": [
-        "Families argue about which city makes me best.",
-        "I'm cooked in layers, often sealed in a pot.",
-        "I'm a fragrant rice dish with meat or vegetables."
+        "Saffron turns me golden.",
+        "I'm cooked in a wide, shallow pan.",
+        "I'm Spain's famous rice dish from Valencia."
       ]
     },
     {
-      "id": "gta-desi-food-005",
-      "category": "desi-food",
-      "answer": "Pani puri",
+      "id": "gta-world-food-005",
+      "category": "world-food",
+      "answer": "Dumplings",
       "clues": [
-        "You need to eat me in one bite or regret it.",
-        "I'm a hollow, crispy ball.",
-        "I'm filled with spicy, tangy water."
+        "I can be steamed, boiled or fried.",
+        "Families fold lots of me for Lunar New Year.",
+        "I'm a little parcel of dough with a filling inside."
       ]
     },
     {
-      "id": "gta-desi-food-006",
-      "category": "desi-food",
-      "answer": "Idli",
+      "id": "gta-world-food-006",
+      "category": "world-food",
+      "answer": "Pretzel",
       "clues": [
-        "I'm round, white and very fluffy.",
-        "I'm steamed, not fried.",
-        "I'm a South Indian rice cake eaten with chutney."
+        "Salt crystals sit on my shiny brown crust.",
+        "Bakers in Germany are famous for me.",
+        "I'm bread twisted into a knot."
       ]
     },
     {
-      "id": "gta-desi-food-007",
-      "category": "desi-food",
-      "answer": "Gulab jamun",
+      "id": "gta-world-food-007",
+      "category": "world-food",
+      "answer": "Falafel",
       "clues": [
-        "My name mentions roses, but I don't look like one.",
-        "I'm a soft ball made from milk solids.",
-        "I'm fried and soaked in sugar syrup."
+        "I'm made from chickpeas or fava beans.",
+        "I'm often tucked into pita bread with tahini.",
+        "I'm a deep-fried ball popular across the Middle East."
       ]
     },
     {
-      "id": "gta-desi-food-008",
-      "category": "desi-food",
-      "answer": "Pav bhaji",
+      "id": "gta-world-food-008",
+      "category": "world-food",
+      "answer": "Ramen",
       "clues": [
-        "I was born as a quick meal for Mumbai's mill workers.",
-        "I come with buttered bread rolls.",
-        "I'm a spicy mashed vegetable curry."
+        "My broth can be pork, chicken, miso or soy.",
+        "A soft-boiled egg often floats on top of me.",
+        "I'm a bowl of Japanese noodle soup."
       ]
     },
     {
-      "id": "gta-desi-food-009",
-      "category": "desi-food",
-      "answer": "Masala chai",
+      "id": "gta-world-food-009",
+      "category": "world-food",
+      "answer": "Churros",
       "clues": [
-        "I'm boiled, not brewed.",
-        "I'm full of ginger, cardamom and milk.",
-        "I'm India's favourite spiced tea."
+        "I'm piped from a star-shaped nozzle.",
+        "People dip me in thick hot chocolate.",
+        "I'm a long stick of fried dough rolled in sugar."
       ]
     },
     {
-      "id": "gta-desi-food-010",
-      "category": "desi-food",
-      "answer": "Lassi",
+      "id": "gta-world-food-010",
+      "category": "world-food",
+      "answer": "Fish and chips",
       "clues": [
-        "Punjab is proud of me.",
-        "I'm made by churning yoghurt.",
-        "I'm a cool drink, sweet or salty."
+        "I'm traditionally wrapped in paper.",
+        "Add salt and vinegar to me.",
+        "I'm Britain's battered fish with fried potatoes."
+      ]
+    },
+    {
+      "id": "gta-world-food-011",
+      "category": "world-food",
+      "answer": "Baklava",
+      "clues": [
+        "Thin layers of filo pastry make me.",
+        "I'm soaked in syrup or honey.",
+        "I'm a sweet pastry full of chopped nuts, loved from Turkey to Greece."
+      ]
+    },
+    {
+      "id": "gta-world-food-012",
+      "category": "world-food",
+      "answer": "Spaghetti",
+      "clues": [
+        "Bolognese and carbonara are my famous friends.",
+        "You twirl me round a fork.",
+        "I'm long, thin Italian pasta."
       ]
     },
     {
@@ -582,26 +602,6 @@
       ]
     },
     {
-      "id": "gta-desi-food-011",
-      "category": "desi-food",
-      "answer": "Vada pav",
-      "clues": [
-        "People call me the city’s own burger.",
-        "A spicy potato fritter sits inside a soft bun.",
-        "I’m Mumbai’s favourite street snack."
-      ]
-    },
-    {
-      "id": "gta-desi-food-012",
-      "category": "desi-food",
-      "answer": "Khichdi",
-      "clues": [
-        "I’m what you’re given when you’re feeling unwell.",
-        "I’m rice and lentils cooked together until soft.",
-        "I’m a simple one-pot dish, often eaten with ghee."
-      ]
-    },
-    {
       "id": "gta-jobs-007",
       "category": "jobs",
       "answer": "Farmer",
@@ -707,7 +707,7 @@
       "answer": "Ceiling fan",
       "clues": [
         "I’m up high and go round and round.",
-        "I’m a lifesaver in an Indian summer.",
+        "I’m a lifesaver on a hot summer night.",
         "I hang from above and cool the whole room."
       ]
     },
@@ -718,7 +718,7 @@
       "clues": [
         "I let off steam with a loud whistle.",
         "My lid locks tight while I work.",
-        "I cook dal and rice in a hurry."
+        "I cook beans, stews and rice in a hurry."
       ]
     },
     {
@@ -766,7 +766,7 @@
       "category": "sports-games",
       "answer": "Chess",
       "clues": [
-        "My oldest ancestor was played in India.",
+        "My oldest ancestor is more than 1,400 years old.",
         "I have kings, queens and castles.",
         "I’m played on a board of 64 squares."
       ]
@@ -778,7 +778,7 @@
       "clues": [
         "A match can last five days.",
         "I have bowlers, batters and wickets.",
-        "I’m India’s favourite bat-and-ball sport."
+        "I’m a bat-and-ball sport loved from England to Australia."
       ]
     },
     {
@@ -794,21 +794,21 @@
     {
       "id": "gta-sports-games-004",
       "category": "sports-games",
-      "answer": "Carrom",
+      "answer": "Dominoes",
       "clues": [
-        "I’m usually played on a square wooden board at home.",
-        "You flick a striker to pocket your pieces.",
-        "I have a red queen and black and white coins."
+        "My pieces are covered in dots.",
+        "Line me up and I topple in a long chain.",
+        "Match the ends of my tiles to win."
       ]
     },
     {
       "id": "gta-sports-games-005",
       "category": "sports-games",
-      "answer": "Kabaddi",
+      "answer": "Rugby",
       "clues": [
-        "You must keep chanting the same word while you raid.",
-        "One raider goes into the other team’s half.",
-        "I’m a tag-and-tackle sport from India."
+        "The ball I use isn't round.",
+        "Players pack down in a scrum to restart play.",
+        "I'm like football, but you can carry the ball and score tries."
       ]
     },
     {

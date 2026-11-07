@@ -6,6 +6,13 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRng, seededShuffle } from '../src/random.ts';
 import {
+  EMPTY_PROGRESS,
+  levelProgress,
+  recordGame,
+  xpForLevel,
+  type FinishedGame,
+} from '../src/progress.ts';
+import {
   createGuessSession,
   guessResults,
   reduceGuess,
@@ -226,6 +233,49 @@ const guessScenarios: { name: string; config: GuessConfig; actions: GuessAction[
   },
 ];
 
+const g = (
+  mode: FinishedGame['mode'],
+  rounds: number,
+  day: string,
+  perfect?: boolean,
+): FinishedGame => ({ mode, rounds, day, ...(perfect === undefined ? {} : { perfect }) });
+
+const progressScenarios: { name: string; games: FinishedGame[] }[] = [
+  {
+    name: 'first games, daily bonus once a day, every mode',
+    games: [
+      g('would-you-rather', 10, '2026-11-01'),
+      g('this-or-that', 5, '2026-11-01'),
+      g('trivia', 10, '2026-11-01', false),
+      g('guess', 8, '2026-11-01'),
+      g('would-you-rather', 0, '2026-11-01'),
+    ],
+  },
+  {
+    name: 'streak grows on consecutive days, resets after a gap, survives a clock moved back',
+    games: [
+      g('trivia', 10, '2026-11-01', true),
+      g('trivia', 10, '2026-11-02', false),
+      g('guess', 6, '2026-11-03'),
+      g('guess', 6, '2026-11-03'),
+      g('this-or-that', 5, '2026-11-02'),
+      g('this-or-that', 5, '2026-11-06'),
+    ],
+  },
+  {
+    name: 'seven-day streak, marathon capped at 30 rounds, rising star',
+    games: [
+      g('would-you-rather', 60, '2026-12-30'),
+      g('would-you-rather', 25, '2026-12-31'),
+      g('would-you-rather', 20, '2027-01-01'),
+      g('would-you-rather', 20, '2027-01-02'),
+      g('would-you-rather', 20, '2027-01-03'),
+      g('would-you-rather', 20, '2027-01-04'),
+      g('would-you-rather', 20, '2027-01-05'),
+    ],
+  },
+];
+
 const files: Record<string, unknown> = {
   'would-you-rather.json': {
     ...vectors,
@@ -250,6 +300,23 @@ const files: Record<string, unknown> = {
       for (const a of actions) state = reduceTrivia(state, a);
       const { config: _c, ...expected } = state;
       return { name, config, actions, expected: { ...expected, results: triviaResults(state) } };
+    }),
+  },
+  'progress.json': {
+    $comment: vectors.$comment,
+    levels: [0, 1, 49, 50, 149, 150, 299, 300, 500, 2500].map((xp) => ({
+      xp,
+      ...levelProgress(xp),
+    })),
+    thresholds: [1, 2, 3, 4, 5, 10].map((level) => ({ level, xp: xpForLevel(level) })),
+    scenarios: progressScenarios.map(({ name, games }) => {
+      let progress = EMPTY_PROGRESS;
+      const steps = games.map((game) => {
+        const reward = recordGame(progress, game);
+        progress = reward.progress;
+        return { game, reward };
+      });
+      return { name, steps };
     }),
   },
   'guess.json': {

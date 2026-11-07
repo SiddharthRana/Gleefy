@@ -15,6 +15,7 @@ import {
   reduceWyr,
   triviaResults,
   wyrResults,
+  type GameReward,
   type GuessState,
   type SharedGame,
   type ShareMode,
@@ -27,6 +28,8 @@ import Link from 'next/link';
 import { freeCategories, modeNames, packs, playableCategories } from '@/lib/packs';
 import { usePremium } from '@/lib/premium';
 import { Confetti } from '@/components/confetti';
+import { RewardPanel } from '@/components/reward-panel';
+import { recordFinishedGame } from '@/lib/progress';
 import { primary, secondary } from '@/lib/ui';
 
 /** Setup when there's no `?c=`, otherwise the game the link describes. */
@@ -197,6 +200,7 @@ function start(game: SharedGame, premium: boolean): AnyState | null {
 
 function Game({ game, code, premium }: { game: SharedGame; code: string; premium: boolean }) {
   const [state, setState] = useState<AnyState | null>(() => start(game, premium));
+  const [reward, setReward] = useState<GameReward | null>(null);
   const [copied, setCopied] = useState(false);
   const skipped = premium
     ? []
@@ -231,6 +235,22 @@ function Game({ game, code, premium }: { game: SharedGame; code: string; premium
     }
   };
 
+  // A game that just finished earns XP and trophies (kept in this browser only).
+  const update = (next: AnyState) => {
+    if (state.s.status !== 'finished' && next.s.status === 'finished') {
+      setReward(
+        recordFinishedGame({
+          mode: next.mode,
+          rounds: next.s.rounds.length,
+          ...(next.mode === 'trivia'
+            ? { perfect: next.s.rounds.length > 0 && next.s.rounds.every((r) => r.correct) }
+            : {}),
+        }),
+      );
+    }
+    setState(next);
+  };
+
   const s = state.s;
   const done = s.status === 'finished';
   const round = done ? s.rounds.length : s.rounds.length + 1;
@@ -261,22 +281,22 @@ function Game({ game, code, premium }: { game: SharedGame; code: string; premium
         aria-label="Progress"
       />
       {state.mode === 'trivia' ? (
-        <TriviaView s={state.s} set={(n) => setState({ mode: 'trivia', s: n })} />
+        <TriviaView s={state.s} set={(n) => update({ mode: 'trivia', s: n })} />
       ) : state.mode === 'guess' ? (
-        <GuessView s={state.s} set={(n) => setState({ mode: 'guess', s: n })} />
+        <GuessView s={state.s} set={(n) => update({ mode: 'guess', s: n })} />
       ) : (
-        <ChoiceView
-          mode={state.mode}
-          s={state.s}
-          set={(n) => setState({ mode: state.mode, s: n })}
-        />
+        <ChoiceView mode={state.mode} s={state.s} set={(n) => update({ mode: state.mode, s: n })} />
       )}
+      {done && reward && <RewardPanel reward={reward} />}
       {done && (
         <div className="flex flex-wrap gap-3">
           <button
             type="button"
             className={primary}
-            onClick={() => setState(start({ ...game, seed: newSeed() }, premium))}
+            onClick={() => {
+              setReward(null);
+              setState(start({ ...game, seed: newSeed() }, premium));
+            }}
           >
             Play again
           </button>

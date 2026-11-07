@@ -20,6 +20,7 @@ const pages = [
   '/pricing',
   '/account',
   '/auth/callback',
+  '/trophies',
   '/privacy',
   '/terms',
 ];

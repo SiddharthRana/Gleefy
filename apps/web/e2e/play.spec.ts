@@ -26,6 +26,10 @@ test('Would You Rather plays to results', async ({ page }) => {
     await p.getByRole('button', { name: 'Reveal' }).click();
   });
   await expect(page.getByText('5 rounds · 10 votes')).toBeVisible();
+  // First game: 10 + 5 rounds × 2 + 5 first-game-of-the-day bonus, and the first trophy.
+  const reward = page.getByRole('region', { name: 'Your reward' });
+  await expect(reward).toContainText('+25 XP');
+  await expect(reward).toContainText('Ice Breaker');
   await page.getByRole('button', { name: 'Play again' }).click();
   await expect(page.getByText('Round 1 of 5')).toBeVisible();
 });
@@ -79,4 +83,22 @@ test('a game in progress has no WCAG A/AA violations', async ({ page }) => {
     .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'])
     .analyze();
   expect(results.violations).toEqual([]);
+});
+
+test('finished games add up to levels and trophies, kept in the browser', async ({ page }) => {
+  await page.goto('/trophies');
+  await expect(page.getByRole('heading', { name: '0 of 9 trophies' })).toBeVisible();
+  for (let i = 0; i < 3; i++) {
+    await startGame(page, 'This or That');
+    await finish(page, async (p) => {
+      await p.getByRole('region', { name: 'Question' }).getByRole('button').first().click();
+    });
+  }
+  // 25 XP, then 20 and 20 (the daily bonus comes once a day): level 2 needs 50, so the third game levels up.
+  await expect(page.getByText('Level up! You’re now level 2')).toBeVisible();
+  await page.getByRole('link', { name: 'See all your trophies' }).click();
+  await expect(page.getByRole('heading', { name: '1 of 9 trophies' })).toBeVisible();
+  await expect(page.getByText('Total XP').locator('..')).toContainText('65');
+  await page.goto('/');
+  await expect(page.getByRole('link', { name: /Level 2, 1 day streak/ })).toBeVisible();
 });

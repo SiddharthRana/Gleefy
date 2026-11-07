@@ -37,12 +37,12 @@
       "region": "global"
     },
     {
-      "id": "desi",
-      "name": "Desi Days",
-      "description": "Chai, cricket, weddings and family WhatsApp groups.",
+      "id": "world",
+      "name": "Around the World",
+      "description": "Trips, cities and traditions from every continent.",
       "tier": "free",
       "ageRating": "all",
-      "region": "in"
+      "region": "global"
     },
     {
       "id": "time-travel",
@@ -655,124 +655,124 @@
       "b": "Spend a weekend filming a group video together"
     },
     {
-      "id": "wyr-desi-001",
-      "category": "desi",
-      "a": "Give up chai forever",
-      "b": "Give up coffee forever"
+      "id": "wyr-world-001",
+      "category": "world",
+      "a": "Spend a week in Tokyo",
+      "b": "Spend a week in Paris"
     },
     {
-      "id": "wyr-desi-002",
-      "category": "desi",
-      "a": "Attend five weddings in one week",
-      "b": "Plan one wedding from scratch"
+      "id": "wyr-world-002",
+      "category": "world",
+      "a": "See the Northern Lights",
+      "b": "See a total solar eclipse"
     },
     {
-      "id": "wyr-desi-003",
-      "category": "desi",
-      "a": "Be the admin of the family WhatsApp group",
-      "b": "Leave the family WhatsApp group forever"
+      "id": "wyr-world-003",
+      "category": "world",
+      "a": "Ride a gondola in Venice",
+      "b": "Ride a hot-air balloon over Cappadocia"
     },
     {
-      "id": "wyr-desi-004",
-      "category": "desi",
-      "a": "Watch a full cricket test match live",
-      "b": "Watch a three-hour movie with an interval twice"
+      "id": "wyr-world-004",
+      "category": "world",
+      "a": "Eat street food in Bangkok for a week",
+      "b": "Eat pastries in Vienna for a week"
     },
     {
-      "id": "wyr-desi-005",
-      "category": "desi",
-      "a": "Eat only street food for a month",
-      "b": "Eat only home food for a month"
+      "id": "wyr-world-005",
+      "category": "world",
+      "a": "Climb Mount Kilimanjaro",
+      "b": "Dive the Great Barrier Reef"
     },
     {
-      "id": "wyr-desi-006",
-      "category": "desi",
-      "a": "Travel in a crowded local train daily",
-      "b": "Sit in traffic for an hour daily"
+      "id": "wyr-world-006",
+      "category": "world",
+      "a": "Visit every country once",
+      "b": "Live forever in the one country you love most"
     },
     {
-      "id": "wyr-desi-007",
-      "category": "desi",
-      "a": "Have your relatives plan your career",
-      "b": "Have your relatives plan your wedding"
+      "id": "wyr-world-007",
+      "category": "world",
+      "a": "Live in a city that never sleeps",
+      "b": "Live in a village where everyone knows you"
     },
     {
-      "id": "wyr-desi-008",
-      "category": "desi",
-      "a": "Live without biryani",
-      "b": "Live without dosa"
+      "id": "wyr-world-008",
+      "category": "world",
+      "a": "Ride the Trans-Siberian Railway end to end",
+      "b": "Drive Route 66 end to end"
     },
     {
-      "id": "wyr-desi-009",
-      "category": "desi",
-      "a": "Dance at the baraat until midnight",
-      "b": "Lead the antakshari all night"
+      "id": "wyr-world-009",
+      "category": "world",
+      "a": "Celebrate New Year in Sydney",
+      "b": "Celebrate New Year in New York"
     },
     {
-      "id": "wyr-desi-010",
-      "category": "desi",
-      "a": "Answer 'what are your marks?' at every gathering",
-      "b": "Answer 'when are you getting married?' at every gathering"
+      "id": "wyr-world-010",
+      "category": "world",
+      "a": "Spend a night in an ice hotel",
+      "b": "Spend a night in a jungle treehouse"
     },
     {
-      "id": "wyr-desi-011",
-      "category": "desi",
-      "a": "Have mangoes all year",
-      "b": "Have monsoon all year"
+      "id": "wyr-world-011",
+      "category": "world",
+      "a": "Only travel by boat",
+      "b": "Only travel by train"
     },
     {
-      "id": "wyr-desi-012",
-      "category": "desi",
-      "a": "Bargain at every shop",
-      "b": "Never be allowed to bargain again"
+      "id": "wyr-world-012",
+      "category": "world",
+      "a": "Go on safari in Kenya",
+      "b": "Go whale watching in Iceland"
     },
     {
-      "id": "wyr-desi-013",
-      "category": "desi",
-      "a": "Spend Diwali in a quiet hill station",
-      "b": "Spend Diwali at a huge family get-together"
+      "id": "wyr-world-013",
+      "category": "world",
+      "a": "Learn to samba in Brazil",
+      "b": "Learn flamenco in Spain"
     },
     {
-      "id": "wyr-desi-014",
-      "category": "desi",
-      "a": "Be known for the best rangoli",
-      "b": "Be known for the best mehndi"
+      "id": "wyr-world-014",
+      "category": "world",
+      "a": "See the pyramids of Giza",
+      "b": "See Machu Picchu"
     },
     {
-      "id": "wyr-desi-015",
-      "category": "desi",
-      "a": "Have an auto-rickshaw that always says yes",
-      "b": "Have a parking spot that's always free"
+      "id": "wyr-world-015",
+      "category": "world",
+      "a": "Live where it's always summer",
+      "b": "Live where it snows every winter"
     },
     {
-      "id": "wyr-desi-016",
-      "category": "desi",
-      "a": "Eat golgappe with no limit",
-      "b": "Eat jalebi with no limit"
+      "id": "wyr-world-016",
+      "category": "world",
+      "a": "Taste every cheese in France",
+      "b": "Taste every noodle dish in Asia"
     },
     {
-      "id": "wyr-desi-017",
-      "category": "desi",
-      "a": "Get a forward message every hour",
-      "b": "Get a call from a relative every hour"
+      "id": "wyr-world-017",
+      "category": "world",
+      "a": "Wander a night market in Taipei",
+      "b": "Wander a Christmas market in Germany"
     },
     {
-      "id": "wyr-desi-018",
-      "category": "desi",
-      "a": "Pack for a trip in your mother's style",
-      "b": "Pack for a trip in your father's style"
+      "id": "wyr-world-018",
+      "category": "world",
+      "a": "Get lost in Marrakech's old town",
+      "b": "Get lost in Istanbul's Grand Bazaar"
     },
     {
-      "id": "wyr-desi-019",
-      "category": "desi",
-      "a": "Watch every match in the stadium",
-      "b": "Play one match with your favourite cricketer"
+      "id": "wyr-world-019",
+      "category": "world",
+      "a": "Watch the sunrise from a mountaintop",
+      "b": "Watch the sunset from a desert dune"
     },
     {
-      "id": "wyr-desi-020",
-      "category": "desi",
-      "a": "Sing at a sangeet",
-      "b": "Give a speech at a reception"
+      "id": "wyr-world-020",
+      "category": "world",
+      "a": "Have a pen pal on every continent",
+      "b": "Have a holiday home on one island"
     },
     {
       "id": "wyr-time-travel-001",

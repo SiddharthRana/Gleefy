@@ -932,10 +932,144 @@ class AppLocalizationsEn extends AppLocalizations {
   String get playersEmpty => 'No names yet';
 
   @override
-  String get playersEmptyBody => 'Add players to take turns, or teams like “Team Chai” and “Team Coffee”.';
+  String get playersEmptyBody => 'Add players to take turns, or teams like “Team Tea” and “Team Coffee”.';
 
   @override
   String playersCount(int count, int max) {
     return '$count of $max';
   }
+
+  @override
+  String progressLevel(int level) {
+    return 'Level $level';
+  }
+
+  @override
+  String progressXp(int into, int needed) {
+    return '$into / $needed XP';
+  }
+
+  @override
+  String get progressStreak => 'day streak';
+
+  @override
+  String get progressStartTitle => 'Start your party level';
+
+  @override
+  String get progressStartBody => 'Finish a game to earn XP and your first trophy. Kept on this phone only.';
+
+  @override
+  String progressSummary(int trophies, int total, int games) {
+    return '$trophies of $total trophies · $games games';
+  }
+
+  @override
+  String progressSemantics(int level, int into, int needed, int streak) {
+    return 'Level $level, $into of $needed XP, $streak day streak';
+  }
+
+  @override
+  String rewardXp(int xp) {
+    return '+$xp XP';
+  }
+
+  @override
+  String rewardToNext(int xp, int level) {
+    return '$xp XP to level $level';
+  }
+
+  @override
+  String rewardLevelUp(int level) {
+    return 'Level up! You’re now level $level';
+  }
+
+  @override
+  String rewardNewTrophies(int count) {
+    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, other: 'New trophies!', one: 'New trophy!');
+    return '$_temp0';
+  }
+
+  @override
+  String get trophiesTitle => 'Trophies';
+
+  @override
+  String get trophiesIntro =>
+      'Finish games to earn XP, level up and keep your streak alive. Your progress stays on this phone: no account, nothing uploaded.';
+
+  @override
+  String trophiesCount(int count, int total) {
+    return '$count of $total trophies';
+  }
+
+  @override
+  String get trophiesSee => 'See all trophies';
+
+  @override
+  String get trophyLocked => 'Not earned yet';
+
+  @override
+  String get statTotalXp => 'Total XP';
+
+  @override
+  String get statGames => 'Games played';
+
+  @override
+  String get statStreak => 'Day streak';
+
+  @override
+  String get statBestStreak => 'Best streak';
+
+  @override
+  String get trophyFirstGame => 'Ice Breaker';
+
+  @override
+  String get trophyFirstGameBody => 'Finish your first game.';
+
+  @override
+  String get trophyRegular => 'Regular';
+
+  @override
+  String get trophyRegularBody => 'Finish 5 games.';
+
+  @override
+  String get trophyPartyAnimal => 'Party Animal';
+
+  @override
+  String get trophyPartyAnimalBody => 'Finish 25 games.';
+
+  @override
+  String get trophyAllModes => 'Try Them All';
+
+  @override
+  String get trophyAllModesBody => 'Finish a game of every mode.';
+
+  @override
+  String get trophyStreak3 => 'On a Roll';
+
+  @override
+  String get trophyStreak3Body => 'Play 3 days in a row.';
+
+  @override
+  String get trophyStreak7 => 'Week of Fun';
+
+  @override
+  String get trophyStreak7Body => 'Play 7 days in a row.';
+
+  @override
+  String get trophyMarathon => 'Marathon';
+
+  @override
+  String get trophyMarathonBody => 'Finish a game of 20 rounds or more.';
+
+  @override
+  String get trophyKnowItAll => 'Know-It-All';
+
+  @override
+  String get trophyKnowItAllBody => 'Get every answer right in a Trivia Blitz game.';
+
+  @override
+  String get trophyRisingStar => 'Rising Star';
+
+  @override
+  String get trophyRisingStarBody => 'Reach level 5.';
 }

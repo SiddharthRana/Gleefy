@@ -28,12 +28,12 @@
       "region": "global"
     },
     {
-      "id": "india",
-      "name": "India",
-      "description": "History, culture and places across India.",
+      "id": "world",
+      "name": "Around the World",
+      "description": "Landmarks, languages and traditions from every continent.",
       "tier": "free",
       "ageRating": "all",
-      "region": "in"
+      "region": "global"
     },
     {
       "id": "space",
@@ -682,207 +682,513 @@
       "reviewStatus": "self-checked"
     },
     {
-      "id": "triv-india-001",
-      "category": "india",
+      "id": "triv-world-001",
+      "category": "world",
       "difficulty": "easy",
-      "question": "What is India's national animal?",
+      "question": "In which city is the Colosseum?",
       "choices": [
-        "Bengal tiger",
-        "Asiatic lion",
-        "Indian elephant",
-        "Peacock"
+        "Rome",
+        "Athens",
+        "Istanbul",
+        "Madrid"
       ],
       "answer": 0,
-      "explanation": "The tiger was declared the national animal in 1973.",
-      "source": "Government of India: National symbols",
-      "verifiedOn": "2026-10-30",
+      "explanation": "The Colosseum, finished in AD 80, held up to about 50,000 spectators.",
+      "source": "Britannica: Colosseum",
+      "verifiedOn": "2026-11-08",
       "reviewStatus": "self-checked"
     },
     {
-      "id": "triv-india-002",
-      "category": "india",
+      "id": "triv-world-002",
+      "category": "world",
       "difficulty": "easy",
-      "question": "What is the capital of India?",
+      "question": "The Sydney Opera House is in which country?",
       "choices": [
-        "New Delhi",
-        "Mumbai",
-        "Kolkata",
-        "Bengaluru"
+        "Australia",
+        "New Zealand",
+        "South Africa",
+        "Canada"
       ],
       "answer": 0,
-      "explanation": "New Delhi has been the capital since independence.",
-      "source": "Government of India: National portal",
-      "verifiedOn": "2026-10-30",
+      "explanation": "Its sail-like shells have stood on Sydney Harbour since 1973.",
+      "source": "Britannica: Sydney Opera House",
+      "verifiedOn": "2026-11-08",
       "reviewStatus": "self-checked"
     },
     {
-      "id": "triv-india-003",
-      "category": "india",
+      "id": "triv-world-003",
+      "category": "world",
       "difficulty": "easy",
-      "question": "Who wrote 'Jana Gana Mana', India's national anthem?",
+      "question": "What is the currency of Japan?",
       "choices": [
-        "Rabindranath Tagore",
-        "Bankim Chandra Chatterjee",
-        "Sarojini Naidu",
-        "Muhammad Iqbal"
+        "Yen",
+        "Won",
+        "Yuan",
+        "Ringgit"
       ],
       "answer": 0,
-      "explanation": "Tagore wrote it in Bengali; it was adopted as the anthem in 1950.",
-      "source": "Government of India: National anthem",
-      "verifiedOn": "2026-10-30",
+      "explanation": "The yen has been Japan's currency since 1871.",
+      "source": "Britannica: yen",
+      "verifiedOn": "2026-11-08",
       "reviewStatus": "self-checked"
     },
     {
-      "id": "triv-india-004",
-      "category": "india",
+      "id": "triv-world-004",
+      "category": "world",
       "difficulty": "medium",
-      "question": "In which year did India's Constitution come into effect?",
+      "question": "Which language has the most native speakers?",
       "choices": [
-        "1950",
-        "1947",
-        "1949",
-        "1952"
+        "Mandarin Chinese",
+        "Spanish",
+        "English",
+        "Arabic"
       ],
       "answer": 0,
-      "explanation": "It came into force on 26 January 1950, now celebrated as Republic Day.",
-      "source": "Government of India: Constitution of India",
-      "verifiedOn": "2026-10-30",
+      "explanation": "Mandarin has more native speakers than any other language; English has the most speakers overall.",
+      "source": "Ethnologue: What are the top 200 most spoken languages?",
+      "verifiedOn": "2026-11-08",
       "reviewStatus": "self-checked"
     },
     {
-      "id": "triv-india-005",
-      "category": "india",
+      "id": "triv-world-005",
+      "category": "world",
+      "difficulty": "medium",
+      "question": "Petra, a city carved into rose-red rock, is in which country?",
+      "choices": [
+        "Jordan",
+        "Egypt",
+        "Morocco",
+        "Turkey"
+      ],
+      "answer": 0,
+      "explanation": "The Nabataeans carved Petra's buildings out of sandstone cliffs.",
+      "source": "Britannica: Petra",
+      "verifiedOn": "2026-11-08",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-006",
+      "category": "world",
       "difficulty": "easy",
-      "question": "Which state's name means 'land of five rivers'?",
+      "question": "The Christ the Redeemer statue looks over which city?",
       "choices": [
-        "Punjab",
-        "Haryana",
-        "Assam",
-        "Bihar"
+        "Rio de Janeiro",
+        "São Paulo",
+        "Buenos Aires",
+        "Lisbon"
       ],
       "answer": 0,
-      "explanation": "In Persian, 'panj' means five and 'ab' means water.",
-      "source": "Encyclopaedia Britannica: Punjab",
-      "verifiedOn": "2026-10-30",
+      "explanation": "It stands on Corcovado mountain above Rio de Janeiro, Brazil.",
+      "source": "Britannica: Christ the Redeemer",
+      "verifiedOn": "2026-11-08",
       "reviewStatus": "self-checked"
     },
     {
-      "id": "triv-india-006",
-      "category": "india",
+      "id": "triv-world-007",
+      "category": "world",
       "difficulty": "medium",
-      "question": "Which classical dance from Kerala is known for its elaborate make-up and costumes?",
+      "question": "Angkor Wat, the largest religious monument in the world, is in which country?",
       "choices": [
-        "Kathakali",
-        "Kathak",
-        "Bharatanatyam",
-        "Odissi"
+        "Cambodia",
+        "Thailand",
+        "Vietnam",
+        "Laos"
       ],
       "answer": 0,
-      "explanation": "Kathakali dancers tell stories through expressions and gestures.",
-      "source": "Encyclopaedia Britannica: Kathakali",
-      "verifiedOn": "2026-10-30",
+      "explanation": "Angkor Wat was built in the 12th century and appears on Cambodia's flag.",
+      "source": "Britannica: Angkor Wat",
+      "verifiedOn": "2026-11-08",
       "reviewStatus": "self-checked"
     },
     {
-      "id": "triv-india-007",
-      "category": "india",
+      "id": "triv-world-008",
+      "category": "world",
+      "difficulty": "medium",
+      "question": "The Mayan city of Chichén Itzá is in which country?",
+      "choices": [
+        "Mexico",
+        "Guatemala",
+        "Peru",
+        "Belize"
+      ],
+      "answer": 0,
+      "explanation": "Chichén Itzá is on Mexico's Yucatán Peninsula.",
+      "source": "Britannica: Chichén Itzá",
+      "verifiedOn": "2026-11-08",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-009",
+      "category": "world",
       "difficulty": "easy",
-      "question": "Which city is called the 'Pink City'?",
+      "question": "Which country is famous for tulips and windmills, and has Amsterdam as its capital?",
       "choices": [
-        "Jaipur",
-        "Udaipur",
-        "Jodhpur",
-        "Agra"
+        "The Netherlands",
+        "Belgium",
+        "Denmark",
+        "Germany"
       ],
       "answer": 0,
-      "explanation": "Many of Jaipur's old buildings are painted a terracotta pink.",
-      "source": "Encyclopaedia Britannica: Jaipur",
-      "verifiedOn": "2026-10-30",
+      "explanation": "Amsterdam is the capital of the Netherlands.",
+      "source": "Britannica: Netherlands",
+      "verifiedOn": "2026-11-08",
       "reviewStatus": "self-checked"
     },
     {
-      "id": "triv-india-008",
-      "category": "india",
-      "difficulty": "medium",
-      "question": "Which Indian state has the longest coastline?",
-      "choices": [
-        "Gujarat",
-        "Tamil Nadu",
-        "Maharashtra",
-        "Andhra Pradesh"
-      ],
-      "answer": 0,
-      "explanation": "Gujarat's coast is roughly 1,600 km long.",
-      "source": "Encyclopaedia Britannica: Gujarat",
-      "verifiedOn": "2026-10-30",
-      "reviewStatus": "self-checked"
-    },
-    {
-      "id": "triv-india-009",
-      "category": "india",
-      "difficulty": "medium",
-      "question": "Which Indian grandmaster won the world chess championship in 2000?",
-      "choices": [
-        "Viswanathan Anand",
-        "Pentala Harikrishna",
-        "Koneru Humpy",
-        "Dibyendu Barua"
-      ],
-      "answer": 0,
-      "explanation": "Anand went on to win the world title several more times.",
-      "source": "Encyclopaedia Britannica: Viswanathan Anand",
-      "verifiedOn": "2026-10-30",
-      "reviewStatus": "self-checked"
-    },
-    {
-      "id": "triv-india-010",
-      "category": "india",
-      "difficulty": "medium",
-      "question": "What was the name of India's first satellite, launched in 1975?",
-      "choices": [
-        "Aryabhata",
-        "Bhaskara",
-        "Rohini",
-        "INSAT-1A"
-      ],
-      "answer": 0,
-      "explanation": "It was named after the ancient Indian mathematician and astronomer.",
-      "source": "ISRO: Aryabhata",
-      "verifiedOn": "2026-10-30",
-      "reviewStatus": "self-checked"
-    },
-    {
-      "id": "triv-india-011",
-      "category": "india",
+      "id": "triv-world-010",
+      "category": "world",
       "difficulty": "easy",
-      "question": "What is India's national flower?",
+      "question": "The Acropolis looks over which capital city?",
       "choices": [
-        "Lotus",
-        "Rose",
-        "Marigold",
-        "Jasmine"
+        "Athens",
+        "Rome",
+        "Cairo",
+        "Lisbon"
       ],
       "answer": 0,
-      "explanation": "The lotus is a symbol in Indian art and mythology.",
-      "source": "Government of India: National symbols",
-      "verifiedOn": "2026-10-30",
+      "explanation": "The Parthenon on the Acropolis was built in the 5th century BC.",
+      "source": "Britannica: Acropolis",
+      "verifiedOn": "2026-11-08",
       "reviewStatus": "self-checked"
     },
     {
-      "id": "triv-india-012",
-      "category": "india",
-      "difficulty": "medium",
-      "question": "Which river is the longest flowing within India?",
+      "id": "triv-world-011",
+      "category": "world",
+      "difficulty": "easy",
+      "question": "Which city is nicknamed the Big Apple?",
       "choices": [
-        "Ganga",
-        "Godavari",
-        "Yamuna",
-        "Narmada"
+        "New York City",
+        "Chicago",
+        "Los Angeles",
+        "London"
       ],
       "answer": 0,
-      "explanation": "The Ganga flows about 2,500 km from the Himalayas to the Bay of Bengal.",
-      "source": "Encyclopaedia Britannica: Ganges River",
-      "verifiedOn": "2026-10-30",
+      "explanation": "New York has been called the Big Apple since at least the 1920s.",
+      "source": "Britannica: New York City",
+      "verifiedOn": "2026-11-08",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-012",
+      "category": "world",
+      "difficulty": "easy",
+      "question": "The Louvre museum is in which city?",
+      "choices": [
+        "Paris",
+        "London",
+        "Madrid",
+        "Berlin"
+      ],
+      "answer": 0,
+      "explanation": "The Louvre, home of the Mona Lisa, is the world's most visited museum.",
+      "source": "Britannica: Louvre",
+      "verifiedOn": "2026-11-08",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-013",
+      "category": "world",
+      "difficulty": "medium",
+      "question": "Which African country has the largest population?",
+      "choices": [
+        "Nigeria",
+        "Ethiopia",
+        "Egypt",
+        "DR Congo"
+      ],
+      "answer": 0,
+      "explanation": "Nigeria has more than 200 million people.",
+      "source": "UN World Population Prospects",
+      "verifiedOn": "2026-11-08",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-014",
+      "category": "world",
+      "difficulty": "easy",
+      "question": "What is the official language of Brazil?",
+      "choices": [
+        "Portuguese",
+        "Spanish",
+        "English",
+        "French"
+      ],
+      "answer": 0,
+      "explanation": "Brazil was a Portuguese colony until 1822.",
+      "source": "Britannica: Brazil",
+      "verifiedOn": "2026-11-08",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-015",
+      "category": "world",
+      "difficulty": "easy",
+      "question": "Which country's flag is a red circle on a white background?",
+      "choices": [
+        "Japan",
+        "South Korea",
+        "China",
+        "Bangladesh"
+      ],
+      "answer": 0,
+      "explanation": "Japan's flag is the Hinomaru, the 'circle of the sun'. Bangladesh's red circle sits on green.",
+      "source": "Britannica: flag of Japan",
+      "verifiedOn": "2026-11-08",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-016",
+      "category": "world",
+      "difficulty": "medium",
+      "question": "Neuschwanstein, the fairy-tale castle, is in which country?",
+      "choices": [
+        "Germany",
+        "Austria",
+        "Switzerland",
+        "France"
+      ],
+      "answer": 0,
+      "explanation": "King Ludwig II of Bavaria built it in the 19th century.",
+      "source": "Britannica: Neuschwanstein Castle",
+      "verifiedOn": "2026-11-08",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-017",
+      "category": "world",
+      "difficulty": "easy",
+      "question": "Which country is shaped like a boot?",
+      "choices": [
+        "Italy",
+        "Greece",
+        "Portugal",
+        "Chile"
+      ],
+      "answer": 0,
+      "explanation": "Italy's peninsula looks like a boot kicking Sicily.",
+      "source": "Britannica: Italy",
+      "verifiedOn": "2026-11-08",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-018",
+      "category": "world",
+      "difficulty": "easy",
+      "question": "What is the currency of the United Kingdom?",
+      "choices": [
+        "Pound sterling",
+        "Euro",
+        "Dollar",
+        "Franc"
+      ],
+      "answer": 0,
+      "explanation": "The pound sterling is one of the oldest currencies still in use.",
+      "source": "Britannica: pound sterling",
+      "verifiedOn": "2026-11-08",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-019",
+      "category": "world",
+      "difficulty": "hard",
+      "question": "The Alhambra palace is in which Spanish city?",
+      "choices": [
+        "Granada",
+        "Seville",
+        "Madrid",
+        "Barcelona"
+      ],
+      "answer": 0,
+      "explanation": "The Alhambra was built by the Nasrid rulers of Granada.",
+      "source": "Britannica: Alhambra",
+      "verifiedOn": "2026-11-08",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-020",
+      "category": "world",
+      "difficulty": "hard",
+      "question": "Which country has more ancient pyramids than Egypt?",
+      "choices": [
+        "Sudan",
+        "Mexico",
+        "Peru",
+        "Libya"
+      ],
+      "answer": 0,
+      "explanation": "Sudan has around 200 Nubian pyramids, more than Egypt.",
+      "source": "National Geographic: Sudan's pyramids",
+      "verifiedOn": "2026-11-08",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-021",
+      "category": "world",
+      "difficulty": "easy",
+      "question": "Which country gave the Statue of Liberty to the United States?",
+      "choices": [
+        "France",
+        "The United Kingdom",
+        "Spain",
+        "The Netherlands"
+      ],
+      "answer": 0,
+      "explanation": "It was a gift from the people of France, dedicated in 1886.",
+      "source": "Britannica: Statue of Liberty",
+      "verifiedOn": "2026-11-08",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-022",
+      "category": "world",
+      "difficulty": "medium",
+      "question": "The haka is a traditional dance of which people?",
+      "choices": [
+        "The Māori of New Zealand",
+        "The Inuit of Canada",
+        "The Sámi of Norway",
+        "The Maasai of Kenya"
+      ],
+      "answer": 0,
+      "explanation": "New Zealand's rugby team performs a haka before matches.",
+      "source": "Britannica: haka",
+      "verifiedOn": "2026-11-08",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-023",
+      "category": "world",
+      "difficulty": "medium",
+      "question": "Which Italian city's carnival is famous for elaborate masks?",
+      "choices": [
+        "Venice",
+        "Rome",
+        "Milan",
+        "Naples"
+      ],
+      "answer": 0,
+      "explanation": "Masked balls have been part of the Carnival of Venice for centuries.",
+      "source": "Britannica: Carnival",
+      "verifiedOn": "2026-11-08",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-024",
+      "category": "world",
+      "difficulty": "easy",
+      "question": "Stonehenge is in which country?",
+      "choices": [
+        "England",
+        "Ireland",
+        "Scotland",
+        "France"
+      ],
+      "answer": 0,
+      "explanation": "Stonehenge stands on Salisbury Plain in southern England.",
+      "source": "Britannica: Stonehenge",
+      "verifiedOn": "2026-11-08",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-025",
+      "category": "world",
+      "difficulty": "easy",
+      "question": "In which country is Día de los Muertos (Day of the Dead) celebrated with marigolds and sugar skulls?",
+      "choices": [
+        "Mexico",
+        "Spain",
+        "Argentina",
+        "The Philippines"
+      ],
+      "answer": 0,
+      "explanation": "Families honour their dead on 1 and 2 November.",
+      "source": "Britannica: Day of the Dead",
+      "verifiedOn": "2026-11-08",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-026",
+      "category": "world",
+      "difficulty": "easy",
+      "question": "In Japan, hanami is the custom of viewing which flowers?",
+      "choices": [
+        "Cherry blossoms",
+        "Lotus flowers",
+        "Tulips",
+        "Sunflowers"
+      ],
+      "answer": 0,
+      "explanation": "Friends picnic under the blossoming sakura trees each spring.",
+      "source": "Britannica: cherry blossom",
+      "verifiedOn": "2026-11-08",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-027",
+      "category": "world",
+      "difficulty": "medium",
+      "question": "What is another name for the Northern Lights?",
+      "choices": [
+        "Aurora borealis",
+        "Aurora australis",
+        "Zodiacal light",
+        "St Elmo's fire"
+      ],
+      "answer": 0,
+      "explanation": "Aurora australis is the Southern Lights.",
+      "source": "Britannica: aurora",
+      "verifiedOn": "2026-11-08",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-028",
+      "category": "world",
+      "difficulty": "easy",
+      "question": "Marrakech is a city in which country?",
+      "choices": [
+        "Morocco",
+        "Tunisia",
+        "Algeria",
+        "Egypt"
+      ],
+      "answer": 0,
+      "explanation": "Marrakech's old town is famous for its souks and the square Jemaa el-Fna.",
+      "source": "Britannica: Marrakech",
+      "verifiedOn": "2026-11-08",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-029",
+      "category": "world",
+      "difficulty": "hard",
+      "question": "Lake Titicaca lies on the border between Peru and which country?",
+      "choices": [
+        "Bolivia",
+        "Chile",
+        "Ecuador",
+        "Brazil"
+      ],
+      "answer": 0,
+      "explanation": "It is one of the highest large lakes in the world.",
+      "source": "Britannica: Lake Titicaca",
+      "verifiedOn": "2026-11-08",
+      "reviewStatus": "self-checked"
+    },
+    {
+      "id": "triv-world-030",
+      "category": "world",
+      "difficulty": "medium",
+      "question": "Which country is famous for its fjords and is home to the city of Bergen?",
+      "choices": [
+        "Norway",
+        "Sweden",
+        "Finland",
+        "Iceland"
+      ],
+      "answer": 0,
+      "explanation": "Bergen is the gateway to Norway's western fjords.",
+      "source": "Britannica: Bergen",
+      "verifiedOn": "2026-11-08",
       "reviewStatus": "self-checked"
     },
     {
@@ -991,17 +1297,17 @@
       "id": "triv-space-007",
       "category": "space",
       "difficulty": "medium",
-      "question": "In 2023, Chandrayaan-3 landed near which part of the Moon?",
+      "question": "In 2014, which lander became the first spacecraft to land on a comet?",
       "choices": [
-        "The south pole region",
-        "The north pole region",
-        "The far side's equator",
-        "The Sea of Tranquility"
+        "Philae",
+        "Huygens",
+        "Voyager 1",
+        "Sputnik 1"
       ],
       "answer": 0,
-      "explanation": "India became the first country to land near the lunar south pole.",
-      "source": "ISRO: Chandrayaan-3",
-      "verifiedOn": "2026-10-30",
+      "explanation": "Philae, carried by ESA's Rosetta, landed on comet 67P.",
+      "source": "ESA: Rosetta mission",
+      "verifiedOn": "2026-11-08",
       "reviewStatus": "self-checked"
     },
     {
@@ -1940,312 +2246,6 @@
       "reviewStatus": "self-checked"
     },
     {
-      "id": "triv-india-013",
-      "category": "india",
-      "difficulty": "easy",
-      "question": "What is India’s national bird?",
-      "choices": [
-        "Indian peafowl (peacock)",
-        "Parrot",
-        "Kingfisher",
-        "Sparrow"
-      ],
-      "answer": 0,
-      "explanation": "The Indian peafowl became the national bird in 1963.",
-      "source": "Government of India: National Portal, National Bird",
-      "verifiedOn": "2026-11-03",
-      "reviewStatus": "self-checked"
-    },
-    {
-      "id": "triv-india-014",
-      "category": "india",
-      "difficulty": "easy",
-      "question": "In which city is India Gate?",
-      "choices": [
-        "New Delhi",
-        "Mumbai",
-        "Kolkata",
-        "Agra"
-      ],
-      "answer": 0,
-      "explanation": "India Gate is a war memorial honouring Indian soldiers, in the heart of New Delhi.",
-      "source": "Britannica: India Gate",
-      "verifiedOn": "2026-11-03",
-      "reviewStatus": "self-checked"
-    },
-    {
-      "id": "triv-india-015",
-      "category": "india",
-      "difficulty": "easy",
-      "question": "The Gateway of India stands in which city?",
-      "choices": [
-        "Mumbai",
-        "Chennai",
-        "Kolkata",
-        "Kochi"
-      ],
-      "answer": 0,
-      "explanation": "It overlooks the Arabian Sea at Apollo Bunder in Mumbai.",
-      "source": "Britannica: Gateway of India",
-      "verifiedOn": "2026-11-03",
-      "reviewStatus": "self-checked"
-    },
-    {
-      "id": "triv-india-016",
-      "category": "india",
-      "difficulty": "easy",
-      "question": "Who is known in India as the \"Father of the Nation\"?",
-      "choices": [
-        "Mahatma Gandhi",
-        "Jawaharlal Nehru",
-        "Sardar Patel",
-        "Subhas Chandra Bose"
-      ],
-      "answer": 0,
-      "explanation": "Gandhi led the non-violent movement for independence.",
-      "source": "Britannica: Mahatma Gandhi",
-      "verifiedOn": "2026-11-03",
-      "reviewStatus": "self-checked"
-    },
-    {
-      "id": "triv-india-017",
-      "category": "india",
-      "difficulty": "easy",
-      "question": "Which Mughal emperor built the Taj Mahal?",
-      "choices": [
-        "Shah Jahan",
-        "Akbar",
-        "Babur",
-        "Aurangzeb"
-      ],
-      "answer": 0,
-      "explanation": "Shah Jahan built it in memory of his wife, Mumtaz Mahal.",
-      "source": "Britannica: Taj Mahal",
-      "verifiedOn": "2026-11-03",
-      "reviewStatus": "self-checked"
-    },
-    {
-      "id": "triv-india-018",
-      "category": "india",
-      "difficulty": "medium",
-      "question": "Which Indian scientist won the Nobel Prize in Physics in 1930?",
-      "choices": [
-        "C. V. Raman",
-        "Homi J. Bhabha",
-        "Jagadish Chandra Bose",
-        "Satyendra Nath Bose"
-      ],
-      "answer": 0,
-      "explanation": "Raman won it for his work on the scattering of light, the Raman effect.",
-      "source": "Nobel Prize: C. V. Raman, Physics 1930",
-      "verifiedOn": "2026-11-03",
-      "reviewStatus": "self-checked"
-    },
-    {
-      "id": "triv-india-019",
-      "category": "india",
-      "difficulty": "easy",
-      "question": "Which festival is known as the festival of lights?",
-      "choices": [
-        "Diwali",
-        "Holi",
-        "Onam",
-        "Pongal"
-      ],
-      "answer": 0,
-      "explanation": "Homes are lit with diyas and lamps for Diwali.",
-      "source": "Britannica: Diwali",
-      "verifiedOn": "2026-11-03",
-      "reviewStatus": "self-checked"
-    },
-    {
-      "id": "triv-india-020",
-      "category": "india",
-      "difficulty": "easy",
-      "question": "Onam is mainly celebrated in which state?",
-      "choices": [
-        "Kerala",
-        "Tamil Nadu",
-        "Karnataka",
-        "Goa"
-      ],
-      "answer": 0,
-      "explanation": "Onam is Kerala’s harvest festival, famous for boat races and the Onam sadya.",
-      "source": "Britannica: Onam",
-      "verifiedOn": "2026-11-03",
-      "reviewStatus": "self-checked"
-    },
-    {
-      "id": "triv-india-021",
-      "category": "india",
-      "difficulty": "medium",
-      "question": "Which mountain range runs along India’s western coast?",
-      "choices": [
-        "Western Ghats",
-        "Eastern Ghats",
-        "Aravalli Range",
-        "Vindhya Range"
-      ],
-      "answer": 0,
-      "explanation": "The Western Ghats run from Gujarat down to Kerala and Tamil Nadu.",
-      "source": "Britannica: Western Ghats",
-      "verifiedOn": "2026-11-03",
-      "reviewStatus": "self-checked"
-    },
-    {
-      "id": "triv-india-022",
-      "category": "india",
-      "difficulty": "medium",
-      "question": "Which is one of the oldest mountain ranges in India?",
-      "choices": [
-        "Aravalli Range",
-        "Himalayas",
-        "Western Ghats",
-        "Satpura Range"
-      ],
-      "answer": 0,
-      "explanation": "The Aravallis, in Rajasthan and nearby states, are among the oldest fold mountains on Earth.",
-      "source": "Britannica: Aravalli Range",
-      "verifiedOn": "2026-11-03",
-      "reviewStatus": "self-checked"
-    },
-    {
-      "id": "triv-india-023",
-      "category": "india",
-      "difficulty": "easy",
-      "question": "Who was India’s first Prime Minister?",
-      "choices": [
-        "Jawaharlal Nehru",
-        "Sardar Patel",
-        "Rajendra Prasad",
-        "Lal Bahadur Shastri"
-      ],
-      "answer": 0,
-      "explanation": "Nehru served from independence in 1947 until 1964.",
-      "source": "Britannica: Jawaharlal Nehru",
-      "verifiedOn": "2026-11-03",
-      "reviewStatus": "self-checked"
-    },
-    {
-      "id": "triv-india-024",
-      "category": "india",
-      "difficulty": "medium",
-      "question": "Who was India’s first President?",
-      "choices": [
-        "Rajendra Prasad",
-        "S. Radhakrishnan",
-        "Zakir Husain",
-        "V. V. Giri"
-      ],
-      "answer": 0,
-      "explanation": "Rajendra Prasad took office in 1950, when India became a republic.",
-      "source": "Britannica: Rajendra Prasad",
-      "verifiedOn": "2026-11-03",
-      "reviewStatus": "self-checked"
-    },
-    {
-      "id": "triv-india-025",
-      "category": "india",
-      "difficulty": "medium",
-      "question": "Which Indian travelled to space in 1984?",
-      "choices": [
-        "Rakesh Sharma",
-        "Kalpana Chawla",
-        "Sunita Williams",
-        "Ravish Malhotra"
-      ],
-      "answer": 0,
-      "explanation": "Rakesh Sharma flew aboard the Soviet Soyuz T-11 mission.",
-      "source": "Britannica: Rakesh Sharma",
-      "verifiedOn": "2026-11-03",
-      "reviewStatus": "self-checked"
-    },
-    {
-      "id": "triv-india-026",
-      "category": "india",
-      "difficulty": "medium",
-      "question": "Kalaripayattu, a martial art, comes from which state?",
-      "choices": [
-        "Kerala",
-        "Punjab",
-        "Manipur",
-        "Assam"
-      ],
-      "answer": 0,
-      "explanation": "Kalaripayattu is one of the oldest martial arts still practised.",
-      "source": "Britannica: Kalaripayattu",
-      "verifiedOn": "2026-11-03",
-      "reviewStatus": "self-checked"
-    },
-    {
-      "id": "triv-india-027",
-      "category": "india",
-      "difficulty": "hard",
-      "question": "Which river is often called the \"Dakshin Ganga\"?",
-      "choices": [
-        "Godavari",
-        "Kaveri",
-        "Krishna",
-        "Narmada"
-      ],
-      "answer": 0,
-      "explanation": "The Godavari is the longest river in peninsular India.",
-      "source": "Britannica: Godavari River",
-      "verifiedOn": "2026-11-03",
-      "reviewStatus": "self-checked"
-    },
-    {
-      "id": "triv-india-028",
-      "category": "india",
-      "difficulty": "medium",
-      "question": "The Sundarbans mangrove forest lies in the delta of which rivers?",
-      "choices": [
-        "Ganga and Brahmaputra",
-        "Godavari and Krishna",
-        "Indus and Sutlej",
-        "Narmada and Tapi"
-      ],
-      "answer": 0,
-      "explanation": "The Sundarbans span India and Bangladesh and are home to Bengal tigers.",
-      "source": "UNESCO: The Sundarbans",
-      "verifiedOn": "2026-11-03",
-      "reviewStatus": "self-checked"
-    },
-    {
-      "id": "triv-india-029",
-      "category": "india",
-      "difficulty": "medium",
-      "question": "Bihu is a festival and dance from which state?",
-      "choices": [
-        "Assam",
-        "Odisha",
-        "Bihar",
-        "Sikkim"
-      ],
-      "answer": 0,
-      "explanation": "Bihu marks Assam’s seasons and harvest, with lively dancing.",
-      "source": "Britannica: Bihu",
-      "verifiedOn": "2026-11-03",
-      "reviewStatus": "self-checked"
-    },
-    {
-      "id": "triv-india-030",
-      "category": "india",
-      "difficulty": "easy",
-      "question": "Which city is often called the \"Silicon Valley of India\"?",
-      "choices": [
-        "Bengaluru",
-        "Hyderabad",
-        "Pune",
-        "Chennai"
-      ],
-      "answer": 0,
-      "explanation": "Bengaluru is a major centre of India’s technology industry.",
-      "source": "Britannica: Bengaluru",
-      "verifiedOn": "2026-11-03",
-      "reviewStatus": "self-checked"
-    },
-    {
       "id": "triv-space-009",
       "category": "space",
       "difficulty": "easy",
@@ -2351,17 +2351,17 @@
       "id": "triv-space-015",
       "category": "space",
       "difficulty": "medium",
-      "question": "What was India’s first mission to Mars, launched in 2013?",
+      "question": "Which space telescope, launched in 2021, looks at the universe mainly in infrared?",
       "choices": [
-        "Mangalyaan (Mars Orbiter Mission)",
-        "Chandrayaan-1",
-        "Aditya-L1",
-        "Gaganyaan"
+        "James Webb Space Telescope",
+        "Hubble Space Telescope",
+        "Kepler",
+        "Spitzer"
       ],
       "answer": 0,
-      "explanation": "Mangalyaan reached Mars orbit in 2014 on its first attempt.",
-      "source": "ISRO: Mars Orbiter Mission",
-      "verifiedOn": "2026-11-03",
+      "explanation": "Webb's gold mirror is 6.5 metres across.",
+      "source": "NASA: James Webb Space Telescope",
+      "verifiedOn": "2026-11-08",
       "reviewStatus": "self-checked"
     },
     {
@@ -2487,17 +2487,17 @@
       "id": "triv-history-003",
       "category": "history",
       "difficulty": "medium",
-      "question": "Who founded the Maurya Empire?",
+      "question": "Who led the first expedition to reach the South Pole, in 1911?",
       "choices": [
-        "Chandragupta Maurya",
-        "Ashoka",
-        "Bindusara",
-        "Samudragupta"
+        "Roald Amundsen",
+        "Robert Falcon Scott",
+        "Ernest Shackleton",
+        "Edmund Hillary"
       ],
       "answer": 0,
-      "explanation": "Chandragupta Maurya founded the empire around 321 BCE.",
-      "source": "Britannica: Mauryan empire",
-      "verifiedOn": "2026-11-03",
+      "explanation": "Amundsen's team arrived about a month before Scott's.",
+      "source": "Britannica: Roald Amundsen",
+      "verifiedOn": "2026-11-08",
       "reviewStatus": "self-checked"
     },
     {
@@ -2571,18 +2571,18 @@
     {
       "id": "triv-history-008",
       "category": "history",
-      "difficulty": "easy",
-      "question": "Who led the Salt March in 1930?",
+      "difficulty": "medium",
+      "question": "In 1893, women in which country became the first to win the vote in national elections?",
       "choices": [
-        "Mahatma Gandhi",
-        "Jawaharlal Nehru",
-        "Subhas Chandra Bose",
-        "Bhagat Singh"
+        "New Zealand",
+        "The United Kingdom",
+        "The United States",
+        "Finland"
       ],
       "answer": 0,
-      "explanation": "Gandhi walked to Dandi to make salt in protest against the British salt tax.",
-      "source": "Britannica: Salt March",
-      "verifiedOn": "2026-11-03",
+      "explanation": "New Zealand gave women the vote in 1893.",
+      "source": "Britannica: woman suffrage",
+      "verifiedOn": "2026-11-08",
       "reviewStatus": "self-checked"
     },
     {
@@ -2674,17 +2674,17 @@
       "id": "triv-history-014",
       "category": "history",
       "difficulty": "medium",
-      "question": "Which emperor turned to Buddhism after the Kalinga war?",
+      "question": "The Terracotta Army was buried to guard the tomb of which ruler?",
       "choices": [
-        "Ashoka",
-        "Akbar",
-        "Harsha",
-        "Chandragupta Maurya"
+        "Qin Shi Huang",
+        "Genghis Khan",
+        "Kublai Khan",
+        "Confucius"
       ],
       "answer": 0,
-      "explanation": "Shocked by the bloodshed, Ashoka spread Buddhist ideas through his edicts.",
-      "source": "Britannica: Ashoka",
-      "verifiedOn": "2026-11-03",
+      "explanation": "Thousands of clay soldiers guard China's first emperor.",
+      "source": "Britannica: Terracotta Army",
+      "verifiedOn": "2026-11-08",
       "reviewStatus": "self-checked"
     },
     {
@@ -2708,34 +2708,34 @@
       "id": "triv-history-016",
       "category": "history",
       "difficulty": "easy",
-      "question": "Who was India’s first woman Prime Minister?",
+      "question": "Who was the first woman to win a Nobel Prize?",
       "choices": [
-        "Indira Gandhi",
-        "Sarojini Naidu",
-        "Pratibha Patil",
-        "Sushma Swaraj"
+        "Marie Curie",
+        "Florence Nightingale",
+        "Ada Lovelace",
+        "Mother Teresa"
       ],
       "answer": 0,
-      "explanation": "Indira Gandhi first became Prime Minister in 1966.",
-      "source": "Britannica: Indira Gandhi",
-      "verifiedOn": "2026-11-03",
+      "explanation": "Marie Curie shared the 1903 Nobel Prize in Physics, and won Chemistry in 1911.",
+      "source": "Nobel Prize: Marie Curie",
+      "verifiedOn": "2026-11-08",
       "reviewStatus": "self-checked"
     },
     {
       "id": "triv-history-017",
       "category": "history",
       "difficulty": "hard",
-      "question": "The Battle of Plassey (1757) was fought in which present-day state?",
+      "question": "In which year was the Magna Carta sealed in England?",
       "choices": [
-        "West Bengal",
-        "Bihar",
-        "Odisha",
-        "Uttar Pradesh"
+        "1215",
+        "1066",
+        "1492",
+        "1776"
       ],
       "answer": 0,
-      "explanation": "The East India Company’s victory at Plassey began British rule in Bengal.",
-      "source": "Britannica: Battle of Plassey",
-      "verifiedOn": "2026-11-03",
+      "explanation": "King John sealed it at Runnymede in 1215.",
+      "source": "Britannica: Magna Carta",
+      "verifiedOn": "2026-11-08",
       "reviewStatus": "self-checked"
     },
     {
@@ -3285,18 +3285,18 @@
     {
       "id": "triv-sports-010",
       "category": "sports",
-      "difficulty": "easy",
-      "question": "Kabaddi is a contact sport that originated in which country?",
+      "difficulty": "medium",
+      "question": "Which country won the first FIFA World Cup, in 1930?",
       "choices": [
-        "India",
-        "Japan",
+        "Uruguay",
         "Brazil",
-        "Egypt"
+        "Argentina",
+        "Italy"
       ],
       "answer": 0,
-      "explanation": "Kabaddi has been played in India for centuries and is now played worldwide.",
-      "source": "Britannica: Kabaddi",
-      "verifiedOn": "2026-11-03",
+      "explanation": "Uruguay hosted and won, beating Argentina 4–2 in the final.",
+      "source": "Britannica: World Cup",
+      "verifiedOn": "2026-11-08",
       "reviewStatus": "self-checked"
     },
     {

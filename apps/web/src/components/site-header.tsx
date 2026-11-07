@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { AccountLink } from './account-link';
 import { Logo } from './logo';
+import { LevelChip } from './progress-panel';
 
 export function SiteHeader() {
   return (
@@ -34,14 +34,7 @@ export function SiteHeader() {
                 Play
               </Link>
             </li>
-            <li>
-              <Link
-                href="/pricing"
-                className="nav-link inline-flex min-h-12 items-center whitespace-nowrap rounded-full px-2.5 hover:bg-surface-muted sm:px-4"
-              >
-                Premium
-              </Link>
-            </li>
+
             <li className="hidden md:block">
               <Link
                 href="/how-to-play"
@@ -51,7 +44,15 @@ export function SiteHeader() {
               </Link>
             </li>
             <li>
-              <AccountLink className="nav-link inline-flex min-h-12 min-w-12 items-center justify-center whitespace-nowrap rounded-full px-2.5 hover:bg-surface-muted sm:px-4" />
+              <Link
+                href="/pricing"
+                className="press premium-pill ml-1 inline-flex min-h-12 items-center gap-1 whitespace-nowrap rounded-full px-3 sm:px-4"
+              >
+                <span aria-hidden="true">★</span> Premium
+              </Link>
+            </li>
+            <li>
+              <LevelChip />
             </li>
           </ul>
         </nav>

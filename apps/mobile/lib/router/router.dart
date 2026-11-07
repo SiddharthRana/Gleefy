@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../features/account/account_screen.dart';
 import '../features/account/premium_screen.dart';
 import '../features/account/sign_in_screen.dart';
+import '../features/trophies_screen.dart';
 import '../features/home_screen.dart';
 import '../features/my_questions_screen.dart';
 import '../features/library_screen.dart';
@@ -49,6 +50,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/players', pageBuilder: (_, state) => page(state, const PlayersScreen())),
       GoRoute(path: '/party', pageBuilder: (_, state) => page(state, const PartyScreen())),
       GoRoute(path: '/premium', pageBuilder: (_, state) => page(state, const PremiumScreen())),
+      GoRoute(path: '/trophies', pageBuilder: (_, state) => page(state, const TrophiesScreen())),
       GoRoute(
         path: '/my-questions',
         pageBuilder: (_, state) => page(

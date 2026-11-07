@@ -21,13 +21,23 @@ test('the Premium page shows the one-time price and what premium adds', async ({
   await expect(included.getByRole('listitem').first()).toContainText(/\d+ questions?/);
 });
 
-test('the header has a sign-in link', async ({ page }) => {
+test('the header offers Premium, not sign-in (playing never needs an account)', async ({
+  page,
+}) => {
   await page.goto('/');
-  await page
-    .getByRole('navigation', { name: 'Main' })
-    .getByRole('link', { name: 'Sign in' })
-    .click();
-  await expect(page).toHaveURL(/\/account$/);
+  const nav = page.getByRole('navigation', { name: 'Main' });
+  await expect(nav.getByRole('link', { name: 'Sign in' })).toHaveCount(0);
+  await nav.getByRole('link', { name: 'Premium' }).click();
+  await expect(page).toHaveURL(/\/pricing$/);
+});
+
+test('the homepage lists what Premium adds', async ({ page }) => {
+  await page.goto('/');
+  const premium = page.getByRole('region', { name: /Unlock \d+ extra categories/ });
+  await expect(premium).toContainText('$2.99 once');
+  await expect(premium.getByRole('list', { name: 'Premium categories' })).toContainText(
+    'Time Travel',
+  );
 });
 
 test('without a reachable API, the page says so instead of waiting', async ({ page }) => {
