@@ -46,7 +46,7 @@ class OptionCard extends StatelessWidget {
         enabled: enabled,
         child: Material(
           color: color,
-          borderRadius: BorderRadius.circular(MmRadius.xl),
+          borderRadius: BorderRadius.circular(GfRadius.xl),
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             onTap: enabled ? onTap : null,
@@ -69,7 +69,7 @@ class OptionCard extends StatelessWidget {
                     ),
                   ),
                 Padding(
-                  padding: const EdgeInsets.all(MmSpace.s5),
+                  padding: const EdgeInsets.all(GfSpace.s5),
                   child: Center(
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
@@ -81,8 +81,8 @@ class OptionCard extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  right: MmSpace.s3,
-                  top: MmSpace.s3,
+                  right: GfSpace.s3,
+                  top: GfSpace.s3,
                   // Bumps with every vote, and again when the split is revealed.
                   child: Bump(
                     value: revealed ? 'split' : votes,
@@ -109,12 +109,12 @@ class VoteBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints(minWidth: 40),
-      padding: const EdgeInsets.symmetric(horizontal: MmSpace.s3, vertical: MmSpace.s1),
-      decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(MmRadius.pill)),
+      padding: const EdgeInsets.symmetric(horizontal: GfSpace.s3, vertical: GfSpace.s1),
+      decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(GfRadius.pill)),
       child: Text(
         text,
         textAlign: TextAlign.center,
-        style: TextStyle(color: onColor, fontWeight: FontWeight.w800, fontSize: MmFontSize.lg),
+        style: TextStyle(color: onColor, fontWeight: FontWeight.w800, fontSize: GfFontSize.lg),
       ),
     );
   }

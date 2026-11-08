@@ -18,13 +18,13 @@ class SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Padding(
-      padding: const EdgeInsets.only(bottom: MmSpace.s3),
+      padding: const EdgeInsets.only(bottom: GfSpace.s3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Semantics(header: true, child: Text(title, style: theme.textTheme.titleLarge)),
           if (hint != null)
-            Text(hint!, style: theme.textTheme.bodySmall?.copyWith(color: MmPalette.of(context).textMuted)),
+            Text(hint!, style: theme.textTheme.bodySmall?.copyWith(color: GfPalette.of(context).textMuted)),
         ],
       ),
     );
@@ -55,7 +55,7 @@ class CategoryTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final palette = MmPalette.of(context);
+    final palette = GfPalette.of(context);
     final tags = [
       l.setupQuestionsAvailable(count),
       if (category.ageRating == AgeRating.teen) l.ageTeen,
@@ -64,7 +64,7 @@ class CategoryTile extends StatelessWidget {
     ];
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(MmRadius.lg),
+        borderRadius: BorderRadius.circular(GfRadius.lg),
         side: BorderSide(
           color: selected ? theme.colorScheme.primary : theme.colorScheme.outline,
           width: selected ? 2 : 1,
@@ -73,8 +73,8 @@ class CategoryTile extends StatelessWidget {
       child: CheckboxListTile(
         value: selected && !locked,
         onChanged: locked ? null : (v) => onChanged(v ?? false),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(MmRadius.lg)),
-        contentPadding: const EdgeInsets.symmetric(horizontal: MmSpace.s4, vertical: MmSpace.s1),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(GfRadius.lg)),
+        contentPadding: const EdgeInsets.symmetric(horizontal: GfSpace.s4, vertical: GfSpace.s1),
         secondary: locked ? Icon(Icons.lock_outline_rounded, color: palette.textMuted) : null,
         title: Text(category.name, style: theme.textTheme.titleMedium),
         subtitle: Column(
@@ -82,17 +82,17 @@ class CategoryTile extends StatelessWidget {
           children: [
             Text(category.description),
             if (category.contentNote != null) ...[
-              const SizedBox(height: MmSpace.s1),
+              const SizedBox(height: GfSpace.s1),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Icon(Icons.info_outline_rounded, size: 16, color: palette.textMuted),
-                  const SizedBox(width: MmSpace.s1),
+                  const SizedBox(width: GfSpace.s1),
                   Expanded(child: Text(category.contentNote!, style: theme.textTheme.bodySmall)),
                 ],
               ),
             ],
-            const SizedBox(height: MmSpace.s1),
+            const SizedBox(height: GfSpace.s1),
             Text(
               locked ? '${tags.join(' · ')} — ${l.premiumLocked}' : tags.join(' · '),
               style: theme.textTheme.labelMedium?.copyWith(color: palette.textMuted),
@@ -121,7 +121,7 @@ class GroupSizeStepper extends StatelessWidget {
     final v = value;
     return Card(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: MmSpace.s2, vertical: MmSpace.s1),
+        padding: const EdgeInsets.symmetric(horizontal: GfSpace.s2, vertical: GfSpace.s1),
         child: Row(
           children: [
             IconButton(

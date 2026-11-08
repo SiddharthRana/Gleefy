@@ -20,30 +20,30 @@ class SettingsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final palette = MmPalette.of(context);
+    final palette = GfPalette.of(context);
     final s = ref.watch(settingsProvider);
     final c = ref.read(settingsProvider.notifier);
 
     Widget section(String title) => Padding(
-      padding: const EdgeInsets.fromLTRB(MmSpace.s4, MmSpace.s6, MmSpace.s4, MmSpace.s2),
+      padding: const EdgeInsets.fromLTRB(GfSpace.s4, GfSpace.s6, GfSpace.s4, GfSpace.s2),
       child: Semantics(
         header: true,
         child: Text(title, style: theme.textTheme.titleMedium?.copyWith(color: theme.colorScheme.primary)),
       ),
     );
     Widget note(String body) => Padding(
-      padding: const EdgeInsets.symmetric(horizontal: MmSpace.s4),
+      padding: const EdgeInsets.symmetric(horizontal: GfSpace.s4),
       child: Text(body, style: theme.textTheme.bodyMedium?.copyWith(color: palette.textMuted)),
     );
 
     return Scaffold(
       appBar: AppBar(title: Text(l.settings)),
       body: ListView(
-        padding: listPadding(context, const EdgeInsets.only(bottom: MmSpace.s8)),
+        padding: listPadding(context, const EdgeInsets.only(bottom: GfSpace.s8)),
         children: [
           section(l.settingsTheme),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: MmSpace.s4),
+            padding: const EdgeInsets.symmetric(horizontal: GfSpace.s4),
             child: SegmentedButton<ThemeMode>(
               segments: [
                 ButtonSegment(value: ThemeMode.system, label: Text(l.settingsThemeSystem)),

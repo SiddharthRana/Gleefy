@@ -49,7 +49,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final palette = MmPalette.of(context);
+    final palette = GfPalette.of(context);
     final pages = [
       (null, l.onboarding1Title, l.onboarding1Body),
       (Icons.record_voice_over_rounded, l.onboarding2Title, l.onboarding2Body),
@@ -61,7 +61,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(MmSpace.s6, MmSpace.s4, MmSpace.s2, 0),
+              padding: const EdgeInsets.fromLTRB(GfSpace.s6, GfSpace.s4, GfSpace.s2, 0),
               child: Row(
                 children: [
                   const GleefyWordmark(size: 22),
@@ -77,10 +77,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 children: [
                   for (final (icon, title, body) in pages)
                     SingleChildScrollView(
-                      padding: const EdgeInsets.all(MmSpace.s6),
+                      padding: const EdgeInsets.all(GfSpace.s6),
                       child: Column(
                         children: [
-                          const SizedBox(height: MmSpace.s8),
+                          const SizedBox(height: GfSpace.s8),
                           // The first page shows the app icon itself; the others an illustration.
                           if (icon == null)
                             PopIn(
@@ -89,10 +89,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                               ),
                             )
                           else
-                            GradientPanel(padding: const EdgeInsets.all(MmSpace.s10), child: Icon(icon, size: 72)),
-                          const SizedBox(height: MmSpace.s8),
+                            GradientPanel(padding: const EdgeInsets.all(GfSpace.s10), child: Icon(icon, size: 72)),
+                          const SizedBox(height: GfSpace.s8),
                           Text(title, style: theme.textTheme.headlineMedium, textAlign: TextAlign.center),
-                          const SizedBox(height: MmSpace.s4),
+                          const SizedBox(height: GfSpace.s4),
                           Text(
                             body,
                             style: theme.textTheme.bodyLarge?.copyWith(color: palette.textMuted),
@@ -112,19 +112,19 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                   for (var i = 0; i < 3; i++)
                     AnimatedContainer(
                       duration: reduceMotionOf(context, ref) ? Duration.zero : const Duration(milliseconds: 200),
-                      margin: const EdgeInsets.symmetric(horizontal: MmSpace.s1),
+                      margin: const EdgeInsets.symmetric(horizontal: GfSpace.s1),
                       width: i == _page ? 24 : 8,
                       height: 8,
                       decoration: BoxDecoration(
                         color: i == _page ? theme.colorScheme.primary : theme.colorScheme.outline,
-                        borderRadius: BorderRadius.circular(MmRadius.pill),
+                        borderRadius: BorderRadius.circular(GfRadius.pill),
                       ),
                     ),
                 ],
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(MmSpace.s6),
+              padding: const EdgeInsets.all(GfSpace.s6),
               child: Column(
                 children: [
                   SizedBox(
@@ -134,7 +134,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       child: Text(_page == 2 ? l.onboardingStart : l.onboardingNext),
                     ),
                   ),
-                  const SizedBox(height: MmSpace.s3),
+                  const SizedBox(height: GfSpace.s3),
                   Text(l.onboardingAge, style: theme.textTheme.bodySmall?.copyWith(color: palette.textMuted)),
                 ],
               ),

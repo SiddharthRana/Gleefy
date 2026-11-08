@@ -34,12 +34,12 @@ class AccountScreen extends ConsumerWidget {
       return Scaffold(
         appBar: AppBar(title: Text(l.accountTitle)),
         body: Padding(
-          padding: const EdgeInsets.all(MmSpace.s4),
+          padding: const EdgeInsets.all(GfSpace.s4),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(l.premiumSignInPrompt),
-              const SizedBox(height: MmSpace.s4),
+              const SizedBox(height: GfSpace.s4),
               FilledButton(onPressed: () => context.push('/account/sign-in'), child: Text(l.premiumSignIn)),
             ],
           ),
@@ -49,7 +49,7 @@ class AccountScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: Text(l.accountTitle)),
       body: ListView(
-        padding: listPadding(context, const EdgeInsets.symmetric(vertical: MmSpace.s4)),
+        padding: listPadding(context, const EdgeInsets.symmetric(vertical: GfSpace.s4)),
         children: [
           ListTile(
             leading: const Icon(Icons.person_outline_rounded),
@@ -107,7 +107,7 @@ class _DeleteDialogState extends State<_DeleteDialog> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(l.accountDeleteBody),
-          const SizedBox(height: MmSpace.s3),
+          const SizedBox(height: GfSpace.s3),
           TextField(
             controller: _confirm,
             autofocus: true,

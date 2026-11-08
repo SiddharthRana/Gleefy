@@ -72,7 +72,7 @@ class WyrPlayScreen extends ConsumerWidget {
             cap != null ? l.playVotesOfPlayers(votes, cap) : l.playVotes(votes),
             style: Theme.of(context).textTheme.labelLarge,
           ),
-          const SizedBox(height: MmSpace.s2),
+          const SizedBox(height: GfSpace.s2),
           Row(
             children: [
               if (!current.revealed) ...[
@@ -81,7 +81,7 @@ class WyrPlayScreen extends ConsumerWidget {
                   icon: const Icon(Icons.undo_rounded),
                   label: Text(l.playUndo),
                 ),
-                const SizedBox(width: MmSpace.s3),
+                const SizedBox(width: GfSpace.s3),
               ],
               Expanded(
                 child: current.revealed
@@ -132,7 +132,7 @@ class _Question extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final palette = MmPalette.of(context);
+    final palette = GfPalette.of(context);
     final a = current.count(Side.a);
     final b = current.count(Side.b);
     final verdict = current.revealed ? verdictFor(l, a, b) : null;
@@ -152,27 +152,27 @@ class _Question extends StatelessWidget {
     );
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(MmSpace.s4, MmSpace.s4, MmSpace.s4, 0),
+      padding: const EdgeInsets.fromLTRB(GfSpace.s4, GfSpace.s4, GfSpace.s4, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(l.playPrompt, style: theme.textTheme.headlineSmall, textAlign: TextAlign.center),
-          const SizedBox(height: MmSpace.s1),
+          const SizedBox(height: GfSpace.s1),
           Text(
             current.revealed ? (verdict ?? '') : l.playHint,
             style: theme.textTheme.bodyMedium?.copyWith(color: palette.textMuted),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: MmSpace.s4),
+          const SizedBox(height: GfSpace.s4),
           option(Side.a),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: MmSpace.s2),
+            padding: const EdgeInsets.symmetric(vertical: GfSpace.s2),
             child: Center(
               child: Text(l.playOr, style: theme.textTheme.titleLarge?.copyWith(color: palette.textMuted)),
             ),
           ),
           option(Side.b),
-          const SizedBox(height: MmSpace.s2),
+          const SizedBox(height: GfSpace.s2),
         ],
       ),
     );

@@ -42,14 +42,14 @@ export function CheckoutStatus({
   switch (state) {
     case 'confirming':
       return (
-        <Card tone="var(--mm-primary)" badge={<ConfirmingBadge />} live="polite">
+        <Card tone="var(--gf-primary)" badge={<ConfirmingBadge />} live="polite">
           <Title>Confirming your payment…</Title>
           <Body>This usually takes a few seconds. You can stay on this page.</Body>
         </Card>
       );
     case 'active':
       return (
-        <Card tone="var(--mm-success)" badge={<SuccessBadge />} live="polite" confetti>
+        <Card tone="var(--gf-success)" badge={<SuccessBadge />} live="polite" confetti>
           <Title>Premium is unlocked!</Title>
           <Body>Thank you! Every premium category is yours, on the website and in the app.</Body>
           <Actions>
@@ -62,7 +62,7 @@ export function CheckoutStatus({
       );
     case 'pending':
       return (
-        <Card tone="var(--mm-accent)" badge={<PendingBadge />} live="polite">
+        <Card tone="var(--gf-accent)" badge={<PendingBadge />} live="polite">
           <Title>Still confirming your payment</Title>
           <Body>
             Our payment partner hasn’t confirmed it yet, which can take a minute or two. Premium
@@ -78,7 +78,7 @@ export function CheckoutStatus({
       );
     case 'failed':
       return (
-        <Card tone="var(--mm-danger)" badge={<FailedBadge />} live="assertive">
+        <Card tone="var(--gf-danger)" badge={<FailedBadge />} live="assertive">
           <Title>Your payment didn’t go through</Title>
           <Body>
             You haven’t been charged. Try again with a different card or payment method, or contact
@@ -112,7 +112,7 @@ function Card({
     <div
       role={live === 'assertive' ? 'alert' : 'status'}
       aria-live={live}
-      style={{ borderColor: tone, color: 'var(--mm-text)' }}
+      style={{ borderColor: tone, color: 'var(--gf-text)' }}
       className="pop-big relative flex items-start gap-4 rounded-card border-2 bg-surface p-5"
     >
       {confetti && <Confetti />}

@@ -89,7 +89,7 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final palette = MmPalette.of(context);
+    final palette = GfPalette.of(context);
     // Watched, so questions written from here appear when the person comes back.
     final pack = ref.watch(contentProvider).packFor(widget.mode);
     final premium = ref.watch(premiumProvider);
@@ -110,28 +110,28 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
         ],
       ),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(MmSpace.s4, 0, MmSpace.s4, MmSpace.s6),
+        padding: const EdgeInsets.fromLTRB(GfSpace.s4, 0, GfSpace.s4, GfSpace.s6),
         children: [
           Card(
             color: palette.surfaceMuted,
             child: Padding(
-              padding: const EdgeInsets.all(MmSpace.s4),
+              padding: const EdgeInsets.all(GfSpace.s4),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(l.setupHowToPlay, style: theme.textTheme.titleMedium),
-                  const SizedBox(height: MmSpace.s1),
+                  const SizedBox(height: GfSpace.s1),
                   Text(entry.rules(l)),
                 ],
               ),
             ),
           ),
           if (usesLineup) ...[
-            const SizedBox(height: MmSpace.s6),
+            const SizedBox(height: GfSpace.s6),
             SectionTitle(l.setupPlayers),
             LineupCard(names: names),
           ],
-          const SizedBox(height: MmSpace.s6),
+          const SizedBox(height: GfSpace.s6),
           SectionTitle(l.setupCategories, hint: l.setupCategoriesHint),
           for (final c in pack.categories) ...[
             CategoryTile(
@@ -142,7 +142,7 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
               onChanged: (on) => setState(() => on ? _selected.add(c.id) : _selected.remove(c.id)),
               onUnlock: () => context.push('/premium'),
             ),
-            const SizedBox(height: MmSpace.s2),
+            const SizedBox(height: GfSpace.s2),
           ],
           if (customLimits.containsKey(widget.mode))
             Align(
@@ -153,7 +153,7 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
                 onPressed: () => context.push('/my-questions?mode=${widget.mode.id}'),
               ),
             ),
-          const SizedBox(height: MmSpace.s4),
+          const SizedBox(height: GfSpace.s4),
           SectionTitle(l.setupRounds),
           SegmentedButton<int>(
             segments: [for (final r in roundOptions) ButtonSegment(value: r, label: Text('$r'))],
@@ -162,13 +162,13 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
             onSelectionChanged: (s) => setState(() => _rounds = s.first),
           ),
           if (_selected.isNotEmpty && available < _rounds) ...[
-            const SizedBox(height: MmSpace.s2),
+            const SizedBox(height: GfSpace.s2),
             Text(
               l.setupFewerQuestions(available),
               style: theme.textTheme.bodySmall?.copyWith(color: palette.textMuted),
             ),
           ],
-          const SizedBox(height: MmSpace.s6),
+          const SizedBox(height: GfSpace.s6),
           ...switch (widget.mode) {
             GameMode.wouldYouRather => [
               SectionTitle(l.setupGroupSize, hint: l.setupGroupSizeHint),
@@ -212,7 +212,7 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
       ),
       bottomNavigationBar: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(MmSpace.s4, MmSpace.s2, MmSpace.s4, MmSpace.s4),
+          padding: const EdgeInsets.fromLTRB(GfSpace.s4, GfSpace.s2, GfSpace.s4, GfSpace.s4),
           child: FilledButton.icon(
             onPressed: _selected.isEmpty ? null : _start,
             icon: const Icon(Icons.play_arrow_rounded),

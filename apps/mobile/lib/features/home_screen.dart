@@ -62,7 +62,7 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final palette = MmPalette.of(context);
+    final palette = GfPalette.of(context);
     final game = _inProgress(ref);
     final favourites = ref.watch(favouritesProvider);
     final recents = ref.watch(recentsProvider);
@@ -86,28 +86,28 @@ class HomeScreen extends ConsumerWidget {
         ],
       ),
       body: ListView(
-        padding: listPadding(context, const EdgeInsets.fromLTRB(MmSpace.s4, MmSpace.s2, MmSpace.s4, MmSpace.s8)),
+        padding: listPadding(context, const EdgeInsets.fromLTRB(GfSpace.s4, GfSpace.s2, GfSpace.s4, GfSpace.s8)),
         children: [
           Text(l.homeGreeting, style: theme.textTheme.headlineMedium),
-          const SizedBox(height: MmSpace.s4),
+          const SizedBox(height: GfSpace.s4),
           if (game != null) ...[
             Card(
               child: Padding(
-                padding: const EdgeInsets.all(MmSpace.s4),
+                padding: const EdgeInsets.all(GfSpace.s4),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(l.homeResumeTitle, style: theme.textTheme.titleMedium),
-                    const SizedBox(height: MmSpace.s1),
+                    const SizedBox(height: GfSpace.s1),
                     Text(
                       l.homeResumeBody(modeName(l, game.mode), game.round, game.total),
                       style: theme.textTheme.bodyMedium?.copyWith(color: palette.textMuted),
                     ),
-                    const SizedBox(height: MmSpace.s3),
+                    const SizedBox(height: GfSpace.s3),
                     Row(
                       children: [
                         FilledButton(onPressed: () => context.push(playRoute(game.mode)), child: Text(l.homeResume)),
-                        const SizedBox(width: MmSpace.s2),
+                        const SizedBox(width: GfSpace.s2),
                         TextButton(
                           onPressed: () {
                             game.discard();
@@ -121,10 +121,10 @@ class HomeScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            const SizedBox(height: MmSpace.s4),
+            const SizedBox(height: GfSpace.s4),
           ],
           const ProgressCard(),
-          const SizedBox(height: MmSpace.s4),
+          const SizedBox(height: GfSpace.s4),
           Pressable(
             scale: 0.97,
             child: GradientPanel(
@@ -136,12 +136,12 @@ class HomeScreen extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(l.homeQuickPlay, style: theme.textTheme.headlineSmall?.copyWith(color: Colors.white)),
-                        const SizedBox(height: MmSpace.s2),
+                        const SizedBox(height: GfSpace.s2),
                         Text(l.homeQuickPlayBody, style: theme.textTheme.bodyMedium?.copyWith(color: Colors.white)),
                       ],
                     ),
                   ),
-                  const SizedBox(width: MmSpace.s4),
+                  const SizedBox(width: GfSpace.s4),
                   const PopIn(
                     delay: Duration(milliseconds: 200),
                     child: Icon(Icons.play_circle_fill_rounded, size: 56),
@@ -151,12 +151,12 @@ class HomeScreen extends ConsumerWidget {
             ),
           ),
           if (favourites.isNotEmpty) ...[
-            const SizedBox(height: MmSpace.s8),
+            const SizedBox(height: GfSpace.s8),
             Semantics(header: true, child: Text(l.homeFavourites, style: theme.textTheme.titleLarge)),
-            const SizedBox(height: MmSpace.s2),
+            const SizedBox(height: GfSpace.s2),
             for (final f in favourites)
               Card(
-                margin: const EdgeInsets.only(bottom: MmSpace.s2),
+                margin: const EdgeInsets.only(bottom: GfSpace.s2),
                 child: ListTile(
                   leading: Icon(Icons.star_rounded, color: palette.accent),
                   title: Text(f.name),
@@ -171,12 +171,12 @@ class HomeScreen extends ConsumerWidget {
               ),
           ],
           if (recents.isNotEmpty) ...[
-            const SizedBox(height: MmSpace.s6),
+            const SizedBox(height: GfSpace.s6),
             Semantics(header: true, child: Text(l.homeRecent, style: theme.textTheme.titleLarge)),
-            const SizedBox(height: MmSpace.s2),
+            const SizedBox(height: GfSpace.s2),
             Wrap(
-              spacing: MmSpace.s2,
-              runSpacing: MmSpace.s2,
+              spacing: GfSpace.s2,
+              runSpacing: GfSpace.s2,
               children: [
                 for (final r in recents)
                   ActionChip(
@@ -187,20 +187,20 @@ class HomeScreen extends ConsumerWidget {
               ],
             ),
           ],
-          const SizedBox(height: MmSpace.s8),
+          const SizedBox(height: GfSpace.s8),
           Row(
             children: [
               Expanded(child: Text(l.homeAllGames, style: theme.textTheme.titleLarge)),
               TextButton(onPressed: () => context.push('/games'), child: Text(l.homeSeeAll)),
             ],
           ),
-          const SizedBox(height: MmSpace.s2),
+          const SizedBox(height: GfSpace.s2),
           for (final (i, entry) in LibraryEntry.values.take(3).indexed) ...[
             StaggerIn(
               index: i,
               child: ModeTile(entry: entry),
             ),
-            const SizedBox(height: MmSpace.s3),
+            const SizedBox(height: GfSpace.s3),
           ],
         ],
       ),

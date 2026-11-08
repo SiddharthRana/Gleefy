@@ -65,7 +65,7 @@ class ChoiceResultsScreen extends ConsumerWidget {
       body: Stack(
         children: [
           ListView(
-            padding: const EdgeInsets.all(MmSpace.s4),
+            padding: const EdgeInsets.all(GfSpace.s4),
             children: [
               PopIn(
                 child: GradientPanel(
@@ -73,7 +73,7 @@ class ChoiceResultsScreen extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(modeName(l, mode), style: theme.textTheme.titleMedium?.copyWith(color: Colors.white)),
-                      const SizedBox(height: MmSpace.s1),
+                      const SizedBox(height: GfSpace.s1),
                       Text(
                         l.resultsSummary(results.roundsPlayed, results.totalVotes),
                         style: theme.textTheme.headlineSmall?.copyWith(color: Colors.white),
@@ -85,7 +85,7 @@ class ChoiceResultsScreen extends ConsumerWidget {
               const RewardCard(),
               const UsagePrompt(),
               if (sync != null) ...[
-                const SizedBox(height: MmSpace.s4),
+                const SizedBox(height: GfSpace.s4),
                 Card(
                   child: ListTile(
                     leading: Icon(Icons.favorite_rounded, color: theme.colorScheme.primary),
@@ -95,7 +95,7 @@ class ChoiceResultsScreen extends ConsumerWidget {
                 ),
               ],
               if (results.mostDivisive case final id?) ...[
-                const SizedBox(height: MmSpace.s4),
+                const SizedBox(height: GfSpace.s4),
                 _Highlight(
                   title: l.resultsDivisive,
                   icon: Icons.balance_rounded,
@@ -104,7 +104,7 @@ class ChoiceResultsScreen extends ConsumerWidget {
                 ),
               ],
               if (results.mostUnanimous case final id?) ...[
-                const SizedBox(height: MmSpace.s3),
+                const SizedBox(height: GfSpace.s3),
                 _Highlight(
                   title: l.resultsUnanimous,
                   icon: Icons.groups_rounded,
@@ -112,9 +112,9 @@ class ChoiceResultsScreen extends ConsumerWidget {
                   round: roundFor(id)!,
                 ),
               ],
-              const SizedBox(height: MmSpace.s6),
+              const SizedBox(height: GfSpace.s6),
               Semantics(header: true, child: Text(l.resultsAllRounds, style: theme.textTheme.titleLarge)),
-              const SizedBox(height: MmSpace.s2),
+              const SizedBox(height: GfSpace.s2),
               for (final (i, r) in session.rounds.indexed)
                 if (pack.item(r.questionId) case final item?) _RoundRow(index: i + 1, item: item, round: r),
             ],
@@ -141,18 +141,18 @@ class _Highlight extends StatelessWidget {
     final theme = Theme.of(context);
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(MmSpace.s4),
+        padding: const EdgeInsets.all(GfSpace.s4),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Icon(icon, color: theme.colorScheme.primary),
-                const SizedBox(width: MmSpace.s2),
+                const SizedBox(width: GfSpace.s2),
                 Text(title, style: theme.textTheme.titleMedium?.copyWith(color: theme.colorScheme.primary)),
               ],
             ),
-            const SizedBox(height: MmSpace.s3),
+            const SizedBox(height: GfSpace.s3),
             _SplitBar(item: item, round: round),
           ],
         ),
@@ -172,9 +172,9 @@ class _RoundRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final palette = MmPalette.of(context);
+    final palette = GfPalette.of(context);
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: MmSpace.s2),
+      padding: const EdgeInsets.symmetric(vertical: GfSpace.s2),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -207,7 +207,7 @@ class _SplitBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final palette = MmPalette.of(context);
+    final palette = GfPalette.of(context);
     return Semantics(
       label: '${item.a}: ${l.playVotes(round.a)}. ${item.b}: ${l.playVotes(round.b)}.',
       excludeSemantics: true,
@@ -218,17 +218,17 @@ class _SplitBar extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(child: Text(item.a, style: theme.textTheme.bodyMedium)),
-              const SizedBox(width: MmSpace.s3),
+              const SizedBox(width: GfSpace.s3),
               Text(l.resultsSplit(round.a, round.b), style: theme.textTheme.labelLarge),
-              const SizedBox(width: MmSpace.s3),
+              const SizedBox(width: GfSpace.s3),
               Expanded(
                 child: Text(item.b, style: theme.textTheme.bodyMedium, textAlign: TextAlign.end),
               ),
             ],
           ),
-          const SizedBox(height: MmSpace.s2),
+          const SizedBox(height: GfSpace.s2),
           ClipRRect(
-            borderRadius: BorderRadius.circular(MmRadius.pill),
+            borderRadius: BorderRadius.circular(GfRadius.pill),
             child: SizedBox(
               height: 10,
               child: round.total == 0

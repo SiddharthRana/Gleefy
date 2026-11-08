@@ -78,7 +78,7 @@ class CountdownBar extends StatelessWidget {
             children: [
               Expanded(
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(MmRadius.pill),
+                  borderRadius: BorderRadius.circular(GfRadius.pill),
                   child: LinearProgressIndicator(
                     value: countdown.fraction,
                     minHeight: 10,
@@ -86,7 +86,7 @@ class CountdownBar extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: MmSpace.s3),
+              const SizedBox(width: GfSpace.s3),
               SizedBox(
                 width: 40,
                 child: Text('${seconds}s', textAlign: TextAlign.end, style: theme.textTheme.titleMedium),

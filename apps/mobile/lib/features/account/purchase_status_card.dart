@@ -24,7 +24,7 @@ class PurchaseStatusCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final palette = MmPalette.of(context);
+    final palette = GfPalette.of(context);
     final danger = theme.colorScheme.error;
 
     final (Widget badge, String title, String body, Color tone) = switch (state.phase) {
@@ -72,10 +72,10 @@ class PurchaseStatusCard extends ConsumerWidget {
     final retry = state.phase == PurchasePhase.error && onRetry != null && state.error != 'account_mismatch';
 
     final card = Container(
-      padding: const EdgeInsets.all(MmSpace.s4),
+      padding: const EdgeInsets.all(GfSpace.s4),
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
-        borderRadius: BorderRadius.circular(MmRadius.lg),
+        borderRadius: BorderRadius.circular(GfRadius.lg),
         border: Border.all(color: tone, width: 2),
       ),
       child: Column(
@@ -85,20 +85,20 @@ class PurchaseStatusCard extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ExcludeSemantics(child: badge),
-              const SizedBox(width: MmSpace.s4),
+              const SizedBox(width: GfSpace.s4),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(title, style: theme.textTheme.titleLarge),
-                    const SizedBox(height: MmSpace.s1),
+                    const SizedBox(height: GfSpace.s1),
                     Text(body, style: theme.textTheme.bodyLarge),
                     if (state.phase == PurchasePhase.success && state.duplicateWarning) ...[
-                      const SizedBox(height: MmSpace.s2),
+                      const SizedBox(height: GfSpace.s2),
                       Text(l.premiumDuplicate, style: theme.textTheme.bodyLarge),
                     ],
                     if (retry) ...[
-                      const SizedBox(height: MmSpace.s3),
+                      const SizedBox(height: GfSpace.s3),
                       Pressable(
                         child: FilledButton(onPressed: onRetry, child: Text(l.tryAgain)),
                       ),
@@ -109,7 +109,7 @@ class PurchaseStatusCard extends ConsumerWidget {
             ],
           ),
           if (busy) ...[
-            const SizedBox(height: MmSpace.s4),
+            const SizedBox(height: GfSpace.s4),
             ClipRRect(
               borderRadius: BorderRadius.circular(4),
               child: LinearProgressIndicator(minHeight: 4, color: tone, backgroundColor: tone.withValues(alpha: 0.15)),

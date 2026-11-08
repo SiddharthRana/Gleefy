@@ -32,7 +32,7 @@ class LevelBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final palette = MmPalette.of(context);
+    final palette = GfPalette.of(context);
     return ExcludeSemantics(
       child: Container(
         width: size,
@@ -76,7 +76,7 @@ class XpBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final palette = MmPalette.of(context);
+    final palette = GfPalette.of(context);
     final target = needed == 0 ? 0.0 : (into / needed).clamp(0.0, 1.0);
     final still = reduceMotionOf(context, ref);
     return ExcludeSemantics(
@@ -112,7 +112,7 @@ class ProgressCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final palette = MmPalette.of(context);
+    final palette = GfPalette.of(context);
     final progress = ref.watch(progressProvider);
     final streak = ref.watch(streakProvider);
     final lp = levelProgress(progress.xp);
@@ -128,14 +128,14 @@ class ProgressCard extends ConsumerWidget {
             label: l.progressSemantics(lp.level, lp.into, lp.needed, streak),
             excludeSemantics: true,
             child: Padding(
-              padding: const EdgeInsets.all(MmSpace.s4),
+              padding: const EdgeInsets.all(GfSpace.s4),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Row(
                     children: [
                       LevelBadge(level: lp.level),
-                      const SizedBox(width: MmSpace.s4),
+                      const SizedBox(width: GfSpace.s4),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -144,9 +144,9 @@ class ProgressCard extends ConsumerWidget {
                               fresh ? l.progressStartTitle : l.progressLevel(lp.level),
                               style: theme.textTheme.titleLarge,
                             ),
-                            const SizedBox(height: MmSpace.s2),
+                            const SizedBox(height: GfSpace.s2),
                             XpBar(into: lp.into, needed: lp.needed),
-                            const SizedBox(height: MmSpace.s1),
+                            const SizedBox(height: GfSpace.s1),
                             Text(
                               l.progressXp(lp.into, lp.needed),
                               style: theme.textTheme.bodySmall?.copyWith(color: palette.textMuted),
@@ -154,7 +154,7 @@ class ProgressCard extends ConsumerWidget {
                           ],
                         ),
                       ),
-                      const SizedBox(width: MmSpace.s3),
+                      const SizedBox(width: GfSpace.s3),
                       Column(
                         children: [
                           const Text('🔥', style: TextStyle(fontSize: 24)),
@@ -164,7 +164,7 @@ class ProgressCard extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: MmSpace.s3),
+                  const SizedBox(height: GfSpace.s3),
                   Text(
                     fresh
                         ? l.progressStartBody
@@ -191,18 +191,18 @@ class RewardCard extends ConsumerWidget {
     if (reward == null) return const SizedBox.shrink();
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final palette = MmPalette.of(context);
+    final palette = GfPalette.of(context);
     final lp = levelProgress(reward.progress.xp);
     final still = reduceMotionOf(context, ref);
     return Padding(
-      padding: const EdgeInsets.only(top: MmSpace.s4),
+      padding: const EdgeInsets.only(top: GfSpace.s4),
       child: PopIn(
         delay: const Duration(milliseconds: 250),
         child: Container(
-          padding: const EdgeInsets.all(MmSpace.s4),
+          padding: const EdgeInsets.all(GfSpace.s4),
           decoration: BoxDecoration(
             color: theme.colorScheme.surface,
-            borderRadius: BorderRadius.circular(MmRadius.lg),
+            borderRadius: BorderRadius.circular(GfRadius.lg),
             border: Border.all(color: palette.accent, width: 2),
           ),
           child: Column(
@@ -231,22 +231,22 @@ class RewardCard extends ConsumerWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: MmSpace.s3),
+              const SizedBox(height: GfSpace.s3),
               XpBar(into: lp.into, needed: lp.needed, height: 14),
-              const SizedBox(height: MmSpace.s1),
+              const SizedBox(height: GfSpace.s1),
               Text(
                 l.rewardToNext(lp.needed - lp.into, lp.level + 1),
                 style: theme.textTheme.bodySmall?.copyWith(color: palette.textMuted),
               ),
               if (reward.leveledUp) ...[
-                const SizedBox(height: MmSpace.s3),
+                const SizedBox(height: GfSpace.s3),
                 PopIn(
                   delay: const Duration(milliseconds: 600),
                   child: Container(
-                    padding: const EdgeInsets.all(MmSpace.s3),
+                    padding: const EdgeInsets.all(GfSpace.s3),
                     decoration: BoxDecoration(
                       gradient: palette.gradient,
-                      borderRadius: BorderRadius.circular(MmRadius.md),
+                      borderRadius: BorderRadius.circular(GfRadius.md),
                     ),
                     child: Text(
                       l.rewardLevelUp(reward.levelAfter),
@@ -257,9 +257,9 @@ class RewardCard extends ConsumerWidget {
                 ),
               ],
               if (reward.newTrophies.isNotEmpty) ...[
-                const SizedBox(height: MmSpace.s3),
+                const SizedBox(height: GfSpace.s3),
                 Text(l.rewardNewTrophies(reward.newTrophies.length), style: theme.textTheme.titleMedium),
-                const SizedBox(height: MmSpace.s2),
+                const SizedBox(height: GfSpace.s2),
                 for (final (i, id) in reward.newTrophies.indexed)
                   StaggerIn(
                     index: i + 4,
@@ -288,12 +288,12 @@ class TrophyTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
-    final palette = MmPalette.of(context);
+    final palette = GfPalette.of(context);
     final t = trophyText(l, id);
     return Card(
-      margin: const EdgeInsets.only(bottom: MmSpace.s2),
+      margin: const EdgeInsets.only(bottom: GfSpace.s2),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(MmRadius.md),
+        borderRadius: BorderRadius.circular(GfRadius.md),
         side: BorderSide(color: earned ? palette.accent : palette.surfaceMuted, width: 2),
       ),
       child: ListTile(

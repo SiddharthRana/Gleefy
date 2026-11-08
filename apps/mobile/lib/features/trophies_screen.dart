@@ -18,7 +18,7 @@ class TrophiesScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final palette = MmPalette.of(context);
+    final palette = GfPalette.of(context);
     final progress = ref.watch(progressProvider);
     final streak = ref.watch(streakProvider);
     final lp = levelProgress(progress.xp);
@@ -31,26 +31,26 @@ class TrophiesScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: Text(l.trophiesTitle)),
       body: ListView(
-        padding: listPadding(context, const EdgeInsets.all(MmSpace.s4)),
+        padding: listPadding(context, const EdgeInsets.all(GfSpace.s4)),
         children: [
           Text(l.trophiesIntro, style: theme.textTheme.bodyLarge?.copyWith(color: palette.textMuted)),
-          const SizedBox(height: MmSpace.s4),
+          const SizedBox(height: GfSpace.s4),
           PopIn(
             child: Card(
               child: Padding(
-                padding: const EdgeInsets.all(MmSpace.s4),
+                padding: const EdgeInsets.all(GfSpace.s4),
                 child: Row(
                   children: [
                     LevelBadge(level: lp.level, size: 64),
-                    const SizedBox(width: MmSpace.s4),
+                    const SizedBox(width: GfSpace.s4),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(l.progressLevel(lp.level), style: theme.textTheme.headlineSmall),
-                          const SizedBox(height: MmSpace.s2),
+                          const SizedBox(height: GfSpace.s2),
                           XpBar(into: lp.into, needed: lp.needed, height: 14),
-                          const SizedBox(height: MmSpace.s1),
+                          const SizedBox(height: GfSpace.s1),
                           Text(l.rewardToNext(lp.needed - lp.into, lp.level + 1)),
                         ],
                       ),
@@ -60,13 +60,13 @@ class TrophiesScreen extends ConsumerWidget {
               ),
             ),
           ),
-          const SizedBox(height: MmSpace.s3),
+          const SizedBox(height: GfSpace.s3),
           GridView.count(
             crossAxisCount: 2,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            mainAxisSpacing: MmSpace.s2,
-            crossAxisSpacing: MmSpace.s2,
+            mainAxisSpacing: GfSpace.s2,
+            crossAxisSpacing: GfSpace.s2,
             childAspectRatio: 2,
             children: [
               for (final (label, value) in stats)
@@ -86,7 +86,7 @@ class TrophiesScreen extends ConsumerWidget {
                 ),
             ],
           ),
-          const SizedBox(height: MmSpace.s6),
+          const SizedBox(height: GfSpace.s6),
           Semantics(
             header: true,
             child: Text(
@@ -94,7 +94,7 @@ class TrophiesScreen extends ConsumerWidget {
               style: theme.textTheme.titleLarge,
             ),
           ),
-          const SizedBox(height: MmSpace.s2),
+          const SizedBox(height: GfSpace.s2),
           for (final (i, t) in allTrophies.indexed)
             StaggerIn(
               index: i,
