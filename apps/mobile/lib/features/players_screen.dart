@@ -44,7 +44,7 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final palette = MmPalette.of(context);
+    final palette = GfPalette.of(context);
     final names = ref.watch(lineupProvider);
     final full = names.length >= maxNames;
     return Scaffold(
@@ -53,14 +53,14 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
         actions: [
           if (names.isNotEmpty)
             TextButton(onPressed: () => ref.read(lineupProvider.notifier).set(const []), child: Text(l.playersClear)),
-          const SizedBox(width: MmSpace.s2),
+          const SizedBox(width: GfSpace.s2),
         ],
       ),
       body: ListView(
-        padding: listPadding(context, const EdgeInsets.all(MmSpace.s4)),
+        padding: listPadding(context, const EdgeInsets.all(GfSpace.s4)),
         children: [
           Text(l.playersBody, style: theme.textTheme.bodyMedium?.copyWith(color: palette.textMuted)),
-          const SizedBox(height: MmSpace.s4),
+          const SizedBox(height: GfSpace.s4),
           // Field and button share a height and top edge, so they line up whether or not the
           // field shows its "maximum reached" note underneath.
           Row(
@@ -78,12 +78,12 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
                     labelText: l.playersName,
                     helperText: full ? l.playersFull(maxNames) : null,
                     counterText: '',
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(MmRadius.md)),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(GfRadius.md)),
                   ),
                   onSubmitted: (_) => _add(),
                 ),
               ),
-              const SizedBox(width: MmSpace.s2),
+              const SizedBox(width: GfSpace.s2),
               Pressable(
                 enabled: !full,
                 child: SizedBox(
@@ -93,24 +93,24 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
                     icon: const Icon(Icons.add_rounded),
                     label: Text(l.playersAdd),
                     style: FilledButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: MmSpace.s4),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(MmRadius.md)),
+                      padding: const EdgeInsets.symmetric(horizontal: GfSpace.s4),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(GfRadius.md)),
                     ),
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: MmSpace.s4),
+          const SizedBox(height: GfSpace.s4),
           if (names.isEmpty)
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: MmSpace.s8),
+              padding: const EdgeInsets.symmetric(vertical: GfSpace.s8),
               child: Column(
                 children: [
                   Icon(Icons.groups_rounded, size: 56, color: palette.textMuted),
-                  const SizedBox(height: MmSpace.s2),
+                  const SizedBox(height: GfSpace.s2),
                   Text(l.playersEmpty, style: theme.textTheme.titleMedium),
-                  const SizedBox(height: MmSpace.s1),
+                  const SizedBox(height: GfSpace.s1),
                   Text(
                     l.playersEmptyBody,
                     textAlign: TextAlign.center,
@@ -127,12 +127,12 @@ class _PlayersScreenState extends ConsumerState<PlayersScreen> {
                 style: theme.textTheme.labelLarge?.copyWith(color: palette.textMuted),
               ),
             ),
-            const SizedBox(height: MmSpace.s2),
+            const SizedBox(height: GfSpace.s2),
             for (final (i, name) in names.indexed)
               StaggerIn(
                 key: ValueKey('$i-$name'),
                 child: Card(
-                  margin: const EdgeInsets.only(bottom: MmSpace.s2),
+                  margin: const EdgeInsets.only(bottom: GfSpace.s2),
                   child: ListTile(
                     leading: CircleAvatar(
                       backgroundColor: theme.colorScheme.primary,

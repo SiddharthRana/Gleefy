@@ -27,7 +27,7 @@ export const modes: ModeInfo[] = [
   {
     id: 'would-you-rather',
     icon: '⚖️',
-    color: 'var(--mm-option-a)',
+    color: 'var(--gf-option-a)',
     players: '2+',
     minutes: '10',
     name: 'Would You Rather',
@@ -38,7 +38,7 @@ export const modes: ModeInfo[] = [
   {
     id: 'this-or-that',
     icon: '⚡',
-    color: 'var(--mm-option-b)',
+    color: 'var(--gf-option-b)',
     players: '2+',
     minutes: '5',
     name: 'This or That',
@@ -49,7 +49,7 @@ export const modes: ModeInfo[] = [
   {
     id: 'trivia',
     icon: '🧠',
-    color: 'var(--mm-primary)',
+    color: 'var(--gf-primary)',
     players: '2+',
     minutes: '10',
     name: 'Trivia Blitz',
@@ -60,7 +60,7 @@ export const modes: ModeInfo[] = [
   {
     id: 'guess',
     icon: '🔍',
-    color: 'var(--mm-accent)',
+    color: 'var(--gf-accent)',
     players: '2+',
     minutes: '10',
     name: 'Guess the Answer',
@@ -71,7 +71,7 @@ export const modes: ModeInfo[] = [
   {
     id: 'custom',
     icon: '🎁',
-    color: 'var(--mm-success)',
+    color: 'var(--gf-success)',
     players: '2+',
     minutes: '20',
     name: 'Custom Party Pack',

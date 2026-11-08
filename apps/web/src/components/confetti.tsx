@@ -3,11 +3,11 @@
 import { useMemo } from 'react';
 
 const COLORS = [
-  'var(--mm-option-a)',
-  'var(--mm-option-b)',
-  'var(--mm-accent)',
-  'var(--mm-primary)',
-  'var(--mm-success)',
+  'var(--gf-option-a)',
+  'var(--gf-option-b)',
+  'var(--gf-accent)',
+  'var(--gf-primary)',
+  'var(--gf-success)',
 ];
 
 /**

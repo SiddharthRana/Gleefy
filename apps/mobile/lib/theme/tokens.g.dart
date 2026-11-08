@@ -1,7 +1,7 @@
 // GENERATED FILE — do not edit. Source: packages/design-tokens/tokens.json
 import 'package:flutter/painting.dart';
 
-abstract final class MmColorsLight {
+abstract final class GfColorsLight {
   static const background = Color(0xFFFFF8F1);
   static const surface = Color(0xFFFFFFFF);
   static const surfaceMuted = Color(0xFFFBEFE4);
@@ -24,7 +24,7 @@ abstract final class MmColorsLight {
   static const gradientEnd = Color(0xFFC2410C);
 }
 
-abstract final class MmColorsDark {
+abstract final class GfColorsDark {
   static const background = Color(0xFF120B1F);
   static const surface = Color(0xFF1B1230);
   static const surfaceMuted = Color(0xFF251A3D);
@@ -47,7 +47,7 @@ abstract final class MmColorsDark {
   static const gradientEnd = Color(0xFFC2410C);
 }
 
-abstract final class MmFontSize {
+abstract final class GfFontSize {
   static const double xs = 12.0;
   static const double sm = 14.0;
   static const double md = 16.0;
@@ -58,7 +58,7 @@ abstract final class MmFontSize {
   static const double s4xl = 48.0;
 }
 
-abstract final class MmSpace {
+abstract final class GfSpace {
   static const double s1 = 4.0;
   static const double s2 = 8.0;
   static const double s3 = 12.0;
@@ -71,7 +71,7 @@ abstract final class MmSpace {
   static const double s16 = 64.0;
 }
 
-abstract final class MmRadius {
+abstract final class GfRadius {
   static const double sm = 8.0;
   static const double md = 14.0;
   static const double lg = 20.0;
@@ -79,12 +79,12 @@ abstract final class MmRadius {
   static const double pill = 999.0;
 }
 
-abstract final class MmTouch {
+abstract final class GfTouch {
   static const double min = 48.0;
   static const double game = 56.0;
 }
 
-abstract final class MmFont {
+abstract final class GfFont {
   static const display = 'Fredoka';
   static const sans = 'Nunito';
 }

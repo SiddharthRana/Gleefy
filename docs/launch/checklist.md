@@ -5,7 +5,7 @@ Everything between today and a production release, in order. Code work is done u
 ## 1. Names, accounts and money (owner)
 
 - [ ] Trademark: a quick search (WIPO Global Brand Database, Play Store, web) on 2026-11-08 found no "Gleefy" trademark in any class and no app of that name. Before launch, get a professional clearance search, and consider filing "Gleefy" in classes 9 and 41.
-- [ ] Buy **gleefy.party** (Cloudflare Registrar, about $5 a year). The code already uses it (`NEXT_PUBLIC_SITE_URL`, `SITE_URL`, the App Links host in `apps/mobile/android/app/src/main/AndroidManifest.xml`); set `NEXT_PUBLIC_CONTACT_EMAIL` to a real address on it. Grab matching social handles.
+- [x] Buy **gleefy.party** (bought 2026-11-08) (Cloudflare Registrar, about $5 a year). The code already uses it (`NEXT_PUBLIC_SITE_URL`, `SITE_URL`, the App Links host in `apps/mobile/android/app/src/main/AndroidManifest.xml`); set `NEXT_PUBLIC_CONTACT_EMAIL` to a real address on it. Grab matching social handles.
 - [ ] Set up a support email address (shown on `/contact` and in the Play listing).
 - [ ] Google Play developer account (one-time $25 fee); identity verification.
 - [ ] Confirm Dodo Payments accepts you as a seller (`docs/payments-setup.md` §0), or launch with Google Play billing only (`WEB_PAYMENT_PROVIDER=none`).

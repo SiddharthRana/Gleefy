@@ -29,7 +29,7 @@ class ScoreResultsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final palette = MmPalette.of(context);
+    final palette = GfPalette.of(context);
 
     final List<_Row> rows;
     final List<int> winners;
@@ -92,7 +92,7 @@ class ScoreResultsScreen extends ConsumerWidget {
       body: Stack(
         children: [
           ListView(
-            padding: const EdgeInsets.all(MmSpace.s4),
+            padding: const EdgeInsets.all(GfSpace.s4),
             children: [
               PopIn(
                 child: GradientPanel(
@@ -100,7 +100,7 @@ class ScoreResultsScreen extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(modeName(l, mode), style: theme.textTheme.titleMedium?.copyWith(color: Colors.white)),
-                      const SizedBox(height: MmSpace.s1),
+                      const SizedBox(height: GfSpace.s1),
                       Text(headline, style: theme.textTheme.headlineSmall?.copyWith(color: Colors.white)),
                     ],
                   ),
@@ -108,12 +108,12 @@ class ScoreResultsScreen extends ConsumerWidget {
               ),
               const RewardCard(),
               const UsagePrompt(),
-              const SizedBox(height: MmSpace.s4),
+              const SizedBox(height: GfSpace.s4),
               for (final (i, row) in rows.indexed)
                 StaggerIn(
                   index: i + 2,
                   child: Card(
-                    margin: const EdgeInsets.only(bottom: MmSpace.s2),
+                    margin: const EdgeInsets.only(bottom: GfSpace.s2),
                     child: ListTile(
                       leading: CircleAvatar(
                         backgroundColor: winners.contains(row.team) ? palette.accent : palette.surfaceMuted,

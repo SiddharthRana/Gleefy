@@ -72,13 +72,13 @@ class _PartyScreenState extends ConsumerState<PartyScreen> {
         ],
       ),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(MmSpace.s4, 0, MmSpace.s4, MmSpace.s6),
+        padding: const EdgeInsets.fromLTRB(GfSpace.s4, 0, GfSpace.s4, GfSpace.s6),
         children: [
           Card(
-            color: MmPalette.of(context).surfaceMuted,
-            child: Padding(padding: const EdgeInsets.all(MmSpace.s4), child: Text(l.modeCustomRules)),
+            color: GfPalette.of(context).surfaceMuted,
+            child: Padding(padding: const EdgeInsets.all(GfSpace.s4), child: Text(l.modeCustomRules)),
           ),
-          const SizedBox(height: MmSpace.s6),
+          const SizedBox(height: GfSpace.s6),
           SectionTitle(l.partyGames, hint: ok ? null : l.partyNeedTwo),
           for (final m in GameMode.values)
             CheckboxListTile(
@@ -87,7 +87,7 @@ class _PartyScreenState extends ConsumerState<PartyScreen> {
               secondary: Icon(LibraryEntry.of(m).icon),
               onChanged: (on) => setState(() => on! ? _modes.add(m) : _modes.remove(m)),
             ),
-          const SizedBox(height: MmSpace.s4),
+          const SizedBox(height: GfSpace.s4),
           SectionTitle(l.partyRounds),
           SegmentedButton<int>(
             segments: [
@@ -97,14 +97,14 @@ class _PartyScreenState extends ConsumerState<PartyScreen> {
             showSelectedIcon: false,
             onSelectionChanged: (s) => setState(() => _rounds = s.first),
           ),
-          const SizedBox(height: MmSpace.s6),
+          const SizedBox(height: GfSpace.s6),
           SectionTitle(l.setupPlayers),
           LineupCard(names: ref.watch(lineupProvider)),
         ],
       ),
       bottomNavigationBar: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(MmSpace.s4, MmSpace.s2, MmSpace.s4, MmSpace.s4),
+          padding: const EdgeInsets.fromLTRB(GfSpace.s4, GfSpace.s2, GfSpace.s4, GfSpace.s4),
           child: FilledButton.icon(
             onPressed: ok ? _start : null,
             icon: const Icon(Icons.celebration_rounded),

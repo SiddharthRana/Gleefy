@@ -22,7 +22,7 @@ class GuessPlayScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final palette = MmPalette.of(context);
+    final palette = GfPalette.of(context);
     final session = ref.watch(guessSessionProvider);
     final cur = session?.current;
     final item = cur == null ? null : ref.watch(contentProvider).guess.item(cur.questionId);
@@ -61,35 +61,35 @@ class GuessPlayScreen extends ConsumerWidget {
       body: Stack(
         children: [
           ListView(
-            padding: const EdgeInsets.all(MmSpace.s4),
+            padding: const EdgeInsets.all(GfSpace.s4),
             children: [
               Text(
                 l.guessGuessing(team),
                 style: theme.textTheme.titleMedium?.copyWith(color: theme.colorScheme.primary),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: MmSpace.s3),
+              const SizedBox(height: GfSpace.s3),
               Card(
                 color: palette.surfaceMuted,
                 child: Padding(
-                  padding: const EdgeInsets.all(MmSpace.s4),
+                  padding: const EdgeInsets.all(GfSpace.s4),
                   child: Column(
                     children: [
                       Text(l.guessReaderOnly, style: theme.textTheme.bodySmall),
-                      const SizedBox(height: MmSpace.s1),
+                      const SizedBox(height: GfSpace.s1),
                       Text(item.answer, style: theme.textTheme.headlineMedium, textAlign: TextAlign.center),
                     ],
                   ),
                 ),
               ),
-              const SizedBox(height: MmSpace.s4),
+              const SizedBox(height: GfSpace.s4),
               for (var i = 0; i < cur.cluesShown; i++) ...[
                 // Each clue slides in as it's revealed.
                 StaggerIn(
                   key: ValueKey('${cur.questionId}-clue-$i'),
                   child: Card(
                     child: Padding(
-                      padding: const EdgeInsets.all(MmSpace.s4),
+                      padding: const EdgeInsets.all(GfSpace.s4),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -97,14 +97,14 @@ class GuessPlayScreen extends ConsumerWidget {
                             l.guessClue(i + 1),
                             style: theme.textTheme.labelLarge?.copyWith(color: palette.textMuted),
                           ),
-                          const SizedBox(height: MmSpace.s1),
+                          const SizedBox(height: GfSpace.s1),
                           Text(item.clues[i], style: theme.textTheme.titleLarge),
                         ],
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: MmSpace.s3),
+                const SizedBox(height: GfSpace.s3),
               ],
               if (cur.outcome == GuessOutcome.got)
                 PopIn(
@@ -148,7 +148,7 @@ class GuessPlayScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: MmSpace.s2),
+                const SizedBox(height: GfSpace.s2),
                 Row(
                   children: [
                     Expanded(
@@ -157,7 +157,7 @@ class GuessPlayScreen extends ConsumerWidget {
                         child: Text(l.guessNextClue),
                       ),
                     ),
-                    const SizedBox(width: MmSpace.s3),
+                    const SizedBox(width: GfSpace.s3),
                     Expanded(
                       child: OutlinedButton(onPressed: () => act(GuessAction.reveal), child: Text(l.guessGiveUp)),
                     ),

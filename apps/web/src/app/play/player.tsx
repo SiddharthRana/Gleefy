@@ -275,7 +275,7 @@ function Game({ game, code, premium }: { game: SharedGame; code: string; premium
         </button>
       </div>
       <progress
-        className="h-2 w-full accent-[var(--mm-primary)]"
+        className="h-2 w-full accent-[var(--gf-primary)]"
         max={s.totalRounds}
         value={s.rounds.length}
         aria-label="Progress"
@@ -469,7 +469,7 @@ function TriviaView({ s, set }: { s: TriviaState; set: (s: TriviaState) => void 
             }
             className={`press min-h-14 rounded-card border-2 bg-surface px-5 text-left text-lg font-bold ${
               answered && index === cur!.answer
-                ? 'correct border-[var(--mm-success)]'
+                ? 'correct border-[var(--gf-success)]'
                 : 'border-border'
             } ${answered && index === cur!.picked && index !== cur!.answer ? 'wrong' : ''}`}
           >

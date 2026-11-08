@@ -2,24 +2,24 @@
 @import '@gleefy/design-tokens/tokens.css';
 
 @theme inline {
-  --color-bg: var(--mm-background);
-  --color-surface: var(--mm-surface);
-  --color-surface-muted: var(--mm-surface-muted);
-  --color-border: var(--mm-border);
-  --color-text: var(--mm-text);
-  --color-muted: var(--mm-text-muted);
-  --color-primary: var(--mm-primary);
-  --color-primary-hover: var(--mm-primary-hover);
-  --color-on-primary: var(--mm-on-primary);
-  --color-accent: var(--mm-accent);
-  --color-on-accent: var(--mm-on-accent);
-  --color-option-a: var(--mm-option-a);
-  --color-option-b: var(--mm-option-b);
-  --color-on-option: var(--mm-on-option);
+  --color-bg: var(--gf-background);
+  --color-surface: var(--gf-surface);
+  --color-surface-muted: var(--gf-surface-muted);
+  --color-border: var(--gf-border);
+  --color-text: var(--gf-text);
+  --color-muted: var(--gf-text-muted);
+  --color-primary: var(--gf-primary);
+  --color-primary-hover: var(--gf-primary-hover);
+  --color-on-primary: var(--gf-on-primary);
+  --color-accent: var(--gf-accent);
+  --color-on-accent: var(--gf-on-accent);
+  --color-option-a: var(--gf-option-a);
+  --color-option-b: var(--gf-option-b);
+  --color-on-option: var(--gf-on-option);
   --font-display: var(--font-fredoka), ui-rounded, system-ui, sans-serif;
   --font-sans: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
-  --radius-card: var(--mm-radius-lg);
-  --radius-panel: var(--mm-radius-xl);
+  --radius-card: var(--gf-radius-lg);
+  --radius-panel: var(--gf-radius-xl);
 }
 
 /* Tailwind 4 gives buttons the default arrow; anything clickable gets the hand. */
@@ -44,27 +44,27 @@
 }
 
 html {
-  background: var(--mm-background);
-  color: var(--mm-text);
+  background: var(--gf-background);
+  color: var(--gf-text);
 }
 
 body {
   font-family: var(--font-sans);
-  background: var(--mm-background);
+  background: var(--gf-background);
   -webkit-font-smoothing: antialiased;
 }
 
 :focus-visible {
-  outline: 3px solid var(--mm-focus);
+  outline: 3px solid var(--gf-focus);
   outline-offset: 2px;
 }
 
 .brand-gradient {
   background: linear-gradient(
     135deg,
-    var(--mm-gradient-start),
-    var(--mm-gradient-mid),
-    var(--mm-gradient-end)
+    var(--gf-gradient-start),
+    var(--gf-gradient-mid),
+    var(--gf-gradient-end)
   );
   color: #fff;
 }
@@ -75,7 +75,7 @@ body {
  * ------------------------------------------------------------------------------------------- */
 
 :root {
-  --press-edge: color-mix(in oklab, var(--mm-primary) 55%, black);
+  --press-edge: color-mix(in oklab, var(--gf-primary) 55%, black);
   --bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -84,7 +84,7 @@ body {
   box-shadow: 0 4px 0 var(--press-edge);
 }
 .btn-3d-soft {
-  box-shadow: 0 3px 0 var(--mm-border);
+  box-shadow: 0 3px 0 var(--gf-border);
 }
 
 /* Big answer buttons get a darker edge in their own colour. */
@@ -96,8 +96,8 @@ body {
 
 /* Setup tiles (checkboxes and radios) light up when chosen. */
 .tile:has(input:checked) {
-  border-color: var(--mm-primary);
-  background: color-mix(in oklab, var(--mm-primary) 10%, var(--mm-surface));
+  border-color: var(--gf-primary);
+  background: color-mix(in oklab, var(--gf-primary) 10%, var(--gf-surface));
 }
 
 /* Game-site looks (static). A faint doodle wallpaper of party bits, like a games lobby. */
@@ -111,12 +111,12 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  border: 2px solid var(--mm-text);
+  border: 2px solid var(--gf-text);
   border-radius: 999px;
   padding: 0.25rem 0.85rem;
   font-weight: 800;
   font-size: 0.9rem;
-  box-shadow: 0 3px 0 var(--mm-text);
+  box-shadow: 0 3px 0 var(--gf-text);
   transform: rotate(var(--tilt, -3deg));
 }
 
@@ -129,8 +129,8 @@ body {
 
 /* A game card: its mode colour as a chunky header band. */
 .game-card {
-  border: 2px solid var(--mm-border);
-  box-shadow: 0 5px 0 var(--mm-border);
+  border: 2px solid var(--gf-border);
+  box-shadow: 0 5px 0 var(--gf-border);
 }
 
 /* Revealed vote split: a darker band behind the option text (it only raises text contrast). */
@@ -153,7 +153,7 @@ body {
   bottom: 0.6rem;
   height: 3px;
   border-radius: 3px;
-  background: var(--mm-primary);
+  background: var(--gf-primary);
   transform: scaleX(0);
 }
 
@@ -186,7 +186,7 @@ body {
     box-shadow: 0 1px 0 var(--press-edge);
   }
   .btn-3d-soft:not(:disabled):active {
-    box-shadow: 0 0 0 var(--mm-border);
+    box-shadow: 0 0 0 var(--gf-border);
   }
 
   /* Cards and links that go somewhere: lift and tilt a touch. */
@@ -197,7 +197,7 @@ body {
   }
   .lift:hover {
     transform: translateY(-4px) rotate(-0.4deg);
-    box-shadow: 0 14px 28px -14px color-mix(in oklab, var(--mm-primary) 55%, transparent);
+    box-shadow: 0 14px 28px -14px color-mix(in oklab, var(--gf-primary) 55%, transparent);
   }
   .lift:active {
     transform: translateY(-1px) scale(0.98);
@@ -290,11 +290,11 @@ body {
   }
   .game-card:hover {
     transform: translateY(-4px) rotate(var(--tilt, -0.6deg));
-    box-shadow: 0 9px 0 var(--mm-border);
+    box-shadow: 0 9px 0 var(--gf-border);
   }
   .game-card:active {
     transform: translateY(2px) scale(0.98);
-    box-shadow: 0 2px 0 var(--mm-border);
+    box-shadow: 0 2px 0 var(--gf-border);
   }
   .sticker:hover {
     animation: wiggle 0.5s ease-in-out;
@@ -398,7 +398,7 @@ body {
 
 @keyframes correct {
   0% {
-    box-shadow: 0 0 0 0 color-mix(in oklab, var(--mm-success) 70%, transparent);
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--gf-success) 70%, transparent);
   }
   100% {
     box-shadow: 0 0 0 18px transparent;

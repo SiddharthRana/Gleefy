@@ -57,7 +57,7 @@ class _MyQuestionsScreenState extends ConsumerState<MyQuestionsScreen> {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final palette = MmPalette.of(context);
+    final palette = GfPalette.of(context);
     final questions = ref.watch(customQuestionsProvider).of(_mode);
     return Scaffold(
       appBar: AppBar(title: Text(l.myQuestionsTitle)),
@@ -67,22 +67,22 @@ class _MyQuestionsScreenState extends ConsumerState<MyQuestionsScreen> {
         label: Text(l.myQuestionsAdd),
       ),
       body: ListView(
-        padding: listPadding(context, const EdgeInsets.fromLTRB(MmSpace.s4, MmSpace.s4, MmSpace.s4, 96)),
+        padding: listPadding(context, const EdgeInsets.fromLTRB(GfSpace.s4, GfSpace.s4, GfSpace.s4, 96)),
         children: [
           Text(l.myQuestionsIntro, style: theme.textTheme.bodyLarge),
-          const SizedBox(height: MmSpace.s1),
+          const SizedBox(height: GfSpace.s1),
           Text(l.myQuestionsHowTo, style: theme.textTheme.bodyMedium?.copyWith(color: palette.textMuted)),
-          const SizedBox(height: MmSpace.s4),
+          const SizedBox(height: GfSpace.s4),
           SegmentedButton<GameMode>(
             segments: [for (final m in customLimits.keys) ButtonSegment(value: m, label: Text(modeName(l, m)))],
             selected: {_mode},
             showSelectedIcon: false,
             onSelectionChanged: (s) => setState(() => _mode = s.first),
           ),
-          const SizedBox(height: MmSpace.s4),
+          const SizedBox(height: GfSpace.s4),
           if (questions.isEmpty)
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: MmSpace.s8),
+              padding: const EdgeInsets.symmetric(vertical: GfSpace.s8),
               child: Text(l.myQuestionsEmpty, textAlign: TextAlign.center, style: theme.textTheme.bodyLarge),
             ),
           for (final (i, q) in questions.indexed)
@@ -158,7 +158,7 @@ class _QuestionDialogState extends ConsumerState<_QuestionDialog> {
               textCapitalization: TextCapitalization.sentences,
               decoration: field(l.myQuestionsOptionA),
             ),
-            const SizedBox(height: MmSpace.s2),
+            const SizedBox(height: GfSpace.s2),
             TextField(
               controller: _b,
               maxLength: max,
@@ -170,7 +170,7 @@ class _QuestionDialogState extends ConsumerState<_QuestionDialog> {
               Semantics(
                 liveRegion: true,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: MmSpace.s2),
+                  padding: const EdgeInsets.only(top: GfSpace.s2),
                   child: Text(_error!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
                 ),
               ),
