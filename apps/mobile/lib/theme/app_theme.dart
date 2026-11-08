@@ -5,8 +5,8 @@ import 'tokens.g.dart';
 
 /// Brand colours that Material's [ColorScheme] has no slot for.
 @immutable
-class MmPalette extends ThemeExtension<MmPalette> {
-  const MmPalette({
+class GfPalette extends ThemeExtension<GfPalette> {
+  const GfPalette({
     required this.optionA,
     required this.optionB,
     required this.onOption,
@@ -28,77 +28,77 @@ class MmPalette extends ThemeExtension<MmPalette> {
   final Color success;
   final Gradient gradient;
 
-  static const light = MmPalette(
-    optionA: MmColorsLight.optionA,
-    optionB: MmColorsLight.optionB,
-    onOption: MmColorsLight.onOption,
-    accent: MmColorsLight.accent,
-    onAccent: MmColorsLight.onAccent,
-    textMuted: MmColorsLight.textMuted,
-    surfaceMuted: MmColorsLight.surfaceMuted,
-    success: MmColorsLight.success,
+  static const light = GfPalette(
+    optionA: GfColorsLight.optionA,
+    optionB: GfColorsLight.optionB,
+    onOption: GfColorsLight.onOption,
+    accent: GfColorsLight.accent,
+    onAccent: GfColorsLight.onAccent,
+    textMuted: GfColorsLight.textMuted,
+    surfaceMuted: GfColorsLight.surfaceMuted,
+    success: GfColorsLight.success,
     gradient: LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
-      colors: [MmColorsLight.gradientStart, MmColorsLight.gradientMid, MmColorsLight.gradientEnd],
+      colors: [GfColorsLight.gradientStart, GfColorsLight.gradientMid, GfColorsLight.gradientEnd],
     ),
   );
 
-  static const dark = MmPalette(
-    optionA: MmColorsDark.optionA,
-    optionB: MmColorsDark.optionB,
-    onOption: MmColorsDark.onOption,
-    accent: MmColorsDark.accent,
-    onAccent: MmColorsDark.onAccent,
-    textMuted: MmColorsDark.textMuted,
-    surfaceMuted: MmColorsDark.surfaceMuted,
-    success: MmColorsDark.success,
+  static const dark = GfPalette(
+    optionA: GfColorsDark.optionA,
+    optionB: GfColorsDark.optionB,
+    onOption: GfColorsDark.onOption,
+    accent: GfColorsDark.accent,
+    onAccent: GfColorsDark.onAccent,
+    textMuted: GfColorsDark.textMuted,
+    surfaceMuted: GfColorsDark.surfaceMuted,
+    success: GfColorsDark.success,
     gradient: LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
-      colors: [MmColorsDark.gradientStart, MmColorsDark.gradientMid, MmColorsDark.gradientEnd],
+      colors: [GfColorsDark.gradientStart, GfColorsDark.gradientMid, GfColorsDark.gradientEnd],
     ),
   );
 
-  static MmPalette of(BuildContext context) => Theme.of(context).extension<MmPalette>()!;
+  static GfPalette of(BuildContext context) => Theme.of(context).extension<GfPalette>()!;
 
   @override
-  MmPalette copyWith() => this;
+  GfPalette copyWith() => this;
 
   @override
-  MmPalette lerp(MmPalette? other, double t) => t < 0.5 || other == null ? this : other;
+  GfPalette lerp(GfPalette? other, double t) => t < 0.5 || other == null ? this : other;
 }
 
 ThemeData buildTheme(Brightness brightness, {bool reduceMotion = false}) {
   final dark = brightness == Brightness.dark;
   final scheme = ColorScheme(
     brightness: brightness,
-    primary: dark ? MmColorsDark.primary : MmColorsLight.primary,
-    onPrimary: dark ? MmColorsDark.onPrimary : MmColorsLight.onPrimary,
-    secondary: dark ? MmColorsDark.accent : MmColorsLight.accent,
-    onSecondary: dark ? MmColorsDark.onAccent : MmColorsLight.onAccent,
-    error: dark ? MmColorsDark.danger : MmColorsLight.danger,
-    onError: dark ? MmColorsDark.background : MmColorsLight.surface,
-    surface: dark ? MmColorsDark.surface : MmColorsLight.surface,
-    onSurface: dark ? MmColorsDark.text : MmColorsLight.text,
-    onSurfaceVariant: dark ? MmColorsDark.textMuted : MmColorsLight.textMuted,
-    surfaceContainerHighest: dark ? MmColorsDark.surfaceMuted : MmColorsLight.surfaceMuted,
-    surfaceContainerHigh: dark ? MmColorsDark.surfaceMuted : MmColorsLight.surfaceMuted,
-    surfaceContainer: dark ? MmColorsDark.surface : MmColorsLight.surface,
-    outline: dark ? MmColorsDark.border : MmColorsLight.border,
-    outlineVariant: dark ? MmColorsDark.border : MmColorsLight.border,
+    primary: dark ? GfColorsDark.primary : GfColorsLight.primary,
+    onPrimary: dark ? GfColorsDark.onPrimary : GfColorsLight.onPrimary,
+    secondary: dark ? GfColorsDark.accent : GfColorsLight.accent,
+    onSecondary: dark ? GfColorsDark.onAccent : GfColorsLight.onAccent,
+    error: dark ? GfColorsDark.danger : GfColorsLight.danger,
+    onError: dark ? GfColorsDark.background : GfColorsLight.surface,
+    surface: dark ? GfColorsDark.surface : GfColorsLight.surface,
+    onSurface: dark ? GfColorsDark.text : GfColorsLight.text,
+    onSurfaceVariant: dark ? GfColorsDark.textMuted : GfColorsLight.textMuted,
+    surfaceContainerHighest: dark ? GfColorsDark.surfaceMuted : GfColorsLight.surfaceMuted,
+    surfaceContainerHigh: dark ? GfColorsDark.surfaceMuted : GfColorsLight.surfaceMuted,
+    surfaceContainer: dark ? GfColorsDark.surface : GfColorsLight.surface,
+    outline: dark ? GfColorsDark.border : GfColorsLight.border,
+    outlineVariant: dark ? GfColorsDark.border : GfColorsLight.border,
   );
-  final background = dark ? MmColorsDark.background : MmColorsLight.background;
+  final background = dark ? GfColorsDark.background : GfColorsLight.background;
 
   final base = ThemeData(
     useMaterial3: true,
     colorScheme: scheme,
     scaffoldBackgroundColor: background,
-    fontFamily: MmFont.sans,
-    extensions: [dark ? MmPalette.dark : MmPalette.light],
+    fontFamily: GfFont.sans,
+    extensions: [dark ? GfPalette.dark : GfPalette.light],
   );
 
-  TextStyle? display(TextStyle? s) => s?.copyWith(fontFamily: MmFont.display, fontWeight: FontWeight.w600);
+  TextStyle? display(TextStyle? s) => s?.copyWith(fontFamily: GfFont.display, fontWeight: FontWeight.w600);
   final text = base.textTheme.copyWith(
     displayLarge: display(base.textTheme.displayLarge),
     displayMedium: display(base.textTheme.displayMedium),
@@ -108,11 +108,11 @@ ThemeData buildTheme(Brightness brightness, {bool reduceMotion = false}) {
     headlineSmall: display(base.textTheme.headlineSmall),
     titleLarge: display(base.textTheme.titleLarge),
     titleMedium: base.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
-    labelLarge: base.textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w700, fontSize: MmFontSize.md),
+    labelLarge: base.textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w700, fontSize: GfFontSize.md),
   );
 
-  const buttonShape = RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(MmRadius.pill)));
-  const minButton = Size(MmTouch.min, MmTouch.game);
+  const buttonShape = RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(GfRadius.pill)));
+  const minButton = Size(GfTouch.min, GfTouch.game);
 
   return base.copyWith(
     textTheme: text,
@@ -127,7 +127,7 @@ ThemeData buildTheme(Brightness brightness, {bool reduceMotion = false}) {
       elevation: 0,
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(MmRadius.lg),
+        borderRadius: BorderRadius.circular(GfRadius.lg),
         side: BorderSide(color: scheme.outline),
       ),
     ),
@@ -135,7 +135,7 @@ ThemeData buildTheme(Brightness brightness, {bool reduceMotion = false}) {
       style: FilledButton.styleFrom(
         minimumSize: minButton,
         shape: buttonShape,
-        padding: const EdgeInsets.symmetric(horizontal: MmSpace.s6),
+        padding: const EdgeInsets.symmetric(horizontal: GfSpace.s6),
         textStyle: text.labelLarge,
       ),
     ),
@@ -143,20 +143,20 @@ ThemeData buildTheme(Brightness brightness, {bool reduceMotion = false}) {
       style: OutlinedButton.styleFrom(
         minimumSize: minButton,
         shape: buttonShape,
-        padding: const EdgeInsets.symmetric(horizontal: MmSpace.s6),
+        padding: const EdgeInsets.symmetric(horizontal: GfSpace.s6),
         side: BorderSide(color: scheme.outline, width: 1.5),
         textStyle: text.labelLarge,
       ),
     ),
     textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(minimumSize: const Size(MmTouch.min, MmTouch.min), textStyle: text.labelLarge),
+      style: TextButton.styleFrom(minimumSize: const Size(GfTouch.min, GfTouch.min), textStyle: text.labelLarge),
     ),
     chipTheme: base.chipTheme.copyWith(
       shape: const StadiumBorder(),
-      labelStyle: text.labelLarge?.copyWith(fontSize: MmFontSize.sm),
+      labelStyle: text.labelLarge?.copyWith(fontSize: GfFontSize.sm),
     ),
     segmentedButtonTheme: SegmentedButtonThemeData(
-      style: SegmentedButton.styleFrom(minimumSize: const Size(MmTouch.min, MmTouch.min)),
+      style: SegmentedButton.styleFrom(minimumSize: const Size(GfTouch.min, GfTouch.min)),
     ),
     pageTransitionsTheme: PageTransitionsTheme(
       builders: {

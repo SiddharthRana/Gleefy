@@ -31,10 +31,10 @@ class GleefyWordmark extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             GleefyMark(size: size * 1.2),
-            const SizedBox(width: MmSpace.s2),
+            const SizedBox(width: GfSpace.s2),
             Text(
               'Gleefy',
-              style: TextStyle(fontFamily: MmFont.display, fontWeight: FontWeight.w700, fontSize: size),
+              style: TextStyle(fontFamily: GfFont.display, fontWeight: FontWeight.w700, fontSize: size),
             ),
           ],
         ),
@@ -45,7 +45,7 @@ class GleefyWordmark extends StatelessWidget {
 
 /// A rounded card filled with the brand gradient. Text on it is white (contrast tested in tokens).
 class GradientPanel extends StatelessWidget {
-  const GradientPanel({super.key, required this.child, this.onTap, this.padding = const EdgeInsets.all(MmSpace.s6)});
+  const GradientPanel({super.key, required this.child, this.onTap, this.padding = const EdgeInsets.all(GfSpace.s6)});
 
   final Widget child;
   final VoidCallback? onTap;
@@ -55,13 +55,13 @@ class GradientPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        gradient: MmPalette.of(context).gradient,
-        borderRadius: BorderRadius.circular(MmRadius.xl),
+        gradient: GfPalette.of(context).gradient,
+        borderRadius: BorderRadius.circular(GfRadius.xl),
       ),
       child: Material(
         type: MaterialType.transparency,
         child: InkWell(
-          borderRadius: BorderRadius.circular(MmRadius.xl),
+          borderRadius: BorderRadius.circular(GfRadius.xl),
           onTap: onTap,
           child: Padding(
             padding: padding,

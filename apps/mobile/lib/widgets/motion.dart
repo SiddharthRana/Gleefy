@@ -283,7 +283,7 @@ class _ConfettiState extends ConsumerState<Confetti> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
     if (reduceMotionOf(context, ref)) return const SizedBox.shrink();
-    final palette = MmPalette.of(context);
+    final palette = GfPalette.of(context);
     final scheme = Theme.of(context).colorScheme;
     final colors = [palette.optionA, palette.optionB, palette.accent, scheme.primary, palette.success];
     return IgnorePointer(

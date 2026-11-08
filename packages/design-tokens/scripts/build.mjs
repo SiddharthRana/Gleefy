@@ -21,15 +21,15 @@ const union = (obj) =>
 const HEADER = 'GENERATED FILE — do not edit. Source: packages/design-tokens/tokens.json';
 
 const cssVars = (mode) =>
-  Object.entries(tokens.color[mode]).map(([k, v]) => `--mm-${kebab(k)}: ${v};`);
+  Object.entries(tokens.color[mode]).map(([k, v]) => `--gf-${kebab(k)}: ${v};`);
 
 function buildCss() {
   const shared = [];
   for (const [k, v] of Object.entries(tokens.font.size))
-    shared.push(`--mm-font-size-${k}: ${v / 16}rem;`);
-  for (const [k, v] of Object.entries(tokens.space)) shared.push(`--mm-space-${k}: ${v / 16}rem;`);
-  for (const [k, v] of Object.entries(tokens.radius)) shared.push(`--mm-radius-${k}: ${v}px;`);
-  for (const [k, v] of Object.entries(tokens.touch)) shared.push(`--mm-touch-${k}: ${v}px;`);
+    shared.push(`--gf-font-size-${k}: ${v / 16}rem;`);
+  for (const [k, v] of Object.entries(tokens.space)) shared.push(`--gf-space-${k}: ${v / 16}rem;`);
+  for (const [k, v] of Object.entries(tokens.radius)) shared.push(`--gf-radius-${k}: ${v}px;`);
+  for (const [k, v] of Object.entries(tokens.touch)) shared.push(`--gf-touch-${k}: ${v}px;`);
   const indent = (arr, n = 2) => arr.map((l) => ' '.repeat(n) + l).join('\n');
   return `/* ${HEADER} */
 :root {
@@ -91,7 +91,7 @@ const dartIdent = (k) => (/^[0-9]/.test(k) ? `s${k}` : k);
 
 function buildDart() {
   const colorClass = (mode) => {
-    const name = mode === 'light' ? 'MmColorsLight' : 'MmColorsDark';
+    const name = mode === 'light' ? 'GfColorsLight' : 'GfColorsDark';
     const fields = Object.entries(tokens.color[mode])
       .map(([k, v]) => `  static const ${k} = ${dartColor(v)};`)
       .join('\n');
@@ -108,15 +108,15 @@ ${colorClass('light')}
 
 ${colorClass('dark')}
 
-${numClass('MmFontSize', tokens.font.size)}
+${numClass('GfFontSize', tokens.font.size)}
 
-${numClass('MmSpace', tokens.space)}
+${numClass('GfSpace', tokens.space)}
 
-${numClass('MmRadius', tokens.radius)}
+${numClass('GfRadius', tokens.radius)}
 
-${numClass('MmTouch', tokens.touch)}
+${numClass('GfTouch', tokens.touch)}
 
-abstract final class MmFont {
+abstract final class GfFont {
   static const display = '${tokens.font.family.display}';
   static const sans = '${tokens.font.family.sans}';
 }

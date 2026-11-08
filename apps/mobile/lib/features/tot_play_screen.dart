@@ -84,7 +84,7 @@ class _TotPlayScreenState extends ConsumerState<TotPlayScreen> {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final palette = MmPalette.of(context);
+    final palette = GfPalette.of(context);
     final session = ref.watch(totSessionProvider);
     final cur = session?.current;
     final item = cur == null ? null : ref.watch(contentProvider).tot.item(cur.questionId);
@@ -132,7 +132,7 @@ class _TotPlayScreenState extends ConsumerState<TotPlayScreen> {
             ),
             if (cur.revealed && pickers.isNotEmpty)
               Padding(
-                padding: const EdgeInsets.only(top: MmSpace.s1),
+                padding: const EdgeInsets.only(top: GfSpace.s1),
                 child: Text(pickers.join(', '), textAlign: TextAlign.center, style: theme.textTheme.bodyMedium),
               ),
           ],
@@ -152,23 +152,23 @@ class _TotPlayScreenState extends ConsumerState<TotPlayScreen> {
           ),
       ],
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(MmSpace.s4, MmSpace.s4, MmSpace.s4, 0),
+        padding: const EdgeInsets.fromLTRB(GfSpace.s4, GfSpace.s4, GfSpace.s4, 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(l.totPrompt, style: theme.textTheme.headlineSmall, textAlign: TextAlign.center),
-            const SizedBox(height: MmSpace.s1),
+            const SizedBox(height: GfSpace.s1),
             Text(
               header,
               style: theme.textTheme.titleMedium?.copyWith(color: theme.colorScheme.primary),
               textAlign: TextAlign.center,
             ),
-            if (_timerOn && !cur.revealed) ...[const SizedBox(height: MmSpace.s3), CountdownBar(countdown: _countdown)],
-            const SizedBox(height: MmSpace.s4),
+            if (_timerOn && !cur.revealed) ...[const SizedBox(height: GfSpace.s3), CountdownBar(countdown: _countdown)],
+            const SizedBox(height: GfSpace.s4),
             option(Side.a),
-            const SizedBox(height: MmSpace.s3),
+            const SizedBox(height: GfSpace.s3),
             option(Side.b),
-            const SizedBox(height: MmSpace.s2),
+            const SizedBox(height: GfSpace.s2),
           ],
         ),
       ),

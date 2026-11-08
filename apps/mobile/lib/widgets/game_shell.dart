@@ -91,7 +91,7 @@ class _GameShellState extends ConsumerState<GameShell> {
         body: SafeArea(child: widget.body),
         bottomNavigationBar: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(MmSpace.s4, MmSpace.s2, MmSpace.s4, MmSpace.s4),
+            padding: const EdgeInsets.fromLTRB(GfSpace.s4, GfSpace.s2, GfSpace.s4, GfSpace.s4),
             child: widget.bottom,
           ),
         ),
@@ -114,7 +114,7 @@ class NoGameScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(l.errorNotFound),
-            const SizedBox(height: MmSpace.s4),
+            const SizedBox(height: GfSpace.s4),
             FilledButton(onPressed: () => context.go('/'), child: Text(l.goHome)),
           ],
         ),

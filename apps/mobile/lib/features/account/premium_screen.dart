@@ -45,7 +45,7 @@ class _PremiumScreenState extends ConsumerState<PremiumScreen> {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final palette = MmPalette.of(context);
+    final palette = GfPalette.of(context);
     final entitlement = ref.watch(entitlementProvider);
     final premium = ref.watch(premiumProvider);
     final api = ref.watch(accountApiProvider);
@@ -60,7 +60,7 @@ class _PremiumScreenState extends ConsumerState<PremiumScreen> {
           // The celebration stays up after a purchase turns Premium on.
           if (bought) ...[
             PurchaseStatusCard(state: ref.watch(billingControllerProvider)),
-            const SizedBox(height: MmSpace.s4),
+            const SizedBox(height: GfSpace.s4),
           ],
           _ActiveStatus(entitlement: entitlement),
         ],
@@ -72,7 +72,7 @@ class _PremiumScreenState extends ConsumerState<PremiumScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(l.premiumSignInPrompt, style: theme.textTheme.bodyLarge),
-          const SizedBox(height: MmSpace.s4),
+          const SizedBox(height: GfSpace.s4),
           FilledButton(onPressed: () => context.push('/account/sign-in'), child: Text(l.premiumSignIn)),
         ],
       );
@@ -89,15 +89,15 @@ class _PremiumScreenState extends ConsumerState<PremiumScreen> {
     return Scaffold(
       appBar: AppBar(title: Text(l.premiumTitle)),
       body: ListView(
-        padding: listPadding(context, const EdgeInsets.all(MmSpace.s4)),
+        padding: listPadding(context, const EdgeInsets.all(GfSpace.s4)),
         children: [
           Text(l.premiumPitch, style: theme.textTheme.titleMedium),
-          const SizedBox(height: MmSpace.s4),
+          const SizedBox(height: GfSpace.s4),
           Card(
-            child: Padding(padding: const EdgeInsets.all(MmSpace.s4), child: status),
+            child: Padding(padding: const EdgeInsets.all(GfSpace.s4), child: status),
           ),
           if (entitlement.signedIn) ...[
-            const SizedBox(height: MmSpace.s2),
+            const SizedBox(height: GfSpace.s2),
             ListTile(
               leading: const Icon(Icons.person_outline_rounded),
               title: Text(l.accountTitle),
@@ -106,9 +106,9 @@ class _PremiumScreenState extends ConsumerState<PremiumScreen> {
               onTap: () => context.push('/account'),
             ),
           ],
-          const SizedBox(height: MmSpace.s6),
+          const SizedBox(height: GfSpace.s6),
           Semantics(header: true, child: Text(l.premiumIncludes, style: theme.textTheme.titleMedium)),
-          const SizedBox(height: MmSpace.s2),
+          const SizedBox(height: GfSpace.s2),
           for (final mode in GameMode.values)
             for (final c in content.packFor(mode).categories.where((c) => c.tier == Tier.premium))
               ListTile(
@@ -147,12 +147,12 @@ class _ActiveStatus extends ConsumerWidget {
         Row(
           children: [
             Icon(Icons.verified_rounded, color: theme.colorScheme.primary),
-            const SizedBox(width: MmSpace.s2),
+            const SizedBox(width: GfSpace.s2),
             Expanded(child: Text(l.premiumActive, style: theme.textTheme.titleLarge)),
           ],
         ),
         if (purchase != null && bought != null) ...[
-          const SizedBox(height: MmSpace.s2),
+          const SizedBox(height: GfSpace.s2),
           Text(l.premiumBoughtOn(formatDay(context, bought), purchase.isWeb ? l.premiumStoreWeb : l.premiumStorePlay)),
         ],
       ],
@@ -203,7 +203,7 @@ class _OfferState extends ConsumerState<_Offer> {
       children: [
         if (pendingPurchase && !showCard) ...[
           Text(l.premiumPaymentPending, style: theme.textTheme.bodyLarge),
-          const SizedBox(height: MmSpace.s3),
+          const SizedBox(height: GfSpace.s3),
         ],
         if (offer != null && billing.phase != PurchasePhase.success) ...[
           Pressable(
@@ -213,15 +213,15 @@ class _OfferState extends ConsumerState<_Offer> {
               child: Text(l.premiumUnlock(offer.price)),
             ),
           ),
-          const SizedBox(height: MmSpace.s2),
+          const SizedBox(height: GfSpace.s2),
           Text(l.premiumOnce, textAlign: TextAlign.center, style: theme.textTheme.bodyMedium),
-          const SizedBox(height: MmSpace.s3),
+          const SizedBox(height: GfSpace.s3),
         ],
         if (billing.phase == PurchasePhase.loading)
-          const Padding(padding: EdgeInsets.all(MmSpace.s2), child: LinearProgressIndicator()),
+          const Padding(padding: EdgeInsets.all(GfSpace.s2), child: LinearProgressIndicator()),
         if (showCard) ...[
           PurchaseStatusCard(state: billing, onRetry: () => unawaited(controller.retry(widget.productId))),
-          const SizedBox(height: MmSpace.s2),
+          const SizedBox(height: GfSpace.s2),
         ],
         if (billing.phase != PurchasePhase.success)
           TextButton(onPressed: busy ? null : controller.restore, child: Text(l.premiumRestore)),

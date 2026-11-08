@@ -26,7 +26,7 @@ lib/
   widgets/                Brand mark, gradient panel, mode tile
   theme/
     tokens.g.dart         GENERATED from packages/design-tokens/tokens.json — don't edit
-    app_theme.dart        Light/dark ThemeData + MmPalette extension
+    app_theme.dart        Light/dark ThemeData + GfPalette extension
   l10n/                   app_en.arb (+ generated localizations)
 assets/content/           GENERATED copy of packages/content/packs (`pnpm content:sync`) — don't edit
 ```

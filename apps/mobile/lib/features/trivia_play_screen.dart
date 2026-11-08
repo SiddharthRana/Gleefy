@@ -60,7 +60,7 @@ class _TriviaPlayScreenState extends ConsumerState<TriviaPlayScreen> {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final palette = MmPalette.of(context);
+    final palette = GfPalette.of(context);
     final session = ref.watch(triviaSessionProvider);
     final cur = session?.current;
     final item = cur == null ? null : ref.watch(contentProvider).trivia.item(cur.questionId);
@@ -90,7 +90,7 @@ class _TriviaPlayScreenState extends ConsumerState<TriviaPlayScreen> {
           ),
       ],
       body: ListView(
-        padding: const EdgeInsets.all(MmSpace.s4),
+        padding: const EdgeInsets.all(GfSpace.s4),
         children: [
           Text(
             names.isEmpty ? l.everyone : l.turnOf(player),
@@ -98,12 +98,12 @@ class _TriviaPlayScreenState extends ConsumerState<TriviaPlayScreen> {
             textAlign: TextAlign.center,
           ),
           if (session.config.timeLimitMs > 0 && !cur.answered) ...[
-            const SizedBox(height: MmSpace.s3),
+            const SizedBox(height: GfSpace.s3),
             CountdownBar(countdown: _countdown),
           ],
-          const SizedBox(height: MmSpace.s4),
+          const SizedBox(height: GfSpace.s4),
           Text(item.question, style: theme.textTheme.headlineSmall, textAlign: TextAlign.center),
-          const SizedBox(height: MmSpace.s6),
+          const SizedBox(height: GfSpace.s6),
           for (final (pos, index) in cur.choiceOrder.indexed) ...[
             // Choices deal in one by one for each question; the right one pops, a wrong pick shakes.
             StaggerIn(
@@ -136,10 +136,10 @@ class _TriviaPlayScreenState extends ConsumerState<TriviaPlayScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: MmSpace.s3),
+            const SizedBox(height: GfSpace.s3),
           ],
           if (feedback != null) ...[
-            const SizedBox(height: MmSpace.s2),
+            const SizedBox(height: GfSpace.s2),
             Semantics(
               liveRegion: true,
               child: PopIn(
@@ -147,10 +147,10 @@ class _TriviaPlayScreenState extends ConsumerState<TriviaPlayScreen> {
               ),
             ),
             if (cur.picked != cur.answer) ...[
-              const SizedBox(height: MmSpace.s1),
+              const SizedBox(height: GfSpace.s1),
               Text(l.triviaAnswerWas(correctText), textAlign: TextAlign.center, style: theme.textTheme.titleMedium),
             ],
-            const SizedBox(height: MmSpace.s2),
+            const SizedBox(height: GfSpace.s2),
             Text(
               item.explanation,
               textAlign: TextAlign.center,
@@ -183,7 +183,7 @@ class _Choice extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final palette = MmPalette.of(context);
+    final palette = GfPalette.of(context);
     final (border, icon) = switch (state) {
       _ChoiceState.correct => (palette.success, Icons.check_circle_rounded),
       _ChoiceState.wrong => (theme.colorScheme.error, Icons.cancel_rounded),
@@ -196,16 +196,16 @@ class _Choice extends StatelessWidget {
       child: Material(
         color: theme.colorScheme.surface,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(MmRadius.lg),
+          borderRadius: BorderRadius.circular(GfRadius.lg),
           side: BorderSide(color: border, width: state == _ChoiceState.open || state == _ChoiceState.dimmed ? 1.5 : 3),
         ),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
           onTap: state == _ChoiceState.open ? onTap : null,
           child: ConstrainedBox(
-            constraints: const BoxConstraints(minHeight: MmTouch.game + 8),
+            constraints: const BoxConstraints(minHeight: GfTouch.game + 8),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: MmSpace.s4, vertical: MmSpace.s3),
+              padding: const EdgeInsets.symmetric(horizontal: GfSpace.s4, vertical: GfSpace.s3),
               child: Row(
                 children: [
                   CircleAvatar(
@@ -214,7 +214,7 @@ class _Choice extends StatelessWidget {
                     foregroundColor: theme.colorScheme.onPrimary,
                     child: Text(letter, style: const TextStyle(fontWeight: FontWeight.w800)),
                   ),
-                  const SizedBox(width: MmSpace.s3),
+                  const SizedBox(width: GfSpace.s3),
                   Expanded(child: Text(text, style: theme.textTheme.titleMedium)),
                   if (icon != null) Icon(icon, color: border),
                 ],

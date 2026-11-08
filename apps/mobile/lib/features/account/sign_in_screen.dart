@@ -146,7 +146,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     return Scaffold(
       appBar: AppBar(title: Text(l.signInTitle)),
       body: ListView(
-        padding: listPadding(context, const EdgeInsets.all(MmSpace.s4)),
+        padding: listPadding(context, const EdgeInsets.all(GfSpace.s4)),
         children: [
           if (!sent)
             CheckboxListTile(
@@ -157,7 +157,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
               contentPadding: EdgeInsets.zero,
             ),
           if (google) ...[
-            const SizedBox(height: MmSpace.s2),
+            const SizedBox(height: GfSpace.s2),
             Pressable(
               enabled: !_busy,
               child: OutlinedButton.icon(
@@ -167,19 +167,19 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
               ),
             ),
             if (_googleWaiting) ...[
-              const SizedBox(height: MmSpace.s2),
+              const SizedBox(height: GfSpace.s2),
               Semantics(liveRegion: true, child: Text(l.signInGoogleWaiting, textAlign: TextAlign.center)),
             ],
-            const SizedBox(height: MmSpace.s4),
+            const SizedBox(height: GfSpace.s4),
             Text(
               l.signInOr.toUpperCase(),
               textAlign: TextAlign.center,
               style: theme.textTheme.labelLarge?.copyWith(letterSpacing: 1.2),
             ),
-            const SizedBox(height: MmSpace.s4),
+            const SizedBox(height: GfSpace.s4),
           ],
           Text(sent ? l.signInCodeSent(_sentTo!) : l.signInBody, style: theme.textTheme.bodyLarge),
-          const SizedBox(height: MmSpace.s4),
+          const SizedBox(height: GfSpace.s4),
           if (!sent)
             TextField(
               controller: _email,
@@ -205,11 +205,11 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
             Semantics(
               liveRegion: true,
               child: Padding(
-                padding: const EdgeInsets.only(top: MmSpace.s2),
+                padding: const EdgeInsets.only(top: GfSpace.s2),
                 child: Text(_error!, style: TextStyle(color: theme.colorScheme.error)),
               ),
             ),
-          const SizedBox(height: MmSpace.s4),
+          const SizedBox(height: GfSpace.s4),
           Pressable(
             enabled: !_busy,
             child: FilledButton(

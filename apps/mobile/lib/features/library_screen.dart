@@ -15,9 +15,9 @@ class LibraryScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context).libraryTitle)),
       body: ListView.separated(
-        padding: listPadding(context, const EdgeInsets.all(MmSpace.s4)),
+        padding: listPadding(context, const EdgeInsets.all(GfSpace.s4)),
         itemCount: LibraryEntry.values.length,
-        separatorBuilder: (_, _) => const SizedBox(height: MmSpace.s3),
+        separatorBuilder: (_, _) => const SizedBox(height: GfSpace.s3),
         itemBuilder: (_, i) => StaggerIn(
           index: i,
           child: ModeTile(entry: LibraryEntry.values[i]),

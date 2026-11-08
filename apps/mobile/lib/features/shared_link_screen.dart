@@ -59,12 +59,12 @@ class _SharedLinkScreenState extends ConsumerState<SharedLinkScreen> {
       body: Center(
         child: _failed
             ? Padding(
-                padding: const EdgeInsets.all(MmSpace.s6),
+                padding: const EdgeInsets.all(GfSpace.s6),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(l.shareBroken, textAlign: TextAlign.center),
-                    const SizedBox(height: MmSpace.s4),
+                    const SizedBox(height: GfSpace.s4),
                     FilledButton(onPressed: () => context.go('/'), child: Text(l.goHome)),
                   ],
                 ),

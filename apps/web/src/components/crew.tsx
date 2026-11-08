@@ -1,9 +1,9 @@
 /** The Gleefy crew: four round party characters, one per brand colour. Decorative only. */
 const members = [
-  { fill: 'var(--mm-option-a)', mouth: 'grin', tilt: -8, hat: true },
-  { fill: 'var(--mm-option-b)', mouth: 'oh', tilt: 6, hat: false },
-  { fill: 'var(--mm-accent)', mouth: 'grin', tilt: -4, hat: false },
-  { fill: 'var(--mm-primary)', mouth: 'smile', tilt: 8, hat: true },
+  { fill: 'var(--gf-option-a)', mouth: 'grin', tilt: -8, hat: true },
+  { fill: 'var(--gf-option-b)', mouth: 'oh', tilt: 6, hat: false },
+  { fill: 'var(--gf-accent)', mouth: 'grin', tilt: -4, hat: false },
+  { fill: 'var(--gf-primary)', mouth: 'smile', tilt: 8, hat: true },
 ] as const;
 
 export function Crew({ className = '' }: { className?: string }) {
@@ -19,7 +19,7 @@ export function Crew({ className = '' }: { className?: string }) {
           {m.hat && (
             <path
               d="M24 16 32 0l8 16z"
-              fill="var(--mm-accent)"
+              fill="var(--gf-accent)"
               stroke="#1d1530"
               strokeWidth="3"
               strokeLinejoin="round"

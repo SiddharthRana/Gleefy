@@ -29,7 +29,7 @@ class ResultsActions extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(l.partyProgress(party.index + 1, party.setups.length)),
-          const SizedBox(height: MmSpace.s2),
+          const SizedBox(height: GfSpace.s2),
           SizedBox(
             width: double.infinity,
             child: Pressable(
@@ -61,7 +61,7 @@ class ResultsActions extends ConsumerWidget {
               child: Text(l.resultsChangeSetup),
             ),
           ),
-          const SizedBox(width: MmSpace.s3),
+          const SizedBox(width: GfSpace.s3),
           Expanded(
             child: Pressable(
               child: FilledButton(
@@ -77,7 +77,7 @@ class ResultsActions extends ConsumerWidget {
       );
     }
     return SafeArea(
-      child: Padding(padding: const EdgeInsets.fromLTRB(MmSpace.s4, MmSpace.s2, MmSpace.s4, MmSpace.s4), child: child),
+      child: Padding(padding: const EdgeInsets.fromLTRB(GfSpace.s4, GfSpace.s2, GfSpace.s4, GfSpace.s4), child: child),
     );
   }
 }

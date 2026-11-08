@@ -41,20 +41,20 @@ class _UsagePromptState extends ConsumerState<UsagePrompt> {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
     return Padding(
-      padding: const EdgeInsets.only(top: MmSpace.s4),
+      padding: const EdgeInsets.only(top: GfSpace.s4),
       child: Card(
         child: Padding(
-          padding: const EdgeInsets.all(MmSpace.s4),
+          padding: const EdgeInsets.all(GfSpace.s4),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(l.usagePromptTitle, style: theme.textTheme.titleMedium),
-              const SizedBox(height: MmSpace.s1),
+              const SizedBox(height: GfSpace.s1),
               Text(l.settingsShareUsageBody),
-              const SizedBox(height: MmSpace.s3),
+              const SizedBox(height: GfSpace.s3),
               Wrap(
-                spacing: MmSpace.s2,
-                runSpacing: MmSpace.s2,
+                spacing: GfSpace.s2,
+                runSpacing: GfSpace.s2,
                 children: [
                   FilledButton(onPressed: () => _answer(true), child: Text(l.usagePromptYes)),
                   TextButton(onPressed: () => _answer(false), child: Text(l.usagePromptNo)),
