@@ -246,6 +246,10 @@ From now on, every release is: merge `dev` into `main` → approve `backend`, `w
 5. **QA:** run `docs/qa-checklist.md` on a cheap Android phone, including Premium as a license tester and a Dodo test purchase. Measure cold start (< 2 s).
 6. Fix what testers report (ship to the same track; it doesn't reset the clock). Keep notes: Play asks how the test went.
 
+## Optional: the warmup test copy
+
+Once production works, set up **warmup.gleefy.party**, a full test copy that updates on every merge into `dev` (no approval) so you can try changes before releasing them. It costs about $0–2 a month if its Supabase project lives in a **Free** organisation, not the Pro one. Steps: `docs/deployment.md` → Warmup.
+
 ## Phase 10 — Go live
 
 1. **Dodo → live mode:** create the live product ($2.99) and webhook (same URL and events) and a live API key, then:

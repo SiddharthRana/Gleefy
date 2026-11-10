@@ -3,7 +3,7 @@ import { Fredoka, Nunito } from 'next/font/google';
 import { ErrorMonitoring } from '@/components/error-monitoring';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
-import { siteUrl } from '@/lib/site';
+import { isWarmup, siteUrl } from '@/lib/site';
 import './globals.css';
 
 const fredoka = Fredoka({
@@ -24,6 +24,7 @@ export const metadata: Metadata = {
     'Quick party games for friends, couples and families, played together on one phone. No sign-up needed.',
   openGraph: { type: 'website', siteName: 'Gleefy', locale: 'en_GB' },
   alternates: { canonical: '/' },
+  ...(isWarmup ? { robots: { index: false, follow: false } } : {}),
 };
 
 export const viewport: Viewport = {
@@ -43,6 +44,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
+        {isWarmup && (
+          <p className="bg-accent px-4 py-2 text-center text-sm font-bold text-on-accent">
+            <span aria-hidden="true">🔥 </span>
+            Warmup: the test copy of Gleefy. Payments here are in test mode.
+          </p>
+        )}
         <SiteHeader />
         <main id="main" className="mx-auto max-w-5xl px-4">
           {children}

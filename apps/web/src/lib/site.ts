@@ -6,6 +6,12 @@ export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://gleefy.part
   '',
 );
 
+/**
+ * The "warmup" test copy of the site (warmup.gleefy.party, deployed from the dev branch): hidden
+ * from search engines and labelled, with payments in test mode.
+ */
+export const isWarmup = process.env.NEXT_PUBLIC_WARMUP === 'true';
+
 export type ModeStatus = 'available' | 'in-development';
 
 export interface ModeInfo {

@@ -1,8 +1,11 @@
 name: CI
 
 # Branches (same as Weblume): dev is the default branch that pull requests target; main is what's
-# released. Pushes to dev and main and every pull request run the checks. On main, three deploy jobs
-# follow; each waits for approval in its GitHub environment ("Review deployments" on the run page).
+# released. Pushes to dev and main and every pull request run the checks.
+# - dev deploys the "warmup" test copy (warmup.gleefy.party, warmup-api.gleefy.party) straight away,
+#   with its settings in the GitHub environment `warmup`.
+# - main offers three production deploys; each waits for approval in its GitHub environment
+#   ("Review deployments" on the run page).
 # Setup: docs/deployment.md.
 on:
   # Feature branches are checked through their pull request; pushing to them as well ran everything twice.
@@ -11,10 +14,10 @@ on:
   pull_request:
 
 concurrency:
-  # Pull request builds cancel older ones. Main builds never cancel each other, so a deploy is never
-  # cut off half way and a build waiting for approval doesn't hold up the next one.
-  group: ci-${{ github.ref }}-${{ github.ref == 'refs/heads/main' && github.sha || 'branch' }}
-  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+  # Pull request builds cancel older ones. Builds of main and dev never cancel each other, so a deploy
+  # is never cut off half way and a build waiting for approval doesn't hold up the next one.
+  group: ci-${{ github.ref }}-${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev') && github.sha || 'branch' }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/dev' }}
 
 permissions:
   contents: read
@@ -117,22 +120,28 @@ jobs:
         run: docker build -f apps/api/Dockerfile -t gleefy-api:ci .
 
   # ---------------------------------------------------------------------------------------------
-  # Deploys: main only, after every check passes, each behind its environment's required reviewers.
-  # A target stays switched off until its repository variable (DEPLOY_BACKEND / DEPLOY_WEB /
-  # DEPLOY_ANDROID) is "true", so nothing runs before its accounts and secrets exist.
+  # Deploys, after every check passes:
+  # - main → production, each behind its environment's required reviewers. A target stays switched
+  #   off until its repository variable (DEPLOY_BACKEND / DEPLOY_WEB / DEPLOY_ANDROID) is "true".
+  # - dev → warmup (backend and website, no approval), switched on by DEPLOY_WARMUP = "true". The
+  #   `warmup` environment overrides the shared variables (SITE_URL, API_URL, SUPABASE_*, FLY_APP…).
+  # Nothing runs before its accounts and secrets exist.
   # ---------------------------------------------------------------------------------------------
 
   deploy-backend:
-    name: Deploy backend (Supabase migrations, API on Fly.io)
+    name: Deploy backend (${{ github.ref == 'refs/heads/dev' && 'warmup' || 'production' }})
     needs: [typescript, database, flutter, api-image]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.DEPLOY_BACKEND == 'true'
+    if: >-
+      github.event_name == 'push' && (
+        (github.ref == 'refs/heads/main' && vars.DEPLOY_BACKEND == 'true') ||
+        (github.ref == 'refs/heads/dev' && vars.DEPLOY_WARMUP == 'true'))
     runs-on: ubuntu-latest
     timeout-minutes: 20
     environment:
-      name: backend
+      name: ${{ github.ref == 'refs/heads/dev' && 'warmup' || 'backend' }}
       url: ${{ vars.API_URL }}
     concurrency:
-      group: deploy-backend
+      group: deploy-backend-${{ github.ref_name }}
       cancel-in-progress: false
     steps:
       - uses: actions/checkout@v5
@@ -148,9 +157,10 @@ jobs:
       - name: Deploy the API to Fly.io
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-          FLY_APP: ${{ vars.FLY_APP || 'gleefy-api' }}
+          FLY_APP: ${{ vars.FLY_APP || (github.ref == 'refs/heads/dev' && 'gleefy-warmup-api' || 'gleefy-api') }}
+          FLY_CONFIG: ${{ github.ref == 'refs/heads/dev' && 'apps/api/fly.warmup.toml' || 'apps/api/fly.toml' }}
         run: >-
-          flyctl deploy --remote-only --config apps/api/fly.toml --dockerfile apps/api/Dockerfile
+          flyctl deploy --remote-only --config "$FLY_CONFIG" --dockerfile apps/api/Dockerfile
           --app "$FLY_APP" --wait-timeout 300
       - name: Smoke test
         if: vars.API_URL != ''
@@ -161,16 +171,19 @@ jobs:
           curl -fsS "$API_URL/v1/billing/config"
 
   deploy-web:
-    name: Deploy website (Cloudflare Pages)
+    name: Deploy website (${{ github.ref == 'refs/heads/dev' && 'warmup' || 'production' }})
     needs: [typescript, database, flutter, api-image]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.DEPLOY_WEB == 'true'
+    if: >-
+      github.event_name == 'push' && (
+        (github.ref == 'refs/heads/main' && vars.DEPLOY_WEB == 'true') ||
+        (github.ref == 'refs/heads/dev' && vars.DEPLOY_WARMUP == 'true'))
     runs-on: ubuntu-latest
     timeout-minutes: 20
     environment:
-      name: web
+      name: ${{ github.ref == 'refs/heads/dev' && 'warmup' || 'web' }}
       url: ${{ vars.SITE_URL }}
     concurrency:
-      group: deploy-web
+      group: deploy-web-${{ github.ref_name }}
       cancel-in-progress: false
     steps:
       - uses: actions/checkout@v5
@@ -191,13 +204,15 @@ jobs:
           NEXT_PUBLIC_AUTH_GOOGLE_ENABLED: ${{ vars.AUTH_GOOGLE_ENABLED }}
           NEXT_PUBLIC_SENTRY_DSN: ${{ vars.WEB_SENTRY_DSN }}
           NEXT_PUBLIC_CONTACT_EMAIL: ${{ vars.CONTACT_EMAIL }}
+          # The warmup copy is hidden from search engines and labelled as a test site.
+          NEXT_PUBLIC_WARMUP: ${{ github.ref == 'refs/heads/dev' && 'true' || 'false' }}
         run: pnpm --filter @gleefy/web build
       # Deploying to the project's production branch makes this the live site.
       - name: Upload to Cloudflare Pages
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
-          PAGES_PROJECT: ${{ vars.CLOUDFLARE_PAGES_PROJECT || 'gleefy' }}
+          PAGES_PROJECT: ${{ vars.CLOUDFLARE_PAGES_PROJECT || (github.ref == 'refs/heads/dev' && 'gleefy-warmup' || 'gleefy') }}
           WRANGLER_SEND_METRICS: 'false'
         run: >-
           pnpm --filter @gleefy/web exec wrangler pages deploy out
