@@ -111,6 +111,57 @@ Cloudflare's free plan covers a static site of this size (check Cloudflare's cur
 
 Start on `internal`, move to `alpha` for the closed test (≥ 12 testers for 14 days, required for new personal accounts), and promote to production in Play Console or by changing `PLAY_TRACK`.
 
+## Warmup: the test copy (warmup.gleefy.party)
+
+A full second copy for trying changes before production, deployed from the `dev` branch on every push, with no approval. It shares nothing with production except the Cloudflare account, so a broken warmup deploy or a test purchase can't touch real players. The site shows a "Warmup" banner and is hidden from search engines.
+
+|          | Production                              | Warmup                                                            |
+| -------- | --------------------------------------- | ----------------------------------------------------------------- |
+| Website  | Pages project `gleefy` → `gleefy.party` | Pages project `gleefy-warmup` → `warmup.gleefy.party`             |
+| API      | Fly app `gleefy-api` (always on)        | Fly app `gleefy-warmup-api` (`fly.warmup.toml`, sleeps when idle) |
+| Database | Supabase project (Pro organisation)     | Supabase project `gleefy-warmup` in a **Free** organisation       |
+| Payments | Dodo live, Play production              | Dodo test mode, Play license testers                              |
+| Deploys  | push to `main`, approved per target     | push to `dev`, automatic                                          |
+
+The API is `warmup-api`, not `api.warmup`: Cloudflare's free certificate covers one level of subdomain (`*.gleefy.party`).
+
+**Cost:** about $0 to $2 a month. The Fly machine stops when idle, Pages is free, and a project in a Free Supabase organisation costs nothing. Supabase bills compute per project _inside a paid organisation_, so warmup must not live in the Pro one. A Free project pauses after a week without use; restore it from the dashboard.
+
+Set up once:
+
+1. **Supabase, in a free organisation:** Dashboard → organisation switcher → **New organization** (for example "Playground"), plan **Free**. Create the project `gleefy-warmup` in it. (The Free plan allows two active free projects in total.) Then do what `docs/payments-setup.md` §1 says, with these URLs: Site URL `https://warmup.gleefy.party`; redirect URLs `https://warmup.gleefy.party/auth/callback` and `gleefy://auth-callback`. To move an existing project out of the Pro organisation instead: Project Settings → General → **Transfer project** → the free organisation (you must own both; it takes about two minutes of downtime).
+2. **Pages:** `pnpm --filter @gleefy/web exec wrangler pages project create gleefy-warmup --production-branch main`, then add the custom domain `warmup.gleefy.party`.
+3. **Fly:**
+   ```bash
+   fly apps create gleefy-warmup-api
+   fly secrets set --app gleefy-warmup-api \
+     DATABASE_URL='<warmup session pooler string>' \
+     SUPABASE_URL='https://<warmup-ref>.supabase.co' \
+     SUPABASE_SECRET_KEY='sb_secret_…' \
+     CORS_ORIGINS='https://warmup.gleefy.party' \
+     BILLING_RETURN_URL='https://warmup.gleefy.party/account?checkout=success'
+   fly certs add warmup-api.gleefy.party --app gleefy-warmup-api
+   fly tokens create deploy --app gleefy-warmup-api --expiry 8760h
+   ```
+   Add the DNS-only (grey cloud) records Fly prints in Cloudflare. Payment settings are the test-mode ones from `docs/payments-setup.md` (Dodo `DODO_ENV=test`, its own webhook to `https://warmup-api.gleefy.party/v1/billing/webhooks/dodo`, and its own `BILLING_ACCOUNT_SECRET`).
+4. **GitHub → Environments → New environment `warmup`:** no required reviewers; deployment branches: Selected → `dev`.
+   - Secrets: `SUPABASE_DB_URL` (warmup pooler string), `FLY_API_TOKEN` (the warmup token), `CLOUDFLARE_API_TOKEN`.
+   - Variables: `SITE_URL=https://warmup.gleefy.party`, `API_URL=https://warmup-api.gleefy.party`, `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY` (warmup values), `CLOUDFLARE_ACCOUNT_ID`, and `AUTH_GOOGLE_ENABLED` if Google sign-in is set up for warmup (add `https://<warmup-ref>.supabase.co/auth/v1/callback` to the OAuth client's redirect URIs).
+   - Environment variables override the repository ones with the same name, so production keeps its own.
+5. **Switch it on:** repository variable `DEPLOY_WARMUP=true`. The next push to `dev` migrates the warmup database, deploys the API and the site.
+6. **Android warmup build** (CI doesn't build the app, to save minutes):
+   ```bash
+   cd apps/mobile
+   flutter build apk --release --split-per-abi \
+     --dart-define=API_BASE_URL=https://warmup-api.gleefy.party \
+     --dart-define=SITE_URL=https://warmup.gleefy.party \
+     --dart-define=SUPABASE_URL=https://<warmup-ref>.supabase.co \
+     --dart-define=SUPABASE_PUBLISHABLE_KEY=<warmup publishable key>
+   ```
+   Play purchases only work in a build installed from a Play testing track.
+
+**Flow:** branch from `dev` → PR → merge into `dev` → try it on warmup.gleefy.party → merge `dev` into `main` → approve the production deploys.
+
 ## Rollback
 
 - **API:** `fly releases --app gleefy-api`, then `fly deploy --image <previous image>`; or revert the commit on `main` and approve the backend deploy.
