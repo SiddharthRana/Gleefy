@@ -1,0 +1,35 @@
+# Fly.io app for the "warmup" test copy of the API (warmup-api.gleefy.party), deployed from the
+# dev branch. Same image as production; it sleeps when idle, so it costs almost nothing.
+#   flyctl deploy --config apps/api/fly.warmup.toml --dockerfile apps/api/Dockerfile --app <name>
+# Secrets are set with `fly secrets set`, never here. See docs/deployment.md → Warmup.
+app = "gleefy-warmup-api"
+primary_region = "bom"
+
+[env]
+NODE_ENV = "production"
+PORT = "4000"
+TRUST_PROXY_HOPS = "1"
+LOG_LEVEL = "info"
+
+[http_service]
+internal_port = 4000
+force_https = true
+# Unlike production, warmup may sleep: the first request after a quiet spell wakes it in a second
+# or two. Test webhooks retry, so none are lost.
+auto_stop_machines = "stop"
+auto_start_machines = true
+min_machines_running = 0
+
+[[http_service.checks]]
+grace_period = "20s"
+interval = "30s"
+timeout = "5s"
+method = "GET"
+path = "/ready"
+
+[deploy]
+strategy = "rolling"
+
+[[vm]]
+size = "shared-cpu-1x"
+memory = "512mb"
