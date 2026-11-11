@@ -35,8 +35,9 @@ The site works without the backend: games are free and Premium says checkout isn
 1. In a terminal, from the repo folder:
    ```bash
    pnpm --filter @gleefy/web exec wrangler login
-   pnpm --filter @gleefy/web exec wrangler pages project create gleefy --production-branch main
+   pnpm --filter @gleefy/web exec wrangler pages project create gleefy --production-branch main --force
    ```
+   (Done 2026-11-11. `--force` makes a classic Pages project; without it, newer wrangler tries to make a Worker and fails.)
 2. **Cloudflare → Workers & Pages → gleefy → Custom domains → Set up a domain:** add `gleefy.party`, then also `www.gleefy.party` (Cloudflare creates the DNS records because the domain is on Cloudflare).
 3. **Cloudflare → My Profile → API Tokens → Create token → Custom token:** permission **Account → Cloudflare Pages → Edit**, your account only. Copy the token. Copy your **Account ID** from the right sidebar of the dashboard home.
 4. **GitHub → Settings → Environments → New environment `web`:**
@@ -48,8 +49,9 @@ The site works without the backend: games are free and Premium says checkout isn
    - `SITE_URL` = `https://gleefy.party`
    - `API_URL` = `https://api.gleefy.party` (the API comes in Phase 5; the site already handles it being down)
    - `DEPLOY_WEB` = `true`
+   - `COMING_SOON` = `true` until launch: production then serves the one-page `apps/web/coming-soon` (logo, "coming soon to Android and iOS", contact email) plus /privacy, /terms and /account-deletion (Google Play and Google sign-in link to them); every other path shows the coming-soon page. Warmup always gets the full site. At launch (Phase 9) set it to `false` and redeploy.
 6. **Deploy:** GitHub → Actions → the latest run on `main` → **Re-run all jobs**. When the checks pass, click **Review deployments**, tick `web`, **Approve and deploy**.
-7. Open https://gleefy.party, /play, /privacy and /terms. (They still show "draft" notices until Phase 9.)
+7. Open https://gleefy.party: with `COMING_SOON` on, / and /play show the coming-soon page and /privacy shows the policy. (With it off: /play, /privacy and /terms, which show "draft" notices until Phase 9.)
 
 ## Phase 3 — The app in Play Console (half a day)
 

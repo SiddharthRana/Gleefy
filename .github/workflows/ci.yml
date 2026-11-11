@@ -211,6 +211,21 @@ jobs:
           # The warmup copy is hidden from search engines and labelled as a test site.
           NEXT_PUBLIC_WARMUP: ${{ github.ref == 'refs/heads/dev' && 'true' || 'false' }}
         run: pnpm --filter @gleefy/web build
+      # Until launch, production serves the one-page apps/web/coming-soon (repository
+      # variable COMING_SOON = true), plus the legal pages that Google Play and Google
+      # sign-in link to. Any other path falls back to the coming-soon page. Warmup
+      # always gets the full site.
+      - name: Choose what to upload
+        if: github.ref == 'refs/heads/main' && vars.COMING_SOON == 'true'
+        working-directory: apps/web
+        run: |
+          mkdir site
+          cp -R coming-soon/. site/
+          cp -R out/_next out/icon.svg site/
+          for page in privacy terms account-deletion; do
+            cp -R "out/$page" "out/$page.html" "out/$page.txt" site/
+          done
+          echo "SITE_DIR=site" >> "$GITHUB_ENV"
       # Deploying to the project's production branch makes this the live site.
       - name: Upload to Cloudflare Pages
         env:
@@ -219,7 +234,7 @@ jobs:
           PAGES_PROJECT: ${{ vars.CLOUDFLARE_PAGES_PROJECT || (github.ref == 'refs/heads/dev' && 'gleefy-warmup' || 'gleefy') }}
           WRANGLER_SEND_METRICS: 'false'
         run: >-
-          pnpm --filter @gleefy/web exec wrangler pages deploy out
+          pnpm --filter @gleefy/web exec wrangler pages deploy "${SITE_DIR:-out}"
           --project-name "$PAGES_PROJECT" --branch main --commit-hash "$GITHUB_SHA"
 
   deploy-android:
