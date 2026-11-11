@@ -9,9 +9,14 @@ export function PremiumNavPill() {
   return (
     <Link
       href="/pricing"
-      className="press premium-pill ml-1 inline-flex min-h-12 items-center gap-1 whitespace-nowrap rounded-full px-3 sm:px-4"
+      aria-label="Premium"
+      className="press premium-pill ml-1 inline-flex min-h-12 min-w-12 items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 sm:px-4"
     >
-      <span aria-hidden="true">★</span> Premium
+      <span aria-hidden="true">★</span>
+      {/* Very narrow phones show just the star, so the level chip and avatar still fit. */}
+      <span aria-hidden="true" className="hidden min-[420px]:inline">
+        Premium
+      </span>
     </Link>
   );
 }

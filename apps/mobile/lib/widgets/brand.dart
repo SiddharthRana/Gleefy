@@ -47,6 +47,56 @@ class GleefyWordmark extends StatelessWidget {
   }
 }
 
+/// A round avatar with the account's initial, for the home screen's app bar. A gold ring marks
+/// Premium. Shown only when signed in, so free play never nudges anyone to make an account.
+class AccountAvatarButton extends StatelessWidget {
+  const AccountAvatarButton({
+    super.key,
+    required this.email,
+    required this.premium,
+    required this.onPressed,
+    required this.tooltip,
+  });
+
+  final String? email;
+  final bool premium;
+  final VoidCallback onPressed;
+  final String tooltip;
+
+  static String initialOf(String? email) {
+    final text = email?.trim() ?? '';
+    return text.isEmpty ? '?' : text.characters.first.toUpperCase();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return IconButton(
+      tooltip: tooltip,
+      onPressed: onPressed,
+      icon: Container(
+        width: 34,
+        height: 34,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: scheme.primary,
+          border: premium ? Border.all(color: const Color(0xFFFFB020), width: 3) : null,
+        ),
+        child: Text(
+          initialOf(email),
+          style: TextStyle(
+            color: scheme.onPrimary,
+            fontFamily: GfFont.display,
+            fontWeight: FontWeight.w700,
+            fontSize: 16,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 /// The gold "PREMIUM" tag shown once the account has Premium (same colours as the website's).
 class PremiumTag extends StatelessWidget {
   const PremiumTag({super.key});
