@@ -1,27 +1,46 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useSyncExternalStore } from 'react';
 import { apiFetch } from './api';
 import type { Account } from './billing';
 import { useSession } from './supabase';
 
-// One /v1/me request per signed-in user per page load, shared by every component that asks
-// (header badge, unlock button, game player…). A failed check is not cached, so it retries.
-const checks = new Map<string, Promise<boolean>>();
+// What the API last said about each signed-in user's Premium, shared by every component that asks
+// (header badge and avatar, unlock button, game player…). One /v1/me request per user per page
+// load; the Account page reports fresher answers (for example right after checkout) through
+// notePremium, so the header updates without a reload.
+const known = new Map<string, boolean>();
+const pending = new Map<string, Promise<void>>();
+const listeners = new Set<() => void>();
 
-function checkPremium(userId: string): Promise<boolean> {
-  let check = checks.get(userId);
-  if (!check) {
-    check = apiFetch<Account>('/v1/me').then(
-      (a) => a.entitlements.premiumContent,
-      (err: unknown) => {
-        checks.delete(userId);
-        throw err;
-      },
-    );
-    checks.set(userId, check);
-  }
-  return check;
+function emit() {
+  for (const l of listeners) l();
+}
+
+/** Records what the API just said about this user's Premium. */
+export function notePremium(userId: string, premium: boolean) {
+  if (known.get(userId) === premium) return;
+  known.set(userId, premium);
+  emit();
+}
+
+function load(userId: string) {
+  if (known.has(userId) || pending.has(userId)) return;
+  pending.set(
+    userId,
+    apiFetch<Account>('/v1/me')
+      .then(
+        (a) => notePremium(userId, a.entitlements.premiumContent),
+        // Offline or failed: treat as free for now; a later page load asks again.
+        () => notePremium(userId, false),
+      )
+      .finally(() => pending.delete(userId)),
+  );
+}
+
+function subscribe(listener: () => void) {
+  listeners.add(listener);
+  return () => listeners.delete(listener);
 }
 
 /**
@@ -30,20 +49,16 @@ function checkPremium(userId: string): Promise<boolean> {
  */
 export function usePremium(): boolean | null {
   const session = useSession();
-  const [premium, setPremium] = useState<{ userId: string; value: boolean } | null>(null);
   const userId = session?.user.id;
+  const value = useSyncExternalStore(
+    subscribe,
+    () => (userId ? (known.get(userId) ?? null) : null),
+    () => null,
+  );
   useEffect(() => {
-    if (!userId) return;
-    let live = true;
-    checkPremium(userId).then(
-      (value) => live && setPremium({ userId, value }),
-      () => live && setPremium({ userId, value: false }),
-    );
-    return () => {
-      live = false;
-    };
+    if (userId) load(userId);
   }, [userId]);
   if (session === undefined) return null;
   if (!session) return false;
-  return premium && premium.userId === userId ? premium.value : null;
+  return value;
 }

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { CheckoutStatus, checkoutFailed, type CheckoutState } from '@/components/checkout-status';
+import { notePremium } from '@/lib/premium';
 import { apiFetch, ApiError, errorMessage } from '@/lib/api';
 import { providerName, type Account, type AccountPurchase } from '@/lib/billing';
 import {
@@ -239,6 +240,7 @@ function SignedIn({ email }: { email?: string }) {
         (a) => {
           setAccount(a);
           setError(null);
+          notePremium(a.id, a.entitlements.premiumContent);
           return a;
         },
         (err: unknown) => {

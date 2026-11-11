@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Logo } from './logo';
 import { LevelChip } from './progress-panel';
 import { PremiumNavPill, PremiumTag } from './premium-status';
+import { AccountButton } from './account-button';
 
 export function SiteHeader() {
   return (
@@ -9,7 +10,7 @@ export function SiteHeader() {
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-2 px-4 py-3">
         <Link
           href="/"
-          className="flex min-h-12 items-center gap-2 font-display text-2xl font-bold"
+          className="flex min-h-12 shrink-0 items-center gap-2 font-display text-2xl font-bold"
           aria-label="Gleefy home"
         >
           <span className="wiggle inline-flex">
@@ -50,6 +51,9 @@ export function SiteHeader() {
             </li>
             <li>
               <LevelChip />
+            </li>
+            <li>
+              <AccountButton />
             </li>
           </ul>
         </nav>
