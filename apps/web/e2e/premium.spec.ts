@@ -173,8 +173,7 @@ test('with Premium, the header shows a Premium badge instead of the upgrade pill
   await signIn(page, true);
   await page.goto('/');
   const header = page.getByRole('banner');
-  await expect(header.getByText('Premium', { exact: true })).toBeVisible();
-  await expect(header.locator('.premium-tag')).toBeVisible();
+  await expect(header.locator('.premium-tag:not(.if-premium)')).toHaveText('Premium');
   await expect(
     page
       .getByRole('navigation', { name: 'Main' })
@@ -232,4 +231,50 @@ test('with Premium, the avatar says so', async ({ page }) => {
       name: 'Your account (Premium)',
     }),
   ).toBeVisible();
+});
+
+test('reloading as a Premium account never flashes the upgrade pill', async ({ page }) => {
+  await signIn(page, true);
+  await page.goto('/');
+  const nav = page.getByRole('navigation', { name: 'Main' });
+  const pill = nav.getByRole('link', { name: 'Premium', exact: true });
+  await expect(page.getByRole('banner').locator('.premium-tag')).toBeVisible();
+  // Now the API is slow to answer: the device's hint decides what shows meanwhile.
+  await page.route(`${API}/v1/me`, async (route) => {
+    await new Promise((r) => setTimeout(r, 2500));
+    await route.fulfill({ json: account(true) });
+  });
+  const seen: boolean[] = [];
+  await page.exposeFunction('notePill', (visible: boolean) => seen.push(visible));
+  await page.addInitScript(() => {
+    const check = () => {
+      const el = document.querySelector('a[href="/pricing"].premium-pill');
+      (window as unknown as { notePill: (v: boolean) => void }).notePill(
+        !!el && getComputedStyle(el).display !== 'none',
+      );
+    };
+    document.addEventListener('DOMContentLoaded', check);
+    requestAnimationFrame(check);
+    setTimeout(check, 300);
+    setTimeout(check, 1000);
+  });
+  await page.reload();
+  await expect(page.getByRole('banner').locator('.premium-tag:visible')).toBeVisible();
+  await expect(pill).toHaveCount(0, { timeout: 5000 });
+  await page.waitForTimeout(1200);
+  expect(seen.length).toBeGreaterThan(0);
+  expect(seen).not.toContain(true);
+});
+
+test('a free account on the same device gets the upgrade pill back', async ({ page }) => {
+  await signIn(page, false);
+  await page.addInitScript(() => localStorage.setItem('gleefy.premium-hint.v1', '1'));
+  await page.goto('/');
+  await expect(
+    page
+      .getByRole('navigation', { name: 'Main' })
+      .getByRole('link', { name: 'Premium', exact: true }),
+  ).toBeVisible();
+  await expect(page.getByRole('banner').locator('.premium-tag')).toHaveCount(0);
+  expect(await page.evaluate(() => localStorage.getItem('gleefy.premium-hint.v1'))).toBeNull();
 });

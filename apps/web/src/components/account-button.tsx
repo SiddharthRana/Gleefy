@@ -17,14 +17,15 @@ export function initialOf(user: { email?: string; user_metadata?: Record<string,
  */
 export function AccountButton() {
   const session = useSession();
-  const premium = usePremium() === true;
+  const status = usePremium();
+  const premium = status === true;
   if (!session) return null;
   return (
     <Link
       href="/account"
       aria-label={premium ? 'Your account (Premium)' : 'Your account'}
       title="Your account"
-      className={`press avatar-button ${premium ? 'avatar-premium' : ''}`}
+      className={`press avatar-button ${premium ? 'avatar-premium' : status === null ? 'avatar-premium-hint' : ''}`}
     >
       <span aria-hidden="true">{initialOf(session.user)}</span>
     </Link>
