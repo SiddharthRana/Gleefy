@@ -117,7 +117,7 @@ Follow `docs/launch/closed-test.md`. In short:
 
 ### 5a. Supabase project
 
-1. **supabase.com → New project:** name `gleefy`, region nearest your players (Mumbai or Frankfurt), a strong database password (save it).
+1. **supabase.com → New project:** name `gleefy`, region **Southeast Asia (Singapore)**, the same region as the API on Fly (Fly no longer offers Mumbai), a strong database password (save it).
 2. **Project Settings → API:** copy the **Project URL** (`https://<ref>.supabase.co`), the **publishable key** (`sb_publishable_…`) and the **secret key** (`sb_secret_…`).
 3. **Connect → Session pooler:** copy that connection string (port 5432) and put your database password in it. Use this one everywhere (GitHub's runners have no IPv6).
 4. **Authentication → Providers → Email:** enabled; "Confirm email" off is fine (codes verify the address).
@@ -141,7 +141,7 @@ Follow `docs/launch/closed-test.md`. In short:
      CORS_ORIGINS='https://gleefy.party,https://www.gleefy.party'
    fly tokens create deploy --app gleefy-api
    ```
-   Copy the deploy token. (The region is Mumbai, `primary_region = "bom"` in `apps/api/fly.toml`; change it there first if your players are mostly elsewhere.)
+   Copy the deploy token. (The region is Singapore, `primary_region = "sin"` in `apps/api/fly.toml`, next to the database; change both together if your players are mostly elsewhere.)
 3. **GitHub → Environments → New environment `backend`:** required reviewer you, branch `main`.
    - Secret `SUPABASE_DB_URL` = the session pooler string.
    - Secret `FLY_API_TOKEN` = the deploy token.

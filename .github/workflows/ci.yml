@@ -165,7 +165,7 @@ jobs:
           FLY_CONFIG: ${{ github.ref == 'refs/heads/dev' && 'apps/api/fly.warmup.toml' || 'apps/api/fly.toml' }}
         run: >-
           flyctl deploy --remote-only --config "$FLY_CONFIG" --dockerfile apps/api/Dockerfile
-          --app "$FLY_APP" --wait-timeout 300
+          --app "$FLY_APP" --wait-timeout 300 --ha=false
       - name: Smoke test
         if: vars.API_URL != ''
         env:
