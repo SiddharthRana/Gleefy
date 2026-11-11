@@ -147,9 +147,11 @@ jobs:
       cancel-in-progress: false
     steps:
       - uses: actions/checkout@v5
+      # Pinned: CLI v3 (Nov 2026) rejected the old [inbucket] config key and broke a deploy that
+      # used "latest". Bump deliberately, after checking `supabase db push` still works.
       - uses: supabase/setup-cli@v1
         with:
-          version: latest
+          version: 3.1.0
       # Migrations first: each one must work with the API version already running.
       - name: Apply database migrations to Supabase
         env:
