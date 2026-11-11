@@ -2,6 +2,12 @@
 
 Short, dated records of non-trivial choices. Newest first.
 
+## 2026-11-11 — Icon: a phone in a party hat
+
+**The grinning face is replaced by a phone wearing a party hat**, because the face didn't land with the owner and the phone says what Gleefy is: party games on one phone. It is flat vector art (chunky ink outline, hard offset shadow, no shading): a white phone tilted left, a purple screen with a big gold star and confetti, and a striped party hat at a jaunty angle, on the same gradient tile with sunburst and confetti. It was chosen from four concepts (party popper, party G, party phone, game spinner) because it stays clear at 24 to 48 px and is about the product. `scripts/brand-icons.mjs` still generates every icon from this one drawing; it now also writes the coming-soon page's logo and icons.
+
+**Premium shows as a badge, not a button.** Once an account has Premium, the website header and the app's home screen show a gold PREMIUM tag beside the wordmark (like a subscription badge on a logo), and the upgrade pill and unlock buttons give way to "unlocked" messages.
+
 ## 2026-11-08 — Renamed to Gleefy, with a new icon
 
 **The product is now Gleefy, at gleefy.party.** The mirthmix domains were taken. Short coined names were checked against WIPO's Global Brand Database (classes 9, 28 and 41), the Play Store and the web: "Gleefy" had no trademark anywhere and no app of that name, while the alternatives clashed (Jollo and Mirthy have class-41 registrations, Yippo and Gigzo class-28 ones, and two apps are already called Mimzo). `.party` costs about $5 a year to keep on Cloudflare. Everything was renamed: packages (`@gleefy/*`, Dart `gleefy`), the app ID `com.gleefy.app`, the deep link `gleefy://auth-callback`, the Play product `gleefy_premium_unlock`, storage keys and copy. Nothing had shipped, so no migration was needed. The GitHub repository (now SiddharthRana/Gleefy) and the local folder were renamed afterwards, and gleefy.party was bought. Earlier entries below keep the old name. The design-token prefixes followed: the `--mm-*` CSS variables became `--gf-*`, and the `Mm*` Dart classes (`MmSpace`, `MmPalette`, `MmColorsLight`…) became `Gf*`.
