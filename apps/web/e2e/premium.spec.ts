@@ -332,3 +332,32 @@ test('without Premium, the sales pitch is still there', async ({ page }) => {
   await page.goto('/pricing');
   await expect(page.getByRole('region', { name: 'Free', exact: true })).toBeVisible();
 });
+
+test('signing in shows a spinner while the code is sent and checked', async ({ page }) => {
+  let release: () => void = () => {};
+  const gate = () => new Promise<void>((r) => (release = r));
+  await page.route('http://supabase.test/auth/v1/otp**', async (route) => {
+    await gate();
+    await route.fulfill({ json: {} });
+  });
+  await page.route('http://supabase.test/auth/v1/verify**', async (route) => {
+    await gate();
+    await route.fulfill({ status: 400, json: { code: 'otp_expired', msg: 'expired' } });
+  });
+  await page.goto('/account');
+  await page.getByLabel('I’m 18 or older').check();
+  await page.getByLabel('Email').fill('host@example.test');
+  await page.getByRole('button', { name: 'Send code' }).click();
+  await expect(page.getByRole('button', { name: 'Sending code…' })).toBeDisabled();
+  await expect(page.getByRole('status').filter({ hasText: 'Sending code…' })).toHaveCount(1);
+  release();
+  await expect(page.getByText('We sent a 6-digit code to host@example.test.')).toBeVisible();
+
+  // Typing the sixth digit submits by itself.
+  await page.getByLabel('Code from the email').fill('123456');
+  await expect(page.getByRole('button', { name: 'Checking code…' })).toBeDisabled();
+  release();
+  // Rejected by the (fake) server: the error shows and the button is back, ready to retry.
+  await expect(page.locator('p[role="alert"]')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Sign in' })).toBeEnabled();
+});
