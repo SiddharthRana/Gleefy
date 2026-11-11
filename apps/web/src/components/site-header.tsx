@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Logo } from './logo';
 import { LevelChip } from './progress-panel';
+import { PremiumNavPill, PremiumTag } from './premium-status';
 
 export function SiteHeader() {
   return (
@@ -12,9 +13,10 @@ export function SiteHeader() {
           aria-label="Gleefy home"
         >
           <span className="wiggle inline-flex">
-            <Logo size={40} />
+            <Logo size={46} />
           </span>
           <span className="hidden min-[460px]:inline">Gleefy</span>
+          <PremiumTag />
         </Link>
         <nav aria-label="Main">
           <ul className="flex items-center gap-1 font-bold">
@@ -44,12 +46,7 @@ export function SiteHeader() {
               </Link>
             </li>
             <li>
-              <Link
-                href="/pricing"
-                className="press premium-pill ml-1 inline-flex min-h-12 items-center gap-1 whitespace-nowrap rounded-full px-3 sm:px-4"
-              >
-                <span aria-hidden="true">★</span> Premium
-              </Link>
+              <PremiumNavPill />
             </li>
             <li>
               <LevelChip />

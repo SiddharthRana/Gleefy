@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { apiFetch, ApiError, errorMessage } from '@/lib/api';
 import { useBillingConfigStatus } from '@/lib/billing';
+import { usePremium } from '@/lib/premium';
 import { useSession } from '@/lib/supabase';
 import { primary } from '@/lib/ui';
 
@@ -11,9 +12,26 @@ import { primary } from '@/lib/ui';
 export function UnlockButton({ price }: { price: string }) {
   const { config, failed } = useBillingConfigStatus();
   const session = useSession();
+  const premium = usePremium();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<{ text: string; already?: boolean } | null>(null);
 
+  // Already bought: no second checkout, just say so.
+  if (premium === true) {
+    return (
+      <div className="mt-6 flex flex-col items-start gap-3">
+        <p className="flex items-center gap-2 text-lg font-bold">
+          <span className="premium-tag premium-tag-lg">★ Premium</span> Unlocked on this account
+        </p>
+        <p className="text-muted">
+          Every premium category in every game is yours. Thanks for supporting Gleefy!
+        </p>
+        <Link href="/play" className={`${primary} inline-flex items-center`}>
+          Play now
+        </Link>
+      </div>
+    );
+  }
   if (failed) {
     return (
       <p className="mt-6 rounded-card bg-surface-muted p-4">
@@ -21,7 +39,7 @@ export function UnlockButton({ price }: { price: string }) {
       </p>
     );
   }
-  if (!config || session === undefined)
+  if (!config || session === undefined || (session && premium === null))
     return (
       <p role="status" className="mt-6 text-muted">
         Checking availability…

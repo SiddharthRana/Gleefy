@@ -5,6 +5,7 @@ import { ProgressPanel } from '@/components/progress-panel';
 import { TryOne } from '@/components/try-one';
 import { wyrCount, wyrSamples } from '@/lib/content';
 import { premiumCategories, premiumQuestionCount } from '@/lib/packs';
+import { PremiumCta } from '@/components/premium-status';
 import { formatPrice, PLANS } from '@gleefy/plans';
 import { modes } from '@/lib/site';
 
@@ -224,12 +225,7 @@ export default function HomePage() {
             </li>
           ))}
         </ul>
-        <Link
-          href="/pricing"
-          className="press premium-pill mt-6 inline-flex min-h-14 items-center gap-2 rounded-full px-7 text-lg font-bold"
-        >
-          <span aria-hidden="true">★</span> Unlock Premium
-        </Link>
+        <PremiumCta />
       </section>
     </>
   );

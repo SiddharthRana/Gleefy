@@ -1,4 +1,5 @@
-// Generates every Gleefy icon from one drawing: the grinning party face on the brand gradient.
+// Generates every Gleefy icon from one drawing: a phone in a party hat on the brand gradient
+// (one phone, passed around the party).
 //   node scripts/brand-icons.mjs
 // Writes docs/brand (SVG sources, Play Store icon), the website icons, the Android launcher icons
 // and the iOS app icons. Rasterised with Playwright's Chromium (already used by the web e2e tests).
@@ -20,21 +21,10 @@ const defs = `
       <stop offset="0.5" stop-color="#D4246A"/>
       <stop offset="1" stop-color="#F06A1D"/>
     </linearGradient>
-    <radialGradient id="glow" cx="0.5" cy="0.52" r="0.55">
-      <stop offset="0" stop-color="#FFE7A8" stop-opacity="0.55"/>
-      <stop offset="0.55" stop-color="#FFB86B" stop-opacity="0.12"/>
-      <stop offset="1" stop-color="#FFB86B" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="skin" cx="0.36" cy="0.3" r="0.8">
-      <stop offset="0" stop-color="#FFFFFF"/>
-      <stop offset="0.45" stop-color="#FFF4DD"/>
-      <stop offset="1" stop-color="#FFD59A"/>
-    </radialGradient>
     <linearGradient id="hat" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#FFE15C"/>
       <stop offset="1" stop-color="#FF9F1C"/>
     </linearGradient>
-    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="14"/></filter>
   </defs>`;
 
 // Sunburst: 12 soft rays from the centre.
@@ -46,8 +36,7 @@ const rays = Array.from(
 
 const background = `
   <rect width="1024" height="1024" fill="url(#bg)"/>
-  <g fill="#FFFFFF" opacity="0.08">${rays}</g>
-  <rect width="1024" height="1024" fill="url(#glow)"/>`;
+  <g fill="#FFFFFF" opacity="0.08">${rays}</g>`;
 
 const sparkle = (x, y, s, c = '#FFFFFF') =>
   `<path transform="translate(${x} ${y}) scale(${s})" d="M0-40C6-8 8-6 40 0C8 6 6 8 0 40C-6 8-8 6-40 0C-8-6-6-8 0-40Z" fill="${c}"/>`;
@@ -66,33 +55,32 @@ const confetti = `
     ${sparkle(770, 880, 0.7)}
   </g>`;
 
-// The character, centred near (512, 560), tilted a little for personality.
+// The character: a phone in a party hat, tilted for personality. Flat shapes with a chunky ink
+// outline and a hard offset shadow, so it stays crisp from 20 px to the Play Store's 512 px.
+const phone = (fill, stroke) =>
+  `<rect x="312" y="360" width="400" height="500" rx="88" fill="${fill}"${stroke ? ` stroke="${INK}" stroke-width="32"` : ''}/>`;
 const character = `
-  <g transform="rotate(-6 512 560)">
-    <circle cx="530" cy="600" r="318" fill="${INK}" opacity="0.35" filter="url(#soft)"/>
-    <g stroke="${INK}" stroke-linejoin="round" stroke-linecap="round">
-      <circle cx="512" cy="580" r="310" fill="url(#skin)" stroke-width="30"/>
-      <ellipse cx="400" cy="400" rx="64" ry="34" fill="#FFFFFF" stroke="none" opacity="0.9" transform="rotate(-32 400 400)"/>
-      <ellipse cx="352" cy="652" rx="52" ry="34" fill="#FF7FA0" stroke="none" opacity="0.7"/>
-      <ellipse cx="672" cy="652" rx="52" ry="34" fill="#FF7FA0" stroke="none" opacity="0.7"/>
-      <path d="M352 552q58-74 116 0M556 552q58-74 116 0" fill="none" stroke-width="38"/>
-      <path d="M366 618Q512 860 658 618Z" fill="${INK}" stroke-width="24"/>
-      <path d="M400 630Q512 668 624 630L616 652Q512 690 408 652Z" fill="#FFFFFF" stroke="none"/>
-      <path d="M446 716q66 40 132 0q-10 44-66 48q-56-4-66-48z" fill="#FF5C8A" stroke="none"/>
-    </g>
-    <g transform="rotate(16 700 230)" stroke="${INK}" stroke-linejoin="round" stroke-linecap="round">
-      <path d="M592 318 702 34 812 318Q702 352 592 318Z" fill="url(#hat)" stroke-width="26"/>
-      <circle cx="668" cy="250" r="16" fill="#D4246A" stroke="none"/>
-      <circle cx="736" cy="196" r="14" fill="#D4246A" stroke="none"/>
-      <circle cx="718" cy="290" r="14" fill="#7B2FF7" stroke="none"/>
-      <circle cx="690" cy="130" r="11" fill="#7B2FF7" stroke="none"/>
-      <circle cx="702" cy="38" r="48" fill="#FFF6E5" stroke-width="22"/>
+  <g transform="rotate(-10 512 610)" stroke-linejoin="round" stroke-linecap="round">
+    <g transform="translate(30 30)" opacity="0.28">${phone(INK)}</g>
+    ${phone('#FFFFFF', true)}
+    <rect x="358" y="432" width="308" height="358" rx="42" fill="#7B2FF7"/>
+    <rect x="466" y="390" width="92" height="20" rx="10" fill="${INK}"/>
+    <rect x="470" y="810" width="84" height="18" rx="9" fill="#E3DDF0"/>
+    <polygon points="512.0,484.0 548.4,573.8 645.1,580.7 571.0,643.2 594.3,737.3 512.0,686.0 429.7,737.3 453.0,643.2 378.9,580.7 475.6,573.8" fill="#FFD23F" stroke="${INK}" stroke-width="18"/>
+    <circle cx="398" cy="480" r="16" fill="#3DDCC8"/>
+    <circle cx="628" cy="750" r="14" fill="#FF8FB1"/>
+    <rect x="600" y="468" width="34" height="18" rx="7" fill="#FFF6E5" transform="rotate(30 617 477)"/>
+    <circle cx="396" cy="748" r="10" fill="#FFD23F"/>
+    <g transform="rotate(22 590 380)" stroke="${INK}">
+      <path d="M496 384 590 104 684 384Q590 410 496 384Z" fill="url(#hat)" stroke-width="28"/>
+      <path d="M552 216q38 14 76 0M524 298q66 22 132 0" fill="none" stroke="#D4246A" stroke-width="22"/>
+      <circle cx="590" cy="96" r="50" fill="#FFF6E5" stroke-width="24"/>
     </g>
   </g>`;
 
-/** The character re-centred on its bounding box (hat pom-pom to shadow) and scaled. */
+/** The character re-centred on its bounding box (pom-pom to shadow) and scaled. */
 const placed = (scale) =>
-  `<g transform="translate(512 512) scale(${scale}) translate(-515 -448)">${character}</g>`;
+  `<g transform="translate(512 512) scale(${scale}) translate(-539 -465)">${character}</g>`;
 
 /**
  * shape: 'square' (full bleed: Play Store, iOS), 'rounded' (Android legacy, web), 'none' (logo),
@@ -103,16 +91,16 @@ function svg(shape) {
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${view}" role="img" aria-label="Gleefy">${defs}`;
   switch (shape) {
     case 'none':
-      return `${open('150 -40 730 980')}${character}</svg>\n`;
+      return `${open('205 -15 665 960')}${character}</svg>\n`;
     case 'background':
       return `${open('0 0 1024 1024')}${background}${confetti}</svg>\n`;
     case 'foreground':
       // Android shows a circle of 72 of the layer's 108 units; the whole character stays inside it.
-      return `${open('0 0 1024 1024')}${placed(0.66)}</svg>\n`;
+      return `${open('0 0 1024 1024')}${placed(0.6)}</svg>\n`;
     case 'rounded':
-      return `${open('0 0 1024 1024')}<clipPath id="r"><rect width="1024" height="1024" rx="230"/></clipPath><g clip-path="url(#r)">${background}${confetti}</g>${placed(0.88)}</svg>\n`;
+      return `${open('0 0 1024 1024')}<clipPath id="r"><rect width="1024" height="1024" rx="230"/></clipPath><g clip-path="url(#r)">${background}${confetti}</g>${placed(0.9)}</svg>\n`;
     default:
-      return `${open('0 0 1024 1024')}${background}${confetti}${placed(0.88)}</svg>\n`;
+      return `${open('0 0 1024 1024')}${background}${confetti}${placed(0.9)}</svg>\n`;
   }
 }
 
@@ -127,6 +115,9 @@ out('docs/brand/icon-square.svg', svg('square'));
 out('docs/brand/logo.svg', svg('none'));
 out('apps/web/src/app/icon.svg', svg('rounded'));
 out('apps/web/public/logo.svg', svg('none'));
+// The pre-launch coming-soon page (production) uses the same mark.
+out('apps/web/coming-soon/logo.svg', svg('none'));
+out('apps/web/coming-soon/favicon.svg', svg('rounded'));
 
 const browser = await chromium.launch();
 const page = await browser.newPage();
@@ -146,10 +137,11 @@ async function png(shape, size, path) {
 
 await png('square', 512, 'docs/brand/play-store-icon-512.png');
 await png('square', 180, 'apps/web/src/app/apple-icon.png');
+await png('square', 180, 'apps/web/coming-soon/apple-touch-icon.png');
 // The app's in-screen logo (GleefyMark) is this image, at 3x for sharp phones.
-await page.setViewportSize({ width: 438, height: 588 });
+await page.setViewportSize({ width: 333, height: 480 });
 await page.setContent(
-  `<html><body style="margin:0;background:transparent">${svg('none').replace('<svg ', '<svg width="438" height="588" ')}</body></html>`,
+  `<html><body style="margin:0;background:transparent">${svg('none').replace('<svg ', '<svg width="333" height="480" ')}</body></html>`,
 );
 out(
   'apps/mobile/assets/brand/mark.png',
