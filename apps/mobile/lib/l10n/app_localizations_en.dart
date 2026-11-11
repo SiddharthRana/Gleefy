@@ -854,7 +854,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get signInAdultRequired =>
-      'Accounts and purchases are for people aged 18 or over. You can keep playing everything free without an account.';
+      'Tick “I’m 18 or older” first: accounts and purchases are for people aged 18 or over. Everything free works without an account.';
 
   @override
   String get settingsShareUsage => 'Share anonymous usage stats';

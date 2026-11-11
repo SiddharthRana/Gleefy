@@ -1564,7 +1564,7 @@ abstract class AppLocalizations {
   /// No description provided for @signInAdultRequired.
   ///
   /// In en, this message translates to:
-  /// **'Accounts and purchases are for people aged 18 or over. You can keep playing everything free without an account.'**
+  /// **'Tick “I’m 18 or older” first: accounts and purchases are for people aged 18 or over. Everything free works without an account.'**
   String get signInAdultRequired;
 
   /// No description provided for @settingsShareUsage.
