@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../account/entitlement.dart';
 import '../content/content.dart';
 import '../game/wyr_engine.dart' show EmptyPoolException;
 import '../l10n/app_localizations.dart';
@@ -71,8 +72,20 @@ class HomeScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: GleefyWordmark(size: 22, premium: ref.watch(premiumProvider)),
+        // Scales down on narrow phones so the PREMIUM tag and the account avatar always fit.
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: AlignmentDirectional.centerStart,
+          child: GleefyWordmark(size: 22, premium: ref.watch(premiumProvider)),
+        ),
         actions: [
+          if (ref.watch(entitlementProvider).signedIn)
+            AccountAvatarButton(
+              email: ref.watch(entitlementProvider).user?.email,
+              premium: ref.watch(premiumProvider),
+              tooltip: l.accountTitle,
+              onPressed: () => context.push('/account'),
+            ),
           IconButton(
             tooltip: l.playersTitle,
             icon: const Icon(Icons.groups_outlined),

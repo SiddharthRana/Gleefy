@@ -124,12 +124,12 @@ test('a cancelled Google sign-in says so', async ({ page }) => {
 
 test('after checkout, the account page confirms Premium with a celebration', async ({ page }) => {
   await signIn(page, false);
-  let calls = 0;
+  // The webhook lands a moment after Dodo sends the buyer back.
+  const paidAt = Date.now() + 1500;
   await page.route(`${API}/v1/me`, (route) => {
-    calls++;
     return route.fulfill({
       json:
-        calls < 2
+        Date.now() < paidAt
           ? account(false)
           : account(true, [
               {
@@ -149,6 +149,13 @@ test('after checkout, the account page confirms Premium with a celebration', asy
   await expect(page.getByText('Premium is unlocked!')).toBeVisible({ timeout: 10_000 });
   await expect(page.getByText('Premium unlock via the website')).toBeVisible();
   await expect(page.getByText(/Yours to keep/)).toBeVisible();
+  // The header catches up without a reload: Premium tag, no upgrade pill.
+  await expect(page.getByRole('banner').locator('.premium-tag')).toBeVisible();
+  await expect(
+    page
+      .getByRole('navigation', { name: 'Main' })
+      .getByRole('link', { name: 'Premium', exact: true }),
+  ).toHaveCount(0);
 });
 
 test('a declined checkout shows a failed card, not a pending one', async ({ page }) => {
@@ -169,7 +176,9 @@ test('with Premium, the header shows a Premium badge instead of the upgrade pill
   await expect(header.getByText('Premium', { exact: true })).toBeVisible();
   await expect(header.locator('.premium-tag')).toBeVisible();
   await expect(
-    page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: /Premium/ }),
+    page
+      .getByRole('navigation', { name: 'Main' })
+      .getByRole('link', { name: 'Premium', exact: true }),
   ).toHaveCount(0);
   const section = page.getByRole('region', { name: /Unlock \d+ extra categories/ });
   await expect(section).toContainText('You have Premium');
@@ -191,7 +200,36 @@ test('without Premium, a signed-in visitor still sees the upgrade pill', async (
   await signIn(page, false);
   await page.goto('/');
   await expect(
-    page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: /Premium/ }),
+    page
+      .getByRole('navigation', { name: 'Main' })
+      .getByRole('link', { name: 'Premium', exact: true }),
   ).toBeVisible();
   await expect(page.getByRole('banner').locator('.premium-tag')).toHaveCount(0);
+});
+
+test('signed in, the header has an avatar button to your account', async ({ page }) => {
+  await signIn(page, false);
+  await page.goto('/');
+  const nav = page.getByRole('navigation', { name: 'Main' });
+  const avatar = nav.getByRole('link', { name: 'Your account' });
+  await expect(avatar).toHaveText('H');
+  await avatar.click();
+  await expect(page).toHaveURL(/\/account$/);
+});
+
+test('signed out, the header has no account button', async ({ page }) => {
+  await page.goto('/');
+  await expect(
+    page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: /Your account/ }),
+  ).toHaveCount(0);
+});
+
+test('with Premium, the avatar says so', async ({ page }) => {
+  await signIn(page, true);
+  await page.goto('/');
+  await expect(
+    page.getByRole('navigation', { name: 'Main' }).getByRole('link', {
+      name: 'Your account (Premium)',
+    }),
+  ).toBeVisible();
 });
