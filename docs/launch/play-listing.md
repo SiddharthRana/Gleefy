@@ -10,12 +10,12 @@ Copy for Play Console → Grow → Store presence → Main store listing. Check 
 | Short description (≤ 80) | Party games for one phone: Would You Rather, trivia, This or That and more. |
 | Category                 | Games → Casual (alternative: Trivia)                                        |
 | Tags                     | Party, Trivia, Casual, Offline, Family (pick the closest Play offers)       |
-| Contact email            | The support address on `/contact` (set `NEXT_PUBLIC_CONTACT_EMAIL`)         |
-| Website                  | `https://<domain>`                                                          |
-| Privacy policy URL       | `https://<domain>/privacy` (still a draft: needs legal review first)        |
-| Account deletion URL     | `https://<domain>/account-deletion` (Play's Data safety form asks for it)   |
+| Contact email            | hello@gleefy.party                                                          |
+| Website                  | https://gleefy.party                                                        |
+| Privacy policy URL       | https://gleefy.party/privacy (still a draft: needs legal review first)      |
+| Account deletion URL     | https://gleefy.party/account-deletion (Play's Data safety form asks for it) |
 
-Confirm the name is free on Play and as a trademark before using it (BUILD_PROMPT §18).
+The name was checked on Play and against trademarks on 2026-11-08 (see `docs/DECISIONS.md`).
 
 ## Full description (≤ 4000)
 
@@ -29,7 +29,7 @@ Confirm the name is free on Play and as a trademark before using it (BUILD_PROMP
 > • **Custom party packs**: line up several games and play them back to back.
 >
 > **Made for groups**
-> • Hundreds of original questions across dozens of categories, including desi favourites
+> • 580 original questions across 31 categories, from pop culture to space
 > • Add player or team names for turns and scores; they stay on your phone
 > • 5, 10, 15 or 20 rounds; skip anything that doesn't suit your group
 > • Big text, dark mode, reduced motion and screen-reader support
@@ -46,12 +46,12 @@ Keep these claims true when the app changes: counts on the store must not exceed
 
 ## Graphics
 
-| Asset                 | Spec                              | Status                                                                   |
-| --------------------- | --------------------------------- | ------------------------------------------------------------------------ |
-| App icon              | 512 × 512 PNG                     | `docs/brand/play-store-icon-512.png` (placeholder brand)                 |
-| Feature graphic       | 1024 × 500 PNG/JPG                | To do: logo + "Party games for one phone" on the brand gradient          |
-| Phone screenshots     | 2–8, 16:9 or 9:16, ≥ 1080 px side | To do: onboarding, Home, WYR reveal, Trivia with timer, Results, Premium |
-| 7" / 10" tablet shots | Optional                          | Skip until tablets are tested                                            |
+| Asset                 | Spec                              | Status                                                                                           |
+| --------------------- | --------------------------------- | ------------------------------------------------------------------------------------------------ |
+| App icon              | 512 × 512 PNG                     | `docs/brand/play-store-icon-512.png`                                                             |
+| Feature graphic       | 1024 × 500 PNG/JPG                | `docs/brand/feature-graphic.png` (made by `scripts/brand-icons.mjs`)                             |
+| Phone screenshots     | 2–8, 16:9 or 9:16, ≥ 1080 px side | `docs/brand/play-screenshots/` (5 at 1344 × 2688: onboarding, home, WYR reveal, trivia, results) |
+| 7" / 10" tablet shots | Optional                          | Skip until tablets are tested                                                                    |
 
 Screenshots: run a release build on an emulator or phone and use `adb exec-out screencap -p > shot.png`, in light theme, with real content. Don't add text that promises features the app lacks.
 

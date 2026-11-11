@@ -659,7 +659,7 @@
   "progressStreak": "day streak",
   "progressStartTitle": "Start your party level",
   "progressStartBody": "Finish a game to earn XP and your first trophy. Kept on this phone only.",
-  "progressSummary": "{trophies} of {total} trophies · {games} games",
+  "progressSummary": "{trophies} of {total} trophies · {games, plural, =1{1 game} other{{games} games}} played",
   "@progressSummary": {
     "placeholders": {
       "trophies": {

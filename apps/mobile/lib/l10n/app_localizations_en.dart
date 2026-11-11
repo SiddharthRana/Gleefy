@@ -960,7 +960,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String progressSummary(int trophies, int total, int games) {
-    return '$trophies of $total trophies · $games games';
+    String _temp0 = intl.Intl.pluralLogic(games, locale: localeName, other: '$games games', one: '1 game');
+    return '$trophies of $total trophies · $_temp0 played';
   }
 
   @override
