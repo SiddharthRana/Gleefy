@@ -3,8 +3,9 @@
 # Secrets (DATABASE_URL, SUPABASE_*, billing keys) are set with `fly secrets set`, never here.
 # See docs/deployment.md.
 app = "gleefy-api"
-# Mumbai, nearest the first users. Change before the first deploy if needed.
-primary_region = "bom"
+# Singapore: Fly retired Mumbai (bom) for new machines in 2026, and it sits next to Supabase's
+# ap-southeast-1. Keep the API in the same region as its database.
+primary_region = "sin"
 
 [env]
 NODE_ENV = "production"

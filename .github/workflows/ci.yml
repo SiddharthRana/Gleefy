@@ -3,7 +3,8 @@ name: CI
 # Branches (same as Weblume): dev is the default branch that pull requests target; main is what's
 # released. Pushes to dev and main and every pull request run the checks.
 # - dev deploys the "warmup" test copy (warmup.gleefy.party, warmup-api.gleefy.party) straight away,
-#   with its settings in the GitHub environment `warmup`.
+#   with its settings in the GitHub environment `warmup` (switches: DEPLOY_WARMUP_WEB,
+#   DEPLOY_WARMUP_BACKEND).
 # - main offers three production deploys; each waits for approval in its GitHub environment
 #   ("Review deployments" on the run page).
 # Setup: docs/deployment.md.
@@ -123,7 +124,8 @@ jobs:
   # Deploys, after every check passes:
   # - main → production, each behind its environment's required reviewers. A target stays switched
   #   off until its repository variable (DEPLOY_BACKEND / DEPLOY_WEB / DEPLOY_ANDROID) is "true".
-  # - dev → warmup (backend and website, no approval), switched on by DEPLOY_WARMUP = "true". The
+  # - dev → warmup (no approval): the website when DEPLOY_WARMUP_WEB = "true", the backend when
+  #   DEPLOY_WARMUP_BACKEND = "true" (separate, so the site can go up before the API exists). The
   #   `warmup` environment overrides the shared variables (SITE_URL, API_URL, SUPABASE_*, FLY_APP…).
   # Nothing runs before its accounts and secrets exist.
   # ---------------------------------------------------------------------------------------------
@@ -134,7 +136,7 @@ jobs:
     if: >-
       github.event_name == 'push' && (
         (github.ref == 'refs/heads/main' && vars.DEPLOY_BACKEND == 'true') ||
-        (github.ref == 'refs/heads/dev' && vars.DEPLOY_WARMUP == 'true'))
+        (github.ref == 'refs/heads/dev' && vars.DEPLOY_WARMUP_BACKEND == 'true'))
     runs-on: ubuntu-latest
     timeout-minutes: 20
     environment:
@@ -145,9 +147,11 @@ jobs:
       cancel-in-progress: false
     steps:
       - uses: actions/checkout@v5
+      # Pinned: CLI v3 (Nov 2026) rejected the old [inbucket] config key and broke a deploy that
+      # used "latest". Bump deliberately, after checking `supabase db push` still works.
       - uses: supabase/setup-cli@v1
         with:
-          version: latest
+          version: 3.1.0
       # Migrations first: each one must work with the API version already running.
       - name: Apply database migrations to Supabase
         env:
@@ -161,7 +165,7 @@ jobs:
           FLY_CONFIG: ${{ github.ref == 'refs/heads/dev' && 'apps/api/fly.warmup.toml' || 'apps/api/fly.toml' }}
         run: >-
           flyctl deploy --remote-only --config "$FLY_CONFIG" --dockerfile apps/api/Dockerfile
-          --app "$FLY_APP" --wait-timeout 300
+          --app "$FLY_APP" --wait-timeout 300 --ha=false
       - name: Smoke test
         if: vars.API_URL != ''
         env:
@@ -176,7 +180,7 @@ jobs:
     if: >-
       github.event_name == 'push' && (
         (github.ref == 'refs/heads/main' && vars.DEPLOY_WEB == 'true') ||
-        (github.ref == 'refs/heads/dev' && vars.DEPLOY_WARMUP == 'true'))
+        (github.ref == 'refs/heads/dev' && vars.DEPLOY_WARMUP_WEB == 'true'))
     runs-on: ubuntu-latest
     timeout-minutes: 20
     environment:
@@ -207,6 +211,21 @@ jobs:
           # The warmup copy is hidden from search engines and labelled as a test site.
           NEXT_PUBLIC_WARMUP: ${{ github.ref == 'refs/heads/dev' && 'true' || 'false' }}
         run: pnpm --filter @gleefy/web build
+      # Until launch, production serves the one-page apps/web/coming-soon (repository
+      # variable COMING_SOON = true), plus the legal pages that Google Play and Google
+      # sign-in link to. Any other path falls back to the coming-soon page. Warmup
+      # always gets the full site.
+      - name: Choose what to upload
+        if: github.ref == 'refs/heads/main' && vars.COMING_SOON == 'true'
+        working-directory: apps/web
+        run: |
+          mkdir site
+          cp -R coming-soon/. site/
+          cp -R out/_next out/icon.svg site/
+          for page in privacy terms account-deletion; do
+            cp -R "out/$page" "out/$page.html" "out/$page.txt" site/
+          done
+          echo "SITE_DIR=site" >> "$GITHUB_ENV"
       # Deploying to the project's production branch makes this the live site.
       - name: Upload to Cloudflare Pages
         env:
@@ -215,7 +234,7 @@ jobs:
           PAGES_PROJECT: ${{ vars.CLOUDFLARE_PAGES_PROJECT || (github.ref == 'refs/heads/dev' && 'gleefy-warmup' || 'gleefy') }}
           WRANGLER_SEND_METRICS: 'false'
         run: >-
-          pnpm --filter @gleefy/web exec wrangler pages deploy out
+          pnpm --filter @gleefy/web exec wrangler pages deploy "${SITE_DIR:-out}"
           --project-name "$PAGES_PROJECT" --branch main --commit-hash "$GITHUB_SHA"
 
   deploy-android:

@@ -3,7 +3,8 @@
 #   flyctl deploy --config apps/api/fly.warmup.toml --dockerfile apps/api/Dockerfile --app <name>
 # Secrets are set with `fly secrets set`, never here. See docs/deployment.md → Warmup.
 app = "gleefy-warmup-api"
-primary_region = "bom"
+# Same region as the warmup Supabase project (ap-southeast-1); Fly retired Mumbai (bom).
+primary_region = "sin"
 
 [env]
 NODE_ENV = "production"

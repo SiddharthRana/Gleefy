@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gleefy · Coming soon</title>
+    <meta
+      name="description"
+      content="Gleefy: party games for one phone. Pass it around and play. Coming soon to Android and iOS."
+    />
+    <meta name="theme-color" content="#6B2BD9" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta property="og:title" content="Gleefy · Coming soon" />
+    <meta property="og:description" content="Party games for one phone. Pass it around and play." />
+    <meta property="og:image" content="https://gleefy.party/apple-touch-icon.png" />
+    <style>
+      :root {
+        --bg: #fff8f1;
+        --text: #1e1430;
+        --muted: #5e5270;
+        --primary: #6b2bd9;
+        --accent: #ffb020;
+        --card: #ffffff;
+        --edge: #1e1430;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #120b1f;
+          --text: #f7f2ff;
+          --muted: #b5a9cc;
+          --primary: #c4a6ff;
+          --card: #1e1430;
+          --edge: #000;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+      }
+      body {
+        min-height: 100%;
+        display: grid;
+        place-items: center;
+        padding: 32px 16px;
+        background:
+          radial-gradient(
+            circle at 15% 20%,
+            color-mix(in oklab, #7b2ff7 18%, transparent) 0 18%,
+            transparent 19%
+          ),
+          radial-gradient(
+            circle at 85% 80%,
+            color-mix(in oklab, #f06a1d 16%, transparent) 0 16%,
+            transparent 17%
+          ),
+          radial-gradient(
+            circle at 80% 15%,
+            color-mix(in oklab, #d4246a 14%, transparent) 0 8%,
+            transparent 9%
+          ),
+          var(--bg);
+        color: var(--text);
+        font-family:
+          ui-rounded,
+          'SF Pro Rounded',
+          'Nunito',
+          system-ui,
+          -apple-system,
+          'Segoe UI',
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+        text-align: center;
+      }
+      main {
+        max-width: 560px;
+      }
+      .logo {
+        width: 132px;
+        height: auto;
+        animation: bob 3.2s ease-in-out infinite;
+      }
+      @keyframes bob {
+        50% {
+          transform: translateY(-8px) rotate(3deg);
+        }
+      }
+      h1 {
+        margin: 12px 0 4px;
+        font-size: clamp(2.6rem, 9vw, 4rem);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        background: linear-gradient(135deg, #7b2ff7, #d4246a 50%, #f06a1d);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .tag {
+        margin: 0 0 24px;
+        font-size: 1.25rem;
+        font-weight: 700;
+      }
+      .badge {
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 999px;
+        font-weight: 800;
+        font-size: 1rem;
+        background: var(--accent);
+        color: #1e1430;
+        border: 3px solid var(--edge);
+        box-shadow: 0 5px 0 var(--edge);
+        transform: rotate(-2deg);
+      }
+      p.lead {
+        margin: 28px auto 0;
+        max-width: 440px;
+        color: var(--muted);
+        font-size: 1.05rem;
+        line-height: 1.55;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 24px 0 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+      }
+      li {
+        padding: 8px 14px;
+        border-radius: 14px;
+        background: var(--card);
+        border: 2px solid color-mix(in oklab, var(--primary) 40%, transparent);
+        font-weight: 700;
+        font-size: 0.95rem;
+      }
+      footer {
+        margin-top: 36px;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+      a {
+        color: var(--primary);
+        font-weight: 700;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .logo {
+          animation: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <img class="logo" src="/logo.svg" alt="" width="132" height="177" />
+      <h1>Gleefy</h1>
+      <p class="tag">Party games for one phone.</p>
+      <span class="badge">Coming soon to Android and iOS</span>
+      <p class="lead">
+        Pass the phone, pick a game, and play together. No setup, no extra screens.
+      </p>
+      <ul aria-label="Games">
+        <li>🤔 Would You Rather</li>
+        <li>⚖️ This or That</li>
+        <li>⚡ Trivia Blitz</li>
+        <li>🔍 Guess the Answer</li>
+      </ul>
+      <footer>Questions? <a href="mailto:hello@gleefy.party">hello@gleefy.party</a></footer>
+    </main>
+  </body>
+</html>

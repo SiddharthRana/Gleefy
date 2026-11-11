@@ -31,3 +31,6 @@ apps/mobile/android/key.properties
 
 # Next.js generated
 next-env.d.ts
+
+# Production upload assembled in CI while COMING_SOON is on
+apps/web/site/
