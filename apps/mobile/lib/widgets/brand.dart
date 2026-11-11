@@ -17,15 +17,18 @@ class GleefyMark extends StatelessWidget {
 }
 
 class GleefyWordmark extends StatelessWidget {
-  const GleefyWordmark({super.key, this.size = 28});
+  const GleefyWordmark({super.key, this.size = 28, this.premium = false});
 
   final double size;
+
+  /// Adds a small gold "PREMIUM" tag after the name, like a subscription badge on a logo.
+  final bool premium;
 
   @override
   Widget build(BuildContext context) {
     return Semantics(
       header: true,
-      label: 'Gleefy',
+      label: premium ? 'Gleefy Premium' : 'Gleefy',
       child: ExcludeSemantics(
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -36,11 +39,32 @@ class GleefyWordmark extends StatelessWidget {
               'Gleefy',
               style: TextStyle(fontFamily: GfFont.display, fontWeight: FontWeight.w700, fontSize: size),
             ),
+            if (premium) ...[const SizedBox(width: GfSpace.s2), const PremiumTag()],
           ],
         ),
       ),
     );
   }
+}
+
+/// The gold "PREMIUM" tag shown once the account has Premium (same colours as the website's).
+class PremiumTag extends StatelessWidget {
+  const PremiumTag({super.key});
+
+  @override
+  Widget build(BuildContext context) => DecoratedBox(
+    decoration: BoxDecoration(
+      gradient: const LinearGradient(colors: [Color(0xFFFFD34D), Color(0xFFFFAE2B)]),
+      borderRadius: BorderRadius.circular(6),
+    ),
+    child: const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+      child: Text(
+        'PREMIUM',
+        style: TextStyle(color: Color(0xFF3B2400), fontSize: 11, fontWeight: FontWeight.w900, letterSpacing: 0.7),
+      ),
+    ),
+  );
 }
 
 /// A rounded card filled with the brand gradient. Text on it is white (contrast tested in tokens).

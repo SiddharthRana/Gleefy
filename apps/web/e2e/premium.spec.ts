@@ -159,3 +159,39 @@ test('a declined checkout shows a failed card, not a pending one', async ({ page
   await page.getByRole('button', { name: 'Dismiss' }).click();
   await expect(card).toHaveCount(0);
 });
+
+test('with Premium, the header shows a Premium badge instead of the upgrade pill', async ({
+  page,
+}) => {
+  await signIn(page, true);
+  await page.goto('/');
+  const header = page.getByRole('banner');
+  await expect(header.getByText('Premium', { exact: true })).toBeVisible();
+  await expect(header.locator('.premium-tag')).toBeVisible();
+  await expect(
+    page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: /Premium/ }),
+  ).toHaveCount(0);
+  const section = page.getByRole('region', { name: /Unlock \d+ extra categories/ });
+  await expect(section).toContainText('You have Premium');
+  await expect(section.getByRole('link', { name: /Unlock Premium/ })).toHaveCount(0);
+});
+
+test('with Premium, the Premium page says it is unlocked and offers no checkout', async ({
+  page,
+}) => {
+  await signIn(page, true);
+  await page.route(`${API}/v1/billing/config`, (route) => route.fulfill({ json: config(true) }));
+  await page.goto('/pricing');
+  await expect(page.getByText('Unlocked on this account')).toBeVisible();
+  await expect(page.getByRole('button', { name: /Unlock Premium/ })).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'Play now' })).toBeVisible();
+});
+
+test('without Premium, a signed-in visitor still sees the upgrade pill', async ({ page }) => {
+  await signIn(page, false);
+  await page.goto('/');
+  await expect(
+    page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: /Premium/ }),
+  ).toBeVisible();
+  await expect(page.getByRole('banner').locator('.premium-tag')).toHaveCount(0);
+});
