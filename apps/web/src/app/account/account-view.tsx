@@ -35,7 +35,7 @@ export function AccountView() {
 }
 
 const ADULT_ONLY =
-  'Accounts and purchases are for people aged 18 or over. Everything free works without an account.';
+  'Tick “I’m 18 or older” first: accounts and purchases are for people aged 18 or over. Everything free works without an account.';
 
 /** "Continue with Google" or email + one-time code, the same sign-in as the app. */
 function SignInForm() {
