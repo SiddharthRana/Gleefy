@@ -3,6 +3,7 @@
 import { useEffect, useSyncExternalStore } from 'react';
 import { apiFetch } from './api';
 import type { Account } from './billing';
+import { PREMIUM_HINT_KEY } from './premium-hint';
 import { useSession } from './supabase';
 
 // What the API last said about each signed-in user's Premium, shared by every component that asks
@@ -43,6 +44,17 @@ function subscribe(listener: () => void) {
   return () => listeners.delete(listener);
 }
 
+function rememberHint(premium: boolean) {
+  try {
+    if (premium) window.localStorage.setItem(PREMIUM_HINT_KEY, '1');
+    else window.localStorage.removeItem(PREMIUM_HINT_KEY);
+  } catch {
+    // Storage blocked (private mode): the hint is only a nicety.
+  }
+  if (premium) document.documentElement.dataset.premium = '1';
+  else delete document.documentElement.dataset.premium;
+}
+
 /**
  * Whether the signed-in visitor has Premium, as the API says (never a local flag).
  * `null` while unknown; `false` when signed out, offline or on the free plan.
@@ -58,7 +70,9 @@ export function usePremium(): boolean | null {
   useEffect(() => {
     if (userId) load(userId);
   }, [userId]);
-  if (session === undefined) return null;
-  if (!session) return false;
-  return value;
+  const result = session === undefined ? null : !session ? false : value;
+  useEffect(() => {
+    if (result !== null) rememberHint(result);
+  }, [result]);
+  return result;
 }

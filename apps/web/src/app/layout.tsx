@@ -3,6 +3,7 @@ import { Fredoka, Nunito } from 'next/font/google';
 import { ErrorMonitoring } from '@/components/error-monitoring';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
+import { PREMIUM_HINT_SCRIPT } from '@/lib/premium-hint';
 import { isWarmup, siteUrl } from '@/lib/site';
 import './globals.css';
 
@@ -36,7 +37,16 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${fredoka.variable} ${nunito.variable}`}>
+    <html
+      lang="en"
+      className={`${fredoka.variable} ${nunito.variable}`}
+      // The head script below may set data-premium before React hydrates.
+      suppressHydrationWarning
+    >
+      <head>
+        {/* A fixed one-line script (no user data) that runs before the first paint. */}
+        <script dangerouslySetInnerHTML={{ __html: PREMIUM_HINT_SCRIPT }} />
+      </head>
       <body className="min-h-dvh">
         <a
           href="#main"

@@ -3,14 +3,21 @@
 import Link from 'next/link';
 import { usePremium } from '@/lib/premium';
 
-/** Header: the "★ Premium" upgrade pill for everyone without Premium (and while unknown). */
+// While Premium is still unknown (the first paint, before the API answers), both versions are in
+// the page and CSS shows one by the device's hint on <html data-premium> (see lib/premium.ts):
+// `if-premium` shows only with the hint, `if-free` only without it.
+const unknownFree = (premium: boolean | null) => (premium === null ? ' if-free' : '');
+const unknownPremium = (premium: boolean | null) => (premium === null ? ' if-premium' : '');
+
+/** Header: the "★ Premium" upgrade pill for everyone without Premium. */
 export function PremiumNavPill() {
-  if (usePremium() === true) return null;
+  const premium = usePremium();
+  if (premium === true) return null;
   return (
     <Link
       href="/pricing"
       aria-label="Premium"
-      className="press premium-pill ml-1 inline-flex min-h-12 min-w-12 items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 sm:px-4"
+      className={`press${unknownFree(premium)} premium-pill ml-1 inline-flex min-h-12 min-w-12 items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 sm:px-4`}
     >
       <span aria-hidden="true">★</span>
       {/* Very narrow phones show just the star, so the level chip and avatar still fit. */}
@@ -23,9 +30,10 @@ export function PremiumNavPill() {
 
 /** Header: a small gold "Premium" tag beside the wordmark once the account has Premium. */
 export function PremiumTag() {
-  if (usePremium() !== true) return null;
+  const premium = usePremium();
+  if (premium === false) return null;
   return (
-    <span className="premium-tag" title="Gleefy Premium is unlocked">
+    <span className={`premium-tag${unknownPremium(premium)}`} title="Gleefy Premium is unlocked">
       Premium
     </span>
   );
@@ -33,23 +41,32 @@ export function PremiumTag() {
 
 /** Home page Premium section: the call to action, or a thank-you when it's already unlocked. */
 export function PremiumCta() {
-  if (usePremium() === true) {
-    return (
-      <p className="mt-6 flex flex-wrap items-center gap-3 text-lg font-bold">
-        <span className="premium-tag premium-tag-lg">★ Premium</span>
-        You have Premium. Every category is open.
-        <Link href="/play" className="underline">
-          Play now
-        </Link>
-      </p>
-    );
-  }
-  return (
+  const premium = usePremium();
+  const owned = (
+    <p
+      className={`mt-6 flex flex-wrap items-center gap-3 text-lg font-bold${unknownPremium(premium)}`}
+    >
+      <span className="premium-tag premium-tag-lg">★ Premium</span>
+      You have Premium. Every category is open.
+      <Link href="/play" className="underline">
+        Play now
+      </Link>
+    </p>
+  );
+  const offer = (
     <Link
       href="/pricing"
-      className="press premium-pill mt-6 inline-flex min-h-14 items-center gap-2 rounded-full px-7 text-lg font-bold"
+      className={`press premium-pill mt-6 inline-flex min-h-14 items-center gap-2 rounded-full px-7 text-lg font-bold${unknownFree(premium)}`}
     >
       <span aria-hidden="true">★</span> Unlock Premium
     </Link>
+  );
+  if (premium === true) return owned;
+  if (premium === false) return offer;
+  return (
+    <>
+      {owned}
+      {offer}
+    </>
   );
 }
