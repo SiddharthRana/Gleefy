@@ -1561,10 +1561,28 @@ abstract class AppLocalizations {
   /// **'I’m 18 or older'**
   String get signInAdult;
 
+  /// No description provided for @signInSending.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending code…'**
+  String get signInSending;
+
+  /// No description provided for @signInChecking.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking code…'**
+  String get signInChecking;
+
+  /// No description provided for @signInOpeningGoogle.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening Google…'**
+  String get signInOpeningGoogle;
+
   /// No description provided for @signInAdultRequired.
   ///
   /// In en, this message translates to:
-  /// **'Accounts and purchases are for people aged 18 or over. You can keep playing everything free without an account.'**
+  /// **'Tick “I’m 18 or older” first: accounts and purchases are for people aged 18 or over. Everything free works without an account.'**
   String get signInAdultRequired;
 
   /// No description provided for @settingsShareUsage.
@@ -1750,7 +1768,7 @@ abstract class AppLocalizations {
   /// No description provided for @progressSummary.
   ///
   /// In en, this message translates to:
-  /// **'{trophies} of {total} trophies · {games} games'**
+  /// **'{trophies} of {total} trophies · {games, plural, =1{1 game} other{{games} games}} played'**
   String progressSummary(int trophies, int total, int games);
 
   /// No description provided for @progressSemantics.

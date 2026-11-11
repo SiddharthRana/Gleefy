@@ -35,7 +35,20 @@ export function AccountView() {
 }
 
 const ADULT_ONLY =
-  'Accounts and purchases are for people aged 18 or over. Everything free works without an account.';
+  'Tick “I’m 18 or older” first: accounts and purchases are for people aged 18 or over. Everything free works without an account.';
+
+/** A spinner and a label ("Sending code…") shown inside a button while sign-in works. */
+function Working({ label }: { label: string }) {
+  return (
+    <span className="inline-flex items-center gap-2">
+      <span
+        aria-hidden="true"
+        className="size-4 animate-spin rounded-full border-2 border-current border-t-transparent motion-reduce:animate-none"
+      />
+      {label}
+    </span>
+  );
+}
 
 /** "Continue with Google" or email + one-time code, the same sign-in as the app. */
 function SignInForm() {
@@ -46,7 +59,9 @@ function SignInForm() {
   const [code, setCode] = useState('');
   const [sentTo, setSentTo] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [busy, setBusy] = useState(false);
+  // What the busy button says, with a spinner, while sign-in works (null when idle).
+  const [working, setWorking] = useState<string | null>(null);
+  const busy = working !== null;
 
   async function send(e: React.FormEvent) {
     e.preventDefault();
@@ -58,24 +73,28 @@ function SignInForm() {
       setError(ADULT_ONLY);
       return;
     }
-    setBusy(true);
+    setWorking('Sending code…');
     setError(null);
     const { error: err } = await getSupabase()!.auth.signInWithOtp({ email: email.trim() });
-    setBusy(false);
+    setWorking(null);
     if (err) setError(authErrorMessage(err));
     else setSentTo(email.trim());
   }
 
   async function verify(e: React.FormEvent) {
     e.preventDefault();
-    setBusy(true);
+    await check(code);
+  }
+
+  async function check(token: string) {
+    setWorking('Checking code…');
     setError(null);
     const { error: err } = await getSupabase()!.auth.verifyOtp({
       email: sentTo!,
-      token: code.trim(),
+      token: token.trim(),
       type: 'email',
     });
-    setBusy(false);
+    setWorking(null);
     if (err) {
       setError(authErrorMessage(err));
       return;
@@ -89,7 +108,7 @@ function SignInForm() {
       setError(ADULT_ONLY);
       return;
     }
-    setBusy(true);
+    setWorking('Opening Google…');
     setError(null);
     const failed = await signInWithGoogle(
       safeNext(new URLSearchParams(window.location.search).get('next')),
@@ -97,7 +116,7 @@ function SignInForm() {
     // On success the browser is already on its way to Google.
     if (failed) {
       setError(failed);
-      setBusy(false);
+      setWorking(null);
     }
   }
 
@@ -115,7 +134,11 @@ function SignInForm() {
               autoComplete="one-time-code"
               maxLength={6}
               value={code}
-              onChange={(e) => setCode(e.target.value)}
+              onChange={(e) => {
+                setCode(e.target.value);
+                // The sixth digit submits the code by itself.
+                if (/^\d{6}$/.test(e.target.value.trim()) && !busy) void check(e.target.value);
+              }}
             />
           </label>
         </>
@@ -138,8 +161,14 @@ function SignInForm() {
                 onClick={google}
                 className={`${secondary} inline-flex items-center justify-center gap-3`}
               >
-                <GoogleMark />
-                Continue with Google
+                {working === 'Opening Google…' ? (
+                  <Working label={working} />
+                ) : (
+                  <>
+                    <GoogleMark />
+                    Continue with Google
+                  </>
+                )}
               </button>
               <p className="text-center text-sm font-bold uppercase tracking-wide text-muted">
                 or use your email
@@ -164,9 +193,19 @@ function SignInForm() {
           {error}
         </p>
       )}
+      {/* Announces the busy label to screen readers; the button shows it with a spinner. */}
+      <p role="status" className="sr-only">
+        {working}
+      </p>
       <div className="flex flex-wrap gap-3">
-        <button type="submit" disabled={busy} className={primary}>
-          {sentTo ? 'Sign in' : 'Send code'}
+        <button type="submit" disabled={busy} className={`${primary} inline-flex items-center`}>
+          {working && working !== 'Opening Google…' ? (
+            <Working label={working} />
+          ) : sentTo ? (
+            'Sign in'
+          ) : (
+            'Send code'
+          )}
         </button>
         {sentTo && (
           <button
@@ -393,9 +432,9 @@ function DeleteAccount() {
       <button
         type="submit"
         disabled={busy || confirm.trim() !== 'DELETE'}
-        className={`${secondary} mt-4`}
+        className={`${secondary} mt-4 inline-flex items-center`}
       >
-        Delete my account
+        {busy ? <Working label="Deleting…" /> : 'Delete my account'}
       </button>
     </form>
   );

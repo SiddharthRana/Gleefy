@@ -83,7 +83,7 @@ keyPassword=YOUR_KEY_PASSWORD
    - **Target audience:** 13–15, 16–17, 18+; not designed for children; not in Families.
    - **News app:** No. **Data safety:** answer from `docs/launch/data-safety.md` (if PostHog isn't set up, leave out the analytics rows).
    - **Government app / Financial features / Health:** No.
-   - **Store listing:** copy from `docs/launch/play-listing.md`. Icon: `docs/brand/play-store-icon-512.png`. Feature graphic (1024×500) and at least 2 phone screenshots (take them on the emulator or your phone: Home, a game, results with XP, Trophies, Premium).
+   - **Store listing:** copy from `docs/launch/play-listing.md`. Icon: `docs/brand/play-store-icon-512.png`. Feature graphic: `docs/brand/feature-graphic.png`. Phone screenshots: the five in `docs/brand/play-screenshots/` (1344×2688, in order).
    - **Category:** Games → Casual (or Trivia/Word). Contact email: hello@gleefy.party. Website: https://gleefy.party.
 
 ### 3c. First build, uploaded by hand
@@ -91,10 +91,10 @@ keyPassword=YOUR_KEY_PASSWORD
 Google's API can't make the very first upload, so do this one manually (later releases come from GitHub in Phase 8):
 
 ```bash
-cd apps/mobile
-flutter build appbundle --release --build-number=1 \
-  --dart-define=SITE_URL=https://gleefy.party
+scripts/android-bundle.sh 1
 ```
+
+It refuses to build without the upload key from 3a (a debug-signed bundle is rejected by Play). This first build has no backend settings, so sign-in and Premium say they aren't available yet; every game works. That's fine for starting the closed test; the build with sign-in and Premium comes in Phase 8.
 
 1. **Play Console → Testing → Internal testing → Create new release.**
 2. Accept **Play App Signing** (Google holds the app signing key; you keep the upload key).
@@ -104,7 +104,7 @@ flutter build appbundle --release --build-number=1 \
 ### 3d. App Links (share links open the app)
 
 1. **Play Console → Test and release → Setup → App signing:** copy the **SHA-256** of the _App signing key certificate_.
-2. In `apps/web/public/.well-known/assetlinks.json`, replace `REPLACE_WITH_PLAY_APP_SIGNING_SHA256_FINGERPRINT` with it. Commit on a branch → PR into `dev` → merge `dev` into `main` → approve the `web` deploy.
+2. Put it in `apps/web/public/.well-known/assetlinks.json` (done 2026-11-11: `85:3B:5C:…:B7:5B`). In the current Play Console it's under **Protected with Play → Play Store protection → Play app signing**. Commit on a branch → PR into `dev` → merge `dev` into `main` → approve the `web` deploy.
 3. Check: `https://gleefy.party/.well-known/assetlinks.json` shows the fingerprint.
 
 ## Phase 4 — Start the closed test (do this as early as possible)

@@ -853,8 +853,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signInAdult => 'I’m 18 or older';
 
   @override
+  String get signInSending => 'Sending code…';
+
+  @override
+  String get signInChecking => 'Checking code…';
+
+  @override
+  String get signInOpeningGoogle => 'Opening Google…';
+
+  @override
   String get signInAdultRequired =>
-      'Accounts and purchases are for people aged 18 or over. You can keep playing everything free without an account.';
+      'Tick “I’m 18 or older” first: accounts and purchases are for people aged 18 or over. Everything free works without an account.';
 
   @override
   String get settingsShareUsage => 'Share anonymous usage stats';
@@ -960,7 +969,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String progressSummary(int trophies, int total, int games) {
-    return '$trophies of $total trophies · $games games';
+    String _temp0 = intl.Intl.pluralLogic(games, locale: localeName, other: '$games games', one: '1 game');
+    return '$trophies of $total trophies · $_temp0 played';
   }
 
   @override

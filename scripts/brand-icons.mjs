@@ -201,4 +201,35 @@ for (const [name, size] of [
 ]) {
   await png('square', size, `${ios}/Icon-App-${name}.png`);
 }
+// Play Store feature graphic (1024 x 500): the character on the brand tile, with the name and line.
+// Fredoka is the site's display font; Play shows this image at many sizes, so the text stays big.
+await page.setViewportSize({ width: 1024, height: 500 });
+await page.setContent(`<html><head>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@800&display=block" rel="stylesheet">
+  <style>
+    body{margin:0;width:1024px;height:500px;overflow:hidden;position:relative;font-family:Fredoka,sans-serif}
+    .bg{position:absolute;left:0;top:-262px;width:1024px;height:1024px}
+    .dots{position:absolute;left:0;top:0}
+    .mark{position:absolute;right:92px;top:44px;width:268px}
+    .text{position:absolute;left:72px;top:118px;color:#fff}
+    h1{margin:0;font-size:132px;line-height:1;font-weight:700;letter-spacing:-2px;text-shadow:0 6px 0 rgba(29,21,48,.35)}
+    p{margin:18px 0 0;font:800 40px Nunito,sans-serif;text-shadow:0 3px 0 rgba(29,21,48,.3)}
+    .chip{display:inline-block;margin-top:26px;padding:10px 22px;border-radius:999px;background:#FFD23F;color:#1D1530;font:800 26px Nunito,sans-serif;border:4px solid #1D1530;box-shadow:0 5px 0 #1D1530;transform:rotate(-2deg)}
+  </style></head><body>
+  <div class="bg"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">${defs}${background}</svg></div>
+  <svg class="dots" viewBox="0 0 1024 500" width="1024" height="500">
+    <rect x="610" y="70" width="40" height="22" rx="7" fill="#FFD23F" transform="rotate(-24 630 81)"/>
+    <circle cx="640" cy="420" r="15" fill="#3DDCC8"/>
+    <circle cx="990" cy="440" r="11" fill="#FFF6E5"/>
+    <rect x="44" y="40" width="34" height="20" rx="7" fill="#FF8FB1" transform="rotate(18 61 50)"/>
+    <circle cx="560" cy="250" r="9" fill="#FFF6E5"/>
+    ${sparkle(990, 70, 0.7)}
+    ${sparkle(600, 330, 0.5, '#FFE7A8')}
+  </svg>
+  <div class="mark">${svg('none')}</div>
+  <div class="text"><h1>Gleefy</h1><p>Party games for one phone</p><span class="chip">Pass it around and play!</span></div>
+</body></html>`);
+await page.evaluate(() => document.fonts.ready);
+out('docs/brand/feature-graphic.png', await page.screenshot({ type: 'png' }));
+
 await browser.close();

@@ -587,7 +587,10 @@
   "accountDeleteFailed": "We couldn’t delete your account. Please try again.",
   "settingsPremium": "Premium",
   "signInAdult": "I’m 18 or older",
-  "signInAdultRequired": "Accounts and purchases are for people aged 18 or over. You can keep playing everything free without an account.",
+  "signInSending": "Sending code…",
+  "signInChecking": "Checking code…",
+  "signInOpeningGoogle": "Opening Google…",
+  "signInAdultRequired": "Tick “I’m 18 or older” first: accounts and purchases are for people aged 18 or over. Everything free works without an account.",
   "settingsShareUsage": "Share anonymous usage stats",
   "settingsShareUsageBody": "Which games are played, how far you get, and crash reports, to help improve Gleefy. Never names, questions, answers or your email. Off unless you turn it on.",
   "myQuestionsTitle": "My questions",
@@ -659,7 +662,7 @@
   "progressStreak": "day streak",
   "progressStartTitle": "Start your party level",
   "progressStartBody": "Finish a game to earn XP and your first trophy. Kept on this phone only.",
-  "progressSummary": "{trophies} of {total} trophies · {games} games",
+  "progressSummary": "{trophies} of {total} trophies · {games, plural, =1{1 game} other{{games} games}} played",
   "@progressSummary": {
     "placeholders": {
       "trophies": {
