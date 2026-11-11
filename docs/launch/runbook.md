@@ -104,7 +104,7 @@ It refuses to build without the upload key from 3a (a debug-signed bundle is rej
 ### 3d. App Links (share links open the app)
 
 1. **Play Console → Test and release → Setup → App signing:** copy the **SHA-256** of the _App signing key certificate_.
-2. In `apps/web/public/.well-known/assetlinks.json`, replace `REPLACE_WITH_PLAY_APP_SIGNING_SHA256_FINGERPRINT` with it. Commit on a branch → PR into `dev` → merge `dev` into `main` → approve the `web` deploy.
+2. Put it in `apps/web/public/.well-known/assetlinks.json` (done 2026-11-11: `85:3B:5C:…:B7:5B`). In the current Play Console it's under **Protected with Play → Play Store protection → Play app signing**. Commit on a branch → PR into `dev` → merge `dev` into `main` → approve the `web` deploy.
 3. Check: `https://gleefy.party/.well-known/assetlinks.json` shows the fingerprint.
 
 ## Phase 4 — Start the closed test (do this as early as possible)

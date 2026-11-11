@@ -32,6 +32,7 @@ The name was checked on Play and against trademarks on 2026-11-08 (see `docs/DEC
 > • 580 original questions across 31 categories, from pop culture to space
 > • Add player or team names for turns and scores; they stay on your phone
 > • 5, 10, 15 or 20 rounds; skip anything that doesn't suit your group
+> • Earn XP, level up, keep a daily streak and collect trophies as you play
 > • Big text, dark mode, reduced motion and screen-reader support
 > • Works offline. A game survives a phone call or the app closing
 > • Share a game link: friends get the same questions in the app or their browser
