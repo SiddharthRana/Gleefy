@@ -60,8 +60,14 @@ jobs:
       - run: pnpm test
       - name: Build API and web
         run: pnpm --filter @gleefy/api --filter @gleefy/web run build
+      # --with-deps also apt-installs Chromium's system libraries. When Ubuntu's package mirror is
+      # down (it happens), fall back to the browser alone: GitHub's runner image already has them.
       - name: Install Playwright browser
-        run: pnpm --filter @gleefy/web exec playwright install --with-deps chromium
+        run: |
+          pnpm --filter @gleefy/web exec playwright install --with-deps chromium || {
+            echo "::warning::Ubuntu packages unavailable; installing Chromium without system deps."
+            pnpm --filter @gleefy/web exec playwright install chromium
+          }
       # Same site, built with a fake Supabase address so tests can sign in with a seeded session.
       - name: Build web for end-to-end tests
         run: pnpm --filter @gleefy/web run build:e2e
