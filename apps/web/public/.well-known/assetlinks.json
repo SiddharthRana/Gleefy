@@ -4,7 +4,9 @@
     "target": {
       "namespace": "android_app",
       "package_name": "com.gleefy.app",
-      "sha256_cert_fingerprints": ["REPLACE_WITH_PLAY_APP_SIGNING_SHA256_FINGERPRINT"]
+      "sha256_cert_fingerprints": [
+        "85:3B:5C:F4:82:97:2A:55:A0:F6:0A:92:A1:B0:F8:7F:D6:02:2A:C2:EA:47:A1:41:7C:66:19:42:63:33:B7:5B"
+      ]
     }
   }
 ]
