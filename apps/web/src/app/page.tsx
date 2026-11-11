@@ -5,7 +5,7 @@ import { ProgressPanel } from '@/components/progress-panel';
 import { TryOne } from '@/components/try-one';
 import { wyrCount, wyrSamples } from '@/lib/content';
 import { premiumCategories, premiumQuestionCount } from '@/lib/packs';
-import { PremiumCta } from '@/components/premium-status';
+import { ForFree, ForPremium, PremiumCta } from '@/components/premium-status';
 import { formatPrice, PLANS } from '@gleefy/plans';
 import { modes } from '@/lib/site';
 
@@ -185,48 +185,85 @@ export default function HomePage() {
         </ul>
       </section>
 
-      <section
-        aria-labelledby="premium-heading"
-        className="my-12 rounded-panel border-2 border-accent bg-surface p-6 sm:p-8"
-      >
-        <p
-          className="sticker premium-pill border-0"
-          style={{ '--tilt': '-2deg' } as React.CSSProperties}
+      <ForFree>
+        <section
+          aria-labelledby="premium-heading"
+          className="my-12 rounded-panel border-2 border-accent bg-surface p-6 sm:p-8"
         >
-          <span aria-hidden="true">★</span> Premium
-        </p>
-        <h2 id="premium-heading" className="mt-4 font-display text-4xl font-semibold">
-          Want more? Unlock {premiumCategories.length} extra categories.
-        </h2>
-        <p className="mt-2 text-lg text-muted">
-          {premiumQuestionCount} more questions across every game, for{' '}
-          <strong className="text-text">
-            {formatPrice(PLANS.premium.displayPrice!.amount, 'USD')} once
-          </strong>
-          .
-        </p>
-        <ul className="mt-6 flex flex-wrap gap-2" aria-label="Premium categories">
-          {premiumCategories.map((c) => (
-            <li
-              key={c.id}
-              className="rounded-full border-2 border-border bg-surface-muted px-3 py-1 font-bold"
-            >
-              {c.name} <span className="font-normal text-muted">· {c.mode}</span>
-            </li>
-          ))}
-        </ul>
-        <ul className="mt-6 grid gap-2 sm:grid-cols-3">
-          {premiumPerks.map((p) => (
-            <li key={p} className="flex items-start gap-2 font-bold">
-              <span aria-hidden="true" className="text-success">
-                ✔
-              </span>
-              {p}
-            </li>
-          ))}
-        </ul>
-        <PremiumCta />
-      </section>
+          <p
+            className="sticker premium-pill border-0"
+            style={{ '--tilt': '-2deg' } as React.CSSProperties}
+          >
+            <span aria-hidden="true">★</span> Premium
+          </p>
+          <h2 id="premium-heading" className="mt-4 font-display text-4xl font-semibold">
+            Want more? Unlock {premiumCategories.length} extra categories.
+          </h2>
+          <p className="mt-2 text-lg text-muted">
+            {premiumQuestionCount} more questions across every game, for{' '}
+            <strong className="text-text">
+              {formatPrice(PLANS.premium.displayPrice!.amount, 'USD')} once
+            </strong>
+            .
+          </p>
+          <ul className="mt-6 flex flex-wrap gap-2" aria-label="Premium categories">
+            {premiumCategories.map((c) => (
+              <li
+                key={c.id}
+                className="rounded-full border-2 border-border bg-surface-muted px-3 py-1 font-bold"
+              >
+                {c.name} <span className="font-normal text-muted">· {c.mode}</span>
+              </li>
+            ))}
+          </ul>
+          <ul className="mt-6 grid gap-2 sm:grid-cols-3">
+            {premiumPerks.map((p) => (
+              <li key={p} className="flex items-start gap-2 font-bold">
+                <span aria-hidden="true" className="text-success">
+                  ✔
+                </span>
+                {p}
+              </li>
+            ))}
+          </ul>
+          <PremiumCta />
+        </section>
+      </ForFree>
+      <ForPremium>
+        <section
+          aria-labelledby="your-premium-heading"
+          className="my-12 rounded-panel border-2 border-accent bg-surface p-6 sm:p-8"
+        >
+          <p
+            className="sticker premium-pill border-0"
+            style={{ '--tilt': '-2deg' } as React.CSSProperties}
+          >
+            <span aria-hidden="true">★</span> Premium
+          </p>
+          <h2 id="your-premium-heading" className="mt-4 font-display text-4xl font-semibold">
+            All {premiumCategories.length} Premium categories are yours.
+          </h2>
+          <p className="mt-2 text-lg text-muted">
+            Thanks for supporting Gleefy! Pick any of them when you set up a game.
+          </p>
+          <ul className="mt-6 flex flex-wrap gap-2" aria-label="Your Premium categories">
+            {premiumCategories.map((c) => (
+              <li
+                key={c.id}
+                className="rounded-full border-2 border-border bg-surface-muted px-3 py-1 font-bold"
+              >
+                {c.name} <span className="font-normal text-muted">· {c.mode}</span>
+              </li>
+            ))}
+          </ul>
+          <Link
+            href="/play"
+            className="press premium-pill mt-6 inline-flex min-h-14 items-center gap-2 rounded-full px-7 text-lg font-bold"
+          >
+            <span aria-hidden="true">★</span> Play a Premium category
+          </Link>
+        </section>
+      </ForPremium>
     </>
   );
 }

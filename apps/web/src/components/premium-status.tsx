@@ -70,3 +70,24 @@ export function PremiumCta() {
     </>
   );
 }
+
+/**
+ * Shows its children only to visitors without Premium (signed out or free). While Premium is
+ * unknown they stay in the page and CSS follows the device's hint, so nothing flashes on reload.
+ */
+export function ForFree({ children }: { children: React.ReactNode }) {
+  const premium = usePremium();
+  if (premium === true) return null;
+  return premium === null ? <span className="contents if-free">{children}</span> : <>{children}</>;
+}
+
+/** Shows its children only to accounts with Premium (the opposite of ForFree). */
+export function ForPremium({ children }: { children: React.ReactNode }) {
+  const premium = usePremium();
+  if (premium === false) return null;
+  return premium === null ? (
+    <span className="contents if-premium">{children}</span>
+  ) : (
+    <>{children}</>
+  );
+}

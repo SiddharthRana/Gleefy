@@ -179,9 +179,12 @@ test('with Premium, the header shows a Premium badge instead of the upgrade pill
       .getByRole('navigation', { name: 'Main' })
       .getByRole('link', { name: 'Premium', exact: true }),
   ).toHaveCount(0);
-  const section = page.getByRole('region', { name: /Unlock \d+ extra categories/ });
-  await expect(section).toContainText('You have Premium');
-  await expect(section.getByRole('link', { name: /Unlock Premium/ })).toHaveCount(0);
+  await expect(page.getByRole('region', { name: /Unlock \d+ extra categories/ })).toHaveCount(0);
+  const yours = page.getByRole('region', { name: /Premium categories are yours/ });
+  await expect(yours.getByRole('list', { name: 'Your Premium categories' })).toContainText(
+    'Time Travel',
+  );
+  await expect(yours.getByRole('link', { name: /Play a Premium category/ })).toBeVisible();
 });
 
 test('with Premium, the Premium page says it is unlocked and offers no checkout', async ({
@@ -277,4 +280,55 @@ test('a free account on the same device gets the upgrade pill back', async ({ pa
   ).toBeVisible();
   await expect(page.getByRole('banner').locator('.premium-tag')).toHaveCount(0);
   expect(await page.evaluate(() => localStorage.getItem('gleefy.premium-hint.v1'))).toBeNull();
+});
+
+// Every page, as a Premium account: nothing tries to sell Premium again.
+const upsell =
+  /Want more\?|Unlock Premium|Unlock \d+ extra|unlock with|\$2\.99|See Premium|Sign in to unlock/i;
+const sitePages = [
+  '/',
+  '/play',
+  '/games',
+  '/games/would-you-rather',
+  '/games/this-or-that',
+  '/games/trivia',
+  '/games/guess',
+  '/games/custom-party-pack',
+  '/how-to-play',
+  '/pricing',
+  '/account',
+  '/trophies',
+];
+for (const path of sitePages) {
+  test(`with Premium, ${path} shows no Premium sales pitch`, async ({ page }) => {
+    await signIn(page, true);
+    await page.route(`${API}/v1/billing/config`, (route) => route.fulfill({ json: config(true) }));
+    await page.goto(path);
+    await expect(page.getByRole('banner').locator('.premium-tag:not(.if-premium)')).toBeVisible();
+    await expect(page.locator('main')).not.toContainText(upsell);
+  });
+}
+
+test('with Premium, the Premium page is about what you own, not prices', async ({ page }) => {
+  await signIn(page, true);
+  await page.goto('/pricing');
+  await expect(page.getByRole('region', { name: 'Your Premium', exact: true })).toContainText(
+    'Unlocked on this account',
+  );
+  await expect(page.getByRole('region', { name: 'Free', exact: true })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'Your Premium categories' })).toBeVisible();
+});
+
+test('with Premium, game pages mark premium categories as yours', async ({ page }) => {
+  await signIn(page, true);
+  await page.goto('/games/would-you-rather');
+  await expect(page.getByText('✓ Premium').first()).toBeVisible();
+});
+
+test('without Premium, the sales pitch is still there', async ({ page }) => {
+  await signIn(page, false);
+  await page.goto('/');
+  await expect(page.getByRole('region', { name: /Unlock \d+ extra categories/ })).toBeVisible();
+  await page.goto('/pricing');
+  await expect(page.getByRole('region', { name: 'Free', exact: true })).toBeVisible();
 });
