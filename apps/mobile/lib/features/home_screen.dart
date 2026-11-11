@@ -71,7 +71,7 @@ class HomeScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const GleefyWordmark(size: 22),
+        title: GleefyWordmark(size: 22, premium: ref.watch(premiumProvider)),
         actions: [
           IconButton(
             tooltip: l.playersTitle,
