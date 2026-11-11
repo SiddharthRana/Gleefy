@@ -130,7 +130,7 @@ The API is `warmup-api`, not `api.warmup`: Cloudflare's free certificate covers 
 Set up once:
 
 1. **Supabase, in a free organisation:** Dashboard → organisation switcher → **New organization** (for example "Playground"), plan **Free**. Create the project `gleefy-warmup` in it. (The Free plan allows two active free projects in total.) Then do what `docs/payments-setup.md` §1 says, with these URLs: Site URL `https://warmup.gleefy.party`; redirect URLs `https://warmup.gleefy.party/auth/callback` and `gleefy://auth-callback`. To move an existing project out of the Pro organisation instead: Project Settings → General → **Transfer project** → the free organisation (you must own both; it takes about two minutes of downtime).
-2. **Pages:** `pnpm --filter @gleefy/web exec wrangler pages project create gleefy-warmup --production-branch main`, then add the custom domain `warmup.gleefy.party`.
+2. **Pages:** `pnpm --filter @gleefy/web exec wrangler pages project create gleefy-warmup --production-branch main --force` (`--force` makes a classic Pages project; newer wranglers otherwise try to create a Workers project and fail), then add the custom domain `warmup.gleefy.party` and click **Activate domain** so Cloudflare adds the `warmup` CNAME to `gleefy-warmup.pages.dev`.
 3. **Fly:**
    ```bash
    fly apps create gleefy-warmup-api
@@ -148,7 +148,7 @@ Set up once:
    - Secrets: `SUPABASE_DB_URL` (warmup pooler string), `FLY_API_TOKEN` (the warmup token), `CLOUDFLARE_API_TOKEN`.
    - Variables: `SITE_URL=https://warmup.gleefy.party`, `API_URL=https://warmup-api.gleefy.party`, `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY` (warmup values), `CLOUDFLARE_ACCOUNT_ID`, and `AUTH_GOOGLE_ENABLED` if Google sign-in is set up for warmup (add `https://<warmup-ref>.supabase.co/auth/v1/callback` to the OAuth client's redirect URIs).
    - Environment variables override the repository ones with the same name, so production keeps its own.
-5. **Switch it on:** repository variable `DEPLOY_WARMUP=true`. The next push to `dev` migrates the warmup database, deploys the API and the site.
+5. **Switch it on:** repository variable `DEPLOY_WARMUP_WEB=true` deploys the site on every push to `dev` (it only needs the Pages project and `CLOUDFLARE_API_TOKEN`), and `DEPLOY_WARMUP_BACKEND=true` also migrates the warmup database and deploys the API once steps 1 and 3 are done. The site works before the API exists: games are free and Premium says checkout isn't available.
 6. **Android warmup build** (CI doesn't build the app, to save minutes):
    ```bash
    cd apps/mobile
