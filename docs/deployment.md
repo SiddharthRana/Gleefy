@@ -47,7 +47,7 @@ Shared repository variables (read by more than one job):
 
 ### 2. Backend: Supabase + Fly.io
 
-1. **Supabase:** create the project (Mumbai is nearest India), set up email codes and SMTP as in `docs/payments-setup.md` §1. Copy the **session pooler** connection string (Connect → Session pooler, port 5432). The direct connection is IPv6-only, and GitHub's runners have no IPv6.
+1. **Supabase:** create the project in **Singapore** (`ap-southeast-1`), the same region as the API on Fly (Fly no longer offers Mumbai for new machines), set up email codes and SMTP as in `docs/payments-setup.md` §1. Copy the **session pooler** connection string (Connect → Session pooler, port 5432). The direct connection is IPv6-only, and GitHub's runners have no IPv6.
 2. **Fly.io:** install `flyctl`, then once, from the repo root:
    ```bash
    fly apps create gleefy-api          # or another name; set FLY_APP to match
