@@ -213,7 +213,7 @@ jobs:
         run: pnpm --filter @gleefy/web build
       # Until launch, production serves the one-page apps/web/coming-soon (repository
       # variable COMING_SOON = true), plus the legal pages that Google Play and Google
-      # sign-in link to. Any other path falls back to the coming-soon page. Warmup
+      # sign-in link to, and /.well-known/assetlinks.json so share links open the app. Any other path falls back to the coming-soon page. Warmup
       # always gets the full site.
       - name: Choose what to upload
         if: github.ref == 'refs/heads/main' && vars.COMING_SOON == 'true'
@@ -221,7 +221,7 @@ jobs:
         run: |
           mkdir site
           cp -R coming-soon/. site/
-          cp -R out/_next out/icon.svg site/
+          cp -R out/_next out/icon.svg out/.well-known site/
           for page in privacy terms account-deletion; do
             cp -R "out/$page" "out/$page.html" "out/$page.txt" site/
           done

@@ -1750,7 +1750,7 @@ abstract class AppLocalizations {
   /// No description provided for @progressSummary.
   ///
   /// In en, this message translates to:
-  /// **'{trophies} of {total} trophies · {games} games'**
+  /// **'{trophies} of {total} trophies · {games, plural, =1{1 game} other{{games} games}} played'**
   String progressSummary(int trophies, int total, int games);
 
   /// No description provided for @progressSemantics.
