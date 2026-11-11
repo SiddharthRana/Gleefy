@@ -3,7 +3,8 @@ name: CI
 # Branches (same as Weblume): dev is the default branch that pull requests target; main is what's
 # released. Pushes to dev and main and every pull request run the checks.
 # - dev deploys the "warmup" test copy (warmup.gleefy.party, warmup-api.gleefy.party) straight away,
-#   with its settings in the GitHub environment `warmup`.
+#   with its settings in the GitHub environment `warmup` (switches: DEPLOY_WARMUP_WEB,
+#   DEPLOY_WARMUP_BACKEND).
 # - main offers three production deploys; each waits for approval in its GitHub environment
 #   ("Review deployments" on the run page).
 # Setup: docs/deployment.md.
@@ -123,7 +124,8 @@ jobs:
   # Deploys, after every check passes:
   # - main → production, each behind its environment's required reviewers. A target stays switched
   #   off until its repository variable (DEPLOY_BACKEND / DEPLOY_WEB / DEPLOY_ANDROID) is "true".
-  # - dev → warmup (backend and website, no approval), switched on by DEPLOY_WARMUP = "true". The
+  # - dev → warmup (no approval): the website when DEPLOY_WARMUP_WEB = "true", the backend when
+  #   DEPLOY_WARMUP_BACKEND = "true" (separate, so the site can go up before the API exists). The
   #   `warmup` environment overrides the shared variables (SITE_URL, API_URL, SUPABASE_*, FLY_APP…).
   # Nothing runs before its accounts and secrets exist.
   # ---------------------------------------------------------------------------------------------
@@ -134,7 +136,7 @@ jobs:
     if: >-
       github.event_name == 'push' && (
         (github.ref == 'refs/heads/main' && vars.DEPLOY_BACKEND == 'true') ||
-        (github.ref == 'refs/heads/dev' && vars.DEPLOY_WARMUP == 'true'))
+        (github.ref == 'refs/heads/dev' && vars.DEPLOY_WARMUP_BACKEND == 'true'))
     runs-on: ubuntu-latest
     timeout-minutes: 20
     environment:
@@ -176,7 +178,7 @@ jobs:
     if: >-
       github.event_name == 'push' && (
         (github.ref == 'refs/heads/main' && vars.DEPLOY_WEB == 'true') ||
-        (github.ref == 'refs/heads/dev' && vars.DEPLOY_WARMUP == 'true'))
+        (github.ref == 'refs/heads/dev' && vars.DEPLOY_WARMUP_WEB == 'true'))
     runs-on: ubuntu-latest
     timeout-minutes: 20
     environment:
