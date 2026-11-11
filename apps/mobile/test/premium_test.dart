@@ -253,11 +253,12 @@ void main() {
     await tapText(tester, 'Send code');
     expect(auth.sentTo, ['host@example.test']);
 
+    // The sixth digit submits the code by itself.
     await tester.enterText(find.byType(TextField), '000000');
-    await tapText(tester, 'Sign in');
+    await tester.pumpAndSettle();
     expect(find.text('That code is wrong or has expired.'), findsOneWidget);
     await tester.enterText(find.byType(TextField), '123456');
-    await tapText(tester, 'Sign in');
+    await tester.pumpAndSettle();
 
     // Back on the Premium screen, now verified by the (fake) server.
     expect(find.text('Premium is unlocked'), findsOneWidget);
@@ -279,7 +280,10 @@ void main() {
     expect(auth.googleStarts, 0);
 
     await tapText(tester, 'I’m 18 or older');
-    await tapText(tester, 'Continue with Google');
+    // While Google is open a spinner keeps turning, so step time forward instead of settling.
+    await tester.tap(find.text('Continue with Google'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
     expect(auth.googleStarts, 1);
     expect(find.textContaining('Finish signing in with Google'), findsOneWidget);
 
@@ -287,7 +291,9 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Google sign-in was cancelled.'), findsOneWidget);
 
-    await tapText(tester, 'Continue with Google');
+    await tester.tap(find.text('Continue with Google'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
     auth.finishGoogle();
     await tester.pumpAndSettle();
     expect(find.text('Premium is unlocked'), findsOneWidget);

@@ -853,6 +853,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signInAdult => 'I’m 18 or older';
 
   @override
+  String get signInSending => 'Sending code…';
+
+  @override
+  String get signInChecking => 'Checking code…';
+
+  @override
+  String get signInOpeningGoogle => 'Opening Google…';
+
+  @override
   String get signInAdultRequired =>
       'Tick “I’m 18 or older” first: accounts and purchases are for people aged 18 or over. Everything free works without an account.';
 
