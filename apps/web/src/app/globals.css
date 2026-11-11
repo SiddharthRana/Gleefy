@@ -159,9 +159,16 @@ body {
   font-weight: 700;
   box-shadow: 0 3px 0 color-mix(in oklab, var(--gf-primary) 55%, black);
 }
-.avatar-button.avatar-premium {
+.avatar-button.avatar-premium,
+:root[data-premium] .avatar-button.avatar-premium-hint {
   outline: 3px solid #ffb020;
   outline-offset: 2px;
+}
+
+/* While Premium is unknown, show what this device last saw (see lib/premium.ts). */
+:root:not([data-premium]) .if-premium,
+:root[data-premium] .if-free {
+  display: none !important;
 }
 .premium-tag-lg {
   align-self: center;
