@@ -1561,6 +1561,24 @@ abstract class AppLocalizations {
   /// **'I’m 18 or older'**
   String get signInAdult;
 
+  /// No description provided for @signInSending.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending code…'**
+  String get signInSending;
+
+  /// No description provided for @signInChecking.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking code…'**
+  String get signInChecking;
+
+  /// No description provided for @signInOpeningGoogle.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening Google…'**
+  String get signInOpeningGoogle;
+
   /// No description provided for @signInAdultRequired.
   ///
   /// In en, this message translates to:

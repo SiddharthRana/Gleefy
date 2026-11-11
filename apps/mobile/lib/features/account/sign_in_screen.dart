@@ -30,6 +30,9 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
   bool _adult = false;
   bool _busy = false;
 
+  /// What the busy button says, with a spinner, while sign-in is working (null when idle).
+  String? _busyLabel;
+
   /// Google's page is open in the browser; the app is waiting for it to come back.
   bool _googleWaiting = false;
   StreamSubscription<AuthEvent>? _events;
@@ -81,6 +84,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     }
     setState(() {
       _busy = true;
+      _busyLabel = l.signInOpeningGoogle;
       _error = null;
     });
     try {
@@ -89,7 +93,12 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     } on AuthFailure catch (e) {
       if (mounted) setState(() => _error = e.code == 'google_failed' ? l.signInGoogleFailed : _describe(l, e));
     } finally {
-      if (mounted) setState(() => _busy = false);
+      if (mounted) {
+        setState(() {
+          _busy = false;
+          _busyLabel = null;
+        });
+      }
     }
   }
 
@@ -101,9 +110,10 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     _ => l.signInErrorUnknown,
   };
 
-  Future<void> _run(Future<void> Function() action) async {
+  Future<void> _run(String busyLabel, Future<void> Function() action) async {
     setState(() {
       _busy = true;
+      _busyLabel = busyLabel;
       _error = null;
     });
     try {
@@ -111,7 +121,12 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     } on AuthFailure catch (e) {
       if (mounted) setState(() => _error = _describe(AppLocalizations.of(context), e));
     } finally {
-      if (mounted) setState(() => _busy = false);
+      if (mounted) {
+        setState(() {
+          _busy = false;
+          _busyLabel = null;
+        });
+      }
     }
   }
 
@@ -126,13 +141,13 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
       setState(() => _error = l.signInAdultRequired);
       return;
     }
-    await _run(() async {
+    await _run(l.signInSending, () async {
       await ref.read(authRepositoryProvider).sendCode(email);
       if (mounted) setState(() => _sentTo = email);
     });
   }
 
-  Future<void> _verify() => _run(() async {
+  Future<void> _verify() => _run(AppLocalizations.of(context).signInChecking, () async {
     await ref.read(authRepositoryProvider).verifyCode(email: _sentTo!, code: _code.text);
     await _done();
   });
@@ -163,12 +178,24 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
               child: OutlinedButton.icon(
                 onPressed: _busy ? null : _google,
                 icon: const _GoogleMark(),
-                label: Text(l.signInGoogle),
+                label: _busy && _busyLabel == l.signInOpeningGoogle
+                    ? _Working(l.signInOpeningGoogle)
+                    : Text(l.signInGoogle),
               ),
             ),
             if (_googleWaiting) ...[
               const SizedBox(height: GfSpace.s2),
-              Semantics(liveRegion: true, child: Text(l.signInGoogleWaiting, textAlign: TextAlign.center)),
+              Semantics(
+                liveRegion: true,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const _Spinner(),
+                    const SizedBox(width: GfSpace.s2),
+                    Flexible(child: Text(l.signInGoogleWaiting, textAlign: TextAlign.center)),
+                  ],
+                ),
+              ),
             ],
             const SizedBox(height: GfSpace.s4),
             Text(
@@ -199,6 +226,10 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
               maxLength: 6,
               textInputAction: TextInputAction.done,
               onSubmitted: (_) => _verify(),
+              // Check as soon as the sixth digit is in, so there's nothing more to tap.
+              onChanged: (v) {
+                if (v.length == 6 && !_busy) unawaited(_verify());
+              },
               decoration: InputDecoration(labelText: l.signInCode, border: const OutlineInputBorder()),
             ),
           if (_error != null)
@@ -214,7 +245,9 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
             enabled: !_busy,
             child: FilledButton(
               onPressed: _busy ? null : (sent ? _verify : _send),
-              child: Text(sent ? l.signInVerify : l.signInSendCode),
+              child: _busy && _busyLabel != null && _busyLabel != l.signInOpeningGoogle
+                  ? _Working(_busyLabel!)
+                  : Text(sent ? l.signInVerify : l.signInSendCode),
             ),
           ),
           if (sent)
@@ -232,6 +265,39 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
       ),
     );
   }
+}
+
+/// A small spinner that follows the text colour of the button it sits in.
+class _Spinner extends StatelessWidget {
+  const _Spinner();
+
+  @override
+  Widget build(BuildContext context) => SizedBox.square(
+    dimension: 18,
+    child: CircularProgressIndicator(strokeWidth: 2.5, color: DefaultTextStyle.of(context).style.color),
+  );
+}
+
+/// A spinner and a label ("Sending code…") shown inside the button while it works.
+class _Working extends StatelessWidget {
+  const _Working(this.label);
+  final String label;
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+    liveRegion: true,
+    label: label,
+    child: ExcludeSemantics(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const _Spinner(),
+          const SizedBox(width: GfSpace.s2),
+          Flexible(child: Text(label)),
+        ],
+      ),
+    ),
+  );
 }
 
 /// Google's "G" mark, as Google's sign-in branding asks for (drawn, so no image asset is needed).
