@@ -5,6 +5,7 @@ import type { ShareMode } from '@gleefy/game-engine';
 import { categoryCount, guide, guideHref, guides } from '@/lib/guides';
 import { packs } from '@/lib/packs';
 import { primary } from '@/lib/ui';
+import { ForFree, ForPremium } from '@/components/premium-status';
 
 export const dynamicParams = false;
 
@@ -121,7 +122,8 @@ export default async function ModeGuidePage({ params }: { params: Promise<{ mode
                   <h3 className="font-display text-2xl font-semibold">{c.name}</h3>
                   {c.tier === 'premium' && (
                     <span className="rounded-full bg-accent px-3 py-1 text-sm font-bold text-on-accent">
-                      Premium
+                      <ForFree>Premium</ForFree>
+                      <ForPremium>✓ Premium</ForPremium>
                     </span>
                   )}
                   {c.ageRating === '13+' && (

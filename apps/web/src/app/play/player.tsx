@@ -27,6 +27,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { freeCategories, modeNames, packs, playableCategories } from '@/lib/packs';
 import { usePremium } from '@/lib/premium';
+import { ForFree } from '@/components/premium-status';
 import { Confetti } from '@/components/confetti';
 import { RewardPanel } from '@/components/reward-panel';
 import { recordFinishedGame } from '@/lib/progress';
@@ -128,7 +129,7 @@ export function Setup() {
             </label>
           ))}
         </div>
-        {!premium && (
+        <ForFree>
           <p className="mt-3 text-muted">
             Premium categories unlock with{' '}
             <Link href="/pricing" className="font-bold text-primary underline">
@@ -136,7 +137,7 @@ export function Setup() {
             </Link>
             .
           </p>
-        )}
+        </ForFree>
       </fieldset>
       <fieldset>
         <legend className="font-display text-2xl font-semibold">Rounds</legend>
