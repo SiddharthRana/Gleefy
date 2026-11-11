@@ -125,7 +125,7 @@ Follow `docs/launch/closed-test.md`. In short:
    ```
    <h2>Your Gleefy code</h2><p>Enter this code in Gleefy: <strong>{{ .Token }}</strong></p>
    ```
-6. **SMTP (needed; Supabase's own email is for testing only):** create a free **Resend** account, add the domain `gleefy.party` (Resend gives DNS records; add them in Cloudflare DNS), create an API key. **Supabase → Authentication → SMTP Settings:** host `smtp.resend.com`, port 465, user `resend`, password = the Resend API key, sender `Gleefy <hello@gleefy.party>`.
+6. **SMTP (needed; Supabase's own email is for testing only):** the **Resend** domain `gleefy.party` is already verified (done for warmup with Resend's Cloudflare auto-setup: CNAMEs `send` and `rsend`, TXT `resend._domainkey`). Create a separate API key for production (sending access, domain `gleefy.party`). **Supabase → Authentication → SMTP Settings:** host `smtp.resend.com`, port 465, user `resend`, password = the Resend API key, sender `Gleefy <hello@gleefy.party>`.
 7. **Authentication → URL Configuration:** Site URL `https://gleefy.party`; Redirect URLs `https://gleefy.party/auth/callback` and `gleefy://auth-callback`.
 
 ### 5b. Fly.io API
@@ -154,14 +154,15 @@ Follow `docs/launch/closed-test.md`. In short:
    Fly prints the DNS records. In **Cloudflare DNS**, add them with the proxy **off** (grey cloud, "DNS only"). Then `fly certs check api.gleefy.party --app gleefy-api` until it's issued.
 7. Check: `https://api.gleefy.party/ready` returns OK, and the website's Account page shows the sign-in form. Try an email code sign-in on the website.
 
-## Phase 6 — "Continue with Google" (1 hour)
+## Phase 6 — "Continue with Google" (30 minutes)
 
-1. **console.cloud.google.com → New project `gleefy`.**
-2. **APIs & Services → OAuth consent screen:** External; app name Gleefy; support email hello@gleefy.party; logo `docs/brand/play-store-icon-512.png`; app domain https://gleefy.party; privacy https://gleefy.party/privacy; terms https://gleefy.party/terms; authorised domain `gleefy.party`; scopes: email, profile, openid. **Publish** it (these scopes don't need Google's review).
-3. **Credentials → Create credentials → OAuth client ID → Web application:** authorised redirect URI `https://<ref>.supabase.co/auth/v1/callback`. Copy the client ID and secret.
-4. **Supabase → Authentication → Providers → Google:** enable, paste the client ID and secret.
-5. **GitHub repository variable** `AUTH_GOOGLE_ENABLED` = `true`, then redeploy **web** (re-run `main`, approve web).
-6. Check on the website: Account → tick 18+ → Continue with Google → back on the site, signed in.
+Warmup already has this working (2026-11-11): Google Cloud project **Gleefy**, published, with branding links on `warmup.gleefy.party` and one web client. For production, reuse that project:
+
+1. **Google Auth Platform → Branding:** change the home page, privacy and terms links from `https://warmup.gleefy.party/...` to `https://gleefy.party`, `https://gleefy.party/privacy` and `https://gleefy.party/terms`. Under **Authorized domains**, add the production project's `<ref>.supabase.co` (the bare `supabase.co` is refused as "must be a top private domain"). Keep the logo empty unless you want Google's brand verification (adding one starts a review; basic scopes otherwise need none).
+2. **Clients → Create client → Web application** `Gleefy production`: JavaScript origin `https://gleefy.party`; redirect URI `https://<ref>.supabase.co/auth/v1/callback`. Copy the client ID and secret.
+3. **Supabase (production) → Authentication → Sign In / Providers → Google:** enable, paste the client ID and secret.
+4. **GitHub → Environments → web:** variable `AUTH_GOOGLE_ENABLED` = `true`, then redeploy **web** (re-run `main`, approve web).
+5. Check on the website: Account → tick 18+ → Continue with Google → back on the site, signed in.
 
 ## Phase 7 — Payments in test mode (half a day)
 
