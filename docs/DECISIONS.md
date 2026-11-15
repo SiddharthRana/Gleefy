@@ -2,6 +2,14 @@
 
 Short, dated records of non-trivial choices. Newest first.
 
+## 2026-11-15 — Dream Team, a blind-draft game
+
+**A fifth game: Dream Team.** Inspired by the "blind draft" format popular in short videos (pick a random character card, lock it into a team role, argue whose team wins). Two sides pass the phone: flip a card, place it in an empty role, one skip each. Then the room votes role by role, and hidden 1–10 card stats give a second "stats verdict" so the ending can be argued from both sides.
+
+**No real franchise characters.** Naruto, Marvel, DC and One Piece characters are copyrighted and trademarked, so the app ships only original or public-domain decks: **Anime Archetypes** (free; original trope characters like The Hothead Hero and The Lazy Genius) and **Myths & Legends** (Premium; public-domain gods and heroes, avoiding figures still widely worshipped). Players who want their favourite show use **custom decks** (Premium): typed on the device, kept on the device, judged by the room only.
+
+**Its own flow, shared engine.** Dream Team isn't a `GameMode` (no party packs or share links yet); it has its own routes and session. The rules live in `packages/game-engine/src/dream-team.ts` with a Dart port checked by shared vectors, and it counts for XP; the "Try Them All" trophy now includes it.
+
 ## 2026-11-11 — Icon: a phone in a party hat
 
 **The grinning face is replaced by a phone wearing a party hat**, because the face didn't land with the owner and the phone says what Gleefy is: party games on one phone. It is flat vector art (chunky ink outline, hard offset shadow, no shading): a white phone tilted left, a purple screen with a big gold star and confetti, and a striped party hat at a jaunty angle, on the same gradient tile with sunburst and confetti. It was chosen from four concepts (party popper, party G, party phone, game spinner) because it stays clear at 24 to 48 px and is about the product. `scripts/brand-icons.mjs` still generates every icon from this one drawing; it now also writes the coming-soon page's logo and icons.

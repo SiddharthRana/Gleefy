@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 
+import 'dream_team_content.dart';
+
 /// Mirrors packages/content/src/schema.ts. The packs are validated there in CI; the app
 /// re-checks the essentials so a damaged asset becomes an error screen, not a crash.
 enum Tier { free, premium }
@@ -211,12 +213,21 @@ GuessPack parseGuessPack(String s) => Pack.parse(s, GameMode.guess, GuessItem.fr
 
 /// Everything the app can play. Loaded once at startup.
 class ContentLibrary {
-  const ContentLibrary({required this.wyr, required this.tot, required this.trivia, required this.guess});
+  const ContentLibrary({
+    required this.wyr,
+    required this.tot,
+    required this.trivia,
+    required this.guess,
+    this.dreamTeam = DreamTeamPack.empty,
+  });
 
   final WyrPack wyr;
   final TotPack tot;
   final TriviaPack trivia;
   final GuessPack guess;
+
+  /// Dream Team decks and role sets (its own pack shape; not one of the [GameMode]s).
+  final DreamTeamPack dreamTeam;
 
   Pack<PoolItem> packFor(GameMode mode) => switch (mode) {
     GameMode.wouldYouRather => wyr,
@@ -232,6 +243,7 @@ class ContentLibrary {
       tot: parseTotPack(await read(GameMode.thisOrThat)),
       trivia: parseTriviaPack(await read(GameMode.trivia)),
       guess: parseGuessPack(await read(GameMode.guess)),
+      dreamTeam: DreamTeamPack.parse(await bundle.loadString('assets/content/dream-team.json')),
     );
   }
 }

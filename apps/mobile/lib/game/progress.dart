@@ -1,7 +1,7 @@
 // Player progress: XP, levels, a daily streak and trophies, earned by finishing games. Stored only on
 // the phone. Port of packages/game-engine/src/progress.ts; tests replay test-vectors/progress.json.
 
-const progressModes = ['would-you-rather', 'this-or-that', 'trivia', 'guess'];
+const progressModes = ['would-you-rather', 'this-or-that', 'trivia', 'guess', 'dream-team'];
 
 class Progress {
   const Progress({

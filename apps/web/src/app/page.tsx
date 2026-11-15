@@ -43,6 +43,7 @@ const reasons = [
 
 const premiumPerks = [
   'Every premium category in every game',
+  'Dream Team: the Myths & Legends deck and decks of your own',
   'Pay once and keep it: no subscription',
   'Works in the Android and iOS apps and on this website',
 ];
@@ -216,7 +217,7 @@ export default function HomePage() {
               </li>
             ))}
           </ul>
-          <ul className="mt-6 grid gap-2 sm:grid-cols-3">
+          <ul className="mt-6 grid gap-2 sm:grid-cols-2">
             {premiumPerks.map((p) => (
               <li key={p} className="flex items-start gap-2 font-bold">
                 <span aria-hidden="true" className="text-success">

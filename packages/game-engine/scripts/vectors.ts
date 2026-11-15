@@ -13,6 +13,14 @@ import {
   type FinishedGame,
 } from '../src/progress.ts';
 import {
+  createDreamTeam,
+  dreamTeamResults,
+  reduceDreamTeam,
+  type DreamTeamAction,
+  type DreamTeamCard,
+  type DreamTeamConfig,
+} from '../src/dream-team.ts';
+import {
   createGuessSession,
   guessResults,
   reduceGuess,
@@ -37,6 +45,113 @@ import {
   type WyrConfig,
   type WyrRound,
 } from '../src/would-you-rather.ts';
+
+// Dream Team: 14 cards with simple, distinct stats, and the same cards without stats (a custom deck).
+const dtCards: DreamTeamCard[] = Array.from({ length: 14 }, (_, i) => ({
+  id: `dt-test-${String(i + 1).padStart(3, '0')}`,
+  name: `Card ${i + 1}`,
+  stats: {
+    lead: ((i * 3) % 10) + 1,
+    power: ((i * 7) % 10) + 1,
+    smarts: ((i * 5 + 2) % 10) + 1,
+    heart: ((i * 9 + 4) % 10) + 1,
+    chaos: ((i * 2 + 1) % 10) + 1,
+  },
+}));
+const dtCustom: DreamTeamCard[] = dtCards.map(({ id, name }) => ({ id, name }));
+const dtRoles: DreamTeamConfig['roles'] = [
+  { id: 'captain', stat: 'lead' },
+  { id: 'tank', stat: 'power' },
+  { id: 'strategist', stat: 'smarts' },
+  { id: 'healer', stat: 'heart' },
+  { id: 'wildcard', stat: 'chaos' },
+];
+const P = (slot: number): DreamTeamAction => ({ type: 'place', slot });
+const DSKIP: DreamTeamAction = { type: 'skip' };
+const DV = (slot: number, side: 0 | 1): DreamTeamAction => ({ type: 'vote', slot, side });
+const FINISH: DreamTeamAction = { type: 'finish' };
+const dreamTeamScenarios: {
+  name: string;
+  custom: boolean;
+  config: DreamTeamConfig;
+  actions: DreamTeamAction[];
+}[] = [
+  {
+    name: 'full draft, a skip each, room splits 3–2',
+    custom: false,
+    config: { roles: dtRoles, seed: 42, skips: 1 },
+    actions: [
+      P(0),
+      DSKIP,
+      P(2),
+      P(4),
+      P(1),
+      DSKIP,
+      P(1),
+      P(3),
+      P(2),
+      P(0),
+      P(3),
+      P(4),
+      DV(0, 0),
+      DV(1, 1),
+      DV(2, 0),
+      DV(3, 1),
+      DV(4, 0),
+      DV(4, 1),
+      DV(4, 0),
+      FINISH,
+    ],
+  },
+  {
+    name: 'custom deck: no stats, room tie',
+    custom: true,
+    config: { roles: dtRoles.slice(0, 4), seed: 7, skips: 0 },
+    actions: [
+      P(3),
+      P(0),
+      P(2),
+      P(1),
+      P(1),
+      P(2),
+      P(0),
+      P(3),
+      DV(0, 0),
+      DV(1, 1),
+      DV(2, 1),
+      DV(3, 0),
+      FINISH,
+    ],
+  },
+  {
+    name: 'illegal moves change nothing',
+    custom: false,
+    config: { roles: dtRoles.slice(0, 3), seed: 2026, skips: 1 },
+    actions: [
+      DV(0, 0),
+      FINISH,
+      P(9),
+      P(-1),
+      P(0),
+      P(0),
+      DSKIP,
+      DSKIP,
+      P(0),
+      P(1),
+      P(1),
+      P(2),
+      P(2),
+      FINISH,
+      DV(5, 0),
+      DV(0, 1),
+      DV(1, 1),
+      DV(2, 1),
+      FINISH,
+      P(0),
+      DV(0, 0),
+    ],
+  },
+];
 
 const outDir = join(dirname(fileURLToPath(import.meta.url)), '../test-vectors');
 
@@ -317,6 +432,21 @@ const files: Record<string, unknown> = {
         return { game, reward };
       });
       return { name, steps };
+    }),
+  },
+  'dream-team.json': {
+    $comment: vectors.$comment,
+    cards: dtCards,
+    scenarios: dreamTeamScenarios.map(({ name, custom, config, actions }) => {
+      const cards = custom ? dtCustom : dtCards;
+      let state = createDreamTeam(
+        cards.map((c) => c.id),
+        config,
+      );
+      for (const a of actions) state = reduceDreamTeam(state, a);
+      const { config: _c, ...expected } = state;
+      const results = dreamTeamResults(state, new Map(cards.map((c) => [c.id, c])));
+      return { name, custom, config, actions, expected: { ...expected, results } };
     }),
   },
   'guess.json': {

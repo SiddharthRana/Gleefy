@@ -1051,7 +1051,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get trophyAllModes => 'Try Them All';
 
   @override
-  String get trophyAllModesBody => 'Finish a game of every mode.';
+  String get trophyAllModesBody => 'Finish a game of every mode, Dream Team included.';
 
   @override
   String get trophyStreak3 => 'On a Roll';
@@ -1082,4 +1082,243 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get trophyRisingStarBody => 'Reach level 5.';
+
+  @override
+  String get modeDreamTeamName => 'Dream Team';
+
+  @override
+  String get modeDreamTeamBlurb => 'Draft a squad blind. Then argue who wins.';
+
+  @override
+  String get modeDreamTeamRules =>
+      'Two players or teams take turns. Flip a random card and lock it into one of your empty roles, like Captain or Healer. You can\'t move it later, and you get one skip. When both teams are full, the room votes role by role, and the cards\' hidden stats give a second verdict.';
+
+  @override
+  String get dtDeck => 'Deck';
+
+  @override
+  String get dtRoles => 'Roles';
+
+  @override
+  String get dtSides => 'Who\'s playing';
+
+  @override
+  String dtSideLabel(int n) {
+    return 'Side $n';
+  }
+
+  @override
+  String dtSideDefault(int n) {
+    return 'Player $n';
+  }
+
+  @override
+  String get dtMyDecks => 'My decks';
+
+  @override
+  String get dtMakeDeck => 'Make your own deck';
+
+  @override
+  String get dtMakeDeckBody => 'Type in any characters you like, from your favourite show or your friends. Premium.';
+
+  @override
+  String dtCustomDeckInfo(int count) {
+    return '$count cards · room vote only';
+  }
+
+  @override
+  String dtDeckCards(int count) {
+    return '$count cards';
+  }
+
+  @override
+  String get dtStart => 'Start the draft';
+
+  @override
+  String dtTurn(String name) {
+    return '$name\'s pick';
+  }
+
+  @override
+  String get dtTapToFlip => 'Tap to flip';
+
+  @override
+  String get dtPlaceHint => 'Tap an empty role to lock it in.';
+
+  @override
+  String get dtFlipFirst => 'Flip the card first.';
+
+  @override
+  String get dtEmptySlot => 'Empty';
+
+  @override
+  String dtSkip(int left) {
+    return 'Skip ($left left)';
+  }
+
+  @override
+  String get dtNoSkips => 'No skips left';
+
+  @override
+  String get dtYourTeam => 'Your team';
+
+  @override
+  String dtTheirTeam(String name) {
+    return '$name\'s team';
+  }
+
+  @override
+  String dtPassTo(String name) {
+    return 'Pass the phone to $name';
+  }
+
+  @override
+  String get dtPassBody => 'Don\'t peek at the next card!';
+
+  @override
+  String dtReady(String name) {
+    return 'I\'m $name';
+  }
+
+  @override
+  String dtDraftProgress(int placed, int total) {
+    return '$placed of $total picked';
+  }
+
+  @override
+  String dtVoteTitle(String role) {
+    return 'Who wins $role?';
+  }
+
+  @override
+  String get dtVoteHint => 'The room decides. Tap the winner.';
+
+  @override
+  String dtVoteProgress(int n, int total) {
+    return 'Role $n of $total';
+  }
+
+  @override
+  String get dtSeeVerdict => 'See the verdict';
+
+  @override
+  String dtRoomWins(String name, int a, int b) {
+    return 'The room says: $name wins $a–$b';
+  }
+
+  @override
+  String dtRoomTie(int a, int b) {
+    return 'The room says: it\'s a tie, $a–$b';
+  }
+
+  @override
+  String dtStatsWins(String name, int a, int b) {
+    return 'The stats say: $name wins $a–$b';
+  }
+
+  @override
+  String dtStatsTie(int a, int b) {
+    return 'The stats say: dead even, $a–$b';
+  }
+
+  @override
+  String get dtStatsAgree => 'The room and the stats agree!';
+
+  @override
+  String get dtStatsDisagree => 'The room and the stats disagree. Argue it out.';
+
+  @override
+  String get dtNoStats => 'Custom decks have no stats, so the room\'s word is final.';
+
+  @override
+  String get dtResultsTitle => 'The verdict';
+
+  @override
+  String get dtPlayAgain => 'Draft again';
+
+  @override
+  String get dtDecksTitle => 'My decks';
+
+  @override
+  String get dtNewDeck => 'New deck';
+
+  @override
+  String get dtEditDeck => 'Edit deck';
+
+  @override
+  String get dtDeckTitle => 'Deck name';
+
+  @override
+  String get dtDeckNames => 'Cards, one per line';
+
+  @override
+  String get dtDeckNamesHint => 'Each line is one card, e.g. a character\'s name.';
+
+  @override
+  String dtDeckCount(int count, int min, int max) {
+    return '$count cards (at least $min, up to $max)';
+  }
+
+  @override
+  String get dtDeckSave => 'Save deck';
+
+  @override
+  String get dtDeckDelete => 'Delete deck';
+
+  @override
+  String dtDeckDeleteConfirm(String name) {
+    return 'Delete “$name”? This can\'t be undone.';
+  }
+
+  @override
+  String get dtDeckEmpty => 'No decks yet. Make one with any characters you like.';
+
+  @override
+  String get dtDeckStaysHere => 'Your decks stay on this phone.';
+
+  @override
+  String get dtProblemNoTitle => 'Give the deck a name.';
+
+  @override
+  String dtProblemTitleTooLong(int max) {
+    return 'Keep the deck name to $max characters.';
+  }
+
+  @override
+  String dtProblemTooFew(int min) {
+    return 'Add at least $min cards, so both teams can fill every role.';
+  }
+
+  @override
+  String dtProblemTooMany(int max) {
+    return 'A deck can hold up to $max cards.';
+  }
+
+  @override
+  String dtProblemNameTooLong(int max) {
+    return 'Keep each card to $max characters.';
+  }
+
+  @override
+  String get dtProblemNotAllowed => 'Please keep it friendly: one of those words isn\'t allowed.';
+
+  @override
+  String get dtPremiumDecks => 'Custom decks are part of Premium.';
+
+  @override
+  String get dtPhotos => 'Photos (optional)';
+
+  @override
+  String get dtPhotosHint => 'Add a picture to any card. Photos stay on this phone.';
+
+  @override
+  String get dtPhotoAdd => 'Add photo';
+
+  @override
+  String get dtPhotoChange => 'Change';
+
+  @override
+  String dtPhotoRemove(String name) {
+    return 'Remove the photo of $name';
+  }
 }

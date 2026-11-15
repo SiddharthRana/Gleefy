@@ -4,9 +4,10 @@ import '../content/content.dart';
 import '../l10n/app_localizations.dart';
 import '../state/games.dart';
 
-/// Every entry in the game library: the four modes plus custom party packs.
+/// Every entry in the game library: the four modes, Dream Team and custom party packs.
 enum LibraryEntry {
   wouldYouRather(Icons.call_split_rounded, GameMode.wouldYouRather),
+  dreamTeam(Icons.style_outlined, null),
   thisOrThat(Icons.compare_arrows_rounded, GameMode.thisOrThat),
   trivia(Icons.timer_outlined, GameMode.trivia),
   guess(Icons.lightbulb_outline_rounded, GameMode.guess),
@@ -16,13 +17,18 @@ enum LibraryEntry {
 
   final IconData icon;
 
-  /// The game mode, or null for custom party packs.
+  /// The game mode, or null for Dream Team and custom party packs (they have their own flows).
   final GameMode? mode;
 
-  String get route => mode == null ? '/party' : setupRoute(mode!);
+  String get route => switch (this) {
+    dreamTeam => '/dream-team',
+    custom => '/party',
+    _ => setupRoute(mode!),
+  };
 
   String name(AppLocalizations l) => switch (this) {
     wouldYouRather => l.modeWyrName,
+    dreamTeam => l.modeDreamTeamName,
     thisOrThat => l.modeTotName,
     trivia => l.modeTriviaName,
     guess => l.modeGuessName,
@@ -31,6 +37,7 @@ enum LibraryEntry {
 
   String blurb(AppLocalizations l) => switch (this) {
     wouldYouRather => l.modeWyrBlurb,
+    dreamTeam => l.modeDreamTeamBlurb,
     thisOrThat => l.modeTotBlurb,
     trivia => l.modeTriviaBlurb,
     guess => l.modeGuessBlurb,
@@ -39,6 +46,7 @@ enum LibraryEntry {
 
   String rules(AppLocalizations l) => switch (this) {
     wouldYouRather => l.modeWyrRules,
+    dreamTeam => l.modeDreamTeamRules,
     thisOrThat => l.modeTotRules,
     trivia => l.modeTriviaRules,
     guess => l.modeGuessRules,

@@ -196,16 +196,13 @@
               "bestStreak": 1,
               "lastPlayedDay": "2026-11-01",
               "trophies": [
-                "first-game",
-                "all-modes"
+                "first-game"
               ]
             },
             "xpGained": 26,
             "levelBefore": 2,
             "levelAfter": 2,
-            "newTrophies": [
-              "all-modes"
-            ]
+            "newTrophies": []
           }
         },
         {
@@ -229,7 +226,6 @@
               "lastPlayedDay": "2026-11-01",
               "trophies": [
                 "first-game",
-                "all-modes",
                 "regular"
               ]
             },

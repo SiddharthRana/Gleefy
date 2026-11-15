@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gleefy/app.dart';
 import 'package:gleefy/content/content.dart';
+import 'package:gleefy/content/dream_team_content.dart';
 import 'package:gleefy/state/providers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,6 +25,7 @@ ContentLibrary realContent() => ContentLibrary(
   tot: parseTotPack(_asset('this-or-that')),
   trivia: parseTriviaPack(_asset('trivia')),
   guess: parseGuessPack(_asset('guess')),
+  dreamTeam: DreamTeamPack.parse(_asset('dream-team')),
 );
 
 const _free = Category(

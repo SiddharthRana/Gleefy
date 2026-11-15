@@ -42,6 +42,17 @@ export const modes: ModeInfo[] = [
     href: guideHref('would-you-rather'),
   },
   {
+    id: 'dream-team',
+    icon: '🃏',
+    color: 'var(--gf-accent)',
+    players: '2+',
+    minutes: '10',
+    name: 'Dream Team',
+    blurb: 'Draft a squad blind, one random card at a time. Then argue who wins.',
+    status: 'available',
+    href: guideHref('dream-team'),
+  },
+  {
     id: 'this-or-that',
     icon: '⚡',
     color: 'var(--gf-option-b)',
