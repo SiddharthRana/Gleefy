@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 
 import '../../game/dream_team_engine.dart';
 import '../../l10n/app_localizations.dart';
+import '../../state/card_photos.dart';
 import '../../state/dream_team.dart';
+import 'card_photo.dart';
 import '../../state/providers.dart';
 import '../../theme/app_theme.dart';
 import '../../theme/tokens.g.dart';
@@ -97,24 +99,51 @@ class _DreamTeamDeckEditorState extends ConsumerState<DreamTeamDeckEditor> {
   final _names = TextEditingController();
   String? _error;
 
+  /// Photo file per card ([photoKey] of its name).
+  Map<String, String> _photos = {};
+
+  /// Files picked in this visit; deleted again if the deck isn't saved.
+  final _picked = <String>{};
+  bool _saved = false;
+
+  /// Read once: `ref` can't be used in dispose().
+  late final String? _photosDir = ref.read(cardPhotosDirProvider);
+
   CustomDeck? get _existing => ref.read(customDecksProvider).where((d) => d.id == widget.deckId).firstOrNull;
 
   @override
   void initState() {
     super.initState();
+    _photosDir; // resolve now, while ref is usable
     final d = _existing;
     if (d != null) {
       _title.text = d.name;
       _names.text = d.cards.join('\n');
+      _photos = {...d.photos};
     }
     _names.addListener(() => setState(() {}));
   }
 
   @override
   void dispose() {
+    if (!_saved) deleteCardPhotos(_photosDir, _picked);
     _title.dispose();
     _names.dispose();
     super.dispose();
+  }
+
+  /// Back to wherever the editor was opened from, or the deck list if it was opened directly.
+  void _leave() => context.canPop() ? context.pop() : context.go('/dream-team/decks');
+
+  Future<void> _pickPhoto(String name) async {
+    final dir = ref.read(cardPhotosDirProvider);
+    if (dir == null) return;
+    final file = await ref.read(photoPickerProvider).pick(dir);
+    if (file == null || !mounted) return;
+    setState(() {
+      _picked.add(file);
+      _photos[photoKey(name)] = file;
+    });
   }
 
   String _describe(AppLocalizations l, DeckProblem p, int min) => switch (p) {
@@ -139,8 +168,11 @@ class _DreamTeamDeckEditorState extends ConsumerState<DreamTeamDeckEditor> {
       setState(() => _error = _describe(l, problem, min));
       return;
     }
-    ref.read(customDecksProvider.notifier).save(id: widget.deckId, name: _title.text, cards: names);
-    context.pop();
+    _saved = true;
+    ref.read(customDecksProvider.notifier).save(id: widget.deckId, name: _title.text, cards: names, photos: _photos);
+    // Photos picked and then removed before saving aren't used by anything.
+    deleteCardPhotos(ref.read(cardPhotosDirProvider), _picked.where((f) => !_photos.containsValue(f)));
+    _leave();
   }
 
   Future<void> _delete() async {
@@ -159,7 +191,7 @@ class _DreamTeamDeckEditorState extends ConsumerState<DreamTeamDeckEditor> {
     );
     if (ok == true && mounted) {
       ref.read(customDecksProvider.notifier).remove(d.id);
-      context.pop();
+      _leave();
     }
   }
 
@@ -169,7 +201,8 @@ class _DreamTeamDeckEditorState extends ConsumerState<DreamTeamDeckEditor> {
     final theme = Theme.of(context);
     final palette = GfPalette.of(context);
     final min = minCustomCards(ref);
-    final count = parseDeckNames(_names.text).length;
+    final names = parseDeckNames(_names.text);
+    final count = names.length;
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.deckId == null ? l.dtNewDeck : l.dtEditDeck),
@@ -214,6 +247,38 @@ class _DreamTeamDeckEditorState extends ConsumerState<DreamTeamDeckEditor> {
                 child: Text(_error!, style: TextStyle(color: theme.colorScheme.error)),
               ),
             ),
+          if (names.isNotEmpty) ...[
+            const SizedBox(height: GfSpace.s4),
+            Text(l.dtPhotos, style: theme.textTheme.titleMedium),
+            const SizedBox(height: GfSpace.s1),
+            Text(l.dtPhotosHint, style: TextStyle(color: palette.textMuted)),
+            const SizedBox(height: GfSpace.s2),
+            for (final name in names)
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: CardPhoto(
+                  path: cardPhotoPath(ref.watch(cardPhotosDirProvider), _photos[photoKey(name)]),
+                  name: name,
+                  size: 44,
+                ),
+                title: Text(name),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (_photos.containsKey(photoKey(name)))
+                      IconButton(
+                        tooltip: l.dtPhotoRemove(name),
+                        icon: const Icon(Icons.close_rounded),
+                        onPressed: () => setState(() => _photos.remove(photoKey(name))),
+                      ),
+                    TextButton(
+                      onPressed: () => _pickPhoto(name),
+                      child: Text(_photos.containsKey(photoKey(name)) ? l.dtPhotoChange : l.dtPhotoAdd),
+                    ),
+                  ],
+                ),
+              ),
+          ],
         ],
       ),
       bottomNavigationBar: SafeArea(

@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../content/profanity.dart';
 import '../game/dream_team_engine.dart';
 import '../game/random.dart';
+import 'card_photos.dart';
 import 'progress.dart';
 import 'providers.dart';
 
@@ -27,20 +28,33 @@ const customDeckTitleMax = 30;
 
 @immutable
 class CustomDeck {
-  const CustomDeck({required this.id, required this.name, required this.cards});
+  const CustomDeck({required this.id, required this.name, required this.cards, this.photos = const {}});
 
   final String id;
   final String name;
   final List<String> cards;
 
-  Map<String, Object?> toJson() => {'id': id, 'name': name, 'cards': cards};
+  /// Photo file names (in the card photos folder), keyed by [photoKey] of the card's name.
+  final Map<String, String> photos;
 
-  factory CustomDeck.fromJson(Map<String, dynamic> j) =>
-      CustomDeck(id: j['id'] as String, name: j['name'] as String, cards: (j['cards'] as List<dynamic>).cast<String>());
+  Map<String, Object?> toJson() => {'id': id, 'name': name, 'cards': cards, 'photos': photos};
 
-  /// Cards for the engine: no stats, so the room's vote decides.
-  List<DreamTeamCard> toCards() => [for (var i = 0; i < cards.length; i++) DreamTeamCard(id: '$id-$i', name: cards[i])];
+  factory CustomDeck.fromJson(Map<String, dynamic> j) => CustomDeck(
+    id: j['id'] as String,
+    name: j['name'] as String,
+    cards: (j['cards'] as List<dynamic>).cast<String>(),
+    photos: (j['photos'] as Map<String, dynamic>?)?.cast<String, String>() ?? const {},
+  );
+
+  /// Cards for the engine: no stats, so the room's vote decides. [photosDir] adds their photos.
+  List<DreamTeamCard> toCards([String? photosDir]) => [
+    for (var i = 0; i < cards.length; i++)
+      DreamTeamCard(id: '$id-$i', name: cards[i], photo: cardPhotoPath(photosDir, photos[photoKey(cards[i])])),
+  ];
 }
+
+/// Photos follow a card's name, so editing the list keeps them on the right cards.
+String photoKey(String name) => name.trim().toLowerCase();
 
 enum DeckProblem { noTitle, titleTooLong, tooFew, tooMany, nameTooLong, notAllowed }
 
@@ -87,19 +101,32 @@ class CustomDecksController extends Notifier<List<CustomDeck>> {
     ref.read(sharedPreferencesProvider).setString(storageKey, jsonEncode([for (final d in decks) d.toJson()]));
   }
 
-  /// Adds or replaces a deck (by id) and returns its id.
-  String save({String? id, required String name, required List<String> cards}) {
+  /// Adds or replaces a deck (by id) and returns its id. Photos for cards no longer in the deck
+  /// are dropped, and files nothing uses any more are deleted.
+  String save({String? id, required String name, required List<String> cards, Map<String, String> photos = const {}}) {
     final deckId = id ?? 'mine-${_random.nextInt(1 << 31).toRadixString(36)}';
-    final deck = CustomDeck(id: deckId, name: _clean(name), cards: cards);
-    final exists = state.any((d) => d.id == deckId);
-    _save(exists ? [for (final d in state) d.id == deckId ? deck : d] : [...state, deck]);
+    final keys = cards.map(photoKey).toSet();
+    final kept = {
+      for (final e in photos.entries)
+        if (keys.contains(e.key)) e.key: e.value,
+    };
+    final before = state.where((d) => d.id == deckId).firstOrNull;
+    if (before != null) {
+      deleteCardPhotos(ref.read(cardPhotosDirProvider), before.photos.values.where((f) => !kept.containsValue(f)));
+    }
+    final deck = CustomDeck(id: deckId, name: _clean(name), cards: cards, photos: kept);
+    _save(before != null ? [for (final d in state) d.id == deckId ? deck : d] : [...state, deck]);
     return deckId;
   }
 
-  void remove(String id) => _save([
-    for (final d in state)
-      if (d.id != id) d,
-  ]);
+  void remove(String id) {
+    final deck = state.where((d) => d.id == id).firstOrNull;
+    if (deck != null) deleteCardPhotos(ref.read(cardPhotosDirProvider), deck.photos.values);
+    _save([
+      for (final d in state)
+        if (d.id != id) d,
+    ]);
+  }
 }
 
 final customDecksProvider = NotifierProvider<CustomDecksController, List<CustomDeck>>(CustomDecksController.new);
@@ -145,7 +172,7 @@ class DreamTeamGame {
     'roleSetName': roleSetName,
     'sides': sides,
     'cards': [
-      for (final c in cards) {'id': c.id, 'name': c.name, 'blurb': c.blurb, 'stats': c.stats},
+      for (final c in cards) {'id': c.id, 'name': c.name, 'blurb': c.blurb, 'stats': c.stats, 'photo': c.photo},
     ],
     'config': state.config.toJson(),
     'state': state.toJson(),
@@ -165,6 +192,7 @@ class DreamTeamGame {
             name: c['name'] as String,
             blurb: c['blurb'] as String?,
             stats: (c['stats'] as Map<String, dynamic>?)?.cast<String, int>(),
+            photo: c['photo'] as String?,
           ),
       ],
       state: DreamTeamState.fromJson(j['state'] as Map<String, dynamic>, config),

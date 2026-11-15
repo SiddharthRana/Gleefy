@@ -19,13 +19,17 @@ import {
   blurbs,
   customCards,
   customDeckMax,
+  customPhotos,
   deckCards,
   deckProblem,
   dreamTeam,
   dreamTeamSkips,
   minCustomCards,
+  newDeckId,
   parseDeckNames,
+  photoKey,
   readCustomDecks,
+  shrinkPhoto,
   writeCustomDecks,
   type CustomDeck,
 } from '@/lib/dream-team';
@@ -38,6 +42,8 @@ interface Game {
   sides: [string, string];
   roleNames: string[];
   cards: Map<string, DreamTeamCard>;
+  /** Card id → photo (custom decks only). */
+  photos: Map<string, string>;
   state: DreamTeamState;
   /** For "Draft again": the same deck and roles, a fresh shuffle. */
   setup: { cards: DreamTeamCard[]; roleSetId: string };
@@ -45,12 +51,18 @@ interface Game {
 
 const roleSet = (id: string) => dreamTeam.roleSets.find((r) => r.id === id)!;
 
-function newGame(cards: DreamTeamCard[], roleSetId: string, sides: [string, string]): Game {
+function newGame(
+  cards: DreamTeamCard[],
+  roleSetId: string,
+  sides: [string, string],
+  photos: Map<string, string> = new Map(),
+): Game {
   const set = roleSet(roleSetId);
   return {
     sides,
     roleNames: set.roles.map((r) => r.name),
     cards: new Map(cards.map((c) => [c.id, c])),
+    photos,
     state: createDreamTeam(
       cards.map((c) => c.id),
       {
@@ -88,7 +100,7 @@ export function DreamTeamPlayer() {
       reward={reward}
       onAgain={() => {
         setReward(null);
-        setGame(newGame(game.setup.cards, game.setup.roleSetId, game.sides));
+        setGame(newGame(game.setup.cards, game.setup.roleSetId, game.sides, game.photos));
       }}
     />
   );
@@ -117,7 +129,11 @@ function DreamTeamSetup({ onStart }: { onStart: (g: Game) => void }) {
       names[1]!.trim() || 'Player 2',
     ];
     try {
-      onStart(newGame(custom ? customCards(custom) : deckCards(deckId), roleSetId, sides));
+      onStart(
+        custom
+          ? newGame(customCards(custom), roleSetId, sides, customPhotos(custom))
+          : newGame(deckCards(deckId), roleSetId, sides),
+      );
     } catch (e) {
       setError(
         e instanceof DeckTooSmallError
@@ -134,7 +150,11 @@ function DreamTeamSetup({ onStart }: { onStart: (g: Game) => void }) {
         onDone={(next) => {
           if (next) {
             setDecks(next);
-            writeCustomDecks(next);
+            if (!writeCustomDecks(next)) {
+              setError(
+                'Your browser’s storage is full, so this deck will only last until you close the tab. Remove a few photos to save it.',
+              );
+            }
           }
           setEditing(null);
         }}
@@ -282,8 +302,19 @@ function DeckEditor({
 }) {
   const [title, setTitle] = useState(deck?.name ?? '');
   const [text, setText] = useState(deck?.cards.join('\n') ?? '');
+  const [photos, setPhotos] = useState<Record<string, string>>(deck?.photos ?? {});
   const [error, setError] = useState<string | null>(null);
   const names = parseDeckNames(text);
+
+  const addPhoto = async (name: string, file: File | undefined) => {
+    if (!file) return;
+    try {
+      const photo = await shrinkPhoto(file);
+      setPhotos((p) => ({ ...p, [photoKey(name)]: photo }));
+    } catch {
+      setError('That picture couldn’t be opened. Try another one.');
+    }
+  };
 
   const save = () => {
     const problem = deckProblem(title, names);
@@ -292,9 +323,13 @@ function DeckEditor({
       return;
     }
     const saved: CustomDeck = {
-      id: deck?.id ?? `mine-${Math.random().toString(36).slice(2, 10)}`,
+      id: deck?.id ?? newDeckId(),
       name: title.trim().replace(/\s+/g, ' '),
       cards: names,
+      // Keep only photos of cards still in the deck.
+      photos: Object.fromEntries(
+        names.flatMap((n) => (photos[photoKey(n)] ? [[photoKey(n), photos[photoKey(n)]!]] : [])),
+      ),
     };
     onDone(deck ? decks.map((d) => (d.id === deck.id ? saved : d)) : [...decks, saved]);
   };
@@ -331,6 +366,53 @@ function DeckEditor({
         <p role="alert" className="font-bold">
           {error}
         </p>
+      )}
+      {names.length > 0 && (
+        <section aria-labelledby="photos" className="grid gap-2">
+          <h3 id="photos" className="font-display text-xl font-semibold">
+            Photos (optional)
+          </h3>
+          <p className="text-muted">Add a picture to any card. Photos stay in this browser.</p>
+          <ul className="grid gap-2">
+            {names.map((n) => {
+              const photo = photos[photoKey(n)];
+              return (
+                <li key={n} className="flex min-h-12 items-center gap-3">
+                  <CardPhoto src={photo} name={n} size={44} />
+                  <span className="grow">{n}</span>
+                  {photo && (
+                    <button
+                      type="button"
+                      className="font-bold underline"
+                      aria-label={`Remove the photo of ${n}`}
+                      onClick={() =>
+                        setPhotos((p) => {
+                          const next = { ...p };
+                          delete next[photoKey(n)];
+                          return next;
+                        })
+                      }
+                    >
+                      Remove
+                    </button>
+                  )}
+                  <label
+                    className={`${secondary} inline-flex cursor-pointer items-center justify-center`}
+                  >
+                    {photo ? 'Change' : 'Add photo'}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="sr-only"
+                      aria-label={`${photo ? 'Change' : 'Add'} the photo of ${n}`}
+                      onChange={(e) => void addPhoto(n, e.target.files?.[0])}
+                    />
+                  </label>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
       )}
       <p className="text-sm text-muted">Your decks stay in this browser.</p>
       <div className="flex flex-wrap gap-3">
@@ -404,7 +486,10 @@ function Draft({ game, act }: { game: Game; act: (a: DreamTeamAction) => void })
             key={card.id}
             className="flip-in grid min-h-44 place-items-center rounded-panel border-4 border-primary bg-surface p-5 text-center"
           >
-            <div>
+            <div className="grid justify-items-center gap-3">
+              {game.photos.get(card.id) && (
+                <CardPhoto src={game.photos.get(card.id)} name={card.name} size={140} square />
+              )}
               <p className="font-display text-3xl font-semibold">{card.name}</p>
               {blurbs.get(card.id) && <p className="mt-2 text-muted">{blurbs.get(card.id)}</p>}
             </div>
@@ -471,6 +556,9 @@ function Slots({
         const content = (
           <>
             <span className="w-32 shrink-0 font-bold">{role}</span>
+            {id && game.photos.get(id) && (
+              <CardPhoto src={game.photos.get(id)} name={game.cards.get(id)!.name} size={32} />
+            )}
             <span className={id ? 'font-bold' : 'text-muted'}>
               {id ? game.cards.get(id)?.name : 'Empty'}
             </span>
@@ -530,6 +618,11 @@ function Vote({ game, act }: { game: Game; act: (a: DreamTeamAction) => void }) 
           >
             <span>
               <span className="block font-bold">{game.sides[side]}</span>
+              {game.photos.get(card.id) && (
+                <span className="my-2 flex justify-center">
+                  <CardPhoto src={game.photos.get(card.id)} name={card.name} size={96} square />
+                </span>
+              )}
               <span className="block font-display text-2xl font-semibold">{card.name}</span>
               {blurbs.get(card.id) && <span className="block">{blurbs.get(card.id)}</span>}
               {s.votes[slot] === side && <span className="block font-bold">✓ Picked</span>}
@@ -590,6 +683,13 @@ function Verdict({
             {([0, 1] as const).map((side) => (
               <p key={side} className="flex items-center gap-2">
                 <span aria-hidden="true">{game.state.votes[i] === side ? '🏆' : '○'}</span>
+                {game.photos.get(game.state.teams[side][i]!) && (
+                  <CardPhoto
+                    src={game.photos.get(game.state.teams[side][i]!)}
+                    name={game.cards.get(game.state.teams[side][i]!)!.name}
+                    size={28}
+                  />
+                )}
                 <span className={game.state.votes[i] === side ? 'font-bold' : ''}>
                   {game.sides[side]}: {game.cards.get(game.state.teams[side][i]!)?.name}
                 </span>
@@ -611,5 +711,39 @@ function Verdict({
         </Link>
       </div>
     </div>
+  );
+}
+
+/** A card's photo, or its first letter when it has none. Decorative: the name is always shown. */
+function CardPhoto({
+  src,
+  name,
+  size,
+  square = false,
+}: {
+  src?: string;
+  name: string;
+  size: number;
+  square?: boolean;
+}) {
+  const shape = square ? 'rounded-card' : 'rounded-full';
+  return src ? (
+    // eslint-disable-next-line @next/next/no-img-element -- a local data URL; next/image adds nothing.
+    <img
+      src={src}
+      alt=""
+      width={size}
+      height={size}
+      className={`${shape} shrink-0 object-cover`}
+      style={{ width: size, height: size }}
+    />
+  ) : (
+    <span
+      aria-hidden="true"
+      className={`${shape} grid shrink-0 place-items-center bg-surface-muted font-extrabold text-primary`}
+      style={{ width: size, height: size, fontSize: size * 0.42 }}
+    >
+      {Array.from(name.trim())[0]?.toUpperCase() ?? '?'}
+    </span>
   );
 }

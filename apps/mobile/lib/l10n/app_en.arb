@@ -1007,5 +1007,17 @@
     }
   },
   "dtProblemNotAllowed": "Please keep it friendly: one of those words isn't allowed.",
-  "dtPremiumDecks": "Custom decks are part of Premium."
+  "dtPremiumDecks": "Custom decks are part of Premium.",
+  "dtPhotos": "Photos (optional)",
+  "dtPhotosHint": "Add a picture to any card. Photos stay on this phone.",
+  "dtPhotoAdd": "Add photo",
+  "dtPhotoChange": "Change",
+  "dtPhotoRemove": "Remove the photo of {name}",
+  "@dtPhotoRemove": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }

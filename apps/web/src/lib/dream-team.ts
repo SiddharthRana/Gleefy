@@ -28,6 +28,26 @@ export interface CustomDeck {
   id: string;
   name: string;
   cards: string[];
+  /** Small JPEG data URLs, keyed by photoKey(card name). Kept only in this browser. */
+  photos?: Record<string, string>;
+}
+
+/** A fresh id for a new custom deck. */
+export const newDeckId = () => `mine-${Math.random().toString(36).slice(2, 10)}`;
+
+/** Photos follow a card's name, so editing the list keeps them on the right cards. */
+export const photoKey = (name: string) => name.trim().toLowerCase();
+
+/** Shrinks a picked image to a small square-ish JPEG so many fit in browser storage. */
+export async function shrinkPhoto(file: File, max = 320): Promise<string> {
+  const bitmap = await createImageBitmap(file);
+  const scale = Math.min(1, max / Math.max(bitmap.width, bitmap.height));
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.round(bitmap.width * scale);
+  canvas.height = Math.round(bitmap.height * scale);
+  canvas.getContext('2d')!.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+  bitmap.close();
+  return canvas.toDataURL('image/jpeg', 0.8);
 }
 
 const DECKS_KEY = 'gleefy.dream-team.decks.v1';
@@ -47,11 +67,13 @@ export function readCustomDecks(): CustomDeck[] {
   }
 }
 
-export function writeCustomDecks(decks: CustomDeck[]) {
+/** Saves decks; false when the browser's storage is full or blocked (photos take space). */
+export function writeCustomDecks(decks: CustomDeck[]): boolean {
   try {
     window.localStorage.setItem(DECKS_KEY, JSON.stringify(decks));
+    return true;
   } catch {
-    // Storage blocked: decks last until the tab closes.
+    return false;
   }
 }
 
@@ -86,3 +108,12 @@ export function deckProblem(title: string, names: string[]): string | null {
 
 export const customCards = (deck: CustomDeck): DreamTeamCard[] =>
   deck.cards.map((name, i) => ({ id: `${deck.id}-${i}`, name }));
+
+/** Card id → photo, for a custom deck's cards. */
+export const customPhotos = (deck: CustomDeck): Map<string, string> =>
+  new Map(
+    deck.cards.flatMap((name, i) => {
+      const photo = deck.photos?.[photoKey(name)];
+      return photo ? [[`${deck.id}-${i}`, photo] as const] : [];
+    }),
+  );

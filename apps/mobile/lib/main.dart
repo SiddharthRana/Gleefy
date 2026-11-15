@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -19,6 +20,7 @@ import 'config/app_config.dart';
 
 import 'app.dart';
 import 'content/content.dart';
+import 'state/card_photos.dart';
 import 'state/providers.dart';
 import 'telemetry/analytics.dart';
 
@@ -40,9 +42,11 @@ Future<void> main() async {
   }
 
   // Accounts and billing are optional: without configuration everything free still works.
+  final docs = await getApplicationDocumentsDirectory();
   final overrides = [
     sharedPreferencesProvider.overrideWithValue(prefs),
     bundledContentProvider.overrideWithValue(content),
+    cardPhotosDirProvider.overrideWithValue('${docs.path}/dream_team_photos'),
   ];
   if (AppConfig.accountsConfigured) {
     await Supabase.initialize(

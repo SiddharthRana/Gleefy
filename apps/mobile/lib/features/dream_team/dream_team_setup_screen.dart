@@ -6,6 +6,7 @@ import '../../content/content.dart';
 import '../../content/dream_team_content.dart';
 import '../../game/dream_team_engine.dart';
 import '../../l10n/app_localizations.dart';
+import '../../state/card_photos.dart';
 import '../../state/dream_team.dart';
 import '../../state/providers.dart';
 import '../../theme/app_theme.dart';
@@ -55,7 +56,7 @@ class _DreamTeamSetupScreenState extends ConsumerState<DreamTeamSetupScreen> {
       context.push('/premium');
       return;
     }
-    final cards = custom?.toCards() ?? _pack.cardsIn(_deckId);
+    final cards = custom?.toCards(ref.read(cardPhotosDirProvider)) ?? _pack.cardsIn(_deckId);
     final names = [
       for (var i = 0; i < 2; i++) _sides[i].text.trim().isEmpty ? l.dtSideDefault(i + 1) : _sides[i].text.trim(),
     ];

@@ -17,6 +17,10 @@ export default function PrivacyPage() {
         <li>Your settings (theme, big text, motion and vibration preferences).</li>
         <li>The game you are playing, so it survives the app closing, and your last game setup.</li>
         <li>Player and team names, favourites, party packs and questions you write yourself.</li>
+        <li>
+          Dream Team decks you make, and any photos you add to their cards. Photos are copied into
+          the app (or, on the website, this browser) and never uploaded.
+        </li>
       </ul>
       <p className="mt-3">
         All of this stays on your phone. There is no advertising, and nothing you play is sent to us

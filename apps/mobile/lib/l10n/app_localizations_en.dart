@@ -1304,4 +1304,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dtPremiumDecks => 'Custom decks are part of Premium.';
+
+  @override
+  String get dtPhotos => 'Photos (optional)';
+
+  @override
+  String get dtPhotosHint => 'Add a picture to any card. Photos stay on this phone.';
+
+  @override
+  String get dtPhotoAdd => 'Add photo';
+
+  @override
+  String get dtPhotoChange => 'Change';
+
+  @override
+  String dtPhotoRemove(String name) {
+    return 'Remove the photo of $name';
+  }
 }

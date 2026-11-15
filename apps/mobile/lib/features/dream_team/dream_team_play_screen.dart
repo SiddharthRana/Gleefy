@@ -14,6 +14,7 @@ import '../../widgets/game_shell.dart';
 import '../../widgets/insets.dart';
 import '../../widgets/motion.dart';
 import '../../widgets/progress_widgets.dart';
+import 'card_photo.dart';
 
 /// Dream Team: the draft, the pass-the-phone handover, the room's vote and the verdict.
 class DreamTeamPlayScreen extends ConsumerStatefulWidget {
@@ -227,6 +228,10 @@ class _FlipCard extends StatelessWidget {
           ? Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                if (card.photo != null) ...[
+                  CardPhoto(path: card.photo, name: card.name, size: 140, radius: GfRadius.lg),
+                  const SizedBox(height: GfSpace.s3),
+                ],
                 Text(card.name, textAlign: TextAlign.center, style: theme.textTheme.headlineSmall),
                 if (card.blurb != null) ...[
                   const SizedBox(height: GfSpace.s2),
@@ -330,9 +335,23 @@ class _TeamSlots extends StatelessWidget {
                           child: team[i] == null
                               ? Text(l.dtEmptySlot, style: TextStyle(color: palette.textMuted))
                               : PopIn(
-                                  child: Text(
-                                    game.card(team[i])!.name,
-                                    style: const TextStyle(fontWeight: FontWeight.w700),
+                                  child: Row(
+                                    children: [
+                                      if (game.card(team[i])!.photo != null) ...[
+                                        CardPhoto(
+                                          path: game.card(team[i])!.photo,
+                                          name: game.card(team[i])!.name,
+                                          size: 32,
+                                        ),
+                                        const SizedBox(width: GfSpace.s2),
+                                      ],
+                                      Flexible(
+                                        child: Text(
+                                          game.card(team[i])!.name,
+                                          style: const TextStyle(fontWeight: FontWeight.w700),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                         ),
@@ -389,6 +408,10 @@ class _VoteCard extends StatelessWidget {
                     style: TextStyle(color: palette.onOption, fontWeight: FontWeight.w700),
                   ),
                   const SizedBox(height: GfSpace.s1),
+                  if (card.photo != null) ...[
+                    CardPhoto(path: card.photo, name: card.name, size: 96, radius: GfRadius.md),
+                    const SizedBox(height: GfSpace.s2),
+                  ],
                   Text(
                     card.name,
                     textAlign: TextAlign.center,
@@ -502,6 +525,14 @@ class _DreamTeamResults extends ConsumerWidget {
                                 color: game.state.votes[i] == side ? palette.accent : palette.textMuted,
                               ),
                               const SizedBox(width: GfSpace.s2),
+                              if (game.card(game.state.teams[side][i])!.photo != null) ...[
+                                CardPhoto(
+                                  path: game.card(game.state.teams[side][i])!.photo,
+                                  name: game.card(game.state.teams[side][i])!.name,
+                                  size: 28,
+                                ),
+                                const SizedBox(width: GfSpace.s2),
+                              ],
                               Expanded(
                                 child: Text(
                                   '${game.sides[side]}: ${game.card(game.state.teams[side][i])!.name}',

@@ -82,3 +82,41 @@ test('with Premium, make a deck of your own and play it (room vote only)', async
   await page.reload();
   await expect(page.getByRole('radio', { name: /Office Legends/ })).toBeVisible();
 });
+
+const PNG = Buffer.from(
+  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAFBQIAX8jx0gAAAABJRU5ErkJggg==',
+  'base64',
+);
+
+test('with Premium, custom cards can carry a photo, shown in the game', async ({ page }) => {
+  await signIn(page, true);
+  await page.goto('/play/dream-team');
+  await page.getByRole('button', { name: '+ Make your own deck' }).click();
+  await page.getByLabel('Deck name').fill('Photo deck');
+  await page
+    .getByLabel('Cards, one per line')
+    .fill(Array.from({ length: 12 }, (_, i) => `Pal ${i + 1}`).join('\n'));
+  // Every card gets a photo, so the first flipped card shows one.
+  for (let i = 1; i <= 12; i++) {
+    await page.getByLabel(`Add the photo of Pal ${i}`, { exact: true }).setInputFiles({
+      name: `pal-${i}.png`,
+      mimeType: 'image/png',
+      buffer: PNG,
+    });
+    await expect(page.getByLabel(`Change the photo of Pal ${i}`, { exact: true })).toBeAttached();
+  }
+  await page.getByRole('button', { name: 'Remove the photo of Pal 12' }).click();
+  await expect(page.getByLabel('Add the photo of Pal 12', { exact: true })).toBeAttached();
+  await page.getByRole('button', { name: 'Save deck' }).click();
+
+  await page.getByRole('radio', { name: /Photo deck/ }).check();
+  await page.getByRole('button', { name: 'Start the draft' }).click();
+  await page.getByRole('button', { name: 'Tap to flip' }).click();
+  const flipped = page.locator('.flip-in');
+  const name = (await flipped.locator('p').first().textContent()) ?? '';
+  await expect(flipped.locator('img')).toHaveCount(name === 'Pal 12' ? 0 : 1);
+
+  // The photos are saved with the deck in this browser.
+  const saved = await page.evaluate(() => localStorage.getItem('gleefy.dream-team.decks.v1'));
+  expect(Object.keys(JSON.parse(saved!)[0].photos)).toHaveLength(11);
+});

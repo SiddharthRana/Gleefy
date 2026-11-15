@@ -12,12 +12,15 @@ const dreamTeamStats = ['lead', 'power', 'smarts', 'heart', 'chaos'];
 
 @immutable
 class DreamTeamCard {
-  const DreamTeamCard({required this.id, required this.name, this.blurb, this.stats, this.category});
+  const DreamTeamCard({required this.id, required this.name, this.blurb, this.stats, this.category, this.photo});
 
   final String id;
   final String name;
   final String? blurb;
   final String? category;
+
+  /// A photo the person added to a custom card (a file on this phone). Display only.
+  final String? photo;
 
   /// 1–10 per stat in [dreamTeamStats]. Custom decks have none, so the room alone decides.
   final Map<String, int>? stats;

@@ -2316,6 +2316,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Custom decks are part of Premium.'**
   String get dtPremiumDecks;
+
+  /// No description provided for @dtPhotos.
+  ///
+  /// In en, this message translates to:
+  /// **'Photos (optional)'**
+  String get dtPhotos;
+
+  /// No description provided for @dtPhotosHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a picture to any card. Photos stay on this phone.'**
+  String get dtPhotosHint;
+
+  /// No description provided for @dtPhotoAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add photo'**
+  String get dtPhotoAdd;
+
+  /// No description provided for @dtPhotoChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get dtPhotoChange;
+
+  /// No description provided for @dtPhotoRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove the photo of {name}'**
+  String dtPhotoRemove(String name);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
