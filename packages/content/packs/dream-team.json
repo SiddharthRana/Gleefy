@@ -1,0 +1,1035 @@
+{
+  "$schema": "../schema/pack.schema.json",
+  "mode": "dream-team",
+  "version": 1,
+  "categories": [
+    {
+      "id": "anime-archetypes",
+      "name": "Anime Archetypes",
+      "description": "Heroes, rivals, mentors and final bosses: the characters every anime fan knows.",
+      "tier": "free",
+      "ageRating": "all",
+      "region": "global"
+    },
+    {
+      "id": "myths-legends",
+      "name": "Myths & Legends",
+      "description": "Gods, heroes and monsters from myths around the world.",
+      "tier": "premium",
+      "ageRating": "all",
+      "region": "global"
+    }
+  ],
+  "roleSets": [
+    {
+      "id": "final-arc",
+      "name": "Final Arc",
+      "roles": [
+        {
+          "id": "captain",
+          "name": "Captain",
+          "stat": "lead"
+        },
+        {
+          "id": "tank",
+          "name": "Tank",
+          "stat": "power"
+        },
+        {
+          "id": "strategist",
+          "name": "Strategist",
+          "stat": "smarts"
+        },
+        {
+          "id": "healer",
+          "name": "Healer",
+          "stat": "heart"
+        },
+        {
+          "id": "wildcard",
+          "name": "Wildcard",
+          "stat": "chaos"
+        }
+      ]
+    },
+    {
+      "id": "dream-team",
+      "name": "Dream Team",
+      "roles": [
+        {
+          "id": "leader",
+          "name": "Leader",
+          "stat": "lead"
+        },
+        {
+          "id": "muscle",
+          "name": "Muscle",
+          "stat": "power"
+        },
+        {
+          "id": "brains",
+          "name": "Brains",
+          "stat": "smarts"
+        },
+        {
+          "id": "heart",
+          "name": "Heart",
+          "stat": "heart"
+        },
+        {
+          "id": "wildcard",
+          "name": "Wildcard",
+          "stat": "chaos"
+        }
+      ]
+    },
+    {
+      "id": "heist-crew",
+      "name": "Heist Crew",
+      "roles": [
+        {
+          "id": "boss",
+          "name": "Boss",
+          "stat": "lead"
+        },
+        {
+          "id": "muscle",
+          "name": "Muscle",
+          "stat": "power"
+        },
+        {
+          "id": "hacker",
+          "name": "Hacker",
+          "stat": "smarts"
+        },
+        {
+          "id": "smooth-talker",
+          "name": "Smooth Talker",
+          "stat": "heart"
+        },
+        {
+          "id": "getaway-driver",
+          "name": "Getaway Driver",
+          "stat": "chaos"
+        }
+      ]
+    },
+    {
+      "id": "zombie-squad",
+      "name": "Zombie Squad",
+      "roles": [
+        {
+          "id": "leader",
+          "name": "Leader",
+          "stat": "lead"
+        },
+        {
+          "id": "fighter",
+          "name": "Fighter",
+          "stat": "power"
+        },
+        {
+          "id": "inventor",
+          "name": "Inventor",
+          "stat": "smarts"
+        },
+        {
+          "id": "medic",
+          "name": "Medic",
+          "stat": "heart"
+        },
+        {
+          "id": "scout",
+          "name": "Scout",
+          "stat": "chaos"
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": "dt-anime-archetypes-001",
+      "category": "anime-archetypes",
+      "name": "The Hothead Hero",
+      "blurb": "Never gives up, shouts every attack, somehow wins anyway.",
+      "stats": {
+        "lead": 7,
+        "power": 8,
+        "smarts": 3,
+        "heart": 9,
+        "chaos": 7
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-002",
+      "category": "anime-archetypes",
+      "name": "The Cool Rival",
+      "blurb": "Brooding, gifted, always one step behind and furious about it.",
+      "stats": {
+        "lead": 4,
+        "power": 9,
+        "smarts": 7,
+        "heart": 3,
+        "chaos": 6
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-003",
+      "category": "anime-archetypes",
+      "name": "The Lazy Genius",
+      "blurb": "Sleeps through every lesson, then wins in three moves.",
+      "stats": {
+        "lead": 6,
+        "power": 4,
+        "smarts": 10,
+        "heart": 5,
+        "chaos": 3
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-004",
+      "category": "anime-archetypes",
+      "name": "The Wise Old Mentor",
+      "blurb": "Long beard, cup of tea, terrifying when serious.",
+      "stats": {
+        "lead": 8,
+        "power": 8,
+        "smarts": 9,
+        "heart": 8,
+        "chaos": 3
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-005",
+      "category": "anime-archetypes",
+      "name": "The Quiet Healer",
+      "blurb": "Patches everyone up mid-fight without a single complaint.",
+      "stats": {
+        "lead": 4,
+        "power": 2,
+        "smarts": 7,
+        "heart": 10,
+        "chaos": 2
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-006",
+      "category": "anime-archetypes",
+      "name": "The Hidden Powerhouse",
+      "blurb": "\"Was that even ten percent of my power?\"",
+      "stats": {
+        "lead": 3,
+        "power": 10,
+        "smarts": 4,
+        "heart": 5,
+        "chaos": 8
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-007",
+      "category": "anime-archetypes",
+      "name": "The Comic Relief Sidekick",
+      "blurb": "Eats all the snacks, saves the day exactly once.",
+      "stats": {
+        "lead": 2,
+        "power": 3,
+        "smarts": 2,
+        "heart": 8,
+        "chaos": 9
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-008",
+      "category": "anime-archetypes",
+      "name": "The Ice-Cold Swordsman",
+      "blurb": "Says five words a season. Never misses.",
+      "stats": {
+        "lead": 5,
+        "power": 9,
+        "smarts": 6,
+        "heart": 4,
+        "chaos": 3
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-009",
+      "category": "anime-archetypes",
+      "name": "The Tournament Champion",
+      "blurb": "Trained in the mountains. Won't shut up about it.",
+      "stats": {
+        "lead": 6,
+        "power": 8,
+        "smarts": 5,
+        "heart": 6,
+        "chaos": 5
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-010",
+      "category": "anime-archetypes",
+      "name": "The Villain Who Was Right",
+      "blurb": "Evil plan, fair point. The fans are split.",
+      "stats": {
+        "lead": 9,
+        "power": 8,
+        "smarts": 9,
+        "heart": 3,
+        "chaos": 7
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-011",
+      "category": "anime-archetypes",
+      "name": "The Mysterious Transfer Student",
+      "blurb": "Arrives mid-term with a dark past and perfect hair.",
+      "stats": {
+        "lead": 4,
+        "power": 6,
+        "smarts": 7,
+        "heart": 5,
+        "chaos": 7
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-012",
+      "category": "anime-archetypes",
+      "name": "The Gentle Giant",
+      "blurb": "Could flatten a mountain. Prefers feeding stray cats.",
+      "stats": {
+        "lead": 4,
+        "power": 9,
+        "smarts": 3,
+        "heart": 9,
+        "chaos": 2
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-013",
+      "category": "anime-archetypes",
+      "name": "The Strategist with Glasses",
+      "blurb": "Pushes glasses up, explains the plan, plan works.",
+      "stats": {
+        "lead": 7,
+        "power": 2,
+        "smarts": 10,
+        "heart": 4,
+        "chaos": 2
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-014",
+      "category": "anime-archetypes",
+      "name": "The Overpowered Teacher",
+      "blurb": "Blindfolded, bored, and still the strongest in the room.",
+      "stats": {
+        "lead": 7,
+        "power": 10,
+        "smarts": 7,
+        "heart": 6,
+        "chaos": 8
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-015",
+      "category": "anime-archetypes",
+      "name": "The Chosen One",
+      "blurb": "Prophecy, glowing birthmark, no idea what's going on.",
+      "stats": {
+        "lead": 6,
+        "power": 8,
+        "smarts": 3,
+        "heart": 7,
+        "chaos": 6
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-016",
+      "category": "anime-archetypes",
+      "name": "The Rich Kid Rival",
+      "blurb": "Has a butler, a jet and a deep fear of losing.",
+      "stats": {
+        "lead": 6,
+        "power": 6,
+        "smarts": 6,
+        "heart": 3,
+        "chaos": 5
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-017",
+      "category": "anime-archetypes",
+      "name": "The Cheerful Childhood Friend",
+      "blurb": "Remembers everyone's birthday. Holds the group together.",
+      "stats": {
+        "lead": 5,
+        "power": 4,
+        "smarts": 4,
+        "heart": 10,
+        "chaos": 4
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-018",
+      "category": "anime-archetypes",
+      "name": "The Masked Stranger",
+      "blurb": "Nobody knows who they are. Everybody has a theory.",
+      "stats": {
+        "lead": 5,
+        "power": 8,
+        "smarts": 8,
+        "heart": 3,
+        "chaos": 9
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-019",
+      "category": "anime-archetypes",
+      "name": "The Cursed Blade Wielder",
+      "blurb": "The sword whispers. They are trying not to listen.",
+      "stats": {
+        "lead": 3,
+        "power": 9,
+        "smarts": 4,
+        "heart": 4,
+        "chaos": 9
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-020",
+      "category": "anime-archetypes",
+      "name": "The Student Council President",
+      "blurb": "Runs the school, the festival and probably the world.",
+      "stats": {
+        "lead": 9,
+        "power": 5,
+        "smarts": 8,
+        "heart": 4,
+        "chaos": 3
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-021",
+      "category": "anime-archetypes",
+      "name": "The Speedster",
+      "blurb": "Already there. Also already left.",
+      "stats": {
+        "lead": 3,
+        "power": 7,
+        "smarts": 4,
+        "heart": 5,
+        "chaos": 7
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-022",
+      "category": "anime-archetypes",
+      "name": "The Puppet Master",
+      "blurb": "Pulls the strings from three rooms away.",
+      "stats": {
+        "lead": 6,
+        "power": 6,
+        "smarts": 9,
+        "heart": 2,
+        "chaos": 8
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-023",
+      "category": "anime-archetypes",
+      "name": "The Bottomless Stomach",
+      "blurb": "Eats for five, fights for ten, naps for twelve.",
+      "stats": {
+        "lead": 3,
+        "power": 7,
+        "smarts": 2,
+        "heart": 7,
+        "chaos": 8
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-024",
+      "category": "anime-archetypes",
+      "name": "The Shy Prodigy",
+      "blurb": "Hides behind a book. Secretly the top of the class.",
+      "stats": {
+        "lead": 2,
+        "power": 8,
+        "smarts": 8,
+        "heart": 6,
+        "chaos": 3
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-025",
+      "category": "anime-archetypes",
+      "name": "The Grumpy Blacksmith",
+      "blurb": "Forges legendary weapons. Hates customers.",
+      "stats": {
+        "lead": 3,
+        "power": 6,
+        "smarts": 7,
+        "heart": 4,
+        "chaos": 4
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-026",
+      "category": "anime-archetypes",
+      "name": "The Beast Tamer",
+      "blurb": "Rides a giant wolf to school. Nobody asks.",
+      "stats": {
+        "lead": 4,
+        "power": 7,
+        "smarts": 4,
+        "heart": 7,
+        "chaos": 6
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-027",
+      "category": "anime-archetypes",
+      "name": "The Reformed Villain",
+      "blurb": "Used to be the problem. Now brings the snacks.",
+      "stats": {
+        "lead": 6,
+        "power": 8,
+        "smarts": 6,
+        "heart": 7,
+        "chaos": 6
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-028",
+      "category": "anime-archetypes",
+      "name": "The Pirate Captain",
+      "blurb": "Big hat, bigger dreams, no map.",
+      "stats": {
+        "lead": 9,
+        "power": 7,
+        "smarts": 4,
+        "heart": 6,
+        "chaos": 8
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-029",
+      "category": "anime-archetypes",
+      "name": "The Demon Hunter",
+      "blurb": "Works nights. Doesn't talk about work.",
+      "stats": {
+        "lead": 5,
+        "power": 8,
+        "smarts": 5,
+        "heart": 6,
+        "chaos": 5
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-030",
+      "category": "anime-archetypes",
+      "name": "The Talking Cat Guide",
+      "blurb": "Knows every secret. Shares them for fish.",
+      "stats": {
+        "lead": 4,
+        "power": 1,
+        "smarts": 8,
+        "heart": 6,
+        "chaos": 7
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-031",
+      "category": "anime-archetypes",
+      "name": "The Final Boss",
+      "blurb": "Waited forty episodes for this. Monologue ready.",
+      "stats": {
+        "lead": 8,
+        "power": 10,
+        "smarts": 8,
+        "heart": 1,
+        "chaos": 9
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-032",
+      "category": "anime-archetypes",
+      "name": "The Background Character",
+      "blurb": "Just here for the group photo.",
+      "stats": {
+        "lead": 1,
+        "power": 1,
+        "smarts": 2,
+        "heart": 3,
+        "chaos": 5
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-033",
+      "category": "anime-archetypes",
+      "name": "The Chatty Ninja",
+      "blurb": "Never stops talking. Never misses a throw.",
+      "stats": {
+        "lead": 4,
+        "power": 7,
+        "smarts": 5,
+        "heart": 6,
+        "chaos": 8
+      }
+    },
+    {
+      "id": "dt-anime-archetypes-034",
+      "category": "anime-archetypes",
+      "name": "The Retired Legend",
+      "blurb": "Swore they'd never fight again. Lasted one episode.",
+      "stats": {
+        "lead": 8,
+        "power": 9,
+        "smarts": 7,
+        "heart": 7,
+        "chaos": 4
+      }
+    },
+    {
+      "id": "dt-myths-legends-001",
+      "category": "myths-legends",
+      "name": "Zeus",
+      "blurb": "King of the Greek gods. Throws lightning when annoyed.",
+      "stats": {
+        "lead": 10,
+        "power": 10,
+        "smarts": 6,
+        "heart": 3,
+        "chaos": 9
+      }
+    },
+    {
+      "id": "dt-myths-legends-002",
+      "category": "myths-legends",
+      "name": "Athena",
+      "blurb": "Greek goddess of wisdom and battle strategy.",
+      "stats": {
+        "lead": 8,
+        "power": 7,
+        "smarts": 10,
+        "heart": 6,
+        "chaos": 2
+      }
+    },
+    {
+      "id": "dt-myths-legends-003",
+      "category": "myths-legends",
+      "name": "Hercules",
+      "blurb": "The strongest hero of Greek myth. Twelve labours, zero rest.",
+      "stats": {
+        "lead": 5,
+        "power": 10,
+        "smarts": 3,
+        "heart": 7,
+        "chaos": 6
+      }
+    },
+    {
+      "id": "dt-myths-legends-004",
+      "category": "myths-legends",
+      "name": "Thor",
+      "blurb": "Norse god of thunder with a hammer and a temper.",
+      "stats": {
+        "lead": 6,
+        "power": 10,
+        "smarts": 3,
+        "heart": 7,
+        "chaos": 8
+      }
+    },
+    {
+      "id": "dt-myths-legends-005",
+      "category": "myths-legends",
+      "name": "Loki",
+      "blurb": "Norse trickster. Shape-shifter. Never on time, never to be trusted.",
+      "stats": {
+        "lead": 3,
+        "power": 5,
+        "smarts": 9,
+        "heart": 2,
+        "chaos": 10
+      }
+    },
+    {
+      "id": "dt-myths-legends-006",
+      "category": "myths-legends",
+      "name": "Odin",
+      "blurb": "All-father of the Norse gods. Gave an eye for wisdom.",
+      "stats": {
+        "lead": 9,
+        "power": 8,
+        "smarts": 10,
+        "heart": 5,
+        "chaos": 4
+      }
+    },
+    {
+      "id": "dt-myths-legends-007",
+      "category": "myths-legends",
+      "name": "Anubis",
+      "blurb": "Egyptian guardian of the dead, weigher of hearts.",
+      "stats": {
+        "lead": 6,
+        "power": 7,
+        "smarts": 8,
+        "heart": 5,
+        "chaos": 3
+      }
+    },
+    {
+      "id": "dt-myths-legends-008",
+      "category": "myths-legends",
+      "name": "Ra",
+      "blurb": "Egyptian sun god who sails the sky every day.",
+      "stats": {
+        "lead": 9,
+        "power": 9,
+        "smarts": 7,
+        "heart": 5,
+        "chaos": 4
+      }
+    },
+    {
+      "id": "dt-myths-legends-009",
+      "category": "myths-legends",
+      "name": "Medusa",
+      "blurb": "One look turns you to stone. Bad at selfies.",
+      "stats": {
+        "lead": 3,
+        "power": 8,
+        "smarts": 5,
+        "heart": 3,
+        "chaos": 8
+      }
+    },
+    {
+      "id": "dt-myths-legends-010",
+      "category": "myths-legends",
+      "name": "King Arthur",
+      "blurb": "Pulled the sword from the stone. Leads the Round Table.",
+      "stats": {
+        "lead": 10,
+        "power": 7,
+        "smarts": 6,
+        "heart": 8,
+        "chaos": 2
+      }
+    },
+    {
+      "id": "dt-myths-legends-011",
+      "category": "myths-legends",
+      "name": "Merlin",
+      "blurb": "The wizard who advised kings and saw the future.",
+      "stats": {
+        "lead": 6,
+        "power": 7,
+        "smarts": 10,
+        "heart": 6,
+        "chaos": 7
+      }
+    },
+    {
+      "id": "dt-myths-legends-012",
+      "category": "myths-legends",
+      "name": "Sun Wukong",
+      "blurb": "The Monkey King. Fought heaven and nearly won.",
+      "stats": {
+        "lead": 5,
+        "power": 9,
+        "smarts": 7,
+        "heart": 5,
+        "chaos": 10
+      }
+    },
+    {
+      "id": "dt-myths-legends-013",
+      "category": "myths-legends",
+      "name": "Anansi",
+      "blurb": "West African spider trickster who owns all stories.",
+      "stats": {
+        "lead": 4,
+        "power": 2,
+        "smarts": 9,
+        "heart": 6,
+        "chaos": 9
+      }
+    },
+    {
+      "id": "dt-myths-legends-014",
+      "category": "myths-legends",
+      "name": "Achilles",
+      "blurb": "Greatest warrior of Troy. One weak heel.",
+      "stats": {
+        "lead": 6,
+        "power": 10,
+        "smarts": 4,
+        "heart": 4,
+        "chaos": 6
+      }
+    },
+    {
+      "id": "dt-myths-legends-015",
+      "category": "myths-legends",
+      "name": "Hermes",
+      "blurb": "Messenger of the gods. Winged sandals, sticky fingers.",
+      "stats": {
+        "lead": 4,
+        "power": 4,
+        "smarts": 8,
+        "heart": 6,
+        "chaos": 9
+      }
+    },
+    {
+      "id": "dt-myths-legends-016",
+      "category": "myths-legends",
+      "name": "Poseidon",
+      "blurb": "Greek god of the sea, storms and earthquakes.",
+      "stats": {
+        "lead": 8,
+        "power": 9,
+        "smarts": 5,
+        "heart": 3,
+        "chaos": 8
+      }
+    },
+    {
+      "id": "dt-myths-legends-017",
+      "category": "myths-legends",
+      "name": "Hades",
+      "blurb": "Ruler of the Greek underworld. Unfairly stuck with the job.",
+      "stats": {
+        "lead": 8,
+        "power": 8,
+        "smarts": 8,
+        "heart": 4,
+        "chaos": 3
+      }
+    },
+    {
+      "id": "dt-myths-legends-018",
+      "category": "myths-legends",
+      "name": "Robin Hood",
+      "blurb": "Steals from the rich, gives to the poor, never misses.",
+      "stats": {
+        "lead": 7,
+        "power": 6,
+        "smarts": 7,
+        "heart": 9,
+        "chaos": 7
+      }
+    },
+    {
+      "id": "dt-myths-legends-019",
+      "category": "myths-legends",
+      "name": "Beowulf",
+      "blurb": "Fought monsters with his bare hands. Then their mothers.",
+      "stats": {
+        "lead": 7,
+        "power": 9,
+        "smarts": 3,
+        "heart": 7,
+        "chaos": 5
+      }
+    },
+    {
+      "id": "dt-myths-legends-020",
+      "category": "myths-legends",
+      "name": "Hua Mulan",
+      "blurb": "Took her father's place in the army and led it.",
+      "stats": {
+        "lead": 7,
+        "power": 7,
+        "smarts": 8,
+        "heart": 9,
+        "chaos": 4
+      }
+    },
+    {
+      "id": "dt-myths-legends-021",
+      "category": "myths-legends",
+      "name": "Cú Chulainn",
+      "blurb": "Irish hero whose battle rage was its own weather.",
+      "stats": {
+        "lead": 6,
+        "power": 10,
+        "smarts": 3,
+        "heart": 5,
+        "chaos": 8
+      }
+    },
+    {
+      "id": "dt-myths-legends-022",
+      "category": "myths-legends",
+      "name": "Gilgamesh",
+      "blurb": "Mesopotamian king who searched for eternal life.",
+      "stats": {
+        "lead": 9,
+        "power": 9,
+        "smarts": 6,
+        "heart": 5,
+        "chaos": 5
+      }
+    },
+    {
+      "id": "dt-myths-legends-023",
+      "category": "myths-legends",
+      "name": "Scheherazade",
+      "blurb": "Told a story every night for 1,001 nights to stay alive.",
+      "stats": {
+        "lead": 5,
+        "power": 1,
+        "smarts": 10,
+        "heart": 8,
+        "chaos": 5
+      }
+    },
+    {
+      "id": "dt-myths-legends-024",
+      "category": "myths-legends",
+      "name": "Baba Yaga",
+      "blurb": "Slavic witch in a house on chicken legs.",
+      "stats": {
+        "lead": 4,
+        "power": 6,
+        "smarts": 9,
+        "heart": 2,
+        "chaos": 9
+      }
+    },
+    {
+      "id": "dt-myths-legends-025",
+      "category": "myths-legends",
+      "name": "Pegasus",
+      "blurb": "The winged horse of Greek myth.",
+      "stats": {
+        "lead": 2,
+        "power": 6,
+        "smarts": 3,
+        "heart": 7,
+        "chaos": 6
+      }
+    },
+    {
+      "id": "dt-myths-legends-026",
+      "category": "myths-legends",
+      "name": "The Minotaur",
+      "blurb": "Half bull, half man, all maze.",
+      "stats": {
+        "lead": 2,
+        "power": 9,
+        "smarts": 1,
+        "heart": 1,
+        "chaos": 7
+      }
+    },
+    {
+      "id": "dt-myths-legends-027",
+      "category": "myths-legends",
+      "name": "The Sphinx",
+      "blurb": "Answer the riddle or else.",
+      "stats": {
+        "lead": 4,
+        "power": 6,
+        "smarts": 10,
+        "heart": 2,
+        "chaos": 6
+      }
+    },
+    {
+      "id": "dt-myths-legends-028",
+      "category": "myths-legends",
+      "name": "Quetzalcoatl",
+      "blurb": "Feathered serpent of Mesoamerica, bringer of knowledge.",
+      "stats": {
+        "lead": 8,
+        "power": 8,
+        "smarts": 9,
+        "heart": 7,
+        "chaos": 4
+      }
+    },
+    {
+      "id": "dt-myths-legends-029",
+      "category": "myths-legends",
+      "name": "Maui",
+      "blurb": "Polynesian demigod who lassoed the sun and fished up islands.",
+      "stats": {
+        "lead": 6,
+        "power": 8,
+        "smarts": 6,
+        "heart": 7,
+        "chaos": 9
+      }
+    },
+    {
+      "id": "dt-myths-legends-030",
+      "category": "myths-legends",
+      "name": "Odysseus",
+      "blurb": "Ten years getting home. Outsmarted a cyclops on the way.",
+      "stats": {
+        "lead": 8,
+        "power": 7,
+        "smarts": 10,
+        "heart": 6,
+        "chaos": 6
+      }
+    },
+    {
+      "id": "dt-myths-legends-031",
+      "category": "myths-legends",
+      "name": "Pandora",
+      "blurb": "Opened the box. Regrets nothing. Mostly.",
+      "stats": {
+        "lead": 2,
+        "power": 1,
+        "smarts": 5,
+        "heart": 6,
+        "chaos": 10
+      }
+    },
+    {
+      "id": "dt-myths-legends-032",
+      "category": "myths-legends",
+      "name": "Icarus",
+      "blurb": "Flew too close to the sun. Great view, though.",
+      "stats": {
+        "lead": 2,
+        "power": 3,
+        "smarts": 3,
+        "heart": 6,
+        "chaos": 8
+      }
+    },
+    {
+      "id": "dt-myths-legends-033",
+      "category": "myths-legends",
+      "name": "A Valkyrie",
+      "blurb": "Norse warrior spirit who chooses the bravest in battle.",
+      "stats": {
+        "lead": 6,
+        "power": 8,
+        "smarts": 5,
+        "heart": 6,
+        "chaos": 5
+      }
+    },
+    {
+      "id": "dt-myths-legends-034",
+      "category": "myths-legends",
+      "name": "Perseus",
+      "blurb": "Slew Medusa with a mirrored shield.",
+      "stats": {
+        "lead": 6,
+        "power": 8,
+        "smarts": 6,
+        "heart": 7,
+        "chaos": 5
+      }
+    }
+  ]
+}

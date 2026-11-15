@@ -754,7 +754,7 @@
   "trophyPartyAnimal": "Party Animal",
   "trophyPartyAnimalBody": "Finish 25 games.",
   "trophyAllModes": "Try Them All",
-  "trophyAllModesBody": "Finish a game of every mode.",
+  "trophyAllModesBody": "Finish a game of every mode, Dream Team included.",
   "trophyStreak3": "On a Roll",
   "trophyStreak3Body": "Play 3 days in a row.",
   "trophyStreak7": "Week of Fun",
@@ -764,5 +764,248 @@
   "trophyKnowItAll": "Know-It-All",
   "trophyKnowItAllBody": "Get every answer right in a Trivia Blitz game.",
   "trophyRisingStar": "Rising Star",
-  "trophyRisingStarBody": "Reach level 5."
+  "trophyRisingStarBody": "Reach level 5.",
+  "modeDreamTeamName": "Dream Team",
+  "modeDreamTeamBlurb": "Draft a squad blind. Then argue who wins.",
+  "modeDreamTeamRules": "Two players or teams take turns. Flip a random card and lock it into one of your empty roles, like Captain or Healer. You can't move it later, and you get one skip. When both teams are full, the room votes role by role, and the cards' hidden stats give a second verdict.",
+  "dtDeck": "Deck",
+  "dtRoles": "Roles",
+  "dtSides": "Who's playing",
+  "dtSideLabel": "Side {n}",
+  "@dtSideLabel": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "dtSideDefault": "Player {n}",
+  "@dtSideDefault": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "dtMyDecks": "My decks",
+  "dtMakeDeck": "Make your own deck",
+  "dtMakeDeckBody": "Type in any characters you like, from your favourite show or your friends. Premium.",
+  "dtCustomDeckInfo": "{count} cards · room vote only",
+  "@dtCustomDeckInfo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "dtDeckCards": "{count} cards",
+  "@dtDeckCards": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "dtStart": "Start the draft",
+  "dtTurn": "{name}'s pick",
+  "@dtTurn": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "dtTapToFlip": "Tap to flip",
+  "dtPlaceHint": "Tap an empty role to lock it in.",
+  "dtFlipFirst": "Flip the card first.",
+  "dtEmptySlot": "Empty",
+  "dtSkip": "Skip ({left} left)",
+  "@dtSkip": {
+    "placeholders": {
+      "left": {
+        "type": "int"
+      }
+    }
+  },
+  "dtNoSkips": "No skips left",
+  "dtYourTeam": "Your team",
+  "dtTheirTeam": "{name}'s team",
+  "@dtTheirTeam": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "dtPassTo": "Pass the phone to {name}",
+  "@dtPassTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "dtPassBody": "Don't peek at the next card!",
+  "dtReady": "I'm {name}",
+  "@dtReady": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "dtDraftProgress": "{placed} of {total} picked",
+  "@dtDraftProgress": {
+    "placeholders": {
+      "placed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "dtVoteTitle": "Who wins {role}?",
+  "@dtVoteTitle": {
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "dtVoteHint": "The room decides. Tap the winner.",
+  "dtVoteProgress": "Role {n} of {total}",
+  "@dtVoteProgress": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "dtSeeVerdict": "See the verdict",
+  "dtRoomWins": "The room says: {name} wins {a}–{b}",
+  "@dtRoomWins": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "a": {
+        "type": "int"
+      },
+      "b": {
+        "type": "int"
+      }
+    }
+  },
+  "dtRoomTie": "The room says: it's a tie, {a}–{b}",
+  "@dtRoomTie": {
+    "placeholders": {
+      "a": {
+        "type": "int"
+      },
+      "b": {
+        "type": "int"
+      }
+    }
+  },
+  "dtStatsWins": "The stats say: {name} wins {a}–{b}",
+  "@dtStatsWins": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "a": {
+        "type": "int"
+      },
+      "b": {
+        "type": "int"
+      }
+    }
+  },
+  "dtStatsTie": "The stats say: dead even, {a}–{b}",
+  "@dtStatsTie": {
+    "placeholders": {
+      "a": {
+        "type": "int"
+      },
+      "b": {
+        "type": "int"
+      }
+    }
+  },
+  "dtStatsAgree": "The room and the stats agree!",
+  "dtStatsDisagree": "The room and the stats disagree. Argue it out.",
+  "dtNoStats": "Custom decks have no stats, so the room's word is final.",
+  "dtResultsTitle": "The verdict",
+  "dtPlayAgain": "Draft again",
+  "dtDecksTitle": "My decks",
+  "dtNewDeck": "New deck",
+  "dtEditDeck": "Edit deck",
+  "dtDeckTitle": "Deck name",
+  "dtDeckNames": "Cards, one per line",
+  "dtDeckNamesHint": "Each line is one card, e.g. a character's name.",
+  "dtDeckCount": "{count} cards (at least {min}, up to {max})",
+  "@dtDeckCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "dtDeckSave": "Save deck",
+  "dtDeckDelete": "Delete deck",
+  "dtDeckDeleteConfirm": "Delete “{name}”? This can't be undone.",
+  "@dtDeckDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "dtDeckEmpty": "No decks yet. Make one with any characters you like.",
+  "dtDeckStaysHere": "Your decks stay on this phone.",
+  "dtProblemNoTitle": "Give the deck a name.",
+  "dtProblemTitleTooLong": "Keep the deck name to {max} characters.",
+  "@dtProblemTitleTooLong": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "dtProblemTooFew": "Add at least {min} cards, so both teams can fill every role.",
+  "@dtProblemTooFew": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "dtProblemTooMany": "A deck can hold up to {max} cards.",
+  "@dtProblemTooMany": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "dtProblemNameTooLong": "Keep each card to {max} characters.",
+  "@dtProblemNameTooLong": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "dtProblemNotAllowed": "Please keep it friendly: one of those words isn't allowed.",
+  "dtPremiumDecks": "Custom decks are part of Premium."
 }

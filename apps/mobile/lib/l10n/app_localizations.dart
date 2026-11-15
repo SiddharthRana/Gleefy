@@ -1900,7 +1900,7 @@ abstract class AppLocalizations {
   /// No description provided for @trophyAllModesBody.
   ///
   /// In en, this message translates to:
-  /// **'Finish a game of every mode.'**
+  /// **'Finish a game of every mode, Dream Team included.'**
   String get trophyAllModesBody;
 
   /// No description provided for @trophyStreak3.
@@ -1962,6 +1962,360 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reach level 5.'**
   String get trophyRisingStarBody;
+
+  /// No description provided for @modeDreamTeamName.
+  ///
+  /// In en, this message translates to:
+  /// **'Dream Team'**
+  String get modeDreamTeamName;
+
+  /// No description provided for @modeDreamTeamBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft a squad blind. Then argue who wins.'**
+  String get modeDreamTeamBlurb;
+
+  /// No description provided for @modeDreamTeamRules.
+  ///
+  /// In en, this message translates to:
+  /// **'Two players or teams take turns. Flip a random card and lock it into one of your empty roles, like Captain or Healer. You can\'t move it later, and you get one skip. When both teams are full, the room votes role by role, and the cards\' hidden stats give a second verdict.'**
+  String get modeDreamTeamRules;
+
+  /// No description provided for @dtDeck.
+  ///
+  /// In en, this message translates to:
+  /// **'Deck'**
+  String get dtDeck;
+
+  /// No description provided for @dtRoles.
+  ///
+  /// In en, this message translates to:
+  /// **'Roles'**
+  String get dtRoles;
+
+  /// No description provided for @dtSides.
+  ///
+  /// In en, this message translates to:
+  /// **'Who\'s playing'**
+  String get dtSides;
+
+  /// No description provided for @dtSideLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Side {n}'**
+  String dtSideLabel(int n);
+
+  /// No description provided for @dtSideDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Player {n}'**
+  String dtSideDefault(int n);
+
+  /// No description provided for @dtMyDecks.
+  ///
+  /// In en, this message translates to:
+  /// **'My decks'**
+  String get dtMyDecks;
+
+  /// No description provided for @dtMakeDeck.
+  ///
+  /// In en, this message translates to:
+  /// **'Make your own deck'**
+  String get dtMakeDeck;
+
+  /// No description provided for @dtMakeDeckBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Type in any characters you like, from your favourite show or your friends. Premium.'**
+  String get dtMakeDeckBody;
+
+  /// No description provided for @dtCustomDeckInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} cards · room vote only'**
+  String dtCustomDeckInfo(int count);
+
+  /// No description provided for @dtDeckCards.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} cards'**
+  String dtDeckCards(int count);
+
+  /// No description provided for @dtStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start the draft'**
+  String get dtStart;
+
+  /// No description provided for @dtTurn.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}\'s pick'**
+  String dtTurn(String name);
+
+  /// No description provided for @dtTapToFlip.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to flip'**
+  String get dtTapToFlip;
+
+  /// No description provided for @dtPlaceHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap an empty role to lock it in.'**
+  String get dtPlaceHint;
+
+  /// No description provided for @dtFlipFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Flip the card first.'**
+  String get dtFlipFirst;
+
+  /// No description provided for @dtEmptySlot.
+  ///
+  /// In en, this message translates to:
+  /// **'Empty'**
+  String get dtEmptySlot;
+
+  /// No description provided for @dtSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip ({left} left)'**
+  String dtSkip(int left);
+
+  /// No description provided for @dtNoSkips.
+  ///
+  /// In en, this message translates to:
+  /// **'No skips left'**
+  String get dtNoSkips;
+
+  /// No description provided for @dtYourTeam.
+  ///
+  /// In en, this message translates to:
+  /// **'Your team'**
+  String get dtYourTeam;
+
+  /// No description provided for @dtTheirTeam.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}\'s team'**
+  String dtTheirTeam(String name);
+
+  /// No description provided for @dtPassTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Pass the phone to {name}'**
+  String dtPassTo(String name);
+
+  /// No description provided for @dtPassBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t peek at the next card!'**
+  String get dtPassBody;
+
+  /// No description provided for @dtReady.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m {name}'**
+  String dtReady(String name);
+
+  /// No description provided for @dtDraftProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'{placed} of {total} picked'**
+  String dtDraftProgress(int placed, int total);
+
+  /// No description provided for @dtVoteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Who wins {role}?'**
+  String dtVoteTitle(String role);
+
+  /// No description provided for @dtVoteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The room decides. Tap the winner.'**
+  String get dtVoteHint;
+
+  /// No description provided for @dtVoteProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Role {n} of {total}'**
+  String dtVoteProgress(int n, int total);
+
+  /// No description provided for @dtSeeVerdict.
+  ///
+  /// In en, this message translates to:
+  /// **'See the verdict'**
+  String get dtSeeVerdict;
+
+  /// No description provided for @dtRoomWins.
+  ///
+  /// In en, this message translates to:
+  /// **'The room says: {name} wins {a}–{b}'**
+  String dtRoomWins(String name, int a, int b);
+
+  /// No description provided for @dtRoomTie.
+  ///
+  /// In en, this message translates to:
+  /// **'The room says: it\'s a tie, {a}–{b}'**
+  String dtRoomTie(int a, int b);
+
+  /// No description provided for @dtStatsWins.
+  ///
+  /// In en, this message translates to:
+  /// **'The stats say: {name} wins {a}–{b}'**
+  String dtStatsWins(String name, int a, int b);
+
+  /// No description provided for @dtStatsTie.
+  ///
+  /// In en, this message translates to:
+  /// **'The stats say: dead even, {a}–{b}'**
+  String dtStatsTie(int a, int b);
+
+  /// No description provided for @dtStatsAgree.
+  ///
+  /// In en, this message translates to:
+  /// **'The room and the stats agree!'**
+  String get dtStatsAgree;
+
+  /// No description provided for @dtStatsDisagree.
+  ///
+  /// In en, this message translates to:
+  /// **'The room and the stats disagree. Argue it out.'**
+  String get dtStatsDisagree;
+
+  /// No description provided for @dtNoStats.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom decks have no stats, so the room\'s word is final.'**
+  String get dtNoStats;
+
+  /// No description provided for @dtResultsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The verdict'**
+  String get dtResultsTitle;
+
+  /// No description provided for @dtPlayAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft again'**
+  String get dtPlayAgain;
+
+  /// No description provided for @dtDecksTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My decks'**
+  String get dtDecksTitle;
+
+  /// No description provided for @dtNewDeck.
+  ///
+  /// In en, this message translates to:
+  /// **'New deck'**
+  String get dtNewDeck;
+
+  /// No description provided for @dtEditDeck.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit deck'**
+  String get dtEditDeck;
+
+  /// No description provided for @dtDeckTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Deck name'**
+  String get dtDeckTitle;
+
+  /// No description provided for @dtDeckNames.
+  ///
+  /// In en, this message translates to:
+  /// **'Cards, one per line'**
+  String get dtDeckNames;
+
+  /// No description provided for @dtDeckNamesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Each line is one card, e.g. a character\'s name.'**
+  String get dtDeckNamesHint;
+
+  /// No description provided for @dtDeckCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} cards (at least {min}, up to {max})'**
+  String dtDeckCount(int count, int min, int max);
+
+  /// No description provided for @dtDeckSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save deck'**
+  String get dtDeckSave;
+
+  /// No description provided for @dtDeckDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete deck'**
+  String get dtDeckDelete;
+
+  /// No description provided for @dtDeckDeleteConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete “{name}”? This can\'t be undone.'**
+  String dtDeckDeleteConfirm(String name);
+
+  /// No description provided for @dtDeckEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No decks yet. Make one with any characters you like.'**
+  String get dtDeckEmpty;
+
+  /// No description provided for @dtDeckStaysHere.
+  ///
+  /// In en, this message translates to:
+  /// **'Your decks stay on this phone.'**
+  String get dtDeckStaysHere;
+
+  /// No description provided for @dtProblemNoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Give the deck a name.'**
+  String get dtProblemNoTitle;
+
+  /// No description provided for @dtProblemTitleTooLong.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep the deck name to {max} characters.'**
+  String dtProblemTitleTooLong(int max);
+
+  /// No description provided for @dtProblemTooFew.
+  ///
+  /// In en, this message translates to:
+  /// **'Add at least {min} cards, so both teams can fill every role.'**
+  String dtProblemTooFew(int min);
+
+  /// No description provided for @dtProblemTooMany.
+  ///
+  /// In en, this message translates to:
+  /// **'A deck can hold up to {max} cards.'**
+  String dtProblemTooMany(int max);
+
+  /// No description provided for @dtProblemNameTooLong.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep each card to {max} characters.'**
+  String dtProblemNameTooLong(int max);
+
+  /// No description provided for @dtProblemNotAllowed.
+  ///
+  /// In en, this message translates to:
+  /// **'Please keep it friendly: one of those words isn\'t allowed.'**
+  String get dtProblemNotAllowed;
+
+  /// No description provided for @dtPremiumDecks.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom decks are part of Premium.'**
+  String get dtPremiumDecks;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

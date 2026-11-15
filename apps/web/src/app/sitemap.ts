@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...modes.flatMap((m) => (m.href ? [m.href] : [])),
     '/how-to-play',
     '/play',
+    '/play/dream-team',
     '/pricing',
     '/faq',
     '/guides',

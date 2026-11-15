@@ -2,7 +2,7 @@ import type { Route } from 'next';
 import type { ShareMode } from '@gleefy/game-engine';
 import { packs } from './packs';
 
-export type GuideId = ShareMode | 'custom-party-pack';
+export type GuideId = ShareMode | 'custom-party-pack' | 'dream-team';
 
 export interface ModeGuide {
   id: GuideId;
@@ -15,6 +15,8 @@ export interface ModeGuide {
   pack?: ShareMode;
   /** Can be played in the browser at /play. */
   webPlayer: boolean;
+  /** Where the browser version lives, if not /play. */
+  playHref?: Route;
 }
 
 export const guides: ModeGuide[] = [
@@ -106,6 +108,29 @@ export const guides: ModeGuide[] = [
     ],
     pack: 'guess',
     webPlayer: true,
+  },
+  {
+    id: 'dream-team',
+    name: 'Dream Team',
+    description:
+      'Dream Team is a blind draft party game for two players or teams: flip random characters, lock each into a role, then argue whose squad wins.',
+    intro:
+      'Draft a squad blind, one random card at a time, and live with every pick. Then the room argues whose team wins, and the hidden stats have their say too.',
+    rules: [
+      'Pick a deck and a set of roles, like Captain, Tank, Strategist, Healer and Wildcard.',
+      'Take turns passing the phone. Flip a random card and lock it into one of your empty roles.',
+      'Placed cards can’t move. Each side gets one skip to throw a card away.',
+      'When both teams are full, the room votes role by role on who wins.',
+      'Then see the stats verdict: every card has hidden ratings. Do the room and the stats agree?',
+    ],
+    tips: [
+      'Save your skip. The worst card always turns up when you’ve used it.',
+      'Argue every vote out loud before anyone taps. That’s the game.',
+      'Try the Heist Crew or Zombie Squad roles for a different fight.',
+      'With Premium, make a deck of your own characters: a favourite show, your friends, anything.',
+    ],
+    webPlayer: true,
+    playHref: '/play/dream-team',
   },
   {
     id: 'custom-party-pack',

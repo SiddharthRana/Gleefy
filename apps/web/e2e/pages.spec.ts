@@ -10,6 +10,8 @@ const pages = [
   '/games/trivia',
   '/games/guess',
   '/games/custom-party-pack',
+  '/games/dream-team',
+  '/play/dream-team',
   '/how-to-play',
   '/faq',
   '/guides',
@@ -89,7 +91,7 @@ test('the landing page demo plays real questions', async ({ page }) => {
 
 test('every mode is listed as available in the app', async ({ page }) => {
   await page.goto('/games');
-  await expect(page.getByText('Android & iOS')).toHaveCount(5);
+  await expect(page.getByText('Android & iOS')).toHaveCount(6);
   await expect(page.getByText('In development')).toHaveCount(0);
 });
 
@@ -120,8 +122,14 @@ test('security headers are set', async ({ request }) => {
 test('every game in the library has its own guide page', async ({ page }) => {
   await page.goto('/games');
   const links = page.getByRole('main').getByRole('link');
-  await expect(links).toHaveCount(5);
-  for (const name of ['This or That', 'Trivia Blitz', 'Guess the Answer', 'Custom Party Pack']) {
+  await expect(links).toHaveCount(6);
+  for (const name of [
+    'Dream Team',
+    'This or That',
+    'Trivia Blitz',
+    'Guess the Answer',
+    'Custom Party Pack',
+  ]) {
     await page.goto('/games');
     await page
       .getByRole('main')

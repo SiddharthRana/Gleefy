@@ -94,6 +94,7 @@ export default function PricingPage() {
             <ul className="mt-4 list-disc space-y-2 pl-6">
               <li>Everything in Free</li>
               <li>Every premium category in every game</li>
+              <li>Dream Team: the Myths &amp; Legends deck and decks of your own</li>
               <li>One account for the Android and iOS apps and the website</li>
               <li>Pay once, keep it for good</li>
             </ul>

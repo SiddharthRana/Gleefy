@@ -3,6 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../features/account/account_screen.dart';
+import '../features/dream_team/dream_team_decks_screen.dart';
+import '../features/dream_team/dream_team_play_screen.dart';
+import '../features/dream_team/dream_team_setup_screen.dart';
 import '../features/account/premium_screen.dart';
 import '../features/account/sign_in_screen.dart';
 import '../features/trophies_screen.dart';
@@ -59,6 +62,16 @@ final routerProvider = Provider<GoRouter>((ref) {
             initialMode: GameMode.fromId(state.uri.queryParameters['mode'] ?? '') ?? GameMode.wouldYouRather,
           ),
         ),
+      ),
+      GoRoute(path: '/dream-team', pageBuilder: (_, state) => page(state, const DreamTeamSetupScreen())),
+      GoRoute(path: '/dream-team/play', pageBuilder: (_, state) => page(state, const DreamTeamPlayScreen())),
+      GoRoute(path: '/dream-team/decks', pageBuilder: (_, state) => page(state, const DreamTeamDecksScreen())),
+      GoRoute(
+        path: '/dream-team/decks/:id',
+        pageBuilder: (_, state) {
+          final id = state.pathParameters['id']!;
+          return page(state, DreamTeamDeckEditor(deckId: id == 'new' ? null : id));
+        },
       ),
       GoRoute(path: '/account', pageBuilder: (_, state) => page(state, const AccountScreen())),
       GoRoute(path: '/account/sign-in', pageBuilder: (_, state) => page(state, const SignInScreen())),

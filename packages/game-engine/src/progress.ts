@@ -2,13 +2,14 @@
 // on the device (localStorage on the website, shared preferences in the app) and never leaves it.
 // The Dart copy (apps/mobile/lib/game/progress.dart) replays test-vectors/progress.json.
 
-export type ProgressMode = 'would-you-rather' | 'this-or-that' | 'trivia' | 'guess';
+export type ProgressMode = 'would-you-rather' | 'this-or-that' | 'trivia' | 'guess' | 'dream-team';
 
 export const PROGRESS_MODES: readonly ProgressMode[] = [
   'would-you-rather',
   'this-or-that',
   'trivia',
   'guess',
+  'dream-team',
 ];
 
 export interface Progress {
