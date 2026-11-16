@@ -23,6 +23,12 @@ concurrency:
 permissions:
   contents: read
 
+# Flutter is pinned, like the Supabase CLI: "stable" moves on its own (3.50 deprecated
+# package:flutter/material.dart overnight and failed analysis). Upgrade on purpose: change this,
+# run `flutter analyze` and the tests locally on the same version, then merge.
+env:
+  FLUTTER_VERSION: 3.47.9
+
 jobs:
   typescript:
     name: TypeScript (web, api, packages, content)
@@ -107,6 +113,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
       - run: flutter pub get
       - name: Format check
@@ -262,6 +269,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
       - uses: actions/setup-java@v5
         with:
