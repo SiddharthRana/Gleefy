@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { ShareMode } from '@gleefy/game-engine';
 import { categoryCount, guide, guideHref, guides } from '@/lib/guides';
+import { dreamTeam } from '@/lib/dream-team';
 import { packs } from '@/lib/packs';
 import { primary } from '@/lib/ui';
 import { ForFree, ForPremium } from '@/components/premium-status';
@@ -90,7 +91,7 @@ export default async function ModeGuidePage({ params }: { params: Promise<{ mode
       <p className="mt-3 max-w-2xl text-lg text-muted">{g.intro}</p>
       {g.pack && <Sample mode={g.pack} />}
       {g.webPlayer && (
-        <Link href="/play" className={`${primary} mt-8 inline-flex items-center`}>
+        <Link href={g.playHref ?? '/play'} className={`${primary} mt-8 inline-flex items-center`}>
           Play {g.name} in your browser
         </Link>
       )}
@@ -137,6 +138,53 @@ export default async function ModeGuidePage({ params }: { params: Promise<{ mode
                 <p className="mt-2 text-sm font-bold">
                   {categoryCount(g.pack!, c.id)} {g.pack === 'guess' ? 'cards' : 'questions'}
                 </p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {g.id === 'dream-team' && (
+        <section aria-labelledby="decks" className="mt-12">
+          <h2 id="decks" className="font-display text-3xl font-semibold">
+            Decks and roles
+          </h2>
+          <ul className="mt-6 grid gap-4 sm:grid-cols-2">
+            {dreamTeam.categories.map((d) => (
+              <li key={d.id} className="rounded-card border border-border bg-surface p-5">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h3 className="font-display text-2xl font-semibold">{d.name}</h3>
+                  {d.tier === 'premium' && (
+                    <span className="rounded-full bg-accent px-3 py-1 text-sm font-bold text-on-accent">
+                      <ForFree>Premium</ForFree>
+                      <ForPremium>✓ Premium</ForPremium>
+                    </span>
+                  )}
+                </div>
+                <p className="mt-1 text-muted">{d.description}</p>
+                <p className="mt-2 text-sm font-bold">
+                  {dreamTeam.items.filter((i) => i.category === d.id).length} cards
+                </p>
+              </li>
+            ))}
+            <li className="rounded-card border border-border bg-surface p-5">
+              <div className="flex flex-wrap items-center gap-2">
+                <h3 className="font-display text-2xl font-semibold">Your own decks</h3>
+                <span className="rounded-full bg-accent px-3 py-1 text-sm font-bold text-on-accent">
+                  Premium
+                </span>
+              </div>
+              <p className="mt-1 text-muted">
+                Type in any characters you like. They stay on your device, and the room decides
+                every vote.
+              </p>
+            </li>
+          </ul>
+          <ul className="mt-6 grid gap-2 sm:grid-cols-2" aria-label="Role sets">
+            {dreamTeam.roleSets.map((r) => (
+              <li key={r.id}>
+                <span className="font-bold">{r.name}:</span>{' '}
+                <span className="text-muted">{r.roles.map((x) => x.name).join(', ')}</span>
               </li>
             ))}
           </ul>

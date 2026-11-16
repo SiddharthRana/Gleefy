@@ -1,6 +1,12 @@
 import { z } from 'zod';
 
-export const MODE_IDS = ['would-you-rather', 'this-or-that', 'trivia', 'guess'] as const;
+export const MODE_IDS = [
+  'would-you-rather',
+  'this-or-that',
+  'trivia',
+  'guess',
+  'dream-team',
+] as const;
 export type ModeId = (typeof MODE_IDS)[number];
 
 /** Short id prefix used in item ids, e.g. `wyr-casual-001`. */
@@ -9,6 +15,7 @@ export const MODE_PREFIX: Record<ModeId, string> = {
   'this-or-that': 'tot',
   trivia: 'triv',
   guess: 'gta',
+  'dream-team': 'dt',
 };
 
 const slug = z
@@ -79,6 +86,44 @@ export const guessItemSchema = z.strictObject({
   clues: z.array(text(120)).length(3),
 });
 
+/** Dream Team card stats, each 1–10; a role is judged on one of them. */
+export const DREAM_TEAM_STATS = ['lead', 'power', 'smarts', 'heart', 'chaos'] as const;
+export type DreamTeamStat = (typeof DREAM_TEAM_STATS)[number];
+
+const stat = z.int().min(1).max(10);
+
+/** A Dream Team card: a character drafted into a team. Original or public-domain only. */
+export const dreamTeamItemSchema = z.strictObject({
+  id: itemId('dt'),
+  category: slug,
+  name: text(40),
+  blurb: text(90),
+  stats: z.strictObject({
+    lead: stat,
+    power: stat,
+    smarts: stat,
+    heart: stat,
+    chaos: stat,
+  }),
+});
+
+/** The slots each side fills, e.g. Captain, Tank, Strategist, Healer, Wildcard. */
+export const roleSetSchema = z.strictObject({
+  id: slug,
+  name: text(30),
+  roles: z
+    .array(
+      z.strictObject({
+        id: slug,
+        name: text(20),
+        /** The stat the stats verdict compares for this role. */
+        stat: z.enum(DREAM_TEAM_STATS),
+      }),
+    )
+    .min(3)
+    .max(6),
+});
+
 const packBase = {
   $schema: z.string().optional(),
   version: z.int().positive(),
@@ -106,11 +151,19 @@ export const guessPackSchema = z.strictObject({
   items: z.array(guessItemSchema).min(1),
 });
 
+export const dreamTeamPackSchema = z.strictObject({
+  ...packBase,
+  mode: z.literal('dream-team'),
+  roleSets: z.array(roleSetSchema).min(1),
+  items: z.array(dreamTeamItemSchema).min(1),
+});
+
 export const packSchema = z.discriminatedUnion('mode', [
   wyrPackSchema,
   totPackSchema,
   triviaPackSchema,
   guessPackSchema,
+  dreamTeamPackSchema,
 ]);
 
 export type Category = z.infer<typeof categorySchema>;
@@ -118,8 +171,11 @@ export type WyrItem = z.infer<typeof wyrItemSchema>;
 export type TotItem = z.infer<typeof totItemSchema>;
 export type TriviaItem = z.infer<typeof triviaItemSchema>;
 export type GuessItem = z.infer<typeof guessItemSchema>;
+export type DreamTeamItem = z.infer<typeof dreamTeamItemSchema>;
+export type RoleSet = z.infer<typeof roleSetSchema>;
 export type WyrPack = z.infer<typeof wyrPackSchema>;
 export type TotPack = z.infer<typeof totPackSchema>;
 export type TriviaPack = z.infer<typeof triviaPackSchema>;
 export type GuessPack = z.infer<typeof guessPackSchema>;
+export type DreamTeamPack = z.infer<typeof dreamTeamPackSchema>;
 export type Pack = z.infer<typeof packSchema>;

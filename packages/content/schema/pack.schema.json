@@ -524,6 +524,225 @@
         "items"
       ],
       "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "version": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "categories": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "maxLength": 40,
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 40
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 140
+              },
+              "tier": {
+                "type": "string",
+                "enum": [
+                  "free",
+                  "premium"
+                ]
+              },
+              "ageRating": {
+                "type": "string",
+                "enum": [
+                  "all",
+                  "13+"
+                ]
+              },
+              "region": {
+                "type": "string",
+                "enum": [
+                  "global",
+                  "in"
+                ]
+              },
+              "contentNote": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 140
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "description",
+              "tier",
+              "ageRating",
+              "region"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "mode": {
+          "type": "string",
+          "const": "dream-team"
+        },
+        "roleSets": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "maxLength": 40,
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 30
+              },
+              "roles": {
+                "minItems": 3,
+                "maxItems": 6,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "maxLength": 40,
+                      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 20
+                    },
+                    "stat": {
+                      "type": "string",
+                      "enum": [
+                        "lead",
+                        "power",
+                        "smarts",
+                        "heart",
+                        "chaos"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "stat"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "roles"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "items": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^dt-[a-z0-9-]+-\\d{3}$"
+              },
+              "category": {
+                "type": "string",
+                "maxLength": 40,
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 40
+              },
+              "blurb": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 90
+              },
+              "stats": {
+                "type": "object",
+                "properties": {
+                  "lead": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 10
+                  },
+                  "power": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 10
+                  },
+                  "smarts": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 10
+                  },
+                  "heart": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 10
+                  },
+                  "chaos": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 10
+                  }
+                },
+                "required": [
+                  "lead",
+                  "power",
+                  "smarts",
+                  "heart",
+                  "chaos"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "id",
+              "category",
+              "name",
+              "blurb",
+              "stats"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "version",
+        "categories",
+        "mode",
+        "roleSets",
+        "items"
+      ],
+      "additionalProperties": false
     }
   ]
 }

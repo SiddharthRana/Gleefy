@@ -17,6 +17,7 @@ type AnyItem = Pack['items'][number];
 
 /** Checks within one item and returns the text used to detect duplicate questions. */
 function itemKey(item: AnyItem, errors: string[]): string {
+  if ('name' in item) return norm(item.name);
   if ('a' in item) {
     if (norm(item.a) === norm(item.b)) errors.push(`${item.id}: both options are the same`);
     return [norm(item.a), norm(item.b)].sort().join(' | ');
@@ -76,6 +77,22 @@ export function validatePack(input: unknown): ValidationResult {
 
   for (const id of categoryIds) {
     if (!perCategory.get(id)) errors.push(`category "${id}" has no items`);
+  }
+
+  if (pack.mode === 'dream-team') {
+    const setIds = new Set<string>();
+    for (const set of pack.roleSets) {
+      if (setIds.has(set.id)) errors.push(`roleSets: duplicate id "${set.id}"`);
+      setIds.add(set.id);
+      const roleIds = set.roles.map((r) => r.id);
+      if (new Set(roleIds).size !== roleIds.length) errors.push(`${set.id}: duplicate role ids`);
+    }
+    // Two sides fill every slot, plus one skip each, so a deck needs at least that many cards.
+    const need = 2 * Math.max(...pack.roleSets.map((r) => r.roles.length)) + 2;
+    for (const id of categoryIds) {
+      if ((perCategory.get(id) ?? 0) < need)
+        errors.push(`deck "${id}" needs at least ${need} cards`);
+    }
   }
 
   return errors.length ? { ok: false, errors } : { ok: true, pack };

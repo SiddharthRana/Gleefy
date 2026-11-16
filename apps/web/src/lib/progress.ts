@@ -70,7 +70,11 @@ export const trophyInfo: Record<string, TrophyInfo> = {
   'first-game': { name: 'Ice Breaker', description: 'Finish your first game.', icon: '🎉' },
   regular: { name: 'Regular', description: 'Finish 5 games.', icon: '⭐' },
   'party-animal': { name: 'Party Animal', description: 'Finish 25 games.', icon: '🦄' },
-  'all-modes': { name: 'Try Them All', description: 'Finish a game of every mode.', icon: '🧭' },
+  'all-modes': {
+    name: 'Try Them All',
+    description: 'Finish a game of every mode, Dream Team included.',
+    icon: '🧭',
+  },
   'streak-3': { name: 'On a Roll', description: 'Play 3 days in a row.', icon: '🔥' },
   'streak-7': { name: 'Week of Fun', description: 'Play 7 days in a row.', icon: '📅' },
   marathon: { name: 'Marathon', description: 'Finish a game of 20 rounds or more.', icon: '🏃' },

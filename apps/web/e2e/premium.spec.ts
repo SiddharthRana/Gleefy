@@ -294,6 +294,8 @@ const sitePages = [
   '/games/trivia',
   '/games/guess',
   '/games/custom-party-pack',
+  '/games/dream-team',
+  '/play/dream-team',
   '/how-to-play',
   '/pricing',
   '/account',

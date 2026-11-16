@@ -4,3 +4,4 @@ export * from './trivia.ts';
 export * from './guess.ts';
 export * from './share.ts';
 export * from './progress.ts';
+export * from './dream-team.ts';

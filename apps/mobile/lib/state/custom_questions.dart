@@ -139,6 +139,7 @@ ContentLibrary withCustomQuestions(ContentLibrary base, CustomQuestions custom) 
     tot: extend(base.tot, custom.tot),
     trivia: base.trivia,
     guess: base.guess,
+    dreamTeam: base.dreamTeam,
   );
 }
 

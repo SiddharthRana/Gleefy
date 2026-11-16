@@ -21,15 +21,16 @@ The name was checked on Play and against trademarks on 2026-11-08 (see `docs/DEC
 
 > **Party games for the people in the room.** Gleefy turns one phone into a game night: pick a game, read it out, and let everyone answer. Nobody else needs to install anything, and you never need an account to play.
 >
-> **Five ways to play**
+> **Six ways to play**
 > • **Would You Rather**: two choices, everyone votes, and the reveal shows how the room split. See the most divisive and most unanimous questions at the end.
 > • **This or That**: rapid-fire picks with big buttons. Add a 5-second timer, or pass the phone so everyone answers on their own and find out who agrees most.
 > • **Trivia Blitz**: four choices against the clock, in teams. Speed bonuses, a pausable timer and a short explanation after every answer.
 > • **Guess the Answer**: one reader, three clues, fewer points for every clue you need.
+> • **Dream Team**: draft a squad blind. Flip random characters, lock each into a role like Captain or Healer, then the room votes on whose team wins, and the hidden stats have their say too.
 > • **Custom party packs**: line up several games and play them back to back.
 >
 > **Made for groups**
-> • 580 original questions across 31 categories, from pop culture to space
+> • 580 original questions across 31 categories, plus 68 Dream Team characters
 > • Add player or team names for turns and scores; they stay on your phone
 > • 5, 10, 15 or 20 rounds; skip anything that doesn't suit your group
 > • Earn XP, level up, keep a daily streak and collect trophies as you play
