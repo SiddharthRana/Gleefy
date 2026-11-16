@@ -2,7 +2,7 @@
 
 Android-first Flutter app. iOS is structurally supported but not in scope yet (no iOS builds or payments).
 
-- Flutter 3.47 stable / Dart 3.13, Material 3 with a custom playful theme
+- Flutter 3.47.9 stable / Dart 3.13 (pinned in CI as `FLUTTER_VERSION`), Material 3 with a custom playful theme
 - State: Riverpod 3 · Routing: go_router 18 · Storage: shared_preferences · Screen-awake: wakelock_plus · i18n: `flutter gen-l10n` (ARB in `lib/l10n`)
 - Fonts: Fredoka (display) and Nunito (body), bundled under the SIL Open Font License (`assets/fonts/OFL.txt`)
 - Package: `com.gleefy.app` (permanent once published on Google Play)
